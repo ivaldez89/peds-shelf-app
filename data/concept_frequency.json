@@ -1,0 +1,639 @@
+{
+  "NEONATOLOGY": [
+    {
+      "concept": "Physiologic vs pathologic neonatal jaundice (timing, bilirubin thresholds)",
+      "intent": "DISTINGUISH/NUMBERS",
+      "frequency": 5
+    },
+    {
+      "concept": "Pyloric stenosis (nonbilious vomiting, olive mass, hypochloremic hypokalemic metabolic alkalosis)",
+      "intent": "DX/MECH",
+      "frequency": 4
+    },
+    {
+      "concept": "Bilious vomiting as sign of intestinal obstruction/malrotation",
+      "intent": "DX",
+      "frequency": 4
+    },
+    {
+      "concept": "Midgut volvulus (intestinal malrotation complication)",
+      "intent": "DX/MECH",
+      "frequency": 3
+    },
+    {
+      "concept": "Neonatal resuscitation initial steps (warm, dry, stimulate)",
+      "intent": "MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Posterior urethral valves (bladder distention, hydronephrosis)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Esophageal atresia/TEF (polyhydramnios, inability to feed, choking)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Infant of diabetic mother (macrosomia, hypoglycemia)",
+      "intent": "MECH",
+      "frequency": 3
+    },
+    {
+      "concept": "Transient tachypnea of newborn vs RDS",
+      "intent": "DISTINGUISH",
+      "frequency": 2
+    },
+    {
+      "concept": "Congenital hypothyroidism (macroglossia, hypotonia, large fontanelle)",
+      "intent": "DX/MECH",
+      "frequency": 2
+    },
+    {
+      "concept": "Acrocyanosis in newborns (normal finding)",
+      "intent": "DISTINGUISH",
+      "frequency": 2
+    },
+    {
+      "concept": "Cephalohematoma vs caput succedaneum",
+      "intent": "DISTINGUISH",
+      "frequency": 2
+    }
+  ],
+  "INFECTIOUS DISEASE": [
+    {
+      "concept": "Bronchiolitis (RSV, wheezing, crackles, supportive care)",
+      "intent": "DX/MGMT",
+      "frequency": 5
+    },
+    {
+      "concept": "Pertussis (paroxysmal cough, stages, macrolide treatment)",
+      "intent": "DX/MGMT",
+      "frequency": 4
+    },
+    {
+      "concept": "Croup/laryngotracheobronchitis (stridor, barking cough, parainfluenza)",
+      "intent": "DX/MECH",
+      "frequency": 3
+    },
+    {
+      "concept": "C. difficile colitis (post-antibiotic diarrhea)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Measles/rubeola (cough, coryza, conjunctivitis, Koplik spots)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "UTI in infants (fever, irritability, gram-negative coverage)",
+      "intent": "DX/MGMT",
+      "frequency": 3
+    },
+    {
+      "concept": "Meningitis CSF findings (bacterial vs viral vs fungal)",
+      "intent": "DISTINGUISH",
+      "frequency": 3
+    },
+    {
+      "concept": "Septic arthritis (fever, joint swelling, S. aureus, surgical washout)",
+      "intent": "DX/MGMT",
+      "frequency": 3
+    },
+    {
+      "concept": "Osteomyelitis (localized bone pain, elevated ESR)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Varicella in immunocompromised (prolonged course)",
+      "intent": "DX/MECH",
+      "frequency": 2
+    },
+    {
+      "concept": "Herpes zoster reactivation (dermatomal distribution)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Lyme disease (erythema migrans, tick-borne)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Giardiasis (malabsorption, failure to thrive)",
+      "intent": "DX/MECH",
+      "frequency": 2
+    },
+    {
+      "concept": "Tinea capitis (scalp alopecia, kerion, oral antifungal)",
+      "intent": "DX/MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Group B strep (early-onset neonatal sepsis)",
+      "intent": "DX",
+      "frequency": 2
+    }
+  ],
+  "CARDIOLOGY": [
+    {
+      "concept": "VSD (holosystolic murmur, left lower sternal border, left-to-right shunt)",
+      "intent": "DX/MECH",
+      "frequency": 4
+    },
+    {
+      "concept": "PDA (machinery murmur, continuous, left second intercostal space)",
+      "intent": "DX",
+      "frequency": 3
+    },
+    {
+      "concept": "Tetralogy of Fallot (cyanotic, tet spells)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Myocarditis (viral prodrome, S3 gallop, heart failure signs)",
+      "intent": "DX",
+      "frequency": 3
+    },
+    {
+      "concept": "SVT in infants (narrow complex tachycardia, adenosine treatment)",
+      "intent": "DX/MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Innocent/Still murmur (benign, reassurance)",
+      "intent": "MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "ASD (fixed split S2)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Rheumatic fever (Jones criteria, secondary prophylaxis)",
+      "intent": "DX/MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Cardiogenic shock management (dopamine, not fluids)",
+      "intent": "MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Kawasaki disease (fever >5 days, coronary aneurysm risk)",
+      "intent": "DX",
+      "frequency": 2
+    }
+  ],
+  "PULMONOLOGY": [
+    {
+      "concept": "Foreign body aspiration (unilateral wheeze, hyperinflation, bronchoscopy)",
+      "intent": "DX/MGMT",
+      "frequency": 3
+    },
+    {
+      "concept": "Cystic fibrosis (CFTR mutation, recurrent infections, pancreatic insufficiency)",
+      "intent": "DX",
+      "frequency": 3
+    },
+    {
+      "concept": "Bronchiectasis (chronic cough, dilated airways)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Asthma (reversible obstruction, beta-agonist response)",
+      "intent": "DX/MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Bronchopulmonary dysplasia (prematurity, cor pulmonale)",
+      "intent": "MECH",
+      "frequency": 2
+    }
+  ],
+  "GASTROENTEROLOGY": [
+    {
+      "concept": "Intussusception (colicky pain, currant jelly stool, ultrasound/contrast enema)",
+      "intent": "DX/MGMT",
+      "frequency": 4
+    },
+    {
+      "concept": "Hirschsprung disease (failure to pass meconium, absent ganglion cells)",
+      "intent": "DX/MECH",
+      "frequency": 3
+    },
+    {
+      "concept": "GERD with aspiration (recurrent pneumonia, fundoplication)",
+      "intent": "MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Meckel diverticulum (painless GI bleed, technetium scan)",
+      "intent": "DX/MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Duodenal atresia (double bubble sign, Down syndrome association)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Galactosemia (reducing substances, hepatomegaly)",
+      "intent": "DX",
+      "frequency": 2
+    }
+  ],
+  "NEPHROLOGY": [
+    {
+      "concept": "Minimal change nephrotic syndrome (children, proteinuria, edema)",
+      "intent": "DX",
+      "frequency": 4
+    },
+    {
+      "concept": "Poststreptococcal glomerulonephritis (nephritic, immune complex)",
+      "intent": "DX/MECH",
+      "frequency": 4
+    },
+    {
+      "concept": "IgA nephropathy (synpharyngitic hematuria, normal complement)",
+      "intent": "DX/DISTINGUISH",
+      "frequency": 2
+    },
+    {
+      "concept": "Hemolytic uremic syndrome (HUS: MAHA, thrombocytopenia, AKI)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Vesicoureteral reflux (recurrent UTI, renal scarring)",
+      "intent": "MECH",
+      "frequency": 2
+    }
+  ],
+  "ENDOCRINOLOGY": [
+    {
+      "concept": "DKA initial management (fluids before insulin, check K+ first)",
+      "intent": "MGMT",
+      "frequency": 5
+    },
+    {
+      "concept": "Hashimoto thyroiditis (autoimmune, hypothyroid symptoms, anti-TPO)",
+      "intent": "DX/MECH",
+      "frequency": 3
+    },
+    {
+      "concept": "Congenital adrenal hyperplasia (salt-wasting, ambiguous genitalia)",
+      "intent": "DX/MECH",
+      "frequency": 3
+    },
+    {
+      "concept": "Type 1 DM with autoimmune clustering",
+      "intent": "MECH",
+      "frequency": 2
+    },
+    {
+      "concept": "Turner syndrome (45,X, short stature, primary amenorrhea, webbed neck)",
+      "intent": "DX",
+      "frequency": 3
+    },
+    {
+      "concept": "Constitutional delay of puberty vs pathologic",
+      "intent": "DISTINGUISH",
+      "frequency": 3
+    },
+    {
+      "concept": "Precocious puberty (central vs peripheral)",
+      "intent": "DISTINGUISH",
+      "frequency": 2
+    },
+    {
+      "concept": "Graves disease (thyroid antibodies, exophthalmos)",
+      "intent": "DX/MECH",
+      "frequency": 2
+    }
+  ],
+  "HEMATOLOGY/ONCOLOGY": [
+    {
+      "concept": "Iron deficiency anemia (cow's milk, microcytic, low ferritin)",
+      "intent": "DX",
+      "frequency": 4
+    },
+    {
+      "concept": "Thalassemia minor vs iron deficiency (RDW, target cells)",
+      "intent": "DISTINGUISH",
+      "frequency": 3
+    },
+    {
+      "concept": "Neuroblastoma (adrenal mass, crosses midline, catecholamines)",
+      "intent": "DX",
+      "frequency": 3
+    },
+    {
+      "concept": "Wilms tumor/nephroblastoma (flank mass, does NOT cross midline)",
+      "intent": "DX/DISTINGUISH",
+      "frequency": 3
+    },
+    {
+      "concept": "Hodgkin lymphoma (mediastinal mass, Reed-Sternberg cells, B symptoms)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "ALL (bone marrow infiltration, pancytopenia)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Hereditary spherocytosis (hemolysis, splenomegaly, spherocytes)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "G6PD deficiency (hemolysis with triggers)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Hemophilia A (Factor VIII, prolonged PTT, normal PT)",
+      "intent": "DX",
+      "frequency": 2
+    }
+  ],
+  "GENETICS/SYNDROMES": [
+    {
+      "concept": "DiGeorge syndrome (22q11.2, hypocalcemia, conotruncal defects, absent thymus)",
+      "intent": "DX",
+      "frequency": 3
+    },
+    {
+      "concept": "Trisomy 18/Edwards (clenched fists, rocker-bottom feet, cardiac defects)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Trisomy 21/Down syndrome (associations: Hirschsprung, duodenal atresia, AV canal)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Neurofibromatosis type 1 (cafe-au-lait spots, neurofibromas, autosomal dominant)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Beckwith-Wiedemann (macrosomia, macroglossia, omphalocele, hypoglycemia)",
+      "intent": "DX",
+      "frequency": 2
+    }
+  ],
+  "IMMUNOLOGY": [
+    {
+      "concept": "T-cell deficiency (viral/fungal infections, prolonged varicella)",
+      "intent": "MECH",
+      "frequency": 3
+    },
+    {
+      "concept": "B-cell deficiency/XLA (recurrent bacterial infections, low Ig)",
+      "intent": "DX/MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "IgA deficiency (sinopulmonary infections)",
+      "intent": "MECH",
+      "frequency": 2
+    },
+    {
+      "concept": "Complement deficiency (Neisseria susceptibility)",
+      "intent": "MECH",
+      "frequency": 2
+    },
+    {
+      "concept": "SCID (opportunistic infections, absent thymic shadow)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Hereditary angioedema (C1 esterase inhibitor deficiency)",
+      "intent": "DX",
+      "frequency": 2
+    }
+  ],
+  "NEUROLOGY": [
+    {
+      "concept": "Febrile seizures (simple vs complex, reassurance for simple)",
+      "intent": "MGMT/DISTINGUISH",
+      "frequency": 3
+    },
+    {
+      "concept": "Abusive head trauma/shaken baby (retinal hemorrhages, subdural hematoma)",
+      "intent": "DX",
+      "frequency": 3
+    },
+    {
+      "concept": "Epidural hematoma (lucid interval, lens-shaped)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Breath-holding spells (cyanotic episodes, benign, reassurance)",
+      "intent": "DX/MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Spinal muscular atrophy (hypotonia, hyporeflexia, fasciculations)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Duchenne muscular dystrophy (Gower sign, X-linked, elevated CK)",
+      "intent": "DX/MECH",
+      "frequency": 2
+    }
+  ],
+  "ORTHOPEDICS": [
+    {
+      "concept": "Growing pains (bilateral, nocturnal, nonarticular)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Transient synovitis (hip pain post-viral, NSAIDs)",
+      "intent": "DX/MGMT",
+      "frequency": 3
+    },
+    {
+      "concept": "Osgood-Schlatter (tibial tubercle pain, adolescent athletes)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Legg-Calve-Perthes (AVN femoral head, limp)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "SCFE (obese adolescent, hip/knee pain)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Radial nerve injury with humerus fracture",
+      "intent": "MECH",
+      "frequency": 2
+    }
+  ],
+  "DERMATOLOGY": [
+    {
+      "concept": "Atopic dermatitis (flexural distribution, pruritus, topical steroids)",
+      "intent": "DX/MGMT",
+      "frequency": 3
+    },
+    {
+      "concept": "Henoch-Schonlein purpura (palpable purpura, arthritis, abdominal pain)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Scarlet fever (sandpaper rash, strawberry tongue)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Impetigo (honey-crusted lesions)",
+      "intent": "DX",
+      "frequency": 2
+    }
+  ],
+  "TOXICOLOGY/INGESTIONS": [
+    {
+      "concept": "Caustic ingestion (oral ulcers, drooling, endoscopy)",
+      "intent": "DX/MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Acetaminophen toxicity (liver failure, N-acetylcysteine)",
+      "intent": "MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Opioid toxidrome (miosis, respiratory depression, naloxone)",
+      "intent": "DX/MGMT",
+      "frequency": 3
+    },
+    {
+      "concept": "Lead poisoning (developmental delay, basophilic stippling)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Organophosphate poisoning (SLUDGE, atropine)",
+      "intent": "DX/MGMT",
+      "frequency": 2
+    }
+  ],
+  "ADOLESCENT MEDICINE": [
+    {
+      "concept": "Adolescent immunizations (HPV, TdaP, meningococcal)",
+      "intent": "MGMT",
+      "frequency": 3
+    },
+    {
+      "concept": "STI screening in sexually active adolescents (Chlamydia, gonorrhea)",
+      "intent": "MGMT",
+      "frequency": 3
+    },
+    {
+      "concept": "PCOS (oligomenorrhea, hirsutism, acanthosis nigricans)",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "Primary dysmenorrhea (NSAIDs treatment)",
+      "intent": "MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Eating disorders recognition",
+      "intent": "DX",
+      "frequency": 2
+    },
+    {
+      "concept": "**WELL-CHILD CARE/DEVELOPMENT**",
+      "intent": "",
+      "frequency": 0
+    },
+    {
+      "concept": "Developmental milestone delays - hearing evaluation first",
+      "intent": "MGMT",
+      "frequency": 3
+    },
+    {
+      "concept": "Failure to thrive - dietary history first",
+      "intent": "MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Normal pubertal progression (Tanner staging)",
+      "intent": "NUMBERS",
+      "frequency": 3
+    },
+    {
+      "concept": "Growth chart interpretation",
+      "intent": "NUMBERS",
+      "frequency": 2
+    },
+    {
+      "concept": "Age-appropriate behaviors vs concerning",
+      "intent": "DISTINGUISH",
+      "frequency": 2
+    }
+  ],
+  "ETHICS/COMMUNICATION": [
+    {
+      "concept": "Parental autonomy in pediatric disclosure",
+      "intent": "MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Confidentiality in adolescent care",
+      "intent": "MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "Evidence-based vs alternative treatments",
+      "intent": "MGMT",
+      "frequency": 2
+    },
+    {
+      "concept": "**DX (Diagnosis)**",
+      "intent": "85",
+      "frequency": 42
+    },
+    {
+      "concept": "**MGMT (Management)**",
+      "intent": "60",
+      "frequency": 30
+    },
+    {
+      "concept": "**MECH (Pathophysiology)**",
+      "intent": "35",
+      "frequency": 18
+    },
+    {
+      "concept": "**DISTINGUISH (Differentiation)**",
+      "intent": "15",
+      "frequency": 8
+    },
+    {
+      "concept": "**NUMBERS (Thresholds/Criteria)**",
+      "intent": "5",
+      "frequency": 2
+    }
+  ]
+}

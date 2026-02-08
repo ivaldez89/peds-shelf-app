@@ -1,0 +1,786 @@
+[
+  {
+    "id": "------------",
+    "name": "",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0041-DX",
+    "name": "VUR-related renal scarring recognition",
+    "intent": "DX",
+    "domain": "renal",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0041-MGMT",
+    "name": "VUR monitoring protocol",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0053-DX",
+    "name": "Bronchiolitis recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0053-MGMT",
+    "name": "Bronchiolitis management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0051-DX",
+    "name": "Foreign body aspiration recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0051-MGMT",
+    "name": "Foreign body aspiration management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0084-DX",
+    "name": "ALL recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0084-MECH",
+    "name": "ALL marrow infiltration mechanism",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0066-MGMT",
+    "name": "Congenital hypothyroidism confirmation",
+    "intent": "MGMT",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0066-DX",
+    "name": "Thyroid dysgenesis as congenital hypothyroidism etiology",
+    "intent": "DX",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0091-DX",
+    "name": "Septic arthritis recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0091-MGMT",
+    "name": "Septic arthritis management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0097-DX",
+    "name": "Tinea capitis with kerion recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0097-MGMT",
+    "name": "Tinea capitis treatment",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0102-DX",
+    "name": "Primary dysmenorrhea recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0102-MECH",
+    "name": "Primary dysmenorrhea mechanism",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0098-A",
+    "name": "Pediatric lipid screening",
+    "intent": "SCREENING",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0098-B",
+    "name": "Congenital melanocytic nevus monitoring",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0105-A",
+    "name": "Adolescent confidentiality principles",
+    "intent": "ETHICS",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0105-B",
+    "name": "Complementary/alternative medicine counseling",
+    "intent": "ETHICS",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-NUM-0001",
+    "name": "HPV vaccination timing",
+    "intent": "NUMBERS",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-NUM-0002",
+    "name": "Exchange transfusion threshold",
+    "intent": "NUMBERS",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-NUM-0003",
+    "name": "Newborn screening timing",
+    "intent": "NUMBERS",
+    "domain": "newborn",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-NUM-0004",
+    "name": "Phototherapy initiation threshold",
+    "intent": "NUMBERS",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-NUM-0005",
+    "name": "Fever definition by age",
+    "intent": "NUMBERS",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-NUM-0006",
+    "name": "Hypertension definition in children",
+    "intent": "NUMBERS",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-NUM-0007",
+    "name": "Diabetic ketoacidosis diagnostic criteria",
+    "intent": "NUMBERS",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0001",
+    "name": "Anaphylaxis recognition (distributive shock)",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0002",
+    "name": "Anaphylaxis management (epinephrine first-line)",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0003",
+    "name": "Hypovolemic shock in gastroenteritis",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0004",
+    "name": "DKA initial fluid management",
+    "intent": "MGMT",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0005",
+    "name": "DKA potassium physiology",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0006",
+    "name": "Starvation ketosis vs DKA differentiation",
+    "intent": "DISTINGUISH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0007",
+    "name": "Hyponatremic seizure management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0009",
+    "name": "Hyperkalemia emergency management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0010",
+    "name": "Methemoglobinemia management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0011",
+    "name": "Carbon monoxide poisoning recognition",
+    "intent": "DX",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0012",
+    "name": "Tension pneumothorax management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0013",
+    "name": "ARDS pathophysiology",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0015",
+    "name": "Opioid overdose management",
+    "intent": "MGMT",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0016",
+    "name": "Salicylate toxicity acid-base pattern",
+    "intent": "MECH",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0017",
+    "name": "Obtunded patient airway management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0037",
+    "name": "Hemolytic uremic syndrome recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0020",
+    "name": "Midgut volvulus recognition (bilious vomiting)",
+    "intent": "DX",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0021",
+    "name": "Bilious vomiting workup",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0022",
+    "name": "Intussusception management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0023",
+    "name": "Giardiasis mechanism",
+    "intent": "MECH",
+    "domain": "gi_nutrition",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0024",
+    "name": "Ulcerative colitis recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0025",
+    "name": "C. difficile colitis recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0026",
+    "name": "Staph aureus food poisoning recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0027",
+    "name": "Entamoeba histolytica recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0028",
+    "name": "Caustic ingestion complications",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0029",
+    "name": "Galactosemia recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0030",
+    "name": "Biliary atresia recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0042",
+    "name": "Innocent heart murmur reassurance",
+    "intent": "DISTINGUISH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0043",
+    "name": "Heart murmur intensity change mechanism (PVR)",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0044",
+    "name": "VSD with heart failure recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0045",
+    "name": "Tetralogy of Fallot recognition (tet spells)",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0046",
+    "name": "Bicuspid aortic valve recognition",
+    "intent": "DX",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0047",
+    "name": "SVT management (stable)",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0048",
+    "name": "SVT management (unstable)",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0049",
+    "name": "Cor pulmonale in CF recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0031",
+    "name": "IgA nephropathy recognition (synpharyngitic)",
+    "intent": "DISTINGUISH",
+    "domain": "gi_nutrition",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0032",
+    "name": "Post-streptococcal glomerulonephritis recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0033",
+    "name": "PSGN edema mechanism",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0034",
+    "name": "Minimal change disease recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0035",
+    "name": "Nephrotic syndrome complications mechanism",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0036",
+    "name": "SBP in nephrotic syndrome recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0038",
+    "name": "Renovascular hypertension mechanism",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0039",
+    "name": "Renal trauma workup",
+    "intent": "MGMT",
+    "domain": "renal",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0040",
+    "name": "Urethral injury workup",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0052",
+    "name": "Croup recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0054",
+    "name": "Pertussis exposure management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0056",
+    "name": "PPHN mechanism",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0057",
+    "name": "Treatment-resistant pneumonia recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0058",
+    "name": "Absorption atelectasis mechanism",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0065",
+    "name": "Congenital hypothyroidism recognition",
+    "intent": "DX",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0067",
+    "name": "Abnormal newborn screen follow-up",
+    "intent": "MGMT",
+    "domain": "newborn",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0068",
+    "name": "Infant of diabetic mother recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0070",
+    "name": "Physiologic pubertal gynecomastia",
+    "intent": "DX",
+    "domain": "gi_nutrition",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0072",
+    "name": "IDM hypoglycemia mechanism",
+    "intent": "MECH",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0055",
+    "name": "Transient tachypnea of newborn recognition",
+    "intent": "DX",
+    "domain": "newborn",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0073",
+    "name": "Cephalohematoma recognition",
+    "intent": "DISTINGUISH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0074",
+    "name": "Subgaleal hemorrhage recognition",
+    "intent": "DISTINGUISH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0075",
+    "name": "Cold stress in newborn recognition",
+    "intent": "DX",
+    "domain": "newborn",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0076",
+    "name": "Early-onset neonatal sepsis pathogens",
+    "intent": "MECH",
+    "domain": "newborn",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0077",
+    "name": "Normal newborn acrocyanosis",
+    "intent": "DISTINGUISH",
+    "domain": "newborn",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0078",
+    "name": "Physiologic neonatal jaundice",
+    "intent": "DISTINGUISH",
+    "domain": "newborn",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0059",
+    "name": "Epidural hematoma recognition",
+    "intent": "DX",
+    "domain": "infectious_disease",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0061",
+    "name": "Severe hyperbilirubinemia management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0062",
+    "name": "Breath-holding spell mechanism",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0063",
+    "name": "Retinoblastoma recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0064",
+    "name": "Corneal abrasion recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0096",
+    "name": "Abusive head trauma recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0079",
+    "name": "X-linked agammaglobulinemia management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0081",
+    "name": "Pediatric HIV recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0083",
+    "name": "Terminal complement deficiency recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0090",
+    "name": "Histoplasmosis recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0086",
+    "name": "Anemia of chronic disease mechanism",
+    "intent": "MECH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0087",
+    "name": "Thalassemia trait vs iron deficiency",
+    "intent": "DISTINGUISH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0092",
+    "name": "Osteomyelitis recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0093",
+    "name": "Legg-Calve-Perthes disease recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0095",
+    "name": "Atopic dermatitis management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0100",
+    "name": "Testicular torsion recognition",
+    "intent": "DX",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0101",
+    "name": "Appendix testis torsion differentiation",
+    "intent": "DISTINGUISH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0104",
+    "name": "HPV vaccination recommendation",
+    "intent": "SCREENING",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0107",
+    "name": "Sleep terrors vs nightmares",
+    "intent": "DISTINGUISH",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0108",
+    "name": "Normal adolescent development",
+    "intent": "DX",
+    "domain": "growth_development",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0106",
+    "name": "Normal childhood behavior vs abuse concern",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0018",
+    "name": "Viral gastroenteritis outbreak control",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  },
+  {
+    "id": "PEDS-0103",
+    "name": "Gonorrhea exposure management",
+    "intent": "MGMT",
+    "domain": "general",
+    "sourceCards": []
+  }
+]

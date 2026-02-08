@@ -1,0 +1,152 @@
+[
+  {
+    "mnemonic": "LEFT",
+    "meaning": "TO-RIGHT SHUNTS 529",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "RIGHT",
+    "meaning": "TO-LEFT SHUNTS 532",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "PROTEIN",
+    "meaning": "INDUCED ALLERGIC PROCTOCOLITIS 538",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "gi_nutrition"
+  },
+  {
+    "mnemonic": "BREATH",
+    "meaning": "HOLDING SPELLS 562",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "DIAMOND",
+    "meaning": "BLACKFAN ANEMIA 564",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "KASABACH",
+    "meaning": "MERRITT SYNDROME 567",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "LEGG",
+    "meaning": "CALVÉ-PERTHES DISEASE 576",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "HIGH",
+    "meaning": "YIELD FACTS IN PEDIATRICS",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "USMLE",
+    "meaning": "Rx.com.)",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "CHD",
+    "meaning": "VSD, PDA, ASD",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "CNS",
+    "meaning": "Holoprosencephaly with incomplete",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "VACTERL",
+    "meaning": "H includes:",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "DOI",
+    "meaning": "10.1186/1746-6148-7-57.)",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "III",
+    "meaning": "V): Ureteral dilation (III), renal pel-",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "renal"
+  },
+  {
+    "mnemonic": "TMP",
+    "meaning": "SMX);",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "IVIG",
+    "meaning": "refractory cases, but routine use is",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "HSV",
+    "meaning": "2). Neisseria gonorrhoeae was much more common before",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "HHV",
+    "meaning": "7",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "CBC",
+    "meaning": "� hemoglobin (Hb), ! mean corpuscular volume (MCV), normal",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "VOC",
+    "meaning": "Dactylitis (occurs <3 years of age), mesenteric ischemia",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "SIDS",
+    "meaning": "Sudden infant death syndrome.",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "BRUE",
+    "meaning": "Brief resolved unexplained",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "NRAS",
+    "meaning": "driven CNS melanoma in children. Br J Cancer. 2017;116(8):990-993. doi:10.1038/bjc.2017.49. Image B reproduced with",
+    "source": "FirstAid_Pediatrics.md",
+    "domain": "general"
+  },
+  {
+    "mnemonic": "HIV",
+    "meaning": "positive mothers with HIV and a viral load of ≥ 50 copies/mL. However, a three-drug regimen is",
+    "source": "Amboss_Pediatrics_Qbank.md",
+    "domain": "gi_nutrition"
+  },
+  {
+    "mnemonic": "SCD",
+    "meaning": "associated conditions,",
+    "source": "Amboss_Pediatrics_Qbank.md",
+    "domain": "general"
+  }
+]

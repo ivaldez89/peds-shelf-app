@@ -1,0 +1,2796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pediatrics Shelf Study Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: { slate: { 850: '#172033' } },
+          fontFamily: {
+            sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+    .choice-btn { transition: all 0.15s ease; }
+    .choice-btn:hover { transform: translateX(4px); }
+    .flashcard-flip { perspective: 1000px; }
+    .flashcard-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+    .flashcard-inner.flipped { transform: rotateY(180deg); }
+    .flashcard-front, .flashcard-back { backface-visibility: hidden; }
+    .flashcard-back { transform: rotateY(180deg); }
+    body { background: #0f172a; transition: background-color 0.3s ease; }
+
+    /* ══════════════════════════════════════════════════════════════
+       LIGHT THEME OVERRIDES
+       ══════════════════════════════════════════════════════════════ */
+    body.theme-light { background: #f1f5f9 !important; }
+
+    /* Structural elements */
+    body.theme-light aside { background: #ffffff !important; border-color: #e2e8f0 !important; }
+    body.theme-light header { background: rgba(255,255,255,0.92) !important; border-color: #e2e8f0 !important; }
+
+    /* Text color remapping (dark→light friendly) */
+    body.theme-light .text-white { color: #0f172a !important; }
+    body.theme-light .text-slate-100 { color: #1e293b !important; }
+    body.theme-light .text-slate-200 { color: #334155 !important; }
+    body.theme-light .text-slate-300 { color: #475569 !important; }
+    body.theme-light .text-slate-400 { color: #64748b !important; }
+    body.theme-light .text-slate-500 { color: #94a3b8 !important; }
+    body.theme-light .text-slate-600 { color: #94a3b8 !important; }
+    body.theme-light .text-slate-700 { color: #94a3b8 !important; }
+
+    /* Background remapping */
+    body.theme-light .bg-slate-900 { background-color: #f1f5f9 !important; }
+    body.theme-light .bg-slate-950 { background-color: #ffffff !important; }
+    body.theme-light [class*="bg-slate-800"] { background-color: #ffffff !important; }
+    body.theme-light [class*="bg-slate-700"] { background-color: #f1f5f9 !important; }
+    body.theme-light aside button.bg-slate-800 { background-color: #e2e8f0 !important; }
+    body.theme-light [class*="bg-black"] { background-color: rgba(0,0,0,0.06) !important; }
+
+    /* Border remapping */
+    body.theme-light .border-slate-800 { border-color: #e2e8f0 !important; }
+    body.theme-light [class*="border-slate-700"] { border-color: #e2e8f0 !important; }
+    body.theme-light [class*="border-slate-600"] { border-color: #cbd5e1 !important; }
+
+    /* Hover states */
+    body.theme-light [class*="hover:bg-slate-800"]:hover { background-color: #f1f5f9 !important; }
+    body.theme-light [class*="hover:border-slate"]:hover { border-color: #cbd5e1 !important; }
+    body.theme-light [class*="hover:text-white"]:hover { color: #0f172a !important; }
+    body.theme-light [class*="hover:text-slate"]:hover { color: #334155 !important; }
+
+    /* Colored tinted backgrounds → lighter pastel versions */
+    body.theme-light [class*="bg-emerald-950"] { background-color: #ecfdf5 !important; }
+    body.theme-light [class*="bg-red-950"] { background-color: #fef2f2 !important; }
+    body.theme-light [class*="bg-violet-950"] { background-color: #f5f3ff !important; }
+    body.theme-light [class*="bg-amber-950"] { background-color: #fffbeb !important; }
+    body.theme-light [class*="bg-blue-950"] { background-color: #eff6ff !important; }
+
+    /* Colored text → darker for readability on light backgrounds */
+    body.theme-light .text-emerald-300, body.theme-light .text-emerald-400 { color: #059669 !important; }
+    body.theme-light .text-blue-300, body.theme-light .text-blue-400 { color: #2563eb !important; }
+    body.theme-light .text-red-300, body.theme-light .text-red-400 { color: #dc2626 !important; }
+    body.theme-light .text-violet-300 { color: #7c3aed !important; }
+    body.theme-light .text-amber-300, body.theme-light .text-amber-400 { color: #d97706 !important; }
+    body.theme-light .text-pink-300 { color: #db2777 !important; }
+    body.theme-light .text-sky-300 { color: #0284c7 !important; }
+    body.theme-light .text-rose-300 { color: #e11d48 !important; }
+    body.theme-light .text-teal-300 { color: #0d9488 !important; }
+    body.theme-light .text-fuchsia-300 { color: #c026d3 !important; }
+    body.theme-light .text-orange-300 { color: #ea580c !important; }
+    body.theme-light .text-cyan-300 { color: #0891b2 !important; }
+    body.theme-light .text-lime-300 { color: #65a30d !important; }
+    body.theme-light .text-indigo-300 { color: #4f46e5 !important; }
+    body.theme-light .text-yellow-300 { color: #ca8a04 !important; }
+    body.theme-light .text-green-300 { color: #16a34a !important; }
+
+    /* Rich text classes */
+    body.theme-light .rich-text { color: #475569; }
+    body.theme-light .rich-text strong, body.theme-light .rich-text b { color: #1e293b; }
+    body.theme-light .rich-text .highlight-term { color: #2563eb; }
+    body.theme-light .rich-text ul li::before { color: #94a3b8; }
+    body.theme-light .vignette-stem { color: #475569; }
+    body.theme-light .vignette-stem strong { color: #1e293b; }
+    body.theme-light .feedback-text { color: #475569; }
+    body.theme-light .feedback-text strong { color: #2563eb; }
+    body.theme-light .feedback-text ul li::before { color: #94a3b8; }
+    body.theme-light .pearl-text { color: #92400e; opacity: 1; }
+    body.theme-light .pearl-text strong { color: #b45309; }
+
+    /* Accent borders → softer for light mode */
+    body.theme-light [class*="border-emerald-700"], body.theme-light [class*="border-emerald-800"] { border-color: #a7f3d0 !important; }
+    body.theme-light [class*="border-red-700"], body.theme-light [class*="border-red-800"] { border-color: #fecaca !important; }
+    body.theme-light [class*="border-violet-800"] { border-color: #ddd6fe !important; }
+    body.theme-light [class*="border-amber-700"] { border-color: #fde68a !important; }
+    body.theme-light [class*="border-blue-500"] { border-color: #93c5fd !important; }
+
+    /* Forms & inputs */
+    body.theme-light select { background: #ffffff !important; border-color: #e2e8f0 !important; color: #334155 !important; }
+    body.theme-light input { color: #1e293b !important; }
+    body.theme-light input::placeholder { color: #94a3b8 !important; }
+
+    /* Scrollbar */
+    body.theme-light .scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; }
+
+    /* Dividers */
+    body.theme-light [class*="divide-slate"] > :not([hidden]) ~ :not([hidden]) { border-color: #e2e8f0 !important; }
+
+    /* Flashcard override */
+    body.theme-light .flashcard-back { border-color: #a7f3d0 !important; }
+
+    /* Theme toggle */
+    .theme-toggle { transition: background-color 0.3s ease; }
+
+    /* ── Rich text formatting ── */
+    .rich-text { font-size: 0.9375rem; line-height: 1.8; color: #cbd5e1; }
+    .rich-text p { margin-bottom: 0.85em; }
+    .rich-text p:last-child { margin-bottom: 0; }
+    .rich-text strong, .rich-text b { color: #e2e8f0; font-weight: 600; }
+    .rich-text ul { list-style: none; padding-left: 0; margin: 0.6em 0; }
+    .rich-text ul li { position: relative; padding-left: 1.2em; margin-bottom: 0.4em; line-height: 1.65; }
+    .rich-text ul li::before { content: "•"; position: absolute; left: 0; color: #64748b; font-weight: bold; }
+    .rich-text .highlight-term { color: #93c5fd; font-weight: 600; }
+
+    /* ── Vignette stem ── */
+    .vignette-stem { font-size: 0.9375rem; line-height: 1.85; color: #cbd5e1; letter-spacing: 0.005em; }
+    .vignette-stem p { margin-bottom: 1em; }
+    .vignette-stem p:last-child { margin-bottom: 0; }
+    .vignette-stem strong { color: #e2e8f0; font-weight: 600; }
+
+    /* ── Feedback text ── */
+    .feedback-text { font-size: 0.8125rem; line-height: 1.75; color: #cbd5e1; }
+    .feedback-text p { margin-bottom: 0.65em; }
+    .feedback-text p:last-child { margin-bottom: 0; }
+    .feedback-text strong { color: #93c5fd; font-weight: 600; }
+    .feedback-text ul { list-style: none; padding-left: 0; margin: 0.5em 0; }
+    .feedback-text ul li { position: relative; padding-left: 1.1em; margin-bottom: 0.35em; }
+    .feedback-text ul li::before { content: "–"; position: absolute; left: 0; color: #64748b; }
+
+    /* ── Pearl text ── */
+    .pearl-text { font-size: 0.875rem; line-height: 1.7; color: #fde68a; opacity: 0.85; }
+    .pearl-text strong { color: #fbbf24; font-weight: 600; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+  <div id="root"></div>
+  <script type="text/babel" data-type="module">
+    const { useState, useEffect, useCallback, useMemo, useRef, createContext, useContext } = React;
+
+    // ─── MEDICAL TERM DICTIONARY for auto-bolding ───────────────────
+    const BOLD_TERMS = [
+      'DKA','VSD','ASD','PDA','SVT','RSV','GBS','UTI','ITP','ALL','AML','HUS','HSP',
+      'PKU','CAH','SCFE','DDH','NEC','RDS','TTN','MAS','PPHN','SIADH','ARDS','SBP',
+      'Kawasaki','intussusception','pyloric stenosis','Hirschsprung','volvulus',
+      'malrotation','meconium','bronchiolitis','croup','epiglottitis','pertussis',
+      'measles','varicella','anaphylaxis','sepsis','meningitis','osteomyelitis',
+      'nephrotic syndrome','glomerulonephritis','febrile seizure','retinoblastoma',
+      'leukocoria','phototherapy','Pavlik harness','Barlow','Ortolani','Kernig',
+      'Brudzinski','McBurney','Rovsing','psoas sign','obturator sign',
+      'strawberry tongue','currant jelly','sausage-shaped mass','target sign',
+      'olive-shaped mass','steeple sign','thumbprint sign','boot-shaped heart',
+      'egg on a string','rib notching','pneumatosis intestinalis',
+      'Kussmaul breathing','fruity breath','cherry-red spot','blue dot sign',
+      'slapped cheek','lacy reticular rash','honey-crusted','herald patch',
+      'rachitic rosary','widened physis','pencil-in-cup',
+      'hyperbilirubinemia','jaundice','phototherapy','exchange transfusion',
+      'surfactant','ECMO','IV fluids','normal saline','bolus','epinephrine',
+      'albuterol','corticosteroids','antibiotics','IVIG','aspirin',
+      'insulin','dextrose','calcium gluconate','sodium bicarbonate','naloxone',
+      'palivizumab','amoxicillin','ceftriaxone','vancomycin','acyclovir',
+      'CT scan','MRI','ultrasound','X-ray','echocardiography','EEG','LP',
+      'lumbar puncture','CBC','BMP','CMP','CRP','ESR','UA','blood culture',
+      'CSF analysis','newborn screen','VCUG','DMSA scan',
+      'trisomy 21','22q11','Turner syndrome','Klinefelter',
+    ];
+
+    // Build a regex from the term list (case-insensitive, word boundary where possible)
+    const boldRegex = new RegExp(
+      '\\b(' + BOLD_TERMS.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')\\b', 'gi'
+    );
+
+    // ─── FORMATTED TEXT COMPONENT ────────────────────────────────────
+    // Converts raw strings into structured HTML with paragraphs, bullets, and bold terms
+    function FormattedText({ text, className = 'rich-text', boldKeywords = true }) {
+      if (!text) return null;
+
+      const processLine = (line) => {
+        if (!boldKeywords) return line;
+        // Split on bold regex matches
+        const parts = [];
+        let lastIdx = 0;
+        const str = String(line);
+        str.replace(boldRegex, (match, p1, offset) => {
+          if (offset > lastIdx) parts.push(str.slice(lastIdx, offset));
+          parts.push(<strong key={offset}>{match}</strong>);
+          lastIdx = offset + match.length;
+        });
+        if (lastIdx < str.length) parts.push(str.slice(lastIdx));
+        return parts.length > 0 ? parts : line;
+      };
+
+      // Split into paragraphs on double newlines; detect bullet lines
+      const raw = String(text).trim();
+      const blocks = raw.split(/\n\s*\n/);
+
+      const elements = blocks.map((block, bi) => {
+        const lines = block.trim().split('\n');
+
+        // Check if this block is a bullet list
+        const isBulletBlock = lines.every(l => /^\s*[-•–*]\s/.test(l.trim()) || l.trim() === '');
+        if (isBulletBlock) {
+          return (
+            <ul key={bi}>
+              {lines.filter(l => l.trim()).map((l, li) => (
+                <li key={li}>{processLine(l.replace(/^\s*[-•–*]\s*/, ''))}</li>
+              ))}
+            </ul>
+          );
+        }
+
+        // Check if individual lines within a single block are bullets mixed with text
+        const mixedContent = [];
+        let currentBullets = [];
+        const flushBullets = () => {
+          if (currentBullets.length > 0) {
+            mixedContent.push(
+              <ul key={`ul-${mixedContent.length}`}>
+                {currentBullets.map((b, bi2) => <li key={bi2}>{processLine(b)}</li>)}
+              </ul>
+            );
+            currentBullets = [];
+          }
+        };
+
+        lines.forEach((l, li) => {
+          const trimmed = l.trim();
+          if (/^\s*[-•–*]\s/.test(trimmed)) {
+            currentBullets.push(trimmed.replace(/^\s*[-•–*]\s*/, ''));
+          } else if (trimmed) {
+            flushBullets();
+            mixedContent.push(<p key={`p-${li}`}>{processLine(trimmed)}</p>);
+          }
+        });
+        flushBullets();
+
+        if (mixedContent.length > 0) return <React.Fragment key={bi}>{mixedContent}</React.Fragment>;
+
+        // Default: simple paragraph
+        return <p key={bi}>{processLine(block.trim())}</p>;
+      });
+
+      return <div className={className}>{elements}</div>;
+    }
+
+    // ─── CONSTANTS ──────────────────────────────────────────────────
+    const DOMAIN_META = {
+      newborn: { label: 'Newborn / Neonatology', icon: '🍼', color: 'bg-pink-500/20 text-pink-300 border-pink-500/30' },
+      growth_development: { label: 'Growth & Development', icon: '📏', color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
+      cardiology: { label: 'Cardiology', icon: '❤️', color: 'bg-red-500/20 text-red-300 border-red-500/30' },
+      pulmonology: { label: 'Pulmonology', icon: '🫁', color: 'bg-sky-500/20 text-sky-300 border-sky-500/30' },
+      gi_nutrition: { label: 'GI / Nutrition', icon: '🍽️', color: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
+      renal: { label: 'Renal', icon: '🫘', color: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30' },
+      endocrine: { label: 'Endocrine', icon: '⚗️', color: 'bg-violet-500/20 text-violet-300 border-violet-500/30' },
+      infectious_disease: { label: 'Infectious Disease', icon: '🦠', color: 'bg-lime-500/20 text-lime-300 border-lime-500/30' },
+      neurology: { label: 'Neurology', icon: '🧠', color: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' },
+      heme_onc: { label: 'Hematology / Oncology', icon: '🩸', color: 'bg-rose-500/20 text-rose-300 border-rose-500/30' },
+      rheum_immunology: { label: 'Rheumatology / Immunology', icon: '🛡️', color: 'bg-teal-500/20 text-teal-300 border-teal-500/30' },
+      genetics_metabolic: { label: 'Genetics / Metabolic', icon: '🧬', color: 'bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-500/30' },
+      adolescent: { label: 'Adolescent Medicine', icon: '🧑‍⚕️', color: 'bg-orange-500/20 text-orange-300 border-orange-500/30' },
+      child_abuse_ethics: { label: 'Child Abuse / Ethics', icon: '⚖️', color: 'bg-slate-500/20 text-slate-300 border-slate-500/30' },
+      general: { label: 'General Pediatrics', icon: '🏥', color: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' },
+    };
+
+    const DOMAIN_ORDER = [
+      'newborn','growth_development','cardiology','pulmonology','gi_nutrition',
+      'renal','endocrine','infectious_disease','neurology','heme_onc',
+      'rheum_immunology','genetics_metabolic','adolescent','child_abuse_ethics','general'
+    ];
+
+    // ─── DATA CONTEXT ───────────────────────────────────────────────
+    const DataContext = createContext(null);
+    function DataProvider({ children }) {
+      const [data, setData] = useState({ domains: null, vignettes: null, concepts: null, mnemonics: null, pearls: null, playbook: null, frequency: null, loading: true, error: null });
+      useEffect(() => {
+        async function load() {
+          try {
+            const [domains, vignettes, concepts, mnemonics, pearls, playbook, frequency] = await Promise.all([
+              fetch('/api/domains').then(r => r.json()), fetch('/api/vignettes').then(r => r.json()),
+              fetch('/api/concepts').then(r => r.json()), fetch('/api/mnemonics').then(r => r.json()),
+              fetch('/api/pearls').then(r => r.json()), fetch('/api/playbook').then(r => r.json()),
+              fetch('/api/frequency').then(r => r.json()),
+            ]);
+            setData({ domains, vignettes, concepts, mnemonics, pearls, playbook, frequency, loading: false, error: null });
+          } catch (e) { setData(prev => ({ ...prev, loading: false, error: e.message })); }
+        }
+        load();
+      }, []);
+      return <DataContext.Provider value={data}>{children}</DataContext.Provider>;
+    }
+    function useData() { return useContext(DataContext); }
+
+    // ─── PROGRESS CONTEXT ───────────────────────────────────────────
+    const ProgressContext = createContext(null);
+    function ProgressProvider({ children }) {
+      const [progress, setProgress] = useState(() => {
+        try { return JSON.parse(localStorage.getItem('peds_progress') || '{}'); } catch { return {}; }
+      });
+      const updateProgress = useCallback((key, value) => {
+        setProgress(prev => { const next = { ...prev, [key]: value }; localStorage.setItem('peds_progress', JSON.stringify(next)); return next; });
+      }, []);
+      const markVignetteComplete = useCallback((id, score) => {
+        updateProgress(`vig_${id}`, { completed: true, score, timestamp: Date.now() });
+      }, [updateProgress]);
+      const getFlashcardState = useCallback((id) => {
+        return progress[`fc_${id}`] || { interval: 0, ease: 2.5, reps: 0, nextReview: 0 };
+      }, [progress]);
+      const updateFlashcard = useCallback((id, quality) => {
+        const state = progress[`fc_${id}`] || { interval: 0, ease: 2.5, reps: 0, nextReview: 0 };
+        let { interval, ease, reps } = state;
+        if (quality < 2) { reps = 0; interval = 1; }
+        else {
+          if (reps === 0) interval = 1; else if (reps === 1) interval = 3;
+          else interval = Math.round(interval * ease);
+          ease = Math.max(1.3, ease + 0.1 - (4 - quality) * (0.08 + (4 - quality) * 0.02)); reps++;
+        }
+        updateProgress(`fc_${id}`, { interval, ease, reps, nextReview: Date.now() + interval * 86400000, lastReview: Date.now() });
+      }, [progress, updateProgress]);
+      return <ProgressContext.Provider value={{ progress, markVignetteComplete, getFlashcardState, updateFlashcard }}>{children}</ProgressContext.Provider>;
+    }
+    function useProgress() { return useContext(ProgressContext); }
+
+    // ─── THEME CONTEXT ────────────────────────────────────────────
+    const ThemeContext = createContext(null);
+    function ThemeProvider({ children }) {
+      const [isDark, setIsDark] = useState(() => {
+        try { return localStorage.getItem('peds_theme') !== 'light'; } catch { return true; }
+      });
+      useEffect(() => {
+        document.body.classList.toggle('theme-light', !isDark);
+        localStorage.setItem('peds_theme', isDark ? 'dark' : 'light');
+      }, [isDark]);
+      const toggleTheme = useCallback(() => setIsDark(prev => !prev), []);
+      return <ThemeContext.Provider value={{ isDark, toggleTheme }}>{children}</ThemeContext.Provider>;
+    }
+    function useTheme() { return useContext(ThemeContext); }
+
+    // ─── THEME TOGGLE SWITCH ──────────────────────────────────────
+    function ThemeToggle() {
+      const { isDark, toggleTheme } = useTheme();
+      return (
+        <button onClick={toggleTheme}
+          className={`relative w-14 h-7 rounded-full transition-colors duration-300 ${isDark ? 'bg-slate-700' : 'bg-sky-200'}`}
+          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}>
+          <span className={`absolute top-0.5 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm ${isDark ? 'left-0.5 bg-slate-900 text-yellow-300' : 'left-[1.75rem] bg-white text-amber-500'}`}>
+            {isDark ? <Icons.Moon /> : <Icons.Sun />}
+          </span>
+        </button>
+      );
+    }
+
+    // ─── ICONS ──────────────────────────────────────────────────────
+    const Icons = {
+      Menu: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>,
+      X: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>,
+      Search: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>,
+      Home: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>,
+      Book: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>,
+      Zap: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
+      Target: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" strokeWidth={2}/><circle cx="12" cy="12" r="6" strokeWidth={2}/><circle cx="12" cy="12" r="2" strokeWidth={2}/></svg>,
+      Cards: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>,
+      ChevronRight: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>,
+      Check: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>,
+      AlertTriangle: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>,
+      Clock: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+      Lightbulb: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
+      Shuffle: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4h4l3 8-3 8H4m16-16h-4l-3 8 3 8h4" /></svg>,
+      Sun: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" strokeWidth={2}/><path strokeLinecap="round" strokeWidth={2} d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" /></svg>,
+      Moon: () => <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" /></svg>,
+    };
+
+    // ─── SIDEBAR ────────────────────────────────────────────────────
+    function Sidebar({ currentView, setView, sidebarOpen, setSidebarOpen }) {
+      const data = useData();
+      const stats = data.domains || {};
+      return (
+        <aside className={`fixed inset-y-0 left-0 z-40 w-64 bg-slate-950 border-r border-slate-800 transform transition-transform duration-200 lg:translate-x-0 lg:static lg:z-auto ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+          <div className="flex items-center justify-between h-14 px-4 border-b border-slate-800">
+            <button onClick={() => setView({ type: 'dashboard' })} className="flex items-center gap-2 text-sm font-semibold text-slate-100 hover:text-white">
+              <span className="text-lg">📚</span><span>Peds Shelf Guide</span>
+            </button>
+            <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-slate-400 hover:text-white"><Icons.X /></button>
+          </div>
+          <nav className="p-2 overflow-y-auto h-[calc(100vh-3.5rem)] scrollbar-thin">
+            {[
+              { type: 'dashboard', label: 'Dashboard', icon: <Icons.Home /> },
+              { type: 'nbme_strategy', label: 'NBME Strategy', icon: <Icons.Target /> },
+              { type: 'rapid_review', label: 'Rapid Review', icon: <Icons.Zap /> },
+              { type: 'all_vignettes', label: 'All Vignettes', icon: <Icons.Book /> },
+              { type: 'id_hub', label: 'ID & Antibiotics Hub', icon: <span className="text-sm">🦠</span> },
+              { type: 'cardio_hub', label: 'Cardiology Hub', icon: <span className="text-sm">❤️</span> },
+            ].map(nav => (
+              <button key={nav.type} onClick={() => setView({ type: nav.type })}
+                className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-[13px] mb-0.5 ${currentView.type === nav.type ? 'bg-slate-800 text-white font-medium' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}>
+                {nav.icon} {nav.label}
+              </button>
+            ))}
+            <div className="mt-5 mb-2 px-3"><span className="text-[10px] font-semibold uppercase tracking-widest text-slate-600">Systems</span></div>
+            {DOMAIN_ORDER.filter(d => stats[d]).map(domain => {
+              const meta = DOMAIN_META[domain]; const stat = stats[domain];
+              const isActive = currentView.type === 'domain' && currentView.domain === domain;
+              return (
+                <button key={domain} onClick={() => setView({ type: 'domain', domain })}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-[13px] mb-0.5 ${isActive ? 'bg-slate-800 text-white font-medium' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}>
+                  <span className="flex items-center gap-2.5 truncate">
+                    <span className="text-sm w-5 text-center">{meta?.icon}</span>
+                    <span className="truncate">{meta?.label || domain}</span>
+                  </span>
+                  <span className="text-[11px] text-slate-600 tabular-nums ml-1">{stat?.count}</span>
+                </button>
+              );
+            })}
+          </nav>
+        </aside>
+      );
+    }
+
+    // ─── TOPBAR ─────────────────────────────────────────────────────
+    function TopBar({ setSidebarOpen, searchQuery, setSearchQuery, currentView, setView }) {
+      const [showSearch, setShowSearch] = useState(false);
+      return (
+        <header className="sticky top-0 z-30 h-14 bg-slate-900/80 backdrop-blur border-b border-slate-800 flex items-center px-5 gap-3">
+          <button onClick={() => setSidebarOpen(true)} className="lg:hidden text-slate-400 hover:text-white"><Icons.Menu /></button>
+          <Breadcrumb currentView={currentView} setView={setView} />
+          <div className="ml-auto flex items-center gap-3">
+            <ThemeToggle />
+            {showSearch ? (
+              <div className="flex items-center gap-2 bg-slate-800 rounded-md px-3 py-1.5">
+                <Icons.Search />
+                <input autoFocus value={searchQuery} onChange={e => { setSearchQuery(e.target.value); if (e.target.value) setView({ type: 'search', query: e.target.value }); }}
+                  placeholder="Search topics, tags..." className="bg-transparent border-none outline-none text-sm text-slate-200 w-52 placeholder-slate-500" />
+                <button onClick={() => { setShowSearch(false); setSearchQuery(''); }} className="text-slate-500 hover:text-white"><Icons.X /></button>
+              </div>
+            ) : (
+              <button onClick={() => setShowSearch(true)} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-md"><Icons.Search /></button>
+            )}
+          </div>
+        </header>
+      );
+    }
+
+    function Breadcrumb({ currentView, setView }) {
+      const parts = [{ label: 'Dashboard', onClick: () => setView({ type: 'dashboard' }) }];
+      if (currentView.type === 'domain') parts.push({ label: DOMAIN_META[currentView.domain]?.label || currentView.domain });
+      else if (currentView.type === 'vignette') {
+        if (currentView.fromDomain) parts.push({ label: DOMAIN_META[currentView.fromDomain]?.label, onClick: () => setView({ type: 'domain', domain: currentView.fromDomain }) });
+        parts.push({ label: currentView.title || 'Vignette' });
+      } else if (currentView.type === 'id_hub') parts.push({ label: 'ID & Antibiotics Hub' });
+      else if (currentView.type === 'cardio_hub') parts.push({ label: 'Cardiology Hub' });
+      else if (currentView.type === 'nbme_strategy') parts.push({ label: 'NBME Strategy' });
+      else if (currentView.type === 'rapid_review') parts.push({ label: 'Rapid Review' });
+      else if (currentView.type === 'all_vignettes') parts.push({ label: 'All Vignettes' });
+      else if (currentView.type === 'search') parts.push({ label: `Search: "${currentView.query}"` });
+      return (
+        <div className="flex items-center gap-1.5 text-sm text-slate-500">
+          {parts.map((p, i) => (
+            <React.Fragment key={i}>
+              {i > 0 && <Icons.ChevronRight />}
+              {p.onClick ? <button onClick={p.onClick} className="hover:text-slate-300 transition">{p.label}</button> : <span className="text-slate-300 font-medium">{p.label}</span>}
+            </React.Fragment>
+          ))}
+        </div>
+      );
+    }
+
+    // ─── DASHBOARD ──────────────────────────────────────────────────
+    function DashboardView({ setView }) {
+      const data = useData(); const { progress } = useProgress();
+      if (data.loading) return <LoadingScreen />;
+      const stats = data.domains || {};
+      const totalVignettes = Object.values(stats).reduce((s, d) => s + (d.count || 0), 0);
+      const completedVigs = Object.keys(progress).filter(k => k.startsWith('vig_') && progress[k].completed).length;
+      const reviewedCards = Object.keys(progress).filter(k => k.startsWith('fc_')).length;
+      return (
+        <div className="animate-fadeIn p-8 max-w-6xl mx-auto space-y-10">
+          <div>
+            <h1 className="text-2xl font-bold text-white tracking-tight">Pediatrics Shelf Exam</h1>
+            <p className="text-slate-400 mt-2 text-sm leading-relaxed">NBME-aligned study guide — <strong className="text-slate-300">164 interactive vignettes</strong> across <strong className="text-slate-300">15 organ-system domains</strong>, with flashcards, rapid review, and shelf strategy.</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <StatCard label="Vignettes" value={totalVignettes} sub={`${completedVigs} completed`} />
+            <StatCard label="Concepts" value={(data.concepts || []).length} sub="canonical entries" />
+            <StatCard label="Mnemonics" value={(data.mnemonics || []).length} sub="high-yield" />
+            <StatCard label="Cards Reviewed" value={reviewedCards} sub="with SRS tracking" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { type: 'rapid_review', icon: <Icons.Zap />, bg: 'bg-amber-500/20', title: 'Rapid Review', desc: 'Mnemonics, pearls, and one-liners for last-week cramming' },
+              { type: 'all_vignettes', icon: <Icons.Book />, bg: 'bg-blue-500/20', title: 'Practice Vignettes', desc: 'Shelf-style clinical stems with branching decisions' },
+              { type: 'nbme_strategy', icon: <Icons.Target />, bg: 'bg-emerald-500/20', title: 'NBME Strategy', desc: 'Task patterns, common traps, and timing optimization' },
+              { type: 'id_hub', icon: <span className="text-sm">🦠</span>, bg: 'bg-lime-500/20', title: 'ID & Antibiotics Hub', desc: 'Deep-dive: bug-drug matching, rash gallery, empiric therapy, vaccines & more' },
+              { type: 'cardio_hub', icon: <span className="text-sm">❤️</span>, bg: 'bg-rose-500/20', title: 'Cardiology Hub', desc: 'CHD lesions, murmurs, ECGs, fetal circulation, shelf scenarios & more' },
+            ].map(a => (
+              <button key={a.type} onClick={() => setView({ type: a.type })} className="flex items-start gap-4 p-5 bg-slate-800/50 border border-slate-700/40 rounded-lg hover:bg-slate-800/80 hover:border-slate-600/60 text-left transition">
+                <div className={`p-2.5 ${a.bg} rounded-lg shrink-0 mt-0.5`}>{a.icon}</div>
+                <div><div className="text-sm font-semibold text-white mb-1">{a.title}</div><div className="text-xs text-slate-400 leading-relaxed">{a.desc}</div></div>
+              </button>
+            ))}
+          </div>
+          <div>
+            <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Study by System</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {DOMAIN_ORDER.filter(d => stats[d]).map(domain => {
+                const meta = DOMAIN_META[domain]; const stat = stats[domain];
+                return (
+                  <button key={domain} onClick={() => setView({ type: 'domain', domain })}
+                    className={`flex items-start gap-3.5 p-5 rounded-lg border text-left hover:brightness-110 transition ${meta.color}`}>
+                    <span className="text-2xl mt-0.5">{meta.icon}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-sm">{meta.label}</div>
+                      <div className="text-xs opacity-70 mt-1">{stat.count} vignettes</div>
+                      <div className="flex flex-wrap gap-1.5 mt-2.5">
+                        {Object.entries(stat.difficulties || {}).map(([d, n]) => (
+                          <span key={d} className="text-[10px] px-2 py-0.5 rounded-full bg-black/20 tabular-nums">{d}: {n}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          {data.frequency && (
+            <div>
+              <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">NBME High-Frequency Topics</h2>
+              <div className="bg-slate-800/40 border border-slate-700/40 rounded-lg p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {Object.entries(data.frequency).slice(0, 6).map(([section, concepts]) => (
+                    <div key={section}>
+                      <div className="text-xs font-bold text-slate-300 mb-2 pb-1 border-b border-slate-700/40">{section}</div>
+                      <div className="space-y-1.5">
+                        {(Array.isArray(concepts) ? concepts : []).slice(0, 4).map((c, i) => (
+                          <div key={i} className="text-xs text-slate-400 flex justify-between items-center">
+                            <span className="truncate pr-2">{c.concept || c.name || c}</span>
+                            {c.frequency && <span className="text-slate-500 font-mono text-[10px] shrink-0 bg-slate-800 px-1.5 py-0.5 rounded">{c.frequency}x</span>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    function StatCard({ label, value, sub }) {
+      return (
+        <div className="bg-slate-800/40 border border-slate-700/40 rounded-lg p-5">
+          <div className="text-3xl font-bold text-white tabular-nums">{value}</div>
+          <div className="text-sm text-slate-300 mt-1 font-medium">{label}</div>
+          <div className="text-xs text-slate-500 mt-0.5">{sub}</div>
+        </div>
+      );
+    }
+
+    // ─── DOMAIN VIEW ────────────────────────────────────────────────
+    function DomainView({ domain, setView }) {
+      const data = useData(); const [tab, setTab] = useState('vignettes');
+      if (data.loading) return <LoadingScreen />;
+      const meta = DOMAIN_META[domain]; const vignettes = (data.vignettes || {})[domain] || [];
+      const domainConcepts = (data.concepts || []).filter(c => {
+        const cd = (c.domain || '').toLowerCase();
+        return cd.includes(domain.replace('_', '')) || cd.includes(domain.split('_')[0]);
+      });
+      const tabs = [
+        { id: 'vignettes', label: 'Vignettes', icon: <Icons.Book />, count: vignettes.length },
+        { id: 'concepts', label: 'Concepts', icon: <Icons.Lightbulb />, count: domainConcepts.length },
+        { id: 'flashcards', label: 'Flashcards', icon: <Icons.Cards />, count: domainConcepts.length },
+        { id: 'rapid', label: 'Rapid Review', icon: <Icons.Zap /> },
+      ];
+      return (
+        <div className="animate-fadeIn p-8 max-w-5xl mx-auto">
+          <div className="flex items-center gap-4 mb-8">
+            <span className="text-4xl">{meta?.icon}</span>
+            <div>
+              <h1 className="text-2xl font-bold text-white tracking-tight">{meta?.label}</h1>
+              <p className="text-sm text-slate-400 mt-1">{vignettes.length} vignettes &middot; {domainConcepts.length} concepts</p>
+            </div>
+          </div>
+          <div className="flex gap-1 mb-8 border-b border-slate-700/50 pb-px">
+            {tabs.map(t => (
+              <button key={t.id} onClick={() => setTab(t.id)}
+                className={`flex items-center gap-2 px-5 py-2.5 text-sm rounded-t-md border-b-2 transition ${tab === t.id ? 'border-blue-400 text-white bg-slate-800/40 font-medium' : 'border-transparent text-slate-500 hover:text-slate-300'}`}>
+                {t.icon} {t.label} {t.count != null && <span className="text-xs text-slate-600 tabular-nums">({t.count})</span>}
+              </button>
+            ))}
+          </div>
+          {tab === 'vignettes' && <VignetteList vignettes={vignettes} domain={domain} setView={setView} />}
+          {tab === 'concepts' && <ConceptList concepts={domainConcepts} />}
+          {tab === 'flashcards' && <FlashcardDeck concepts={domainConcepts} domain={domain} />}
+          {tab === 'rapid' && <DomainRapidReview domain={domain} />}
+        </div>
+      );
+    }
+
+    // ─── VIGNETTE LIST ──────────────────────────────────────────────
+    function VignetteList({ vignettes, domain, setView }) {
+      const { progress } = useProgress(); const [filter, setFilter] = useState('all');
+      const filtered = filter === 'all' ? vignettes : filter === 'completed' ? vignettes.filter(v => progress[`vig_${v.id}`]?.completed) : vignettes.filter(v => !progress[`vig_${v.id}`]?.completed);
+      return (
+        <div>
+          <div className="flex gap-2 mb-5">
+            {['all', 'incomplete', 'completed'].map(f => (
+              <button key={f} onClick={() => setFilter(f)} className={`px-3.5 py-1.5 text-xs rounded-full font-medium transition ${filter === f ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' : 'bg-slate-800/60 text-slate-400 border border-slate-700/50 hover:text-slate-200'}`}>
+                {f === 'all' ? `All (${vignettes.length})` : f === 'completed' ? `Done (${vignettes.filter(v => progress[`vig_${v.id}`]?.completed).length})` : `To Do (${vignettes.filter(v => !progress[`vig_${v.id}`]?.completed).length})`}
+              </button>
+            ))}
+          </div>
+          <div className="space-y-3">
+            {filtered.map(v => {
+              const done = progress[`vig_${v.id}`]?.completed;
+              return (
+                <button key={v.id} onClick={() => setView({ type: 'vignette', vignetteId: v.id, domain: v.domain, fromDomain: domain, title: v.title })}
+                  className={`w-full text-left p-5 rounded-lg border transition hover:border-slate-600 ${done ? 'bg-emerald-950/20 border-emerald-800/30' : 'bg-slate-800/30 border-slate-700/40 hover:bg-slate-800/60'}`}>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2.5 mb-2">
+                        {done && <span className="text-emerald-400"><Icons.Check /></span>}
+                        <span className="font-semibold text-sm text-white">{v.title}</span>
+                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${v.difficulty === 'advanced' ? 'bg-red-500/20 text-red-300' : v.difficulty === 'introductory' ? 'bg-green-500/20 text-green-300' : 'bg-blue-500/20 text-blue-300'}`}>{v.difficulty}</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {(v.tags || []).slice(0, 5).map((t, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-slate-700/40 text-slate-400 rounded">{t}</span>)}
+                      </div>
+                    </div>
+                    <div className="text-slate-500 flex items-center gap-1.5 text-xs shrink-0"><Icons.Clock /> {v.estimatedMinutes}m</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── ALL VIGNETTES VIEW ─────────────────────────────────────────
+    function AllVignettesView({ setView }) {
+      const data = useData(); const [filterDomain, setFilterDomain] = useState('all'); const [filterDiff, setFilterDiff] = useState('all');
+      if (data.loading) return <LoadingScreen />;
+      const allVigs = []; Object.entries(data.vignettes || {}).forEach(([domain, vigs]) => vigs.forEach(v => allVigs.push({ ...v, domain })));
+      const filtered = allVigs.filter(v => (filterDomain === 'all' || v.domain === filterDomain) && (filterDiff === 'all' || v.difficulty === filterDiff));
+      return (
+        <div className="animate-fadeIn p-8 max-w-5xl mx-auto">
+          <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">All Clinical Vignettes</h1>
+          <p className="text-sm text-slate-400 mb-6">{allVigs.length} shelf-style cases across all pediatric domains</p>
+          <div className="flex flex-wrap gap-3 mb-6">
+            <select value={filterDomain} onChange={e => setFilterDomain(e.target.value)} className="bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-300 focus:border-slate-500 outline-none">
+              <option value="all">All Domains</option>
+              {DOMAIN_ORDER.filter(d => (data.vignettes || {})[d]).map(d => <option key={d} value={d}>{DOMAIN_META[d]?.label}</option>)}
+            </select>
+            <select value={filterDiff} onChange={e => setFilterDiff(e.target.value)} className="bg-slate-800 border border-slate-700 rounded-md px-3 py-2 text-sm text-slate-300 focus:border-slate-500 outline-none">
+              <option value="all">All Difficulties</option>
+              <option value="introductory">Introductory</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option>
+            </select>
+            <span className="text-xs text-slate-500 self-center ml-1 tabular-nums">{filtered.length} results</span>
+          </div>
+          <VignetteList vignettes={filtered} domain="all" setView={setView} />
+        </div>
+      );
+    }
+
+    // ─── VIGNETTE PLAYER ────────────────────────────────────────────
+    function VignettePlayer({ vignetteId, domain, setView, fromDomain }) {
+      const data = useData(); const { markVignetteComplete } = useProgress();
+      const [currentNodeId, setCurrentNodeId] = useState(null);
+      const [selectedChoice, setSelectedChoice] = useState(null);
+      const [showFeedback, setShowFeedback] = useState(false);
+      const [history, setHistory] = useState([]); const [score, setScore] = useState({ correct: 0, total: 0 });
+      if (data.loading) return <LoadingScreen />;
+      let vignette = null;
+      for (const [d, vigs] of Object.entries(data.vignettes || {})) { const found = vigs.find(v => v.id === vignetteId); if (found) { vignette = found; break; } }
+      if (!vignette) return <div className="p-8 text-slate-400">Vignette not found.</div>;
+      const rootId = vignette.rootNodeId || 'node-1'; const activeNodeId = currentNodeId || rootId; const node = vignette.nodes[activeNodeId];
+
+      if (!node) {
+        const isGood = activeNodeId?.includes('good') || activeNodeId?.includes('optimal');
+        markVignetteComplete(vignetteId, score);
+        return (
+          <div className="animate-fadeIn p-8 max-w-3xl mx-auto">
+            <div className={`p-8 rounded-xl border ${isGood ? 'bg-emerald-950/30 border-emerald-700/40' : 'bg-red-950/30 border-red-700/40'}`}>
+              <h2 className="text-xl font-bold text-white mb-3">{isGood ? 'Excellent clinical reasoning!' : 'Review needed'}</h2>
+              <p className="text-sm text-slate-300 mb-6">Score: <strong className="text-white">{score.correct}/{score.total}</strong> optimal choices</p>
+              <div className="space-y-3 mb-6">
+                {history.map((h, i) => (
+                  <div key={i} className="flex items-start gap-3 text-sm p-3 bg-slate-900/40 rounded-lg">
+                    <span className={`shrink-0 mt-0.5 text-lg ${h.wasOptimal ? 'text-emerald-400' : 'text-red-400'}`}>{h.wasOptimal ? '✓' : '✗'}</span>
+                    <div>
+                      <div className="text-slate-300 leading-relaxed">{h.question?.substring(0, 100)}{h.question?.length > 100 ? '...' : ''}</div>
+                      <div className="text-slate-500 text-xs mt-1">Your answer: <span className="text-slate-400">{h.choiceText?.substring(0, 60)}</span></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-3">
+                <button onClick={() => { setCurrentNodeId(null); setSelectedChoice(null); setShowFeedback(false); setHistory([]); setScore({ correct: 0, total: 0 }); }}
+                  className="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm text-white font-medium transition">Retry</button>
+                <button onClick={() => setView({ type: 'domain', domain: fromDomain || domain })}
+                  className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm text-white font-medium transition">Back to Domain</button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      const handleSelect = (choice) => {
+        setSelectedChoice(choice); setShowFeedback(true);
+        setScore(prev => ({ correct: prev.correct + (choice.isOptimal ? 1 : 0), total: prev.total + 1 }));
+        setHistory(prev => [...prev, { question: node.question, choiceText: choice.text, wasOptimal: choice.isOptimal }]);
+      };
+      const handleNext = () => {
+        if (selectedChoice?.nextNodeId) setCurrentNodeId(selectedChoice.nextNodeId);
+        else setCurrentNodeId('node-outcome-good');
+        setSelectedChoice(null); setShowFeedback(false);
+      };
+
+      return (
+        <div className="animate-fadeIn p-8 max-w-3xl mx-auto space-y-7">
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl font-bold text-white tracking-tight">{vignette.title}</h1>
+            <span className="text-[10px] text-slate-600 font-mono bg-slate-800/50 px-2 py-1 rounded">{activeNodeId}</span>
+          </div>
+
+          {/* Clinical stem */}
+          <div className="bg-slate-800/50 border border-slate-700/40 rounded-xl p-7">
+            {activeNodeId === rootId && <FormattedText text={vignette.stem} className="vignette-stem" />}
+            {node.content && <div className={activeNodeId === rootId ? 'mt-5 pt-5 border-t border-slate-700/30' : ''}><FormattedText text={node.content} className="vignette-stem" /></div>}
+            <div className="mt-5 pt-4 border-t border-slate-700/30">
+              <p className="text-white font-semibold text-[15px] leading-relaxed">{node.question}</p>
+            </div>
+          </div>
+
+          {/* Choices */}
+          <div className="space-y-3">
+            {(node.choices || []).map((choice, i) => {
+              const letter = String.fromCharCode(65 + i);
+              let borderClass = 'border-slate-700/40 hover:border-slate-500/60 bg-slate-800/20';
+              if (showFeedback) {
+                if (choice.isOptimal) borderClass = 'border-emerald-500/60 bg-emerald-950/30';
+                else if (choice.id === selectedChoice?.id && !choice.isOptimal) borderClass = 'border-red-500/60 bg-red-950/30';
+                else borderClass = 'border-slate-700/30 bg-slate-900/20 opacity-50';
+              }
+              return (
+                <button key={choice.id} onClick={() => !showFeedback && handleSelect(choice)} disabled={showFeedback}
+                  className={`choice-btn w-full text-left p-5 rounded-xl border transition ${borderClass}`}>
+                  <div className="flex items-start gap-3.5">
+                    <span className={`text-xs font-mono font-bold mt-0.5 w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${showFeedback && choice.isOptimal ? 'bg-emerald-500/30 text-emerald-300' : showFeedback && choice.id === selectedChoice?.id ? 'bg-red-500/30 text-red-300' : 'bg-slate-700/50 text-slate-400'}`}>{letter}</span>
+                    <span className="text-sm text-slate-200 leading-relaxed">{choice.text}</span>
+                  </div>
+                  {showFeedback && (choice.id === selectedChoice?.id || choice.isOptimal) && choice.feedback && (
+                    <div className={`mt-4 ml-10 p-4 rounded-lg border-l-[3px] ${choice.isOptimal ? 'bg-emerald-950/20 border-emerald-500/50' : 'bg-slate-900/50 border-blue-500/40'}`}>
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
+                        {choice.isOptimal ? (choice.id === selectedChoice?.id ? 'Correct — Explanation' : 'Best Answer — Explanation') : 'Why This Is Incorrect'}
+                      </div>
+                      <FormattedText text={choice.feedback} className="feedback-text" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Clinical pearl */}
+          {showFeedback && node.clinicalPearl && (
+            <div className="bg-amber-950/20 border border-amber-700/30 rounded-xl p-6">
+              <div className="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider mb-3">
+                <Icons.Lightbulb /> Clinical Pearl
+              </div>
+              <FormattedText text={node.clinicalPearl} className="pearl-text" />
+            </div>
+          )}
+
+          {showFeedback && (
+            <button onClick={handleNext} className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-semibold transition">
+              Continue to Next Step →
+            </button>
+          )}
+        </div>
+      );
+    }
+
+    // ─── CONCEPT LIST ───────────────────────────────────────────────
+    function ConceptList({ concepts }) {
+      const intentColors = {
+        DX: 'bg-blue-500/20 text-blue-300 border-blue-500/20', MGMT: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/20',
+        MECH: 'bg-violet-500/20 text-violet-300 border-violet-500/20', DISTINGUISH: 'bg-amber-500/20 text-amber-300 border-amber-500/20',
+        NUMBERS: 'bg-pink-500/20 text-pink-300 border-pink-500/20', SCREENING: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/20',
+        ETHICS: 'bg-slate-500/20 text-slate-300 border-slate-500/20',
+      };
+      const intentDescriptions = {
+        DX: 'Recognize from presentation', MGMT: 'Select next step', MECH: 'Explain pathophysiology',
+        DISTINGUISH: 'Differentiate entities', NUMBERS: 'Recall thresholds', SCREENING: 'Preventive care', ETHICS: 'Ethical reasoning',
+      };
+      if (concepts.length === 0) return <p className="text-slate-500 text-sm py-4">No concepts mapped to this domain yet.</p>;
+      // Group by intent
+      const grouped = {};
+      concepts.forEach(c => { const k = c.intent || 'OTHER'; if (!grouped[k]) grouped[k] = []; grouped[k].push(c); });
+      return (
+        <div className="space-y-8">
+          {Object.entries(grouped).map(([intent, list]) => (
+            <div key={intent}>
+              <div className="flex items-center gap-3 mb-4">
+                <span className={`text-xs px-2.5 py-1 rounded-md font-bold border ${intentColors[intent] || 'bg-slate-700 text-slate-300 border-slate-600'}`}>{intent}</span>
+                <span className="text-xs text-slate-500">{intentDescriptions[intent] || ''} &middot; {list.length} concepts</span>
+              </div>
+              <div className="space-y-2.5">
+                {list.map((c, i) => (
+                  <div key={i} className="p-4 bg-slate-800/30 border border-slate-700/30 rounded-lg hover:bg-slate-800/50 transition">
+                    <div className="flex items-baseline gap-2.5">
+                      <span className="text-sm font-semibold text-white">{c.name}</span>
+                      {c.id && <span className="text-[10px] text-slate-600 font-mono">{c.id}</span>}
+                    </div>
+                    {c.sourceCards && c.sourceCards.length > 0 && (
+                      <div className="text-[11px] text-slate-500 mt-2">Source cards: <span className="font-mono text-slate-600">{c.sourceCards.join(', ')}</span></div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    // ─── FLASHCARD DECK ─────────────────────────────────────────────
+    function FlashcardDeck({ concepts, domain }) {
+      const { getFlashcardState, updateFlashcard } = useProgress();
+      const [currentIdx, setCurrentIdx] = useState(0); const [flipped, setFlipped] = useState(false); const [mode, setMode] = useState('sequential');
+      const cards = useMemo(() => {
+        const c = concepts.map(concept => ({
+          id: concept.id || `fc-${concept.name}`, front: concept.intent === 'DX' ? 'What diagnosis presents with this pattern?' : concept.intent === 'MGMT' ? 'What is the next best step in management?' : concept.intent === 'MECH' ? 'What is the underlying mechanism?' : 'What is the key concept?',
+          frontContext: concept.name, back: concept.name,
+          backDetail: `Intent: ${concept.intent}\nDomain: ${concept.domain || domain}\n${concept.sourceCards?.length ? 'Source: ' + concept.sourceCards.join(', ') : ''}`,
+          intent: concept.intent,
+        }));
+        if (mode === 'shuffle') return [...c].sort(() => Math.random() - 0.5); return c;
+      }, [concepts, domain, mode]);
+      if (cards.length === 0) return <p className="text-slate-500 text-sm py-4">No flashcards available for this domain.</p>;
+      const card = cards[currentIdx]; const state = getFlashcardState(card.id);
+      const handleRate = (quality) => { updateFlashcard(card.id, quality); setFlipped(false); setCurrentIdx(prev => (prev + 1) % cards.length); };
+      return (
+        <div className="max-w-xl mx-auto py-4">
+          <div className="flex items-center justify-between mb-6">
+            <span className="text-sm text-slate-400 font-medium tabular-nums">{currentIdx + 1} / {cards.length}</span>
+            <button onClick={() => { setMode(mode === 'sequential' ? 'shuffle' : 'sequential'); setCurrentIdx(0); }}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs bg-slate-800 border border-slate-700 rounded-md text-slate-300 hover:text-white font-medium transition">
+              <Icons.Shuffle /> {mode === 'shuffle' ? 'Sequential' : 'Shuffle'}
+            </button>
+          </div>
+          <div className="flashcard-flip h-72 cursor-pointer" onClick={() => setFlipped(!flipped)}>
+            <div className={`flashcard-inner relative w-full h-full ${flipped ? 'flipped' : ''}`}>
+              <div className="flashcard-front absolute inset-0 bg-slate-800 border border-slate-700 rounded-xl p-8 flex flex-col items-center justify-center">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-3">{card.intent}</span>
+                <p className="text-xl text-white font-semibold text-center leading-snug mb-3">{card.frontContext}</p>
+                <p className="text-sm text-slate-400 text-center leading-relaxed">{card.front}</p>
+                <span className="text-[10px] text-slate-700 mt-6">tap to flip</span>
+              </div>
+              <div className="flashcard-back absolute inset-0 bg-slate-800 border-2 border-emerald-700/40 rounded-xl p-8 flex flex-col items-center justify-center">
+                <p className="text-xl text-emerald-300 font-semibold text-center mb-4">{card.back}</p>
+                <pre className="text-xs text-slate-400 text-center whitespace-pre-wrap leading-relaxed">{card.backDetail}</pre>
+              </div>
+            </div>
+          </div>
+          {flipped && (
+            <div className="flex gap-3 mt-6 justify-center">
+              {[{ q: 1, label: 'Again', color: 'bg-red-600/80 hover:bg-red-600' }, { q: 2, label: 'Hard', color: 'bg-orange-600/80 hover:bg-orange-600' }, { q: 3, label: 'Good', color: 'bg-emerald-600/80 hover:bg-emerald-600' }, { q: 4, label: 'Easy', color: 'bg-blue-600/80 hover:bg-blue-600' }].map(b => (
+                <button key={b.q} onClick={() => handleRate(b.q)} className={`px-5 py-2.5 ${b.color} rounded-lg text-sm text-white font-medium transition`}>{b.label}</button>
+              ))}
+            </div>
+          )}
+          {state.reps > 0 && (
+            <div className="text-center mt-4 text-xs text-slate-500 tabular-nums">
+              Interval: <strong className="text-slate-400">{state.interval}d</strong> &middot; Ease: <strong className="text-slate-400">{state.ease?.toFixed(2)}</strong> &middot; Reps: <strong className="text-slate-400">{state.reps}</strong>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── DOMAIN RAPID REVIEW ────────────────────────────────────────
+    function DomainRapidReview({ domain }) {
+      const data = useData();
+      const mnemonics = (data.mnemonics || []).filter(m => { const md = (m.domain || m.meaning || '').toLowerCase(); return md.includes(domain.replace('_', ' ')) || md.includes(domain.split('_')[0]); });
+      const pearls = (data.pearls || []).filter(p => { const pd = (p.domain || p.text || '').toLowerCase(); return pd.includes(domain.replace('_', ' ')) || pd.includes(domain.split('_')[0]); });
+      const vignettes = (data.vignettes || {})[domain] || [];
+      const oneLiners = vignettes.map(v => ({ clue: (v.tags || []).slice(0, 2).join(' + '), diagnosis: v.title })).filter(o => o.clue);
+      return (
+        <div className="space-y-8">
+          {oneLiners.length > 0 && (
+            <div>
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2"><Icons.Zap /> If You See → Think</h3>
+              <div className="bg-slate-800/30 border border-slate-700/30 rounded-xl overflow-hidden divide-y divide-slate-700/30">
+                {oneLiners.map((o, i) => (
+                  <div key={i} className="flex items-center px-5 py-3.5 text-sm hover:bg-slate-800/40 transition">
+                    <span className="text-amber-300 flex-1 leading-relaxed">{o.clue}</span>
+                    <span className="text-slate-600 mx-3 text-lg">→</span>
+                    <span className="text-white font-semibold flex-1">{o.diagnosis}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {mnemonics.length > 0 && (
+            <div>
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Mnemonics</h3>
+              <div className="space-y-3">
+                {mnemonics.map((m, i) => (
+                  <div key={i} className="p-5 bg-violet-950/20 border border-violet-800/25 rounded-xl">
+                    <div className="text-base font-mono font-bold text-violet-300 tracking-wide">{m.mnemonic}</div>
+                    <div className="text-sm text-slate-400 mt-2 leading-relaxed">{m.meaning}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {pearls.length > 0 && (
+            <div>
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Clinical Pearls</h3>
+              <div className="space-y-2">
+                {pearls.map((p, i) => (
+                  <div key={i} className="flex items-start gap-3 p-4 bg-slate-800/25 border border-slate-700/20 rounded-lg">
+                    <span className="text-amber-400 mt-0.5 shrink-0 text-base">💡</span>
+                    <FormattedText text={p.text} className="rich-text text-sm" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {mnemonics.length === 0 && pearls.length === 0 && oneLiners.length === 0 && (
+            <div className="text-center py-8"><p className="text-slate-500 text-sm">No rapid review content specifically tagged for this domain.</p><p className="text-slate-600 text-xs mt-1">Check the global Rapid Review section in the sidebar.</p></div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── GLOBAL RAPID REVIEW ────────────────────────────────────────
+    function RapidReviewView() {
+      const data = useData(); const [tab, setTab] = useState('oneliners');
+      if (data.loading) return <LoadingScreen />;
+      const allVigs = []; Object.values(data.vignettes || {}).forEach(vigs => vigs.forEach(v => allVigs.push(v)));
+      const oneLiners = allVigs.map(v => ({ clue: (v.tags || []).slice(0, 2).join(' + '), diagnosis: v.title, domain: v.domain })).filter(o => o.clue);
+      return (
+        <div className="animate-fadeIn p-8 max-w-4xl mx-auto">
+          <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Rapid Review</h1>
+          <p className="text-sm text-slate-400 mb-8 leading-relaxed">Last-week cram mode: <strong className="text-slate-300">mnemonics</strong>, <strong className="text-slate-300">one-liners</strong>, and <strong className="text-slate-300">clinical pearls</strong> for rapid pattern recognition.</p>
+          <div className="flex gap-1 mb-8 border-b border-slate-700/40 pb-px">
+            {[
+              { id: 'oneliners', label: `One-Liners (${oneLiners.length})` },
+              { id: 'mnemonics', label: `Mnemonics (${(data.mnemonics || []).length})` },
+              { id: 'pearls', label: `Pearls (${(data.pearls || []).length})` },
+            ].map(t => (
+              <button key={t.id} onClick={() => setTab(t.id)}
+                className={`px-5 py-2.5 text-sm rounded-t-md border-b-2 transition font-medium ${tab === t.id ? 'border-amber-400 text-white' : 'border-transparent text-slate-500 hover:text-slate-300'}`}>{t.label}</button>
+            ))}
+          </div>
+          {tab === 'oneliners' && (
+            <div className="bg-slate-800/30 border border-slate-700/30 rounded-xl overflow-hidden divide-y divide-slate-700/20">
+              {oneLiners.map((o, i) => (
+                <div key={i} className="flex items-center px-5 py-3.5 text-sm hover:bg-slate-800/40 transition">
+                  <span className="w-8 text-xs text-slate-600 tabular-nums shrink-0">{i + 1}</span>
+                  <span className="text-amber-300 flex-1 leading-relaxed">{o.clue}</span>
+                  <span className="text-slate-600 mx-3 text-lg">→</span>
+                  <span className="text-white font-semibold flex-1">{o.diagnosis}</span>
+                  <span className="text-sm text-slate-700 ml-2 shrink-0">{DOMAIN_META[o.domain]?.icon}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {tab === 'mnemonics' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {(data.mnemonics || []).map((m, i) => (
+                <div key={i} className="p-5 bg-violet-950/20 border border-violet-800/25 rounded-xl">
+                  <div className="text-base font-mono font-bold text-violet-300 tracking-wide mb-2">{m.mnemonic}</div>
+                  <div className="text-sm text-slate-400 leading-relaxed">{m.meaning}</div>
+                  <div className="text-[10px] text-slate-600 mt-3 uppercase tracking-wider">{m.source}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {tab === 'pearls' && (
+            <div className="space-y-2.5">
+              {(data.pearls || []).map((p, i) => (
+                <div key={i} className="flex items-start gap-3.5 p-4 bg-slate-800/25 border border-slate-700/20 rounded-lg">
+                  <span className="text-amber-400 mt-0.5 shrink-0 text-base">💡</span>
+                  <div className="flex-1">
+                    <FormattedText text={p.text} className="rich-text text-sm" />
+                    {p.source && <div className="text-[10px] text-slate-600 mt-2 uppercase tracking-wider">{p.source}</div>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── NBME STRATEGY VIEW ─────────────────────────────────────────
+    function NBMEStrategyView() {
+      const data = useData(); if (data.loading) return <LoadingScreen />;
+      const playbook = data.playbook || {}; const taskTypes = playbook.taskTypes || []; const traps = playbook.commonTraps || []; const triage = playbook.triageAlgorithm || {};
+      return (
+        <div className="animate-fadeIn p-8 max-w-4xl mx-auto space-y-10">
+          <div>
+            <h1 className="text-2xl font-bold text-white tracking-tight">NBME Strategy Playbook</h1>
+            <p className="text-sm text-slate-400 mt-2 leading-relaxed">Master the <strong className="text-slate-300">question patterns</strong>, avoid the <strong className="text-slate-300">traps</strong>, and optimize your <strong className="text-slate-300">timing</strong> for the Pediatrics Shelf.</p>
+          </div>
+          {triage.steps && (
+            <div className="bg-slate-800/30 border border-emerald-700/25 rounded-xl p-7">
+              <h2 className="text-sm font-bold text-emerald-300 mb-5 uppercase tracking-wider">Clinical Triage Algorithm</h2>
+              <div className="space-y-4">
+                {triage.steps.map((step, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <span className="shrink-0 w-7 h-7 rounded-full bg-emerald-600/25 text-emerald-300 flex items-center justify-center text-xs font-bold">{i + 1}</span>
+                    <div className="text-sm text-slate-300 leading-relaxed pt-0.5">{typeof step === 'string' ? step : step.description || JSON.stringify(step)}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {taskTypes.length > 0 && (
+            <div>
+              <h2 className="text-sm font-bold text-slate-300 mb-5 uppercase tracking-wider">NBME Task Types</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {taskTypes.map((tt, i) => (
+                  <div key={i} className="p-5 bg-slate-800/30 border border-slate-700/30 rounded-xl">
+                    <div className="text-sm font-bold text-blue-300 mb-2">{tt.name || tt.type || `Type ${i + 1}`}</div>
+                    <div className="text-xs text-slate-400 leading-relaxed">{tt.description || tt.stem || JSON.stringify(tt)}</div>
+                    {tt.strategy && <div className="text-xs text-emerald-400/80 mt-3 leading-relaxed italic border-t border-slate-700/30 pt-3">Strategy: {tt.strategy}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {traps.length > 0 && (
+            <div>
+              <h2 className="text-sm font-bold text-slate-300 mb-5 uppercase tracking-wider flex items-center gap-2"><Icons.AlertTriangle /> Common NBME Traps</h2>
+              <div className="space-y-3">
+                {traps.map((trap, i) => (
+                  <div key={i} className="p-5 bg-red-950/15 border border-red-800/25 rounded-xl">
+                    <div className="text-sm font-bold text-red-300 mb-2">{trap.name || trap.trap || `Trap ${i + 1}`}</div>
+                    <div className="text-xs text-slate-400 leading-relaxed">{trap.description || trap.example || JSON.stringify(trap)}</div>
+                    {trap.avoidance && <div className="text-xs text-amber-300/80 mt-3 leading-relaxed border-t border-red-800/20 pt-3"><strong>Avoidance:</strong> {trap.avoidance}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="bg-slate-800/30 border border-slate-700/30 rounded-xl p-7">
+            <h2 className="text-sm font-bold text-slate-300 mb-5 uppercase tracking-wider flex items-center gap-2"><Icons.Clock /> Exam Timing Strategy</h2>
+            <div className="space-y-4">
+              <p className="text-sm text-slate-300 leading-relaxed">NBME Pediatrics Shelf: <strong className="text-white">110 questions</strong> in ~2h45m = approximately <strong className="text-blue-300">90 seconds per question</strong>.</p>
+              <p className="text-xs text-slate-500 leading-relaxed">Budget: <strong className="text-slate-400">60s</strong> reading + <strong className="text-slate-400">20s</strong> elimination + <strong className="text-slate-400">10s</strong> selection. Flag and return for complex vignettes.</p>
+              <div className="grid grid-cols-3 gap-3 mt-4">
+                {[
+                  { label: 'DX', pct: '~42%', color: 'bg-emerald-950/30 border-emerald-800/25 text-emerald-300' },
+                  { label: 'MGMT', pct: '~30%', color: 'bg-blue-950/30 border-blue-800/25 text-blue-300' },
+                  { label: 'MECH', pct: '~18%', color: 'bg-violet-950/30 border-violet-800/25 text-violet-300' },
+                ].map(d => (
+                  <div key={d.label} className={`p-4 ${d.color} border rounded-lg text-center`}>
+                    <div className="text-xl font-bold">{d.label}</div>
+                    <div className="text-[11px] text-slate-500 mt-1">{d.pct} of exam</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          {playbook.siteOfCareFraming && (
+            <div className="bg-slate-800/30 border border-slate-700/30 rounded-xl p-7">
+              <h2 className="text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">Site of Care Distribution</h2>
+              <p className="text-sm text-slate-400 leading-relaxed">{typeof playbook.siteOfCareFraming === 'string' ? playbook.siteOfCareFraming : JSON.stringify(playbook.siteOfCareFraming)}</p>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── SEARCH VIEW ────────────────────────────────────────────────
+    function SearchView({ query, setView }) {
+      const data = useData(); if (data.loading) return <LoadingScreen />;
+      const q = (query || '').toLowerCase(); const results = [];
+      Object.entries(data.vignettes || {}).forEach(([domain, vigs]) => {
+        vigs.forEach(v => { if (v.title.toLowerCase().includes(q) || (v.tags || []).some(t => t.toLowerCase().includes(q)) || (v.stem || '').toLowerCase().includes(q)) results.push({ type: 'vignette', item: v, domain }); });
+      });
+      (data.concepts || []).forEach(c => { if ((c.name || '').toLowerCase().includes(q) || (c.intent || '').toLowerCase().includes(q)) results.push({ type: 'concept', item: c }); });
+      (data.mnemonics || []).forEach(m => { if ((m.mnemonic || '').toLowerCase().includes(q) || (m.meaning || '').toLowerCase().includes(q)) results.push({ type: 'mnemonic', item: m }); });
+      return (
+        <div className="animate-fadeIn p-8 max-w-4xl mx-auto">
+          <h1 className="text-xl font-bold text-white mb-2 tracking-tight">Search Results</h1>
+          <p className="text-sm text-slate-400 mb-6">{results.length} results for "<strong className="text-slate-300">{query}</strong>"</p>
+          <div className="space-y-3">
+            {results.map((r, i) => (
+              <div key={i} className="p-4 bg-slate-800/30 border border-slate-700/30 rounded-lg hover:bg-slate-800/50 transition">
+                {r.type === 'vignette' && (
+                  <button onClick={() => setView({ type: 'vignette', vignetteId: r.item.id, domain: r.domain, fromDomain: r.domain, title: r.item.title })} className="text-left w-full">
+                    <div className="flex items-center gap-2.5 mb-2">
+                      <span className="text-[10px] px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded font-semibold">Vignette</span>
+                      <span className="text-sm font-semibold text-white">{r.item.title}</span>
+                      <span className="text-sm text-slate-600">{DOMAIN_META[r.domain]?.icon}</span>
+                    </div>
+                    <div className="text-xs text-slate-500 leading-relaxed">{r.item.stem?.substring(0, 150)}{r.item.stem?.length > 150 ? '...' : ''}</div>
+                  </button>
+                )}
+                {r.type === 'concept' && (
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-[10px] px-2 py-0.5 bg-violet-500/20 text-violet-300 rounded font-semibold">Concept</span>
+                    <span className="text-sm font-medium text-white">{r.item.name}</span>
+                    <span className="text-[10px] px-2 py-0.5 bg-slate-700 text-slate-400 rounded">{r.item.intent}</span>
+                  </div>
+                )}
+                {r.type === 'mnemonic' && (
+                  <div>
+                    <span className="text-[10px] px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded font-semibold mr-2">Mnemonic</span>
+                    <span className="text-sm font-mono font-bold text-violet-300">{r.item.mnemonic}</span>
+                    <span className="text-xs text-slate-400 ml-3">{r.item.meaning}</span>
+                  </div>
+                )}
+              </div>
+            ))}
+            {results.length === 0 && <div className="text-center py-8"><p className="text-slate-500 text-sm">No results found.</p><p className="text-slate-600 text-xs mt-1">Try a different search term.</p></div>}
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // ─── INFECTIOUS DISEASE & ANTIBIOTICS HUB ─────────────────────
+    // ═══════════════════════════════════════════════════════════════
+
+    // ─── ID PROGRESS TRACKER (localStorage persistence) ──────────
+    const IDProgress = {
+      _key: 'peds_id_progress',
+      getAll() { try { return JSON.parse(localStorage.getItem(this._key) || '{}'); } catch { return {}; } },
+      save(moduleId, result) {
+        const all = this.getAll();
+        if (!all[moduleId]) all[moduleId] = { attempts: [], bestScore: 0, bestStreak: 0 };
+        const pct = Math.round(result.correct / Math.max(1, result.total) * 100);
+        const attempt = { correct: result.correct, total: result.total, pct, missed: result.missed || [], timestamp: Date.now() };
+        all[moduleId].attempts.push(attempt);
+        all[moduleId].bestScore = Math.max(all[moduleId].bestScore, pct);
+        if (result.bestStreak) all[moduleId].bestStreak = Math.max(all[moduleId].bestStreak || 0, result.bestStreak);
+        localStorage.setItem(this._key, JSON.stringify(all));
+        return attempt;
+      },
+      getModule(moduleId) { return this.getAll()[moduleId] || { attempts: [], bestScore: 0, bestStreak: 0 }; },
+      getLatest(moduleId) { const m = this.getModule(moduleId); return m.attempts.length > 0 ? m.attempts[m.attempts.length - 1] : null; },
+      markVisited(moduleId) {
+        const all = this.getAll();
+        if (!all[moduleId]) all[moduleId] = { attempts: [], bestScore: 0 };
+        all[moduleId].lastVisited = Date.now();
+        all[moduleId].visitCount = (all[moduleId].visitCount || 0) + 1;
+        localStorage.setItem(this._key, JSON.stringify(all));
+      },
+      getRecommendations(idData) {
+        const all = this.getAll();
+        const recs = [];
+        const quizModules = [
+          { id: 'bug_drug', label: 'Bug-Drug Matcher', tab: 'bug_drug' },
+          { id: 'whats_the_bug', label: "What's the Bug?", tab: 'whats_the_bug' },
+          { id: 'vaccines_quiz', label: 'Vaccine Quiz', tab: 'vaccines' },
+        ];
+        quizModules.forEach(mod => {
+          const progress = all[mod.id];
+          if (!progress || progress.attempts.length === 0) {
+            recs.push({ priority: 0, tab: mod.tab, label: mod.label, reason: 'Not attempted yet — start here to establish your baseline.', type: 'not_started', action: 'Start Now' });
+          } else {
+            const latest = progress.attempts[progress.attempts.length - 1];
+            const trend = progress.attempts.length >= 2 ? latest.pct - progress.attempts[progress.attempts.length - 2].pct : 0;
+            if (latest.pct < 60) {
+              recs.push({ priority: 1, tab: mod.tab, label: mod.label, reason: `Scored ${latest.pct}% — focus on the ${latest.missed?.length || 0} missed items.`, type: 'weak', score: latest.pct, trend, missed: latest.missed, action: 'Retry Now' });
+            } else if (latest.pct < 80) {
+              recs.push({ priority: 2, tab: mod.tab, label: mod.label, reason: `Scored ${latest.pct}% — review your ${latest.missed?.length || 0} weak spots.`, type: 'improving', score: latest.pct, trend, missed: latest.missed, action: 'Practice Again' });
+            } else {
+              recs.push({ priority: 3, tab: mod.tab, label: mod.label, reason: `Scored ${latest.pct}% — solid! Maintain with periodic review.`, type: 'strong', score: latest.pct, trend, action: 'Quick Review' });
+            }
+          }
+        });
+        const refModules = [
+          { id: 'rash_gallery', label: 'Rash Gallery', tab: 'rash_gallery' },
+          { id: 'empiric', label: 'Empiric Therapy', tab: 'empiric' },
+          { id: 'spectrum', label: 'Antibiotic Spectrum', tab: 'spectrum' },
+          { id: 'age_bugs', label: 'Age-Based Bugs', tab: 'age_bugs' },
+          { id: 'pearls', label: 'Pearls & Associations', tab: 'pearls' },
+          { id: 'side_effects', label: 'Side Effects', tab: 'side_effects' },
+        ];
+        refModules.forEach(mod => {
+          const p = all[mod.id];
+          if (!p || !p.lastVisited) {
+            recs.push({ priority: 1.5, tab: mod.tab, label: mod.label, reason: 'Not yet reviewed — browse to build familiarity.', type: 'reference', action: 'Browse' });
+          }
+        });
+        recs.sort((a, b) => a.priority - b.priority);
+        return recs;
+      },
+      clearAll() { localStorage.removeItem(this._key); }
+    };
+
+    function IDHubView() {
+      const [tab, setTab] = useState('overview');
+      const [idData, setIdData] = useState(null);
+      const [loading, setLoading] = useState(true);
+      useEffect(() => {
+        fetch('/api/id-antibiotics').then(r => r.json()).then(d => { setIdData(d); setLoading(false); }).catch(() => setLoading(false));
+      }, []);
+      if (loading) return <LoadingScreen />;
+      if (!idData) return <div className="p-8 text-slate-400">Failed to load ID data.</div>;
+
+      const tabs = [
+        { id: 'overview', label: 'Overview', icon: '🦠' },
+        { id: 'bug_drug', label: 'Bug-Drug Matcher', icon: '🎯' },
+        { id: 'whats_the_bug', label: "What's the Bug?", icon: '🔬' },
+        { id: 'rash_gallery', label: 'Rash Gallery', icon: '🔴' },
+        { id: 'empiric', label: 'Empiric Therapy', icon: '💊' },
+        { id: 'spectrum', label: 'Antibiotic Spectrum', icon: '📊' },
+        { id: 'age_bugs', label: 'Age-Based Bugs', icon: '👶' },
+        { id: 'vaccines', label: 'Vaccine Trainer', icon: '💉' },
+        { id: 'pearls', label: 'Pearls & Associations', icon: '💡' },
+        { id: 'side_effects', label: 'Side Effects', icon: '⚠️' },
+        { id: 'study_guide', label: 'AI Study Guide', icon: '🧠' },
+      ];
+      return (
+        <div className="animate-fadeIn p-8 max-w-6xl mx-auto">
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-2"><span className="text-3xl">🦠</span>
+              <h1 className="text-2xl font-bold text-white tracking-tight">Infectious Disease & Antibiotics Hub</h1>
+            </div>
+            <p className="text-sm text-slate-400 leading-relaxed">Deep-dive into pediatric ID — master bugs, drugs, empiric therapy, and shelf-exam patterns through <strong className="text-slate-300">10 interactive modules</strong>.</p>
+          </div>
+          <div className="flex flex-wrap gap-1.5 mb-8 pb-3 border-b border-slate-700/40">
+            {tabs.map(t => (
+              <button key={t.id} onClick={() => setTab(t.id)}
+                className={`flex items-center gap-1.5 px-3.5 py-2 text-xs rounded-lg font-medium transition ${tab === t.id ? 'bg-lime-500/20 text-lime-300 border border-lime-500/30' : 'bg-slate-800/40 text-slate-400 border border-slate-700/30 hover:text-slate-200 hover:bg-slate-800/60'}`}>
+                <span className="text-sm">{t.icon}</span> {t.label}
+              </button>
+            ))}
+          </div>
+          {tab === 'overview' && <IDOverview idData={idData} setTab={setTab} />}
+          {tab === 'bug_drug' && <BugDrugMatcher pairs={idData.bugDrugPairs || []} />}
+          {tab === 'whats_the_bug' && <WhatsTheBugQuiz items={idData.whatsTheBug || []} />}
+          {tab === 'rash_gallery' && <RashGallery rashes={idData.rashToDiagnosis || []} />}
+          {tab === 'empiric' && <EmpiricTherapyCards syndromes={idData.empiricTherapy || []} />}
+          {tab === 'spectrum' && <AntibioticSpectrum drugs={idData.antibioticSpectrum || []} />}
+          {tab === 'age_bugs' && <AgeBasedBugs groups={idData.ageBasedBugs || []} />}
+          {tab === 'vaccines' && <VaccineTrainer vaccines={idData.vaccineSchedule || []} />}
+          {tab === 'pearls' && <PearlsAssociations pearls={idData.clinicalPearls || []} associations={idData.associations || []} />}
+          {tab === 'side_effects' && <SideEffectsView items={idData.sideEffectsContraindications || []} />}
+          {tab === 'study_guide' && <StudyGuide idData={idData} setTab={setTab} />}
+        </div>
+      );
+    }
+
+    // ─── ID OVERVIEW ──────────────────────────────────────────────
+    function IDOverview({ idData, setTab }) {
+      const modules = [
+        { id: 'bug_drug', icon: '🎯', title: 'Bug-Drug Matcher', desc: 'Match organisms to first-line antibiotics in a timed game', count: `${(idData.bugDrugPairs||[]).length} pairs`, color: 'bg-lime-500/20 text-lime-300 border-lime-500/30' },
+        { id: 'whats_the_bug', icon: '🔬', title: "What's the Bug?", desc: 'Progressive clue reveal — identify the organism from clinical findings', count: `${(idData.whatsTheBug||[]).length} cases`, color: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' },
+        { id: 'rash_gallery', icon: '🔴', title: 'Rash Gallery', desc: 'Match classic pediatric rash descriptions to diagnoses', count: `${(idData.rashToDiagnosis||[]).length} rashes`, color: 'bg-rose-500/20 text-rose-300 border-rose-500/30' },
+        { id: 'empiric', icon: '💊', title: 'Empiric Therapy', desc: 'Syndrome-based empiric antibiotic selection with reasoning', count: `${(idData.empiricTherapy||[]).length} syndromes`, color: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
+        { id: 'spectrum', icon: '📊', title: 'Antibiotic Spectrum', desc: 'Visual coverage profiles for key pediatric antibiotics', count: `${(idData.antibioticSpectrum||[]).length} drugs`, color: 'bg-violet-500/20 text-violet-300 border-violet-500/30' },
+        { id: 'age_bugs', icon: '👶', title: 'Age-Based Bugs', desc: 'Which organisms to suspect at each pediatric age group', count: `${(idData.ageBasedBugs||[]).length} age groups`, color: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
+        { id: 'vaccines', icon: '💉', title: 'Vaccine Trainer', desc: 'Interactive quiz on pediatric immunization schedules', count: `${(idData.vaccineSchedule||[]).length} vaccines`, color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
+        { id: 'pearls', icon: '💡', title: 'Pearls & Associations', desc: 'High-yield buzzword associations and clinical pearls', count: `${(idData.clinicalPearls||[]).length + (idData.associations||[]).length} items`, color: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30' },
+        { id: 'side_effects', icon: '⚠️', title: 'Side Effects & Contraindications', desc: 'Age-specific drug restrictions and NBME trap exceptions', count: `${(idData.sideEffectsContraindications||[]).length} drugs`, color: 'bg-red-500/20 text-red-300 border-red-500/30' },
+      ];
+      const getProgressBadge = (moduleId) => {
+        const progress = IDProgress.getLatest(moduleId);
+        if (!progress) return null;
+        const color = progress.pct >= 80 ? 'bg-emerald-500/20 text-emerald-300' : progress.pct >= 60 ? 'bg-amber-500/20 text-amber-300' : 'bg-red-500/20 text-red-300';
+        return <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${color}`}>{progress.pct}%</span>;
+      };
+      return (
+        <div className="space-y-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <StatCard label="Bug-Drug Pairs" value={(idData.bugDrugPairs||[]).length} sub="organisms + treatments" />
+            <StatCard label="Clinical Scenarios" value={(idData.whatsTheBug||[]).length} sub="pattern recognition" />
+            <StatCard label="Antibiotics" value={(idData.antibioticSpectrum||[]).length} sub="with full spectra" />
+            <StatCard label="Vaccines" value={(idData.vaccineSchedule||[]).length} sub="schedule entries" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {modules.map(m => (
+              <button key={m.id} onClick={() => setTab(m.id)}
+                className={`flex items-start gap-3.5 p-5 rounded-xl border text-left hover:brightness-110 transition relative ${m.color}`}>
+                <span className="text-2xl mt-0.5">{m.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <div className="font-semibold text-sm">{m.title}</div>
+                    {getProgressBadge(m.id)}
+                  </div>
+                  <div className="text-xs opacity-70 leading-relaxed">{m.desc}</div>
+                  <div className="text-[10px] mt-2 opacity-50">{m.count}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── BUG-DRUG MATCHER GAME ────────────────────────────────────
+    function BugDrugMatcher({ pairs }) {
+      const [queue, setQueue] = useState(() => [...pairs].sort(() => Math.random() - 0.5));
+      const [idx, setIdx] = useState(0);
+      const [score, setScore] = useState({ correct: 0, total: 0 });
+      const [selected, setSelected] = useState(null);
+      const [showResult, setShowResult] = useState(false);
+      const [streak, setStreak] = useState(0);
+      const [bestStreak, setBestStreak] = useState(0);
+      const [missed, setMissed] = useState([]);
+      const savedRef = useRef(false);
+
+      const current = queue[idx];
+      const isComplete = !current && score.total > 0;
+
+      useEffect(() => {
+        if (isComplete && !savedRef.current) {
+          IDProgress.save('bug_drug', { correct: score.correct, total: score.total, missed, bestStreak });
+          savedRef.current = true;
+        }
+      }, [isComplete]);
+
+      if (isComplete) {
+        const pct = Math.round(score.correct / Math.max(1, score.total) * 100);
+        const best = IDProgress.getModule('bug_drug');
+        const color = pct >= 80 ? 'text-emerald-400' : pct >= 60 ? 'text-amber-400' : 'text-red-400';
+        return (
+          <div className="max-w-2xl mx-auto py-8">
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-4">{pct >= 80 ? '🏆' : pct >= 60 ? '📈' : '📚'}</div>
+              <h2 className="text-xl font-bold text-white mb-1">Round Complete!</h2>
+              <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
+              <p className="text-slate-400 text-sm">{score.correct} / {score.total} correct · Best streak: {bestStreak}</p>
+              {best.attempts.length > 1 && <p className="text-xs text-slate-500 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
+            </div>
+            {missed.length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">Missed Items — Review These</h3>
+                <div className="space-y-2">
+                  {missed.map((m, i) => (
+                    <div key={i} className="flex items-center gap-3 p-3 bg-red-950/20 border border-red-800/20 rounded-lg text-sm">
+                      <span className="text-red-400">✗</span>
+                      <span className="text-slate-300 flex-1">{m.bug}</span>
+                      <span className="text-slate-600">→</span>
+                      <span className="text-emerald-400 font-medium">{m.correctDrug}</span>
+                      <span className="text-[10px] text-red-300/50">(you: {m.yourAnswer})</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {pct < 80 && (
+              <div className="p-4 bg-amber-950/15 border border-amber-700/20 rounded-xl mb-6">
+                <p className="text-xs text-amber-200/80 leading-relaxed">💡 <strong>Study tip:</strong> Focus on the {missed.length} bug-drug pairs above. Try the Antibiotic Spectrum module to understand WHY these drugs are first-line for each organism.</p>
+              </div>
+            )}
+            <div className="flex gap-3 justify-center">
+              <button onClick={() => { setQueue([...pairs].sort(() => Math.random() - 0.5)); setIdx(0); setScore({ correct: 0, total: 0 }); setStreak(0); setBestStreak(0); setMissed([]); savedRef.current = false; }}
+                className="px-6 py-2.5 bg-lime-600 hover:bg-lime-500 text-white rounded-lg text-sm font-medium transition">Play Again</button>
+            </div>
+          </div>
+        );
+      }
+
+      const options = useMemo(() => {
+        const correct = current.drug;
+        const others = pairs.filter(d => d.drug !== correct).map(d => d.drug);
+        const unique = [...new Set(others)].sort(() => Math.random() - 0.5).slice(0, 3);
+        return [...unique, correct].sort(() => Math.random() - 0.5);
+      }, [current, pairs]);
+
+      const handleSelect = (opt) => {
+        if (showResult) return;
+        setSelected(opt);
+        setShowResult(true);
+        const isCorrect = opt === current.drug;
+        setScore(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 }));
+        if (isCorrect) { const ns = streak + 1; setStreak(ns); if (ns > bestStreak) setBestStreak(ns); }
+        else { setStreak(0); setMissed(prev => [...prev, { bug: current.bug, correctDrug: current.drug, yourAnswer: opt }]); }
+      };
+
+      return (
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-slate-400 tabular-nums font-medium">{idx + 1} / {queue.length}</span>
+              {streak >= 3 && <span className="text-xs px-2.5 py-1 bg-amber-500/20 text-amber-300 rounded-full font-bold animate-fadeIn">🔥 {streak} streak!</span>}
+            </div>
+            <span className="text-sm text-slate-500 tabular-nums">{score.correct} correct</span>
+          </div>
+
+          <div className="bg-slate-800/50 border border-slate-700/40 rounded-xl p-7 mb-6">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-lime-400/70 mb-3">Identify the First-Line Treatment</div>
+            <h2 className="text-lg font-bold text-white mb-2">{current.bug}</h2>
+            <p className="text-sm text-slate-400 leading-relaxed">{current.context}</p>
+            {current.hint && <p className="text-xs text-slate-500 mt-3 italic">💡 {current.hint}</p>}
+            <div className="text-[10px] text-slate-600 mt-3">Age group: <span className="text-slate-500 capitalize">{current.ageGroup}</span></div>
+          </div>
+
+          <div className="space-y-2.5">
+            {options.map((opt, i) => {
+              let cls = 'bg-slate-800/30 border-slate-700/40 hover:border-slate-500/60';
+              if (showResult) {
+                if (opt === current.drug) cls = 'bg-emerald-950/30 border-emerald-500/60';
+                else if (opt === selected) cls = 'bg-red-950/30 border-red-500/60';
+                else cls = 'bg-slate-900/20 border-slate-700/30 opacity-40';
+              }
+              return (
+                <button key={i} onClick={() => handleSelect(opt)} disabled={showResult}
+                  className={`choice-btn w-full text-left p-4 rounded-xl border transition ${cls}`}>
+                  <span className="text-sm text-slate-200">{opt}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {showResult && (
+            <button onClick={() => { setIdx(prev => prev + 1); setSelected(null); setShowResult(false); }}
+              className="w-full mt-5 py-3 bg-lime-600 hover:bg-lime-500 text-white rounded-xl text-sm font-semibold transition">
+              Next Bug →
+            </button>
+          )}
+        </div>
+      );
+    }
+
+    // ─── WHAT'S THE BUG? QUIZ ─────────────────────────────────────
+    function WhatsTheBugQuiz({ items }) {
+      const [queue, setQueue] = useState(() => [...items].sort(() => Math.random() - 0.5));
+      const [idx, setIdx] = useState(0);
+      const [revealedClues, setRevealedClues] = useState(1);
+      const [guessed, setGuessed] = useState(false);
+      const [selected, setSelected] = useState(null);
+      const [score, setScore] = useState({ correct: 0, total: 0 });
+      const [missed, setMissed] = useState([]);
+      const savedRef = useRef(false);
+
+      const current = queue[idx];
+      const isComplete = !current && score.total > 0;
+
+      useEffect(() => {
+        if (isComplete && !savedRef.current) {
+          IDProgress.save('whats_the_bug', { correct: score.correct, total: score.total, missed });
+          savedRef.current = true;
+        }
+      }, [isComplete]);
+
+      if (isComplete) {
+        const pct = Math.round(score.correct / Math.max(1, score.total) * 100);
+        const best = IDProgress.getModule('whats_the_bug');
+        const color = pct >= 80 ? 'text-emerald-400' : pct >= 60 ? 'text-amber-400' : 'text-red-400';
+        return (
+          <div className="max-w-2xl mx-auto py-8">
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-4">{pct >= 80 ? '🎯' : pct >= 60 ? '🔍' : '📚'}</div>
+              <h2 className="text-xl font-bold text-white mb-1">Quiz Complete!</h2>
+              <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
+              <p className="text-slate-400 text-sm">{score.correct} / {score.total} correct</p>
+              {best.attempts.length > 1 && <p className="text-xs text-slate-500 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
+            </div>
+            {missed.length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">Missed Cases — Study These Clue Patterns</h3>
+                <div className="space-y-2">
+                  {missed.map((m, i) => (
+                    <div key={i} className="flex flex-col gap-2 p-3 bg-red-950/20 border border-red-800/20 rounded-lg text-sm">
+                      <span className="text-slate-300 text-xs"><strong>Clues:</strong> {m.clue}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-red-400">✗</span>
+                        <span className="text-red-300/70 text-xs">Your answer:</span>
+                        <span className="text-red-300">{m.yourAnswer}</span>
+                        <span className="text-slate-600 mx-1">→</span>
+                        <span className="text-emerald-400 font-medium text-xs">Correct:</span>
+                        <span className="text-emerald-400">{m.correctAnswer}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {pct < 80 && (
+              <div className="p-4 bg-amber-950/15 border border-amber-700/20 rounded-xl mb-6">
+                <p className="text-xs text-amber-200/80 leading-relaxed">💡 <strong>Study tip:</strong> Review the {missed.length} missed cases above. Note the clinical clues and organism patterns to strengthen pattern recognition for shelf exams.</p>
+              </div>
+            )}
+            <div className="flex gap-3 justify-center">
+              <button onClick={() => { setQueue([...items].sort(() => Math.random() - 0.5)); setIdx(0); setRevealedClues(1); setGuessed(false); setSelected(null); setScore({ correct: 0, total: 0 }); setMissed([]); savedRef.current = false; }}
+                className="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg text-sm font-medium transition">Play Again</button>
+            </div>
+          </div>
+        );
+      }
+
+      const options = useMemo(() => {
+        return [current.answer, ...(current.distractors || [])].sort(() => Math.random() - 0.5);
+      }, [idx]);
+
+      const handleGuess = (opt) => {
+        if (guessed) return;
+        setSelected(opt);
+        setGuessed(true);
+        setScore(prev => ({ correct: prev.correct + (opt === current.answer ? 1 : 0), total: prev.total + 1 }));
+        if (opt !== current.answer) setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]);
+      };
+
+      return (
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-between mb-6">
+            <span className="text-sm text-slate-400 tabular-nums">{idx + 1} / {queue.length}</span>
+            <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current.difficulty === 'advanced' ? 'bg-red-500/20 text-red-300' : 'bg-blue-500/20 text-blue-300'}`}>{current.difficulty}</span>
+          </div>
+
+          <div className="bg-slate-800/50 border border-slate-700/40 rounded-xl p-7 mb-6">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-cyan-400/70 mb-4">Clinical Clues</div>
+            <div className="space-y-2.5">
+              {(current.clues || []).map((clue, ci) => (
+                <div key={ci} className={`flex items-start gap-3 transition-all duration-300 ${ci < revealedClues ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                  <span className="text-xs text-cyan-500 font-mono mt-0.5 shrink-0 w-4">{ci + 1}.</span>
+                  <span className="text-sm text-slate-300 leading-relaxed">{clue}</span>
+                </div>
+              ))}
+            </div>
+            {!guessed && revealedClues < (current.clues || []).length && (
+              <button onClick={() => setRevealedClues(prev => prev + 1)}
+                className="mt-4 text-xs text-cyan-400 hover:text-cyan-300 font-medium transition">
+                + Reveal next clue ({revealedClues}/{current.clues.length})
+              </button>
+            )}
+          </div>
+
+          <div className="text-xs text-slate-500 uppercase tracking-widest mb-3 font-bold">What's the organism?</div>
+          <div className="grid grid-cols-2 gap-2.5">
+            {options.map((opt, i) => {
+              let cls = 'bg-slate-800/30 border-slate-700/40 hover:border-slate-500/60';
+              if (guessed) {
+                if (opt === current.answer) cls = 'bg-emerald-950/30 border-emerald-500/60';
+                else if (opt === selected) cls = 'bg-red-950/30 border-red-500/60';
+                else cls = 'bg-slate-900/20 border-slate-700/30 opacity-40';
+              }
+              return (
+                <button key={i} onClick={() => handleGuess(opt)} disabled={guessed}
+                  className={`choice-btn text-left p-3.5 rounded-xl border transition text-sm text-slate-200 ${cls}`}>{opt}</button>
+              );
+            })}
+          </div>
+
+          {guessed && (
+            <div className="mt-5">
+              <div className={`p-5 rounded-xl border ${selected === current.answer ? 'bg-emerald-950/20 border-emerald-700/30' : 'bg-slate-800/30 border-slate-700/30'}`}>
+                <FormattedText text={current.explanation} className="feedback-text" />
+              </div>
+              <button onClick={() => { setIdx(prev => prev + 1); setRevealedClues(1); setGuessed(false); setSelected(null); }}
+                className="w-full mt-4 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── RASH GALLERY ─────────────────────────────────────────────
+    function RashGallery({ rashes }) {
+      const [flipped, setFlipped] = useState({});
+      const toggle = (id) => setFlipped(prev => ({ ...prev, [id]: !prev[id] }));
+      return (
+        <div>
+          <p className="text-sm text-slate-400 mb-6 leading-relaxed">Click any card to reveal the diagnosis. Master the classic <strong className="text-slate-300">pediatric rash patterns</strong> that appear on the shelf exam.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {rashes.map(r => (
+              <div key={r.id} onClick={() => toggle(r.id)} className="cursor-pointer">
+                {!flipped[r.id] ? (
+                  <div className="p-6 bg-rose-950/20 border border-rose-800/25 rounded-xl min-h-[200px] hover:bg-rose-950/30 transition">
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-rose-400/60 mb-3">Rash Description</div>
+                    <p className="text-sm text-slate-300 leading-relaxed">{r.rashDescription}</p>
+                    <div className="flex flex-wrap gap-1.5 mt-4">
+                      {(r.buzzwords || []).map((bw, i) => <span key={i} className="text-[10px] px-2 py-0.5 bg-rose-500/15 text-rose-300 rounded-full">{bw}</span>)}
+                    </div>
+                    <div className="text-[10px] text-slate-600 mt-4 italic">tap to reveal →</div>
+                  </div>
+                ) : (
+                  <div className="p-6 bg-emerald-950/20 border border-emerald-800/25 rounded-xl min-h-[200px] animate-fadeIn">
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-emerald-400/60 mb-2">Diagnosis</div>
+                    <h3 className="text-lg font-bold text-emerald-300 mb-1">{r.diagnosis}</h3>
+                    <div className="text-xs text-slate-400 mb-3">Pathogen: <strong className="text-slate-300">{r.pathogen}</strong></div>
+                    <div className="text-xs text-amber-300/80 mb-2 font-medium">🔑 {r.keyFeature}</div>
+                    <div className="text-xs text-slate-400">Tx: <span className="text-slate-300">{r.treatment}</span></div>
+                    {r.complications && <div className="mt-3 text-xs text-slate-500">Complications: {r.complications.join(', ')}</div>}
+                    <div className="text-[10px] text-slate-600 mt-3 italic">tap to flip back →</div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── EMPIRIC THERAPY CARDS ─────────────────────────────────────
+    function EmpiricTherapyCards({ syndromes }) {
+      const [expanded, setExpanded] = useState(null);
+      return (
+        <div>
+          <p className="text-sm text-slate-400 mb-6 leading-relaxed">Syndrome-based empiric antibiotic selection — click any syndrome for the full regimen, target organisms, and clinical reasoning.</p>
+          <div className="space-y-3">
+            {syndromes.map(et => (
+              <div key={et.id} className="bg-slate-800/30 border border-slate-700/30 rounded-xl overflow-hidden">
+                <button onClick={() => setExpanded(expanded === et.id ? null : et.id)}
+                  className="w-full text-left p-5 flex items-center justify-between hover:bg-slate-800/50 transition">
+                  <div className="pr-4">
+                    <span className="text-sm font-semibold text-white">{et.syndrome}</span>
+                    <span className="text-xs text-blue-300/80 ml-3 hidden sm:inline">{et.empiricRegimen}</span>
+                  </div>
+                  <span className={`text-slate-500 transition-transform shrink-0 ${expanded === et.id ? 'rotate-90' : ''}`}><Icons.ChevronRight /></span>
+                </button>
+                {expanded === et.id && (
+                  <div className="px-5 pb-5 border-t border-slate-700/20 pt-4 animate-fadeIn space-y-4">
+                    <div>
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Empiric Regimen</div>
+                      <div className="text-sm text-blue-300 font-semibold">{et.empiricRegimen}</div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Target Organisms</div>
+                      <div className="flex flex-wrap gap-1.5">{(et.targetOrganisms || []).map((o, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-lime-500/15 text-lime-300 rounded">{o}</span>)}</div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Key Considerations</div>
+                      <FormattedText text={et.keyConsiderations} className="feedback-text" />
+                    </div>
+                    {et.whenToNarrow && <div><div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">When to Narrow</div><p className="text-xs text-slate-400 leading-relaxed">{et.whenToNarrow}</p></div>}
+                    {et.duration && <div><div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Duration</div><p className="text-xs text-slate-400 leading-relaxed">{et.duration}</p></div>}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── ANTIBIOTIC SPECTRUM ───────────────────────────────────────
+    function AntibioticSpectrum({ drugs }) {
+      const [selected, setSelected] = useState(drugs[0]?.id);
+      const current = drugs.find(d => d.id === selected) || drugs[0];
+      return (
+        <div>
+          <p className="text-sm text-slate-400 mb-6 leading-relaxed">Visual coverage profiles for key pediatric antibiotics. Select a drug to see its full spectrum.</p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {drugs.map(d => (
+              <button key={d.id} onClick={() => setSelected(d.id)}
+                className={`px-3.5 py-2 text-xs rounded-lg font-medium transition ${(selected || drugs[0]?.id) === d.id ? 'bg-violet-500/20 text-violet-300 border border-violet-500/30' : 'bg-slate-800/40 text-slate-400 border border-slate-700/30 hover:text-slate-200'}`}>
+                {d.drug}
+              </button>
+            ))}
+          </div>
+          {current && (
+            <div className="bg-slate-800/30 border border-slate-700/30 rounded-xl p-6 animate-fadeIn">
+              <div className="flex items-baseline gap-3 mb-1">
+                <h3 className="text-lg font-bold text-violet-300">{current.drug}</h3>
+                <span className="text-xs text-slate-500">{current.class}</span>
+              </div>
+              <p className="text-xs text-slate-500 mb-5 italic">{current.mechanism}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+                <div className="p-4 bg-emerald-950/20 border border-emerald-800/20 rounded-lg">
+                  <div className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider mb-2">Gram-Positive</div>
+                  <div className="flex flex-wrap gap-1.5">{(current.gramPositive || []).map((g, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-emerald-500/15 text-emerald-300 rounded">{g}</span>)}</div>
+                  {(current.gramPositive || []).length === 0 && <span className="text-xs text-slate-600 italic">None</span>}
+                </div>
+                <div className="p-4 bg-blue-950/20 border border-blue-800/20 rounded-lg">
+                  <div className="text-[10px] font-bold text-blue-400 uppercase tracking-wider mb-2">Gram-Negative</div>
+                  <div className="flex flex-wrap gap-1.5">{(current.gramNegative || []).map((g, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-blue-500/15 text-blue-300 rounded">{g}</span>)}</div>
+                  {(current.gramNegative || []).length === 0 && <span className="text-xs text-slate-600 italic">None</span>}
+                </div>
+                {(current.atypicals || []).length > 0 && (
+                  <div className="p-4 bg-amber-950/20 border border-amber-800/20 rounded-lg">
+                    <div className="text-[10px] font-bold text-amber-400 uppercase tracking-wider mb-2">Atypicals</div>
+                    <div className="flex flex-wrap gap-1.5">{current.atypicals.map((g, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-amber-500/15 text-amber-300 rounded">{g}</span>)}</div>
+                  </div>
+                )}
+                <div className="p-4 bg-red-950/20 border border-red-800/20 rounded-lg">
+                  <div className="text-[10px] font-bold text-red-400 uppercase tracking-wider mb-2">NOT Covered</div>
+                  <div className="flex flex-wrap gap-1.5">{(current.notCovered || []).map((g, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-red-500/15 text-red-300 rounded">{g}</span>)}</div>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Pediatric Uses</div>
+                  <div className="flex flex-wrap gap-1.5">{(current.pedsUses || []).map((u, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-slate-700/50 text-slate-300 rounded">{u}</span>)}</div>
+                </div>
+                {current.pedsNotes && <div className="p-3 bg-amber-950/15 border-l-[3px] border-amber-500/40 rounded-r-lg"><p className="text-xs text-amber-200/80 leading-relaxed">📝 {current.pedsNotes}</p></div>}
+                {(current.sideEffects || []).length > 0 && (
+                  <div><div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Side Effects</div><p className="text-xs text-slate-400">{current.sideEffects.join(' · ')}</p></div>
+                )}
+                {current.contraindications && (
+                  <div><div className="text-[10px] font-bold text-red-400/80 uppercase tracking-wider mb-1.5">Contraindications</div><p className="text-xs text-red-300/70">{current.contraindications}</p></div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── AGE-BASED BUGS ───────────────────────────────────────────
+    function AgeBasedBugs({ groups }) {
+      const [active, setActive] = useState(groups[0]?.id);
+      const current = groups.find(g => g.id === active) || groups[0];
+      const ageIcons = { 'abb-1': '👶', 'abb-2': '🍼', 'abb-3': '🧒', 'abb-4': '🏫', 'abb-5': '🧑' };
+      return (
+        <div>
+          <p className="text-sm text-slate-400 mb-6 leading-relaxed">Organisms shift dramatically by age in pediatrics. Select an age group to see the <strong className="text-slate-300">bugs you must know</strong>.</p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {groups.map(ag => (
+              <button key={ag.id} onClick={() => setActive(ag.id)}
+                className={`px-4 py-2.5 text-xs rounded-lg font-medium transition ${active === ag.id ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-slate-800/40 text-slate-400 border border-slate-700/30 hover:text-slate-200'}`}>
+                <span className="mr-1.5">{ageIcons[ag.id] || '🦠'}</span>{ag.ageGroup}
+              </button>
+            ))}
+          </div>
+          {current && (
+            <div className="space-y-3 animate-fadeIn">
+              {(current.commonBugs || []).map((bug, i) => (
+                <div key={i} className="p-5 bg-slate-800/30 border border-slate-700/30 rounded-xl">
+                  <div className="flex items-baseline gap-2.5 mb-2">
+                    <span className="text-sm font-bold text-amber-300">{bug.organism}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {(bug.presentations || []).map((p, pi) => <span key={pi} className="text-[11px] px-2 py-0.5 bg-amber-500/10 text-amber-200/80 rounded">{p}</span>)}
+                  </div>
+                  {bug.notes && <p className="text-xs text-slate-400 leading-relaxed">{bug.notes}</p>}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── VACCINE TRAINER ──────────────────────────────────────────
+    function VaccineTrainer({ vaccines }) {
+      const [mode, setMode] = useState('study');
+      const [qIdx, setQIdx] = useState(0);
+      const [qAnswer, setQAnswer] = useState(null);
+      const [qScore, setQScore] = useState({ correct: 0, total: 0 });
+      const [qMissed, setQMissed] = useState([]);
+      const quizQueue = useMemo(() => [...vaccines].sort(() => Math.random() - 0.5), [vaccines]);
+      const savedRef = useRef(false);
+
+      const quizComplete = mode === 'quiz' && !quizQueue[qIdx] && qScore.total > 0;
+
+      useEffect(() => {
+        if (quizComplete && !savedRef.current) {
+          IDProgress.save('vaccines_quiz', { correct: qScore.correct, total: qScore.total, missed: qMissed });
+          savedRef.current = true;
+        }
+      }, [quizComplete]);
+
+      if (mode === 'study') {
+        return (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-sm text-slate-400">Pediatric immunization reference — <strong className="text-slate-300">{vaccines.length} vaccines</strong>.</p>
+              <button onClick={() => { setMode('quiz'); setQIdx(0); setQAnswer(null); setQScore({ correct: 0, total: 0 }); }}
+                className="px-4 py-2 bg-emerald-600/80 hover:bg-emerald-600 text-white rounded-lg text-xs font-medium transition">🎮 Quiz Mode</button>
+            </div>
+            <div className="space-y-3">
+              {vaccines.map(v => (
+                <div key={v.id} className="p-5 bg-slate-800/30 border border-slate-700/30 rounded-xl">
+                  <div className="flex items-baseline gap-2.5 mb-2">
+                    <span className="text-sm font-bold text-emerald-300">{v.vaccine}</span>
+                    <span className="text-[10px] text-slate-500">{v.fullName}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mb-2">
+                    {(v.schedule || []).map((s, si) => <span key={si} className="text-[11px] px-2 py-0.5 bg-emerald-500/10 text-emerald-200/80 rounded tabular-nums">{s}</span>)}
+                  </div>
+                  {v.booster && <p className="text-xs text-slate-500 mb-1"><strong className="text-slate-400">Booster:</strong> {v.booster}</p>}
+                  <p className="text-xs text-slate-500"><strong className="text-slate-400">Type:</strong> {v.type}</p>
+                  {v.contraindications && v.contraindications.length > 0 && <p className="text-xs text-red-300/60 mt-1"><strong>CI:</strong> {v.contraindications.join('; ')}</p>}
+                  {v.highYield && <div className="mt-3 p-2.5 bg-amber-950/15 border-l-[3px] border-amber-500/30 rounded-r-lg"><p className="text-[11px] text-amber-200/80 leading-relaxed">⭐ {v.highYield}</p></div>}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      // Quiz mode
+      const q = quizQueue[qIdx];
+      if (quizComplete) {
+        const pct = Math.round(qScore.correct / Math.max(1, qScore.total) * 100);
+        const best = IDProgress.getModule('vaccines_quiz');
+        const color = pct >= 80 ? 'text-emerald-400' : pct >= 60 ? 'text-amber-400' : 'text-red-400';
+        return (
+          <div className="max-w-2xl mx-auto py-8">
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-4">{pct >= 80 ? '🎖️' : pct >= 60 ? '📅' : '📚'}</div>
+              <h2 className="text-xl font-bold text-white mb-1">Quiz Complete!</h2>
+              <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
+              <p className="text-slate-400 text-sm">{qScore.correct} / {qScore.total} correct</p>
+              {best.attempts.length > 1 && <p className="text-xs text-slate-500 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
+            </div>
+            {qMissed.length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">Missed Schedules — Review These</h3>
+                <div className="space-y-2">
+                  {qMissed.map((m, i) => (
+                    <div key={i} className="flex flex-col gap-2 p-3 bg-red-950/20 border border-red-800/20 rounded-lg text-sm">
+                      <span className="text-slate-300 font-medium">{m.vaccine}</span>
+                      <div className="flex items-center gap-2 text-xs">
+                        <span className="text-red-400">✗</span>
+                        <span className="text-red-300/70">Your answer:</span>
+                        <span className="text-red-300">{m.yourAnswer}</span>
+                        <span className="text-slate-600 mx-1">→</span>
+                        <span className="text-emerald-400">Correct:</span>
+                        <span className="text-emerald-400">{m.correctSchedule}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {pct < 80 && (
+              <div className="p-4 bg-amber-950/15 border border-amber-700/20 rounded-xl mb-6">
+                <p className="text-xs text-amber-200/80 leading-relaxed">💡 <strong>Study tip:</strong> Review the {qMissed.length} missed vaccine schedules. Pay close attention to age windows and booster patterns — these are high-yield for shelf exams.</p>
+              </div>
+            )}
+            <div className="flex gap-3 justify-center">
+              <button onClick={() => setMode('study')} className="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition">Back to Study</button>
+              <button onClick={() => { setQIdx(0); setQAnswer(null); setQScore({ correct: 0, total: 0 }); setQMissed([]); savedRef.current = false; }} className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition">Play Again</button>
+            </div>
+          </div>
+        );
+      }
+
+      const correctSchedule = (q.schedule || []).join(', ');
+      const scheduleOptions = useMemo(() => {
+        const others = vaccines.filter(d => d.id !== q.id).sort(() => Math.random() - 0.5).slice(0, 3).map(d => (d.schedule || []).join(', '));
+        return [...new Set([correctSchedule, ...others])].sort(() => Math.random() - 0.5);
+      }, [qIdx]);
+
+      return (
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-between mb-6">
+            <span className="text-sm text-slate-400 tabular-nums">{qIdx + 1} / {quizQueue.length}</span>
+            <button onClick={() => setMode('study')} className="text-xs text-slate-500 hover:text-slate-300 transition">← Back to Study</button>
+          </div>
+          <div className="bg-slate-800/50 border border-slate-700/40 rounded-xl p-7 mb-6">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-emerald-400/70 mb-3">When is this vaccine given?</div>
+            <h2 className="text-lg font-bold text-white mb-1">{q.vaccine}</h2>
+            <p className="text-xs text-slate-500">{q.fullName} · {q.type}</p>
+          </div>
+          <div className="space-y-2.5">
+            {scheduleOptions.map((opt, i) => {
+              let cls = 'bg-slate-800/30 border-slate-700/40 hover:border-slate-500/60';
+              if (qAnswer !== null) {
+                if (opt === correctSchedule) cls = 'bg-emerald-950/30 border-emerald-500/60';
+                else if (opt === qAnswer) cls = 'bg-red-950/30 border-red-500/60';
+                else cls = 'bg-slate-900/20 border-slate-700/30 opacity-40';
+              }
+              return (
+                <button key={i} onClick={() => { if (qAnswer !== null) return; setQAnswer(opt); const isCorrect = opt === correctSchedule; setQScore(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 })); if (!isCorrect) setQMissed(prev => [...prev, { vaccine: q.vaccine, correctSchedule, yourAnswer: opt }]); }} disabled={qAnswer !== null}
+                  className={`choice-btn w-full text-left p-4 rounded-xl border transition text-sm text-slate-200 ${cls}`}>{opt}</button>
+              );
+            })}
+          </div>
+          {qAnswer !== null && (
+            <div>
+              {q.highYield && <div className="mt-4 p-4 bg-amber-950/15 border border-amber-700/20 rounded-xl"><p className="text-xs text-amber-200/80 leading-relaxed">⭐ {q.highYield}</p></div>}
+              <button onClick={() => { setQIdx(prev => prev + 1); setQAnswer(null); }}
+                className="w-full mt-4 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold transition">Next Vaccine →</button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── PEARLS & ASSOCIATIONS ────────────────────────────────────
+    function PearlsAssociations({ pearls, associations }) {
+      const [sub, setSub] = useState('associations');
+      const [hideAnswers, setHideAnswers] = useState(true);
+      return (
+        <div>
+          <div className="flex gap-2 mb-6">
+            <button onClick={() => setSub('associations')} className={`px-4 py-2 text-xs rounded-lg font-medium transition ${sub === 'associations' ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30' : 'bg-slate-800/40 text-slate-400 border border-slate-700/30'}`}>
+              Buzzword Associations ({associations.length})
+            </button>
+            <button onClick={() => setSub('pearls')} className={`px-4 py-2 text-xs rounded-lg font-medium transition ${sub === 'pearls' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-slate-800/40 text-slate-400 border border-slate-700/30'}`}>
+              Clinical Pearls ({pearls.length})
+            </button>
+          </div>
+
+          {sub === 'associations' && (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-xs text-slate-500">Classic "if you see → think" shelf-exam patterns</p>
+                <button onClick={() => setHideAnswers(!hideAnswers)} className="text-xs text-slate-500 hover:text-slate-300 transition font-medium">
+                  {hideAnswers ? '👁 Show Answers' : '🙈 Hide Answers'}
+                </button>
+              </div>
+              <div className="bg-slate-800/30 border border-slate-700/30 rounded-xl overflow-hidden divide-y divide-slate-700/20">
+                {associations.map((a, i) => (
+                  <div key={a.id || i} className="flex items-center px-5 py-3.5 text-sm hover:bg-slate-800/40 transition">
+                    <span className="w-8 text-xs text-slate-600 tabular-nums shrink-0">{i + 1}</span>
+                    <span className="text-amber-300 flex-1 leading-relaxed">{a.clue}</span>
+                    <span className="text-slate-600 mx-3 text-lg">→</span>
+                    <span className={`font-semibold flex-1 transition-colors ${hideAnswers ? 'text-slate-700 bg-slate-700/50 rounded px-2 select-none cursor-pointer' : 'text-white'}`}
+                      onClick={(e) => { if (hideAnswers) { e.stopPropagation(); const el = e.currentTarget; el.style.color = '#e2e8f0'; el.style.background = 'transparent'; } }}>{a.answer}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {sub === 'pearls' && (
+            <div className="space-y-2.5">
+              {pearls.map((p, i) => (
+                <div key={p.id || i} className={`flex items-start gap-3.5 p-4 rounded-lg border ${p.highYield ? 'bg-amber-950/20 border-amber-700/20' : 'bg-slate-800/25 border-slate-700/20'}`}>
+                  <span className="text-amber-400 mt-0.5 shrink-0">{p.highYield ? '⭐' : '💡'}</span>
+                  <div className="flex-1">
+                    <FormattedText text={p.pearl} className="rich-text text-sm" />
+                    <span className="text-[10px] text-slate-600 uppercase tracking-wider mt-2 inline-block">{p.category}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── SIDE EFFECTS & CONTRAINDICATIONS ─────────────────────────
+    function SideEffectsView({ items }) {
+      return (
+        <div>
+          <p className="text-sm text-slate-400 mb-6 leading-relaxed">Age-specific drug restrictions and the <strong className="text-red-300">critical exceptions</strong> the NBME loves to test.</p>
+          <div className="space-y-3">
+            {items.map(d => (
+              <div key={d.id} className="p-5 bg-slate-800/30 border border-slate-700/30 rounded-xl">
+                <div className="flex items-baseline justify-between mb-2">
+                  <span className="text-sm font-bold text-white">{d.drug}</span>
+                  {d.ageRestriction && <span className="text-[10px] px-2.5 py-0.5 bg-red-500/15 text-red-300 rounded-full font-medium">{d.ageRestriction}</span>}
+                </div>
+                <p className="text-sm text-slate-400 mb-3 leading-relaxed">{d.sideEffect}</p>
+                {d.exception && (
+                  <div className="p-3.5 bg-amber-950/20 border-l-[3px] border-amber-500/40 rounded-r-lg mb-2.5">
+                    <div className="text-[10px] font-bold text-amber-400 uppercase tracking-wider mb-1">⚡ Exception</div>
+                    <p className="text-xs text-amber-200/80 leading-relaxed">{d.exception}</p>
+                  </div>
+                )}
+                {d.shelfTrap && (
+                  <div className="p-3.5 bg-red-950/15 border-l-[3px] border-red-500/30 rounded-r-lg">
+                    <div className="text-[10px] font-bold text-red-400 uppercase tracking-wider mb-1">🎯 Shelf Trap</div>
+                    <p className="text-xs text-red-200/80 leading-relaxed">{d.shelfTrap}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── STUDY GUIDE (AI-driven recommendations) ─────────────────
+    function StudyGuide({ idData, setTab }) {
+      const recs = IDProgress.getRecommendations(idData);
+      const all = IDProgress.getAll();
+      const totalAttempts = Object.values(all).reduce((sum, m) => sum + (m.attempts?.length || 0), 0);
+      const avgScore = totalAttempts > 0 ? Math.round(Object.values(all).reduce((sum, m) => sum + (m.bestScore || 0), 0) / Object.keys(all).length) : 0;
+
+      return (
+        <div className="max-w-4xl mx-auto animate-fadeIn">
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-white mb-2">📊 Your Study Progress</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="p-4 bg-slate-800/50 border border-slate-700/30 rounded-xl">
+                <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Attempts</div>
+                <div className="text-2xl font-bold text-white">{totalAttempts}</div>
+                <div className="text-[10px] text-slate-500 mt-1">quiz rounds completed</div>
+              </div>
+              <div className="p-4 bg-slate-800/50 border border-slate-700/30 rounded-xl">
+                <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Average Score</div>
+                <div className="text-2xl font-bold text-cyan-400">{avgScore}%</div>
+                <div className="text-[10px] text-slate-500 mt-1">across all modules</div>
+              </div>
+              <div className="p-4 bg-slate-800/50 border border-slate-700/30 rounded-xl">
+                <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Modules Started</div>
+                <div className="text-2xl font-bold text-emerald-400">{Object.keys(all).length}</div>
+                <div className="text-[10px] text-slate-500 mt-1">of 10 available</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-8">
+            <h2 className="text-xl font-bold text-white mb-4">🎯 Personalized Recommendations</h2>
+            {recs.length === 0 ? (
+              <div className="p-6 bg-slate-800/30 border border-slate-700/30 rounded-xl text-center">
+                <p className="text-slate-400 text-sm">No modules attempted yet. Start with a quiz to generate recommendations!</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {recs.map((rec, i) => {
+                  let priorityBg = 'bg-red-950/20 border-red-800/30';
+                  let priorityBadge = 'bg-red-500/20 text-red-300';
+                  if (rec.priority >= 2) { priorityBg = 'bg-amber-950/20 border-amber-800/30'; priorityBadge = 'bg-amber-500/20 text-amber-300'; }
+                  if (rec.priority >= 3) { priorityBg = 'bg-emerald-950/20 border-emerald-800/30'; priorityBadge = 'bg-emerald-500/20 text-emerald-300'; }
+
+                  return (
+                    <button key={i} onClick={() => setTab(rec.tab)}
+                      className={`w-full text-left p-5 rounded-xl border transition hover:brightness-110 ${priorityBg}`}>
+                      <div className="flex items-start gap-4 justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-1">
+                            <span className="font-semibold text-white">{rec.label}</span>
+                            <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${priorityBadge}`}>
+                              {rec.type === 'not_started' ? '⭐ Start Here' : rec.type === 'weak' ? '⚠️ Focus Area' : rec.type === 'improving' ? '📈 Keep Going' : rec.type === 'strong' ? '✓ Solid' : '🔖 Reference'}
+                            </span>
+                          </div>
+                          <p className="text-sm text-slate-300 mb-2">{rec.reason}</p>
+                          {rec.missed && rec.missed.length > 0 && (
+                            <div className="text-[11px] text-slate-400 mb-2">
+                              <strong>{rec.missed.length}</strong> items to review
+                            </div>
+                          )}
+                          {rec.trend !== undefined && rec.trend !== 0 && (
+                            <div className={`text-[10px] ${rec.trend > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                              {rec.trend > 0 ? '↑' : '↓'} {Math.abs(rec.trend)}% since last attempt
+                            </div>
+                          )}
+                        </div>
+                        <button onClick={(e) => { e.stopPropagation(); setTab(rec.tab); }}
+                          className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded text-xs font-medium transition shrink-0">
+                          {rec.action}
+                        </button>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {totalAttempts > 0 && (
+            <div className="mb-8">
+              <h2 className="text-xl font-bold text-white mb-4">📅 Spaced Repetition Hints</h2>
+              <div className="space-y-2">
+                {Object.entries(all).map(([moduleId, data]) => {
+                  if (!data.lastVisited) return null;
+                  const daysSince = Math.floor((Date.now() - data.lastVisited) / (1000 * 60 * 60 * 24));
+                  const isOverdue = daysSince > 3;
+                  const tab = ['bug_drug', 'whats_the_bug', 'vaccines_quiz'].includes(moduleId) ? moduleId.replace('_quiz', '') : moduleId;
+                  return (
+                    <button key={moduleId} onClick={() => setTab(tab)}
+                      className={`w-full text-left p-3 rounded-lg border transition ${isOverdue ? 'bg-red-950/15 border-red-800/30 hover:bg-red-950/25' : 'bg-slate-800/30 border-slate-700/30 hover:bg-slate-800/50'}`}>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-300">{moduleId.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</span>
+                        <span className={`text-xs ${isOverdue ? 'text-red-300 font-medium' : 'text-slate-500'}`}>
+                          {daysSince === 0 ? 'Today' : daysSince === 1 ? 'Yesterday' : `${daysSince} days ago`}
+                          {isOverdue && <span className="ml-2">🔔 Time to review</span>}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          <div className="p-6 bg-slate-800/20 border border-slate-700/30 rounded-xl">
+            <p className="text-xs text-slate-400 leading-relaxed">
+              <strong>💡 Study Strategy:</strong> Aim for 80%+ on each quiz before moving on. Use the Antibiotic Spectrum and Clinical Pearls modules to deepen understanding of why certain organisms respond to specific drugs. Return to weak areas every 3 days for spaced repetition.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // ─── PEDIATRIC CARDIOLOGY HUB ────────────────────────────────
+    // ═══════════════════════════════════════════════════════════════
+
+    function CardioHubView() {
+      const [tab, setTab] = useState('overview');
+      const [cardioData, setCardioData] = useState(null);
+      const [loading, setLoading] = useState(true);
+      useEffect(() => {
+        fetch('/api/cardiology').then(r => r.json()).then(d => { setCardioData(d); setLoading(false); }).catch(() => setLoading(false));
+      }, []);
+      if (loading) return <LoadingScreen />;
+      if (!cardioData) return <div className="p-8 text-slate-400">Failed to load cardiology data.</div>;
+
+      const tabs = [
+        { id: 'overview', label: 'Overview', icon: '❤️' },
+        { id: 'chd_cards', label: 'CHD Cards', icon: '🫀' },
+        { id: 'murmur_quiz', label: 'Name That Murmur', icon: '🩺' },
+        { id: 'acquired', label: 'Acquired Disease', icon: '🔥' },
+        { id: 'ecg', label: 'ECG Patterns', icon: '📈' },
+        { id: 'pharm', label: 'Cardiac Pharm', icon: '💊' },
+        { id: 'scenarios', label: 'Shelf Scenarios', icon: '📝' },
+        { id: 'fetal', label: 'Fetal Circulation', icon: '🤰' },
+        { id: 'sports', label: 'Sports Cardiology', icon: '🏃' },
+        { id: 'pearls', label: 'Pearls & Associations', icon: '💡' },
+        { id: 'study_guide', label: 'AI Study Guide', icon: '🧠' },
+      ];
+      return (
+        <div className="animate-fadeIn p-8 max-w-6xl mx-auto">
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-2"><span className="text-3xl">❤️</span>
+              <h1 className="text-2xl font-bold text-white tracking-tight">Pediatric Cardiology Hub</h1>
+            </div>
+            <p className="text-sm text-slate-400 leading-relaxed">Master pediatric heart disease — from <strong className="text-slate-300">congenital defects</strong> to <strong className="text-slate-300">murmurs, ECGs, and shelf scenarios</strong> through <strong className="text-slate-300">11 interactive modules</strong>.</p>
+          </div>
+          <div className="flex flex-wrap gap-1.5 mb-8 pb-3 border-b border-slate-700/40">
+            {tabs.map(t => (
+              <button key={t.id} onClick={() => setTab(t.id)}
+                className={`flex items-center gap-1.5 px-3.5 py-2 text-xs rounded-lg font-medium transition ${tab === t.id ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-slate-800/40 text-slate-400 border border-slate-700/30 hover:text-slate-200 hover:bg-slate-800/60'}`}>
+                <span className="text-sm">{t.icon}</span> {t.label}
+              </button>
+            ))}
+          </div>
+          {tab === 'overview' && <CardioOverview data={cardioData} setTab={setTab} />}
+          {tab === 'chd_cards' && <CHDCards lesions={cardioData.chdLesions || []} />}
+          {tab === 'murmur_quiz' && <MurmurQuiz items={cardioData.murmurQuiz || []} />}
+          {tab === 'acquired' && <AcquiredHeartDisease conditions={cardioData.acquiredHeartDisease || []} />}
+          {tab === 'ecg' && <ECGPatterns patterns={cardioData.ecgPatterns || []} />}
+          {tab === 'pharm' && <CardiacPharm drugs={cardioData.pharmacology || []} />}
+          {tab === 'scenarios' && <ShelfScenarios items={cardioData.shelfScenarios || []} />}
+          {tab === 'fetal' && <FetalCirculation structures={cardioData.fetalCirculation || []} />}
+          {tab === 'sports' && <SportsCardiology items={cardioData.sportsCardiology || []} />}
+          {tab === 'pearls' && <CardioPearlsAssociations pearls={cardioData.clinicalPearls || []} associations={cardioData.associations || []} />}
+          {tab === 'study_guide' && <CardioStudyGuide data={cardioData} setTab={setTab} />}
+        </div>
+      );
+    }
+
+    // ─── CARDIO OVERVIEW ──────────────────────────────────────────────
+    function CardioOverview({ data, setTab }) {
+      const modules = [
+        { id: 'chd_cards', icon: '🫀', title: 'CHD Cards', desc: 'Cyanotic & acyanotic congenital lesions with hemodynamics', count: `${(data.chdLesions||[]).length} lesions`, color: 'bg-rose-500/20 text-rose-300 border-rose-500/30' },
+        { id: 'murmur_quiz', icon: '🩺', title: 'Name That Murmur', desc: 'Progressive clue reveal quiz on cardiac murmurs', count: `${(data.murmurQuiz||[]).length} cases`, color: 'bg-pink-500/20 text-pink-300 border-pink-500/30' },
+        { id: 'acquired', icon: '🔥', title: 'Acquired Heart Disease', desc: 'Myocarditis, pericarditis, rheumatic fever & more', count: `${(data.acquiredHeartDisease||[]).length} conditions`, color: 'bg-red-500/20 text-red-300 border-red-500/30' },
+        { id: 'ecg', icon: '📈', title: 'ECG Patterns', desc: 'Age-appropriate ECG findings and arrhythmias', count: `${(data.ecgPatterns||[]).length} patterns`, color: 'bg-purple-500/20 text-purple-300 border-purple-500/30' },
+        { id: 'pharm', icon: '💊', title: 'Cardiac Pharmacology', desc: 'Inotropes, vasodilators, and antiarrhythmics', count: `${(data.pharmacology||[]).length} drugs`, color: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' },
+        { id: 'scenarios', icon: '📝', title: 'Shelf Scenarios', desc: 'Shelf-exam style vignettes with branching decisions', count: `${(data.shelfScenarios||[]).length} cases`, color: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
+        { id: 'fetal', icon: '🤰', title: 'Fetal Circulation', desc: 'Fetal shunts, closure mechanisms, and pathology', count: `${(data.fetalCirculation||[]).length} structures`, color: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' },
+        { id: 'sports', icon: '🏃', title: 'Sports Cardiology', desc: 'Screening, management, and return-to-play guidelines', count: `${(data.sportsCardiology||[]).length} conditions`, color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
+        { id: 'pearls', icon: '💡', title: 'Pearls & Associations', desc: 'High-yield buzzword associations and clinical pearls', count: `${(data.clinicalPearls||[]).length + (data.associations||[]).length} items`, color: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30' },
+      ];
+      const getProgressBadge = (moduleId) => {
+        const progress = IDProgress.getLatest('cardio_' + moduleId);
+        if (!progress) return null;
+        const color = progress.pct >= 80 ? 'bg-emerald-500/20 text-emerald-300' : progress.pct >= 60 ? 'bg-amber-500/20 text-amber-300' : 'bg-red-500/20 text-red-300';
+        return <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${color}`}>{progress.pct}%</span>;
+      };
+      return (
+        <div className="space-y-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <StatCard label="CHD Lesions" value={(data.chdLesions||[]).length} sub="cyanotic & acyanotic" />
+            <StatCard label="Murmur Cases" value={(data.murmurQuiz||[]).length} sub="pattern recognition" />
+            <StatCard label="ECG Patterns" value={(data.ecgPatterns||[]).length} sub="peds-specific" />
+            <StatCard label="Scenarios" value={(data.shelfScenarios||[]).length} sub="shelf exam style" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {modules.map(m => (
+              <button key={m.id} onClick={() => setTab(m.id)}
+                className={`flex items-start gap-3.5 p-5 rounded-xl border text-left hover:brightness-110 transition relative ${m.color}`}>
+                <span className="text-2xl mt-0.5">{m.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <div className="font-semibold text-sm">{m.title}</div>
+                    {getProgressBadge(m.id)}
+                  </div>
+                  <div className="text-xs opacity-70 leading-relaxed">{m.desc}</div>
+                  <div className="text-[10px] mt-2 opacity-50">{m.count}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── CHD CARDS ─────────────────────────────────────────────────────
+    function CHDCards({ lesions }) {
+      const [tab, setTab] = useState('cyanotic');
+      const [expanded, setExpanded] = useState({});
+      const toggle = (id) => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
+      const filtered = lesions.filter(l => (tab === 'cyanotic' ? l.cyanotic : !l.cyanotic));
+      return (
+        <div>
+          <div className="flex gap-2 mb-6">
+            <button onClick={() => setTab('cyanotic')}
+              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${tab === 'cyanotic' ? 'bg-red-600 text-white' : 'bg-slate-800/40 text-slate-400 hover:text-slate-200'}`}>
+              🔴 Cyanotic
+            </button>
+            <button onClick={() => setTab('acyanotic')}
+              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${tab === 'acyanotic' ? 'bg-blue-600 text-white' : 'bg-slate-800/40 text-slate-400 hover:text-slate-200'}`}>
+              🔵 Acyanotic
+            </button>
+          </div>
+          <div className="space-y-4">
+            {filtered.map(l => (
+              <div key={l.id} onClick={() => toggle(l.id)} className="cursor-pointer">
+                <div className={`p-4 rounded-xl border transition ${expanded[l.id] ? (l.cyanotic ? 'bg-red-950/30 border-red-700/40' : 'bg-blue-950/30 border-blue-700/40') : 'bg-slate-800/50 border-slate-700/40 hover:border-slate-600/60'}`}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-semibold text-white">{l.name}</h3>
+                      <p className="text-xs text-slate-400 mt-1">{l.category}</p>
+                    </div>
+                    <span className={`text-lg transition ${expanded[l.id] ? 'rotate-90' : ''}`}>▶</span>
+                  </div>
+                  {expanded[l.id] && (
+                    <div className="mt-4 pt-4 border-t border-slate-700/40 space-y-3">
+                      <div className="text-sm"><span className="text-slate-400">Hemodynamics:</span> <span className="text-slate-300">{l.hemodynamics}</span></div>
+                      <div className="text-sm"><span className="text-slate-400">Presentation:</span> <span className="text-slate-300">{l.presentation}</span></div>
+                      <div className="text-sm"><span className="text-slate-400">Murmur:</span> <span className="text-slate-300">{l.murmur}</span></div>
+                      <div className="text-sm"><span className="text-slate-400">Management:</span> <span className="text-slate-300">{l.management}</span></div>
+                      {l.associations && (
+                        <div className="flex flex-wrap gap-1.5 mt-3">
+                          {l.associations.map((a, i) => (
+                            <span key={i} className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${l.cyanotic ? 'bg-red-500/20 text-red-300' : 'bg-blue-500/20 text-blue-300'}`}>{a}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // ─── MURMUR QUIZ ──────────────────────────────────────────────────
+    function MurmurQuiz({ items }) {
+      const [queue, setQueue] = useState(() => [...items].sort(() => Math.random() - 0.5));
+      const [idx, setIdx] = useState(0);
+      const [revealedClues, setRevealedClues] = useState(1);
+      const [guessed, setGuessed] = useState(false);
+      const [selected, setSelected] = useState(null);
+      const [score, setScore] = useState({ correct: 0, total: 0 });
+      const [missed, setMissed] = useState([]);
+      const savedRef = useRef(false);
+
+      const current = queue[idx];
+      const isComplete = !current && score.total > 0;
+
+      useEffect(() => {
+        if (isComplete && !savedRef.current) {
+          IDProgress.save('cardio_murmur_quiz', { correct: score.correct, total: score.total, missed });
+          savedRef.current = true;
+        }
+      }, [isComplete]);
+
+      if (isComplete) {
+        const pct = Math.round(score.correct / Math.max(1, score.total) * 100);
+        const best = IDProgress.getModule('cardio_murmur_quiz');
+        const color = pct >= 80 ? 'text-emerald-400' : pct >= 60 ? 'text-amber-400' : 'text-red-400';
+        return (
+          <div className="max-w-2xl mx-auto py-8">
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-4">{pct >= 80 ? '🎯' : pct >= 60 ? '🔍' : '📚'}</div>
+              <h2 className="text-xl font-bold text-white mb-1">Quiz Complete!</h2>
+              <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
+              <p className="text-slate-400 text-sm">{score.correct} / {score.total} correct</p>
+              {best.attempts.length > 1 && <p className="text-xs text-slate-500 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
+            </div>
+            {missed.length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">Missed Cases — Study These Clue Patterns</h3>
+                <div className="space-y-2">
+                  {missed.map((m, i) => (
+                    <div key={i} className="flex flex-col gap-2 p-3 bg-red-950/20 border border-red-800/20 rounded-lg text-sm">
+                      <span className="text-slate-300 text-xs"><strong>Clues:</strong> {m.clue}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-red-400">✗</span>
+                        <span className="text-red-300/70 text-xs">Your answer:</span>
+                        <span className="text-red-300">{m.yourAnswer}</span>
+                        <span className="text-slate-600 mx-1">→</span>
+                        <span className="text-emerald-400 font-medium text-xs">Correct:</span>
+                        <span className="text-emerald-400">{m.correctAnswer}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex gap-3 justify-center">
+              <button onClick={() => { setQueue([...items].sort(() => Math.random() - 0.5)); setIdx(0); setRevealedClues(1); setGuessed(false); setSelected(null); setScore({ correct: 0, total: 0 }); setMissed([]); savedRef.current = false; }}
+                className="px-6 py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-sm font-medium transition">Play Again</button>
+            </div>
+          </div>
+        );
+      }
+
+      const options = useMemo(() => {
+        return [current.answer, ...(current.distractors || [])].sort(() => Math.random() - 0.5);
+      }, [idx]);
+
+      const handleGuess = (opt) => {
+        if (guessed) return;
+        setSelected(opt);
+        setGuessed(true);
+        setScore(prev => ({ correct: prev.correct + (opt === current.answer ? 1 : 0), total: prev.total + 1 }));
+        if (opt !== current.answer) setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]);
+      };
+
+      return (
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-between mb-6">
+            <span className="text-sm text-slate-400 tabular-nums">{idx + 1} / {queue.length}</span>
+            <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current.difficulty === 'advanced' ? 'bg-red-500/20 text-red-300' : 'bg-blue-500/20 text-blue-300'}`}>{current.difficulty}</span>
+          </div>
+
+          <div className="bg-slate-800/50 border border-slate-700/40 rounded-xl p-7 mb-6">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-rose-400/70 mb-4">Murmur Clues</div>
+            <div className="space-y-2.5">
+              {(current.clues || []).map((clue, ci) => (
+                <div key={ci} className={`flex items-start gap-3 transition-all duration-300 ${ci < revealedClues ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                  <span className="text-xs text-rose-500 font-mono mt-0.5 shrink-0 w-4">{ci + 1}.</span>
+                  <span className="text-sm text-slate-300 leading-relaxed">{clue}</span>
+                </div>
+              ))}
+            </div>
+            {!guessed && revealedClues < (current.clues || []).length && (
+              <button onClick={() => setRevealedClues(prev => prev + 1)}
+                className="mt-4 text-xs text-rose-400 hover:text-rose-300 font-medium transition">
+                + Reveal next clue ({revealedClues}/{current.clues.length})
+              </button>
+            )}
+          </div>
+
+          <div className="text-xs text-slate-500 uppercase tracking-widest mb-3 font-bold">What murmur is this?</div>
+          <div className="grid grid-cols-2 gap-2.5">
+            {options.map((opt, i) => {
+              let cls = 'bg-slate-800/30 border-slate-700/40 hover:border-slate-500/60';
+              if (guessed) {
+                if (opt === current.answer) cls = 'bg-emerald-950/30 border-emerald-500/60';
+                else if (opt === selected) cls = 'bg-red-950/30 border-red-500/60';
+                else cls = 'bg-slate-900/20 border-slate-700/30 opacity-40';
+              }
+              return (
+                <button key={i} onClick={() => handleGuess(opt)} disabled={guessed}
+                  className={`choice-btn text-left p-3.5 rounded-xl border transition text-sm text-slate-200 ${cls}`}>{opt}</button>
+              );
+            })}
+          </div>
+
+          {guessed && (
+            <div className="mt-5">
+              <div className={`p-5 rounded-xl border ${selected === current.answer ? 'bg-emerald-950/20 border-emerald-700/30' : 'bg-slate-800/30 border-slate-700/30'}`}>
+                <FormattedText text={current.explanation} className="feedback-text" />
+              </div>
+              <button onClick={() => { setIdx(prev => prev + 1); setRevealedClues(1); setGuessed(false); setSelected(null); }}
+                className="w-full mt-4 py-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── ACQUIRED HEART DISEASE ────────────────────────────────────────
+    function AcquiredHeartDisease({ conditions }) {
+      const [expanded, setExpanded] = useState({});
+      const toggle = (id) => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
+      return (
+        <div className="space-y-3">
+          {conditions.map(c => (
+            <div key={c.id} onClick={() => toggle(c.id)} className="cursor-pointer">
+              <div className={`p-4 rounded-xl border transition ${expanded[c.id] ? 'bg-red-950/30 border-red-700/40' : 'bg-slate-800/50 border-slate-700/40 hover:border-slate-600/60'}`}>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold text-white">{c.name}</h3>
+                  <span className={`text-lg transition ${expanded[c.id] ? 'rotate-90' : ''}`}>▶</span>
+                </div>
+                {expanded[c.id] && (
+                  <div className="mt-4 pt-4 border-t border-slate-700/40 space-y-2">
+                    <div className="text-sm"><span className="text-slate-400">Presentation:</span> <span className="text-slate-300">{c.presentation}</span></div>
+                    <div className="text-sm"><span className="text-slate-400">Diagnostics:</span> <span className="text-slate-300">{c.diagnostics}</span></div>
+                    <div className="text-sm"><span className="text-slate-400">Treatment:</span> <span className="text-slate-300">{c.treatment}</span></div>
+                    <div className="text-sm"><span className="text-slate-400">Complications:</span> <span className="text-slate-300">{c.complications}</span></div>
+                    {c.pearlForShelf && <div className="text-sm mt-2"><span className="text-amber-400">💡</span> <span className="text-amber-300/80">{c.pearlForShelf}</span></div>}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    // ─── ECG PATTERNS ──────────────────────────────────────────────────
+    function ECGPatterns({ patterns }) {
+      const [selected, setSelected] = useState(null);
+      const current = patterns.find(p => p.id === selected);
+      return (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="flex flex-col gap-2 h-fit">
+            {patterns.map(p => {
+              const colorClass = p.type === 'normal' ? 'bg-emerald-500/20 border-emerald-500/40 hover:border-emerald-500/60' : p.type === 'arrhythmia' ? 'bg-amber-500/20 border-amber-500/40 hover:border-amber-500/60' : 'bg-red-500/20 border-red-500/40 hover:border-red-500/60';
+              return (
+                <button key={p.id} onClick={() => setSelected(p.id)}
+                  className={`text-left p-3.5 rounded-lg border transition ${selected === p.id ? colorClass : 'bg-slate-800/30 border-slate-700/40 hover:border-slate-600/60 text-slate-400'}`}>
+                  <div className="font-medium text-sm text-white">{p.name}</div>
+                  <div className="text-xs text-slate-400 mt-0.5">{p.type}</div>
+                </button>
+              );
+            })}
+          </div>
+          {current && (
+            <div className="lg:col-span-2 bg-slate-800/50 border border-slate-700/40 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-white mb-4">{current.name}</h3>
+              <div className="space-y-4">
+                <div><span className="text-slate-400 text-sm">Description:</span> <span className="text-slate-300 text-sm block mt-1">{current.description}</span></div>
+                <div><span className="text-slate-400 text-sm">Associations:</span> <span className="text-slate-300 text-sm block mt-1">{current.associations}</span></div>
+                <div><span className="text-slate-400 text-sm">Peds Notes:</span> <span className="text-slate-300 text-sm block mt-1">{current.pedsNotes}</span></div>
+                {current.shelfTrap && <div><span className="text-amber-400 text-sm">🚨 Shelf Trap:</span> <span className="text-amber-300 text-sm block mt-1">{current.shelfTrap}</span></div>}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── CARDIAC PHARMACOLOGY ─────────────────────────────────────────
+    function CardiacPharm({ drugs }) {
+      const [selected, setSelected] = useState(null);
+      const current = drugs.find(d => d.id === selected);
+      return (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="flex flex-col gap-2 h-fit">
+            {drugs.map(d => (
+              <button key={d.id} onClick={() => setSelected(d.id)}
+                className={`text-left p-3.5 rounded-lg border transition ${selected === d.id ? 'bg-rose-500/20 border-rose-500/40 text-white font-medium' : 'bg-slate-800/30 border-slate-700/40 hover:border-slate-600/60 text-slate-400'}`}>
+                <div className="font-medium text-sm">{d.name}</div>
+                <div className="text-xs text-slate-400 mt-0.5">{d.category}</div>
+              </button>
+            ))}
+          </div>
+          {current && (
+            <div className="lg:col-span-2 bg-slate-800/50 border border-slate-700/40 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-white mb-4">{current.name}</h3>
+              <div className="space-y-4">
+                <div><span className="text-slate-400 text-sm font-medium">Mechanism:</span> <span className="text-slate-300 text-sm block mt-1">{current.mechanism}</span></div>
+                <div><span className="text-slate-400 text-sm font-medium">Indication:</span> <span className="text-slate-300 text-sm block mt-1">{current.indication}</span></div>
+                <div><span className="text-slate-400 text-sm font-medium">Side Effects:</span> <span className="text-slate-300 text-sm block mt-1">{current.sideEffects}</span></div>
+                <div><span className="text-slate-400 text-sm font-medium">Peds Notes:</span> <span className="text-slate-300 text-sm block mt-1">{current.pedsNotes}</span></div>
+                {current.shelfPearl && <div><span className="text-amber-400 text-sm font-medium">💡 Pearl:</span> <span className="text-amber-300 text-sm block mt-1">{current.shelfPearl}</span></div>}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── SHELF SCENARIOS ───────────────────────────────────────────────
+    function ShelfScenarios({ items }) {
+      const [queue, setQueue] = useState(() => [...items].sort(() => Math.random() - 0.5));
+      const [idx, setIdx] = useState(0);
+      const [selected, setSelected] = useState(null);
+      const [answered, setAnswered] = useState(false);
+      const [score, setScore] = useState({ correct: 0, total: 0 });
+      const [missed, setMissed] = useState([]);
+      const savedRef = useRef(false);
+
+      const current = queue[idx];
+      const isComplete = !current && score.total > 0;
+
+      useEffect(() => {
+        if (isComplete && !savedRef.current) {
+          IDProgress.save('cardio_shelf_scenarios', { correct: score.correct, total: score.total, missed });
+          savedRef.current = true;
+        }
+      }, [isComplete]);
+
+      if (isComplete) {
+        const pct = Math.round(score.correct / Math.max(1, score.total) * 100);
+        const best = IDProgress.getModule('cardio_shelf_scenarios');
+        const color = pct >= 80 ? 'text-emerald-400' : pct >= 60 ? 'text-amber-400' : 'text-red-400';
+        return (
+          <div className="max-w-2xl mx-auto py-8">
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-4">{pct >= 80 ? '🎖️' : pct >= 60 ? '📋' : '📚'}</div>
+              <h2 className="text-xl font-bold text-white mb-1">Quiz Complete!</h2>
+              <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
+              <p className="text-slate-400 text-sm">{score.correct} / {score.total} correct</p>
+              {best.attempts.length > 1 && <p className="text-xs text-slate-500 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
+            </div>
+            {missed.length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">Missed Cases — Review These</h3>
+                <div className="space-y-2">
+                  {missed.map((m, i) => (
+                    <div key={i} className="flex items-center gap-3 p-3 bg-red-950/20 border border-red-800/20 rounded-lg text-sm">
+                      <span className="text-red-400">✗</span>
+                      <span className="text-slate-300 flex-1">{m.stem}</span>
+                      <span className="text-[10px] text-red-300/50">(you: {m.yourAnswer} → {m.correctAnswer})</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="flex gap-3 justify-center">
+              <button onClick={() => { setQueue([...items].sort(() => Math.random() - 0.5)); setIdx(0); setSelected(null); setAnswered(false); setScore({ correct: 0, total: 0 }); setMissed([]); savedRef.current = false; }}
+                className="px-6 py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-sm font-medium transition">Play Again</button>
+            </div>
+          </div>
+        );
+      }
+
+      const handleAnswer = (choice) => {
+        setSelected(choice);
+        setAnswered(true);
+        const correct = choice === current.correctAnswer;
+        setScore(prev => ({ correct: prev.correct + (correct ? 1 : 0), total: prev.total + 1 }));
+        if (!correct) setMissed(prev => [...prev, { stem: current.stem, correctAnswer: current.correctAnswer, yourAnswer: choice }]);
+      };
+
+      return (
+        <div className="max-w-3xl mx-auto">
+          <div className="flex items-center justify-between mb-6">
+            <span className="text-sm text-slate-400 tabular-nums">{idx + 1} / {queue.length}</span>
+            <span className="text-sm text-slate-500 tabular-nums">{score.correct} correct</span>
+          </div>
+
+          <div className="bg-slate-800/50 border border-slate-700/40 rounded-xl p-6 mb-6">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-rose-400/70 mb-3">Clinical Vignette</div>
+            <p className="text-sm text-slate-300 leading-relaxed mb-4">{current.stem}</p>
+            <div className="text-[10px] font-bold uppercase tracking-widest text-rose-400/70 mb-3">Question</div>
+            <p className="text-sm text-slate-300">{current.question}</p>
+          </div>
+
+          <div className="space-y-3 mb-6">
+            {current.choices.map((choice, i) => {
+              let cls = 'bg-slate-800/30 border-slate-700/40 hover:border-slate-500/60';
+              if (answered) {
+                if (choice === current.correctAnswer) cls = 'bg-emerald-950/30 border-emerald-500/60';
+                else if (choice === selected) cls = 'bg-red-950/30 border-red-500/60';
+                else cls = 'bg-slate-900/20 border-slate-700/30 opacity-40';
+              }
+              return (
+                <button key={i} onClick={() => !answered && handleAnswer(choice)} disabled={answered}
+                  className={`choice-btn w-full text-left p-4 rounded-xl border transition ${cls}`}>
+                  <span className="text-sm text-slate-200">{choice}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {answered && (
+            <div className="space-y-4">
+              <div className={`p-5 rounded-xl border ${selected === current.correctAnswer ? 'bg-emerald-950/20 border-emerald-700/30' : 'bg-slate-800/30 border-slate-700/30'}`}>
+                <FormattedText text={current.explanation} className="feedback-text" />
+              </div>
+              <button onClick={() => { setIdx(prev => prev + 1); setSelected(null); setAnswered(false); }}
+                className="w-full py-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── FETAL CIRCULATION ────────────────────────────────────────────
+    function FetalCirculation({ structures }) {
+      const [selected, setSelected] = useState(null);
+      const current = structures.find(s => s.id === selected);
+      return (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="flex flex-col gap-2 h-fit">
+            {structures.map(s => (
+              <button key={s.id} onClick={() => setSelected(s.id)}
+                className={`text-left p-3.5 rounded-lg border transition ${selected === s.id ? 'bg-indigo-500/20 border-indigo-500/40 text-white font-medium' : 'bg-slate-800/30 border-slate-700/40 hover:border-slate-600/60 text-slate-400'}`}>
+                <div className="font-medium text-sm">{s.name}</div>
+              </button>
+            ))}
+          </div>
+          {current && (
+            <div className="lg:col-span-2 bg-slate-800/50 border border-slate-700/40 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-white mb-4">{current.name}</h3>
+              <div className="space-y-4">
+                <div><span className="text-slate-400 text-sm font-medium">Fetal Function:</span> <span className="text-slate-300 text-sm block mt-1">{current.fetalFunction}</span></div>
+                <div><span className="text-slate-400 text-sm font-medium">Postnatal Fate:</span> <span className="text-slate-300 text-sm block mt-1">{current.postnatalFate}</span></div>
+                <div><span className="text-slate-400 text-sm font-medium">Closure Stimulus:</span> <span className="text-slate-300 text-sm block mt-1">{current.closureStimulus}</span></div>
+                {current.pathologyIfFails && <div><span className="text-slate-400 text-sm font-medium">Pathology if Fails:</span> <span className="text-slate-300 text-sm block mt-1">{current.pathologyIfFails}</span></div>}
+                {current.pharmacology && <div><span className="text-slate-400 text-sm font-medium">Pharmacology:</span> <span className="text-slate-300 text-sm block mt-1">{current.pharmacology}</span></div>}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── SPORTS CARDIOLOGY ────────────────────────────────────────────
+    function SportsCardiology({ items }) {
+      const [expanded, setExpanded] = useState({});
+      const toggle = (id) => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
+      return (
+        <div className="space-y-3">
+          {items.map(item => (
+            <div key={item.id} onClick={() => toggle(item.id)} className="cursor-pointer">
+              <div className={`p-4 rounded-xl border transition ${expanded[item.id] ? 'bg-emerald-950/30 border-emerald-700/40' : 'bg-slate-800/50 border-slate-700/40 hover:border-slate-600/60'}`}>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 flex-1">
+                    <h3 className="font-semibold text-white">{item.name}</h3>
+                    <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${item.riskLevel === 'high' ? 'bg-red-500/20 text-red-300' : item.riskLevel === 'moderate' ? 'bg-amber-500/20 text-amber-300' : 'bg-blue-500/20 text-blue-300'}`}>{item.riskLevel}</span>
+                  </div>
+                  <span className={`text-lg transition ${expanded[item.id] ? 'rotate-90' : ''}`}>▶</span>
+                </div>
+                {expanded[item.id] && (
+                  <div className="mt-4 pt-4 border-t border-slate-700/40 space-y-2">
+                    <div className="text-sm"><span className="text-slate-400">Screening:</span> <span className="text-slate-300">{item.screening}</span></div>
+                    <div className="text-sm"><span className="text-slate-400">Management:</span> <span className="text-slate-300">{item.management}</span></div>
+                    {item.shelfPearl && <div className="text-sm mt-2"><span className="text-amber-400">💡</span> <span className="text-amber-300/80">{item.shelfPearl}</span></div>}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    // ─── CARDIO PEARLS & ASSOCIATIONS ────────────────────────────────
+    function CardioPearlsAssociations({ pearls, associations }) {
+      const [subTab, setSubTab] = useState('pearls');
+      const [flipped, setFlipped] = useState({});
+      const toggle = (id) => setFlipped(prev => ({ ...prev, [id]: !prev[id] }));
+      return (
+        <div>
+          <div className="flex gap-2 mb-6">
+            <button onClick={() => setSubTab('pearls')}
+              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${subTab === 'pearls' ? 'bg-rose-600 text-white' : 'bg-slate-800/40 text-slate-400 hover:text-slate-200'}`}>
+              💡 Clinical Pearls
+            </button>
+            <button onClick={() => setSubTab('associations')}
+              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${subTab === 'associations' ? 'bg-rose-600 text-white' : 'bg-slate-800/40 text-slate-400 hover:text-slate-200'}`}>
+              🔗 Buzzword Associations
+            </button>
+          </div>
+          {subTab === 'pearls' && (
+            <div className="space-y-3">
+              {pearls.map(p => (
+                <div key={p.id} className="p-4 bg-slate-800/50 border border-slate-700/40 rounded-xl">
+                  <div className="font-medium text-white text-sm mb-2">{p.title}</div>
+                  <div className="text-sm text-slate-400">{p.content}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {subTab === 'associations' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {associations.map(a => (
+                <div key={a.id} onClick={() => toggle(a.id)} className="cursor-pointer">
+                  <div className={`p-4 rounded-xl border transition ${flipped[a.id] ? 'bg-rose-950/30 border-rose-700/40' : 'bg-slate-800/50 border-slate-700/40 hover:border-slate-600/60'}`}>
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-semibold text-white text-sm">{a.buzzword}</h4>
+                      <span className={`text-lg transition ${flipped[a.id] ? 'rotate-90' : ''}`}>▶</span>
+                    </div>
+                    {flipped[a.id] && (
+                      <div className="mt-3 pt-3 border-t border-slate-700/40">
+                        <div className="text-sm text-slate-300">{a.diagnosis}</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── CARDIO STUDY GUIDE ───────────────────────────────────────────
+    function CardioStudyGuide({ data, setTab }) {
+      const allScores = [
+        { moduleId: 'cardio_murmur_quiz', name: 'Murmur Quiz' },
+        { moduleId: 'cardio_shelf_scenarios', name: 'Shelf Scenarios' },
+      ];
+      const scores = allScores.map(m => {
+        const prog = IDProgress.getModule(m.moduleId);
+        return { ...m, pct: prog?.bestScore || 0, attempts: prog?.attempts?.length || 0 };
+      });
+      const avgScore = Math.round(scores.reduce((s, m) => s + m.pct, 0) / Math.max(1, scores.length));
+      const recs = scores.filter(m => m.pct < 75 && m.attempts > 0).map(m => m.name);
+      return (
+        <div className="max-w-2xl mx-auto space-y-6">
+          <div className="bg-slate-800/50 border border-slate-700/40 rounded-xl p-6">
+            <h3 className="text-lg font-bold text-white mb-4">Your Progress</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {scores.map(m => (
+                <div key={m.moduleId} className="p-3 bg-slate-900/30 rounded-lg border border-slate-700/30">
+                  <div className="text-xs text-slate-400 mb-1">{m.name}</div>
+                  <div className={`text-lg font-bold ${m.pct >= 80 ? 'text-emerald-400' : m.pct >= 60 ? 'text-amber-400' : m.pct > 0 ? 'text-red-400' : 'text-slate-500'}`}>{m.pct || '—'}%</div>
+                  {m.attempts > 0 && <div className="text-[10px] text-slate-500">{m.attempts} attempt{m.attempts !== 1 ? 's' : ''}</div>}
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 pt-4 border-t border-slate-700/30">
+              <div className="text-sm"><span className="text-slate-400">Overall Mastery:</span> <span className={`text-lg font-bold ml-2 ${avgScore >= 80 ? 'text-emerald-400' : avgScore >= 60 ? 'text-amber-400' : 'text-red-400'}`}>{avgScore}%</span></div>
+            </div>
+          </div>
+          {recs.length > 0 && (
+            <div className="p-4 bg-amber-950/15 border border-amber-700/20 rounded-xl">
+              <p className="text-xs text-amber-200/80 leading-relaxed">
+                <strong>📚 Study Focus:</strong> Review <strong>{recs.join(', ')}</strong> — aim for 75%+ on each quiz. Use flashcards and spaced repetition for weak areas.
+              </p>
+            </div>
+          )}
+          {avgScore >= 80 && (
+            <div className="p-4 bg-emerald-950/15 border border-emerald-700/20 rounded-xl">
+              <p className="text-xs text-emerald-200/80 leading-relaxed">
+                <strong>🎉 Great job!</strong> You're mastering cardiology. Now deepen your understanding by exploring the other modules — CHD Cards, ECG Patterns, and Fetal Circulation are especially high-yield for shelf exams.
+              </p>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // ─── LOADING SCREEN ─────────────────────────────────────────────
+    function LoadingScreen() {
+      return (
+        <div className="flex items-center justify-center h-64">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400 mx-auto mb-4"></div>
+            <p className="text-sm text-slate-400">Loading study data...</p>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── APP ────────────────────────────────────────────────────────
+    function App() {
+      const [currentView, setView] = useState({ type: 'dashboard' });
+      const [sidebarOpen, setSidebarOpen] = useState(false);
+      const [searchQuery, setSearchQuery] = useState('');
+      const navigate = useCallback((view) => { setView(view); setSidebarOpen(false); window.scrollTo(0, 0); }, []);
+      return (
+        <ThemeProvider><DataProvider><ProgressProvider>
+          <div className="flex h-screen overflow-hidden">
+            <Sidebar currentView={currentView} setView={navigate} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            {sidebarOpen && <div onClick={() => setSidebarOpen(false)} className="fixed inset-0 bg-black/50 z-30 lg:hidden" />}
+            <div className="flex-1 flex flex-col overflow-hidden">
+              <TopBar setSidebarOpen={setSidebarOpen} searchQuery={searchQuery} setSearchQuery={setSearchQuery} currentView={currentView} setView={navigate} />
+              <main className="flex-1 overflow-y-auto scrollbar-thin">
+                {currentView.type === 'dashboard' && <DashboardView setView={navigate} />}
+                {currentView.type === 'domain' && <DomainView domain={currentView.domain} setView={navigate} />}
+                {currentView.type === 'vignette' && <VignettePlayer vignetteId={currentView.vignetteId} domain={currentView.domain} setView={navigate} fromDomain={currentView.fromDomain} />}
+                {currentView.type === 'all_vignettes' && <AllVignettesView setView={navigate} />}
+                {currentView.type === 'id_hub' && <IDHubView />}
+                {currentView.type === 'cardio_hub' && <CardioHubView />}
+                {currentView.type === 'nbme_strategy' && <NBMEStrategyView />}
+                {currentView.type === 'rapid_review' && <RapidReviewView />}
+                {currentView.type === 'search' && <SearchView query={currentView.query} setView={navigate} />}
+              </main>
+            </div>
+          </div>
+        </ProgressProvider></DataProvider></ThemeProvider>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1633 @@
+{
+  "bugDrugPairs": [
+    {
+      "id": "bdp-1",
+      "bug": "Group B Streptococcus (GBS)",
+      "drug": "Ampicillin + Gentamicin",
+      "context": "Neonatal early-onset sepsis",
+      "hint": "Most common cause of neonatal sepsis <7 days",
+      "ageGroup": "neonate"
+    },
+    {
+      "id": "bdp-2",
+      "bug": "Escherichia coli (K1 capsule)",
+      "drug": "Ampicillin + Gentamicin (or Cefotaxime)",
+      "context": "Neonatal meningitis and UTI",
+      "hint": "Second most common neonatal meningitis. K1 capsule crosses BBB",
+      "ageGroup": "neonate"
+    },
+    {
+      "id": "bdp-3",
+      "bug": "Listeria monocytogenes",
+      "drug": "Ampicillin (not Cephalosporin)",
+      "context": "Neonatal and immunocompromised meningitis",
+      "hint": "Cephalosporins are NOT effective. Use Ampicillin or TMP-SMX",
+      "ageGroup": "neonate"
+    },
+    {
+      "id": "bdp-4",
+      "bug": "Streptococcus pneumoniae",
+      "drug": "Cefotaxime or Ceftriaxone + Vancomycin (if resistant)",
+      "context": "Bacterial meningitis >1 month",
+      "hint": "High-dose cephalosporin; add Vancomycin for meningitis empirically",
+      "ageGroup": "infant"
+    },
+    {
+      "id": "bdp-5",
+      "bug": "Neisseria meningitidis",
+      "drug": "Cefotaxime or Ceftriaxone",
+      "context": "Meningitis and meningococcemia",
+      "hint": "Rapid progression. Check for petechial rash. Start antibiotics before LP if suspected",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-6",
+      "bug": "Haemophilus influenzae type b",
+      "drug": "Cefotaxime or Ceftriaxone (Ampicillin if non-beta-lactamase)",
+      "context": "Meningitis, epiglottitis, pneumonia (now rare with Hib vaccine)",
+      "hint": "Vaccine-preventable. Still see in unvaccinated populations",
+      "ageGroup": "infant"
+    },
+    {
+      "id": "bdp-7",
+      "bug": "Staphylococcus aureus (MSSA)",
+      "drug": "Nafcillin or Cefazolin",
+      "context": "Osteomyelitis, septic arthritis, cellulitis",
+      "hint": "MSSA (methicillin-sensitive). Beta-lactam preferred over Vancomycin",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-8",
+      "bug": "Staphylococcus aureus (MRSA)",
+      "drug": "Vancomycin or Clindamycin",
+      "context": "Skin/soft tissue infections, pneumonia",
+      "hint": "MRSA (methicillin-resistant). Clindamycin if susceptible; Vancomycin if serious",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-9",
+      "bug": "Streptococcus pyogenes (Group A Strep)",
+      "drug": "Penicillin or Amoxicillin",
+      "context": "Pharyngitis, impetigo, cellulitis, scarlet fever",
+      "hint": "First-line for GAS. No resistance; erythromycin/azithromycin alternative",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-10",
+      "bug": "Bordetella pertussis",
+      "drug": "Azithromycin (or Trimethoprim-Sulfamethoxazole)",
+      "context": "Pertussis (whooping cough), post-exposure prophylaxis",
+      "hint": "Macrolide is first-line. Vaccine-preventable (DTaP). Limited role for antibiotics if late catarrhal stage",
+      "ageGroup": "infant"
+    },
+    {
+      "id": "bdp-11",
+      "bug": "Chlamydia trachomatis",
+      "drug": "Azithromycin (oral) or Erythromycin (ophthalmic ointment)",
+      "context": "Neonatal conjunctivitis, pneumonia",
+      "hint": "Staccato cough in pneumonia. Prophylaxis with erythromycin ointment at birth prevents inclusion conjunctivitis",
+      "ageGroup": "neonate"
+    },
+    {
+      "id": "bdp-12",
+      "bug": "Neisseria gonorrhoeae",
+      "drug": "Ceftriaxone (single dose IM)",
+      "context": "Gonococcal ophthalmia neonatorum, gonorrhea in adolescents",
+      "hint": "Ceftriaxone monotherapy now recommended. Add azithromycin for presumed co-infection with Chlamydia in older children",
+      "ageGroup": "neonate"
+    },
+    {
+      "id": "bdp-13",
+      "bug": "Mycoplasma pneumoniae",
+      "drug": "Azithromycin (or Doxycycline if >8 years)",
+      "context": "Community-acquired pneumonia, bronchitis",
+      "hint": "Atypical organism. Walking pneumonia. X-ray shows bilateral lower lobe infiltrates",
+      "ageGroup": "school-age"
+    },
+    {
+      "id": "bdp-14",
+      "bug": "Respiratory Syncytial Virus (RSV)",
+      "drug": "Supportive care (Ribavirin reserved for severe/immunocompromised)",
+      "context": "Bronchiolitis in infants",
+      "hint": "Viral—no routine antiviral. Watch for secondary bacterial infection",
+      "ageGroup": "infant"
+    },
+    {
+      "id": "bdp-15",
+      "bug": "Herpes Simplex Virus (HSV)",
+      "drug": "IV Acyclovir",
+      "context": "Neonatal herpes, CNS disease, disseminated infection",
+      "hint": "High mortality if untreated. Vesicular skin lesions, seizures, CSF with RBCs and monocytes. Start empirically if suspected",
+      "ageGroup": "neonate"
+    },
+    {
+      "id": "bdp-16",
+      "bug": "Varicella-Zoster Virus (VZV)",
+      "drug": "IV Acyclovir (if immunocompromised or severe)",
+      "context": "Chickenpox, disseminated VZV, herpes zoster",
+      "hint": "Oral Acyclovir for uncomplicated varicella in immunocompetent. IV for severe/disseminated",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-17",
+      "bug": "Salmonella species",
+      "drug": "Ceftriaxone or Fluoroquinolone (if older)",
+      "context": "Gastroenteritis, bacteremia (especially with SCD)",
+      "hint": "Sickle cell disease patients at high risk for Salmonella osteomyelitis (bone tropism)",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-18",
+      "bug": "Salmonella species (Sickle Cell Disease)",
+      "drug": "Ceftriaxone",
+      "context": "Osteomyelitis in SCD",
+      "hint": "Salmonella OSTEOMYELITIS is pathognomonic for sickle cell. Treat aggressively",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-19",
+      "bug": "Pseudomonas aeruginosa",
+      "drug": "Anti-pseudomonal beta-lactam + Aminoglycoside (or Fluoroquinolone)",
+      "context": "Cystic fibrosis, burn wounds, P. aeruginosa pneumonia",
+      "hint": "Requires double coverage. Aminoglycoside + antipseudomonal penicillin or cephalosporin",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-20",
+      "bug": "Kingella kingae",
+      "drug": "Ceftriaxone or Beta-lactamase-negative Ampicillin",
+      "context": "Osteomyelitis/septic arthritis in young children (1-4 years)",
+      "hint": "Fastidious gram-negative coccobacillus. Most common cause of septic arthritis in toddlers (replacing S. aureus)",
+      "ageGroup": "young-child"
+    },
+    {
+      "id": "bdp-21",
+      "bug": "Bartonella henselae",
+      "drug": "Azithromycin (or Doxycycline if >8 years)",
+      "context": "Cat scratch disease",
+      "hint": "History of cat scratch or exposure. Regional lymphadenopathy. Usually self-limited",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-22",
+      "bug": "Borrelia burgdorferi",
+      "drug": "Doxycycline (if >8 years) or Amoxicillin (if <8 years)",
+      "context": "Early Lyme disease (erythema migrans)",
+      "hint": "Tick exposure in endemic area. Erythema migrans (bull's-eye rash) is pathognomonic. Doxycycline preferred in older kids",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-23",
+      "bug": "Pneumocystis jirovecii",
+      "drug": "Trimethoprim-Sulfamethoxazole (TMP-SMX)",
+      "context": "PCP pneumonia in HIV-positive children",
+      "hint": "CD4 <200 in HIV. Bilateral interstitial infiltrates. Prophylaxis also with TMP-SMX",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-24",
+      "bug": "Candida species",
+      "drug": "Fluconazole or IV Amphotericin B (if invasive)",
+      "context": "Oral thrush, esophageal candidiasis, bloodstream infection",
+      "hint": "Common in premature infants and immunocompromised. Fluconazole for most; Amphotericin for invasive/CNS",
+      "ageGroup": "neonate"
+    },
+    {
+      "id": "bdp-25",
+      "bug": "Clostridioides difficile",
+      "drug": "Metronidazole (mild-moderate) or Vancomycin (severe)",
+      "context": "Antibiotic-associated diarrhea",
+      "hint": "Pseudomembranous colitis. Risk after broad-spectrum antibiotics (clindamycin, cephalosporins)",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-26",
+      "bug": "Enterobius vermicularis (Pinworm)",
+      "drug": "Mebendazole or Pyrantel pamoate",
+      "context": "Perianal pruritus, especially at night",
+      "hint": "Most common helminth in developed countries. Treat whole family. Reinfection common",
+      "ageGroup": "young-child"
+    },
+    {
+      "id": "bdp-27",
+      "bug": "Treponema pallidum (congenital syphilis)",
+      "drug": "IV Penicillin G (aqueous or procaine)",
+      "context": "Congenital syphilis, early or late manifestations",
+      "hint": "VDRL/RPR screening mandatory in prenatal care. Penicillin prevents vertical transmission",
+      "ageGroup": "neonate"
+    },
+    {
+      "id": "bdp-28",
+      "bug": "Treponema pallidum (acquired syphilis, adolescent)",
+      "drug": "Benzathine Penicillin G (IM single dose) or Doxycycline",
+      "context": "Early acquired syphilis (primary or secondary)",
+      "hint": "Primary: chancre. Secondary: rash (including palms/soles), lymphadenopathy, fever",
+      "ageGroup": "adolescent"
+    },
+    {
+      "id": "bdp-29",
+      "bug": "Viridans group Streptococci",
+      "drug": "Penicillin or Cephalosporin",
+      "context": "Subacute endocarditis",
+      "hint": "Alpha-hemolytic streptococci. Slow growth; need blood cultures. Often follows dental procedure",
+      "ageGroup": "all"
+    },
+    {
+      "id": "bdp-30",
+      "bug": "Streptococcus agalactiae (GBS) late-onset sepsis",
+      "drug": "Cefotaxime or Ceftriaxone",
+      "context": "Sepsis/meningitis age 7-90 days",
+      "hint": "Late-onset GBS (≥7 days) has different empiric coverage than early-onset",
+      "ageGroup": "infant"
+    },
+    {
+      "id": "bdp-31",
+      "bug": "Haemophilus influenzae (non-typeable, Beta-lactamase positive)",
+      "drug": "Amoxicillin-Clavulanate or Cephalosporin",
+      "context": "Otitis media, sinusitis, pneumonia",
+      "hint": "Beta-lactamase production confers ampicillin resistance. High-dose amoxicillin-clavulanate is first-line AOM",
+      "ageGroup": "young-child"
+    },
+    {
+      "id": "bdp-32",
+      "bug": "Vibrio species",
+      "drug": "Doxycycline or Fluoroquinolone",
+      "context": "Gastroenteritis, wound infection (marine exposure)",
+      "hint": "Saltwater exposure. Can cause severe septicemia, especially in immunocompromised",
+      "ageGroup": "all"
+    }
+  ],
+  "empiricTherapy": [
+    {
+      "id": "et-1",
+      "syndrome": "Neonatal Meningitis (<1 month)",
+      "empiricRegimen": "Ampicillin + Cefotaxime (preferred) OR Ampicillin + Gentamicin",
+      "targetOrganisms": ["Group B Streptococcus", "E. coli (K1)", "Listeria monocytogenes", "Herpes Simplex Virus"],
+      "keyConsiderations": "Add IV Acyclovir empirically if any concern for HSV (vesicles, maternal genital lesions). Avoid ceftriaxone in neonates due to bilirubin displacement and kernicterus risk. CSF findings: low glucose, high protein, neutrophil predominance in bacterial; lymphocytes early in viral.",
+      "whenToNarrow": "Culture and sensitivity at 48-72 hours. If Listeria identified, continue Ampicillin; cephalosporins do not penetrate CNS adequately for Listeria",
+      "duration": "14-21 days for GBS; 21 days for gram-negative rods; 14-21 days for HSV"
+    },
+    {
+      "id": "et-2",
+      "syndrome": "Neonatal Early-Onset Sepsis (EOS, <72 hours)",
+      "empiricRegimen": "Ampicillin + Gentamicin (or Cefotaxime)",
+      "targetOrganisms": ["Group B Streptococcus", "E. coli", "other gram-negatives"],
+      "keyConsiderations": "Risk factors: maternal fever, chorioamnionitis, prolonged rupture of membranes, prematurity, low birth weight. Blood cultures before antibiotics. Maternal GBS status guides decision; if mother unknown/positive, treat. Do NOT do LP in unstable neonates—treat presumptively.",
+      "whenToNarrow": "Blood culture results (24-48h). If cultures negative and baby well, may discontinue after 48h",
+      "duration": "7-10 days if confirmed bacterial; 10-14 days if meningitis"
+    },
+    {
+      "id": "et-3",
+      "syndrome": "Neonatal Late-Onset Sepsis (LOS, ≥72 hours to 28 days)",
+      "empiricRegimen": "Vancomycin + Gentamicin (± Cefotaxime for meningitis coverage)",
+      "targetOrganisms": ["Coagulase-negative Staphylococci", "S. aureus", "Enterococci", "gram-negatives", "Candida"],
+      "keyConsiderations": "Nosocomial pathogens predominate. Central line associated. Vancomycin dosing: 10-15 mg/kg/dose Q8-12h (goal trough 10-20 mcg/mL). Consider Candida empirically, especially in preemies and prolonged antibiotics. Add fluconazole if risk high.",
+      "whenToNarrow": "Culture results and susceptibilities. Remove central line if infected",
+      "duration": "7-14 days depending on pathogen and source control"
+    },
+    {
+      "id": "et-4",
+      "syndrome": "Bacterial Meningitis (>1 month to 18 years)",
+      "empiricRegimen": "Cefotaxime or Ceftriaxone + Vancomycin (+ Ampicillin if <3 months or risk factors for Listeria)",
+      "targetOrganisms": ["Streptococcus pneumoniae", "Neisseria meningitidis", "Haemophilus influenzae", "Listeria (if <3mo or immunocompromised)"],
+      "keyConsiderations": "Start antibiotics BEFORE LP if meningitis suspected clinically (petechiae, altered mental status, kernig/brudzinski sign). Dexamethasone 0.15 mg/kg Q6h for 4 days (improves outcomes, especially pneumococcal). High-dose cephalosporin; add Vancomycin for empiric coverage of resistant pneumococcus. Listeria coverage only if age <3 months or immunocompromised.",
+      "whenToNarrow": "CSF culture and sensitivity (24-48h). If S. pneumoniae susceptible to penicillin, can narrow to penicillin alone. If H. influenzae, switch to ceftriaxone/cefotaxime if not already using.",
+      "duration": "10-14 days"
+    },
+    {
+      "id": "et-5",
+      "syndrome": "Community-Acquired Pneumonia (CAP) - Infant (3-59 months)",
+      "empiricRegimen": "Amoxicillin (first-line) or Ceftriaxone (if unable to tolerate PO or severe)",
+      "targetOrganisms": ["Streptococcus pneumoniae", "Haemophilus influenzae", "Streptococcus pyogenes"],
+      "keyConsiderations": "High-dose amoxicillin (80-90 mg/kg/day) for resistant pneumococcus. Viral causes (RSV, influenza) are common; antibiotics for bacterial superinfection. Assess severity: mild-moderate usually PO; severe/hypoxia/tachypnea needs IV therapy.",
+      "whenToNarrow": "Clinical response. Cultures not routinely done unless severe/hospitalized",
+      "duration": "7-10 days"
+    },
+    {
+      "id": "et-6",
+      "syndrome": "Community-Acquired Pneumonia (CAP) - School-age (≥6 years)",
+      "empiricRegimen": "Amoxicillin or Amoxicillin-Clavulanate (first-line) or Cephalosporin",
+      "targetOrganisms": ["Streptococcus pneumoniae", "Mycoplasma pneumoniae (older children)", "Chlamydophila pneumoniae"],
+      "keyConsiderations": "Mycoplasma increasingly common in school-age and adolescents (walking pneumonia, minimal infiltrates). If Mycoplasma suspected, use azithromycin or doxycycline (if >8y). Atypical coverage may be needed empirically in some settings.",
+      "whenToNarrow": "Clinical response and local resistance patterns. Consider Mycoplasma serology or PCR if atypical presentation",
+      "duration": "7-10 days"
+    },
+    {
+      "id": "et-7",
+      "syndrome": "Acute Otitis Media (AOM)",
+      "empiricRegimen": "Amoxicillin (high-dose, 80-90 mg/kg/day) or Amoxicillin-Clavulanate",
+      "targetOrganisms": ["Streptococcus pneumoniae", "Haemophilus influenzae (non-typeable, beta-lactamase +/-)", "Moraxella catarrhalis"],
+      "keyConsiderations": "High-dose amoxicillin compensates for resistant pneumococcus. Amoxicillin-clavulanate if beta-lactamase producing H. influenzae suspected. Cephalosporin (cefotaxime, ceftriaxone) second-line if amoxicillin allergy or resistance.",
+      "whenToNarrow": "Not typically done; treat empirically and assess clinical response",
+      "duration": "10 days"
+    },
+    {
+      "id": "et-8",
+      "syndrome": "Febrile Infant with UTI (2-24 months, fever, no obvious source)",
+      "empiricRegimen": "Ampicillin + Gentamicin or Cefotaxime",
+      "targetOrganisms": ["E. coli", "other gram-negatives", "Enterococcus"],
+      "keyConsiderations": "All febrile infants <2 years need urinalysis/culture as part of sepsis workup. Imaging (ultrasound ± VCUG) after acute infection to rule out anatomic abnormality. Positive UA (nitrites, WBCs) in febrile infant warrants IV antibiotics even if source unknown.",
+      "whenToNarrow": "Urine culture results (24-48h). Switch to appropriate agent based on organism and susceptibilities",
+      "duration": "7-14 days (parenteral initially, may step-down to PO after clinical improvement)"
+    },
+    {
+      "id": "et-9",
+      "syndrome": "Cellulitis (non-purulent)",
+      "empiricRegimen": "Beta-lactam (Amoxicillin-Clavulanate or Cephalosporin)",
+      "targetOrganisms": ["Streptococcus pyogenes", "Streptococcus pneumoniae", "H. influenzae"],
+      "keyConsiderations": "Purulent cellulitis with abscess/drainage changes management (now likely MRSA). Non-purulent (streptococcus) traditionally covered by beta-lactam. Clinical response is key. If worsening, add MRSA coverage.",
+      "whenToNarrow": "Clinical improvement. Culture if purulent or severe",
+      "duration": "7-10 days"
+    },
+    {
+      "id": "et-10",
+      "syndrome": "Purulent Cellulitis with Abscess",
+      "empiricRegimen": "Vancomycin or Clindamycin (empirically) pending culture",
+      "targetOrganisms": ["Staphylococcus aureus (MRSA)", "Streptococcus pyogenes"],
+      "keyConsiderations": "Purulent drainage mandates MRSA coverage. Perform incision and drainage; send culture. Clindamycin effective if susceptible; reduces toxin production. Some centers use linezolid or daptomycin for resistant MRSA.",
+      "whenToNarrow": "Culture results and susceptibilities. If MSSA, narrow to nafcillin or cephalosporin",
+      "duration": "7-14 days"
+    },
+    {
+      "id": "et-11",
+      "syndrome": "Periorbital Cellulitis",
+      "empiricRegimen": "IV Beta-lactam ± Vancomycin (Cefotaxime or Ceftriaxone ± Vancomycin)",
+      "targetOrganisms": ["Streptococcus pneumoniae", "Haemophilus influenzae", "Streptococcus pyogenes", "S. aureus"],
+      "keyConsiderations": "Urgent CT/MRI to rule out orbital cellulitis/abscess. All cases get IV antibiotics. Orbital cellulitis (exophthalmos, ophthalmoplegia, vision loss) needs surgical drainage. Periorbital cellulitis may be treated with IV abx alone.",
+      "whenToNarrow": "Culture results and imaging findings. If abscess present, surgical drainage needed",
+      "duration": "10-14 days IV, then transition to PO completion"
+    },
+    {
+      "id": "et-12",
+      "syndrome": "Osteomyelitis/Septic Arthritis",
+      "empiricRegimen": "IV Beta-lactam or Vancomycin (Cefotaxime or Nafcillin ± Vancomycin for empiric S. aureus coverage)",
+      "targetOrganisms": ["Staphylococcus aureus (MSSA and MRSA)", "Streptococcus pyogenes", "Kingella kingae (young children)", "Haemophilus influenzae", "Streptococcus pneumoniae"],
+      "keyConsiderations": "Joint aspiration mandatory for culture and gram stain. Blood cultures. Imaging (X-ray, ultrasound, MRI) localizes infection. Kingella kingae now most common cause of septic arthritis in toddlers. Early surgery if complicated (foreign body, subperiosteal abscess).",
+      "whenToNarrow": "Culture results. If susceptibilities available, narrow to MSSA coverage (nafcillin preferred over cephalosporin) if organism is MSSA",
+      "duration": "3-4 weeks IV for osteomyelitis; 2-3 weeks for septic arthritis (may switch to PO if good response)"
+    },
+    {
+      "id": "et-13",
+      "syndrome": "Epiglottitis",
+      "empiricRegimen": "Ceftriaxone or Cefotaxime (± Vancomycin if unsure of resistance)",
+      "targetOrganisms": ["Haemophilus influenzae type b (rare now with vaccine)", "Streptococcus pyogenes", "Staphylococcus aureus"],
+      "keyConsiderations": "AIRWAY EMERGENCY. Visualize epiglottis in controlled setting (OR, not bedside). Drooling, tripoding, toxic appearance. Do not agitate child. Lateral neck X-ray may show 'thumb sign.' Antibiotics STAT; consider dexamethasone. Airway may need intubation.",
+      "whenToNarrow": "Culture results rare (airway swabs). Treat empirically with high-dose cephalosporin",
+      "duration": "7-10 days"
+    },
+    {
+      "id": "et-14",
+      "syndrome": "Group A Streptococcal Pharyngitis",
+      "empiricRegimen": "Amoxicillin or Penicillin (first-line) or Cephalosporin (if allergy)",
+      "targetOrganisms": ["Streptococcus pyogenes (Group A Strep)"],
+      "keyConsiderations": "Confirmed by rapid strep or throat culture (not empiric antibiotics without testing—avoid unnecessary therapy). Amoxicillin preferred over Penicillin (better taste, dosing). No resistance to penicillin. Erythromycin/azithromycin if penicillin allergy (non-IgE mediated).",
+      "whenToNarrow": "Culture confirms GAS. All penicillin-susceptible; no narrowing needed",
+      "duration": "10 days (full course required to prevent acute rheumatic fever)"
+    },
+    {
+      "id": "et-15",
+      "syndrome": "Neonatal Conjunctivitis (Inclusion body conjunctivitis from Chlamydia)",
+      "empiricRegimen": "Azithromycin (or Erythromycin eye ointment for prophylaxis)",
+      "targetOrganisms": ["Chlamydia trachomatis", "Neisseria gonorrhoeae", "HSV"],
+      "keyConsiderations": "Prophylaxis: erythromycin ointment at birth prevents chlamydial and gonococcal. Chlamydia presents at 1-2 weeks with mild conjunctivitis (non-purulent). Gonorrhea presents acutely with profuse purulent discharge. Always screen mother and treat maternal infection.",
+      "whenToNarrow": "Conjunctival culture and gram stain identify organism. Treat mother and sexual partners",
+      "duration": "7-10 days"
+    },
+    {
+      "id": "et-16",
+      "syndrome": "Sexually Transmitted Infection (STI) - Adolescent with gonorrhea",
+      "empiricRegimen": "Ceftriaxone 250 mg IM single dose + Azithromycin 1 g PO single dose (or Doxycycline 100 mg BID x7 if >8y)",
+      "targetOrganisms": ["Neisseria gonorrhoeae", "Chlamydia trachomatis (presumed co-infection)"],
+      "keyConsiderations": "Dual therapy now standard (Chlamydia coverage mandatory). Fluoroquinolones no longer recommended due to resistance. Screen for other STIs (syphilis, HIV, HSV). Partners need treatment. Report to public health.",
+      "whenToNarrow": "Chlamydia testing; if negative, azithromycin theoretically unnecessary but given due to prevalence",
+      "duration": "Single dose ceftriaxone + single dose azithromycin"
+    }
+  ],
+  "antibioticSpectrum": [
+    {
+      "id": "as-1",
+      "drug": "Amoxicillin",
+      "class": "Aminopenicillin",
+      "mechanism": "Inhibits cell wall synthesis (PBP binding)",
+      "gramPositive": ["Streptococci (sensitive strains)", "Enterococci (ampicillin-susceptible)", "Listeria monocytogenes"],
+      "gramNegative": ["Haemophilus influenzae (non-beta-lactamase)", "E. coli (ampicillin-susceptible)", "Proteus mirabilis"],
+      "atypicals": [],
+      "anaerobes": ["Oral anaerobes (limited coverage)"],
+      "notCovered": ["MRSA", "Pseudomonas", "Beta-lactamase-producing organisms", "Resistant pneumococcus"],
+      "pedsUses": ["Acute otitis media (first-line, high-dose 80-90 mg/kg/day)", "Group A Strep pharyngitis", "Community-acquired pneumonia", "Lyme disease (if <8 years)"],
+      "pedsNotes": "First-line for many common pediatric infections. High-dose compensates for resistant pneumococcus. Rash common with EBV (Epstein-Barr virus) co-infection (not true allergy).",
+      "sideEffects": ["Diarrhea", "Rash (especially with concurrent EBV/mononucleosis)", "Allergic reactions (1-3%)"],
+      "contraindications": "IgE-mediated penicillin allergy (Type I hypersensitivity—urticaria, anaphylaxis). Safely used in non-IgE mediated reactions (delayed rash)."
+    },
+    {
+      "id": "as-2",
+      "drug": "Amoxicillin-Clavulanate (Augmentin)",
+      "class": "Aminopenicillin + beta-lactamase inhibitor",
+      "mechanism": "Clavulanate inhibits beta-lactamase, protecting amoxicillin from destruction",
+      "gramPositive": ["Streptococci", "Staphylococcus aureus (MSSA only)", "Enterococci", "Listeria"],
+      "gramNegative": ["Haemophilus influenzae (beta-lactamase +/-)", "E. coli (beta-lactamase +/-)", "Moraxella catarrhalis", "some Enterobacteriaceae"],
+      "atypicals": [],
+      "anaerobes": ["Anaerobic gram-positives and gram-negatives (better than amoxicillin alone)"],
+      "notCovered": ["MRSA", "Pseudomonas", "Enterococcus faecium"],
+      "pedsUses": ["Acute otitis media (if beta-lactamase-producing organism suspected)", "Sinusitis", "Skin/soft tissue infections", "Animal bites"],
+      "pedsNotes": "Preferred over plain amoxicillin for AOM if there's concern for beta-lactamase-producing H. influenzae. Higher diarrhea rate than amoxicillin alone due to clavulanate.",
+      "sideEffects": ["Diarrhea (higher than amoxicillin)", "C. difficile colitis risk", "Rash"],
+      "contraindications": "Penicillin allergy (Type I), cephalosporin allergy, cholestasis history"
+    },
+    {
+      "id": "as-3",
+      "drug": "Ampicillin",
+      "class": "Aminopenicillin",
+      "mechanism": "Cell wall synthesis inhibition",
+      "gramPositive": ["Streptococci", "Enterococci (ampicillin-susceptible)", "Listeria (CRITICAL—cephalosporins do not cover)"],
+      "gramNegative": ["H. influenzae (non-beta-lactamase)", "E. coli (susceptible strains)"],
+      "atypicals": [],
+      "anaerobes": ["Some oral anaerobes"],
+      "notCovered": ["Beta-lactamase-producing organisms", "MRSA", "Resistant gram-negatives"],
+      "pedsUses": ["Neonatal sepsis (with gentamicin)", "Neonatal meningitis (mandatory for Listeria coverage)", "Febrile infant workup (with gentamicin)"],
+      "pedsNotes": "ESSENTIAL for neonatal coverage because Listeria monocytogenes is a neonatal pathogen. Cephalosporins do NOT cover Listeria—this is a high-yield shelf exam point. Used IV in neonates/severe infections.",
+      "sideEffects": ["Diarrhea", "Rash", "Allergic reactions"],
+      "contraindications": "Penicillin allergy"
+    },
+    {
+      "id": "as-4",
+      "drug": "Ceftriaxone",
+      "class": "Third-generation cephalosporin",
+      "mechanism": "Cell wall synthesis inhibition (PBP binding)",
+      "gramPositive": ["Streptococcus pneumoniae (most)", "Group A Strep", "some Staph"],
+      "gramNegative": ["Excellent gram-negative coverage: H. influenzae, Neisseria, Enterobacteriaceae, some Pseudomonas"],
+      "atypicals": [],
+      "anaerobes": ["Some coverage"],
+      "notCovered": ["Listeria", "MRSA", "Enterococcus", "anaerobes (variable)"],
+      "pedsUses": ["Bacterial meningitis (>1 month)", "Pneumonia", "Gonococcal ophthalmia neonatorum (single dose IM)", "Osteomyelitis", "Epiglottitis"],
+      "pedsNotes": "AVOID in neonates—displaces bilirubin from albumin, causing kernicterus. Use cefotaxime instead in neonates. Excellent tissue penetration including CNS. Third-generation coverage for resistant organisms.",
+      "sideEffects": ["Allergic reactions (less common than first-generation)", "Diarrhea", "C. difficile colitis"],
+      "contraindications": "Cephalosporin allergy, bilirubin concern (neonates)"
+    },
+    {
+      "id": "as-5",
+      "drug": "Cefotaxime",
+      "class": "Third-generation cephalosporin",
+      "mechanism": "Cell wall synthesis inhibition",
+      "gramPositive": ["S. pneumoniae", "Group A Strep", "Staph (some)"],
+      "gramNegative": ["H. influenzae", "Neisseria", "Enterobacteriaceae"],
+      "atypicals": [],
+      "anaerobes": ["Some coverage"],
+      "notCovered": ["Listeria", "MRSA", "Enterococcus"],
+      "pedsUses": ["Neonatal meningitis (preferred over ceftriaxone in neonates)", "Neonatal sepsis", "Bacterial meningitis (all ages)", "Epiglottitis"],
+      "pedsNotes": "PREFERRED in neonates over ceftriaxone (does not displace bilirubin as much). Excellent CNS penetration. Metabolism: hepatic de-esterification.",
+      "sideEffects": ["Allergic reactions", "Diarrhea", "C. difficile"],
+      "contraindications": "Cephalosporin allergy, immediate hypersensitivity to penicillin (cross-reactivity <3%)"
+    },
+    {
+      "id": "as-6",
+      "drug": "Cephalexin",
+      "class": "First-generation cephalosporin (oral)",
+      "mechanism": "Cell wall synthesis inhibition",
+      "gramPositive": ["Streptococci (Group A Strep)", "Staphylococcus aureus (MSSA only)"],
+      "gramNegative": ["Limited: E. coli (some), Klebsiella (some), Proteus (some)", "NOT H. influenzae or Neisseria"],
+      "atypicals": [],
+      "anaerobes": ["Limited coverage"],
+      "notCovered": ["MRSA", "H. influenzae", "Gram-negative rods (most)"],
+      "pedsUses": ["Step-down therapy for skin/soft tissue infections (MSSA)", "Impetigo (oral step-down)", "UTI (step-down)", "NOT for empiric serious infections"],
+      "pedsNotes": "Oral form only. First-gen coverage limited but adequate for MSSA. Good for step-down from IV beta-lactams once organism identified.",
+      "sideEffects": ["Diarrhea", "Allergic reactions"],
+      "contraindications": "Cephalosporin allergy"
+    },
+    {
+      "id": "as-7",
+      "drug": "Azithromycin",
+      "class": "Macrolide",
+      "mechanism": "Inhibits bacterial protein synthesis (50S ribosome)",
+      "gramPositive": ["Group A Strep", "S. pneumoniae (some)", "Staph (some)"],
+      "gramNegative": ["H. influenzae (variable)", "Neisseria (some)", "Bordetella pertussis", "Legionella"],
+      "atypicals": ["Mycoplasma pneumoniae (excellent)", "Chlamydia trachomatis", "Bartonella henselae", "Chlamydophila pneumoniae"],
+      "anaerobes": ["Some coverage"],
+      "notCovered": ["Gram-negative rods", "MRSA (often resistant)"],
+      "pedsUses": ["Pertussis treatment and prophylaxis", "Chlamydia trachomatis (neonatal conjunctivitis and pneumonia)", "Mycoplasma pneumoniae (walking pneumonia)", "Cat scratch disease", "Atypical pneumonia"],
+      "pedsNotes": "Excellent atypical coverage. Single-dose azithromycin for post-exposure pertussis prophylaxis. Good option for allergic-to-penicillin patients with GAS.",
+      "sideEffects": ["GI upset (nausea, vomiting)", "QT prolongation risk (rare in children)", "C. difficile", "Hepatotoxicity (rare)"],
+      "contraindications": "Macrolide allergy, concurrent QT-prolonging drugs"
+    },
+    {
+      "id": "as-8",
+      "drug": "Clindamycin",
+      "class": "Lincosamide",
+      "mechanism": "Protein synthesis inhibition (50S ribosome)",
+      "gramPositive": ["Streptococci", "Staphylococcus aureus (MSSA and some MRSA)", "Anaerobes (excellent)"],
+      "gramNegative": ["Poor gram-negative coverage"],
+      "atypicals": [],
+      "anaerobes": ["Excellent: Bacteroides, Peptostreptococcus, Prevotella, Fusobacterium"],
+      "notCovered": ["Gram-negative rods (most)", "Enterococci"],
+      "pedsUses": ["MRSA skin/soft tissue infections (if susceptible)", "Aspiration pneumonia (anaerobic coverage)", "Intra-abdominal infections with anaerobes", "Acne (topical)"],
+      "pedsNotes": "Good choice for empiric MRSA coverage, especially if susceptibilities show susceptibility. Excellent anaerobic coverage—useful for aspiration or intra-abdominal infections. AVOID overuse due to C. difficile risk.",
+      "sideEffects": ["C. difficile colitis (significant risk—counsel families)", "GI upset", "Allergic reactions"],
+      "contraindications": "Lincosamide allergy, C. difficile colitis history"
+    },
+    {
+      "id": "as-9",
+      "drug": "Trimethoprim-Sulfamethoxazole (TMP-SMX)",
+      "class": "Sulfonamide + antifolate",
+      "mechanism": "Inhibits bacterial folate synthesis",
+      "gramPositive": ["Streptococci (some)", "Staphylococcus aureus (MSSA and some MRSA)", "Nocardia"],
+      "gramNegative": ["Excellent: E. coli, Proteus, Klebsiella, H. influenzae", "some Gram-negatives"],
+      "atypicals": ["Pneumocystis jirovecii (PCP treatment and prophylaxis)", "Toxoplasma gondii (prophylaxis in HIV)"],
+      "anaerobes": ["Limited coverage"],
+      "notCovered": ["Streptococcus pyogenes (GAS)", "Pseudomonas", "Anaerobes (mostly)"],
+      "pedsUses": ["PCP prophylaxis and treatment (gold standard)", "MRSA skin infections (if susceptible)", "UTI prophylaxis", "Otitis media (alternative)", "Toxoplasma prophylaxis in HIV"],
+      "pedsNotes": "AVOIDED in neonates <2 months due to kernicterus risk (displaces bilirubin). Contraindicated in G6PD deficiency. Monitor CBC for bone marrow suppression.",
+      "sideEffects": ["Rash (can be severe—Stevens-Johnson Syndrome)", "Bone marrow suppression", "Kernicterus (neonates)", "Hemolysis (G6PD deficiency)", "Photosensitivity"],
+      "contraindications": "G6PD deficiency, sulfonamide allergy, neonates <2 months, megaloblastic anemia, folate deficiency"
+    },
+    {
+      "id": "as-10",
+      "drug": "Vancomycin",
+      "class": "Glycopeptide",
+      "mechanism": "Inhibits cell wall synthesis (D-ala-D-ala cross-linking)",
+      "gramPositive": ["Excellent: Streptococci, Staphylococcus aureus (MSSA and MRSA)", "Enterococci (some)", "Clostridium difficile (oral, topical)"],
+      "gramNegative": ["None"],
+      "atypicals": [],
+      "anaerobes": ["Clostridium difficile (for pseudomembranous colitis)"],
+      "notCovered": ["All gram-negatives", "Anaerobes except C. difficile"],
+      "pedsUses": ["MRSA serious infections (sepsis, meningitis, pneumonia)", "Empiric meningitis coverage (resistant pneumococcus)", "C. difficile (severe colitis)", "Neonatal late-onset sepsis (empiric)"],
+      "pedsNotes": "Requires therapeutic drug monitoring (TDM). Target troughs: 10-20 mcg/mL (most), 15-20 mcg/mL (meningitis). Nephrotoxicity risk, especially with aminoglycosides. Red man syndrome if infused too fast.",
+      "sideEffects": ["Nephrotoxicity (monitor SCr, UOP)", "Ototoxicity (especially with aminoglycosides)", "Red man syndrome (flushing, pruritus with rapid infusion)", "Phlebitis at IV site"],
+      "contraindications": "Vancomycin allergy (rare), caution in renal disease and hearing impairment"
+    },
+    {
+      "id": "as-11",
+      "drug": "Doxycycline",
+      "class": "Tetracycline",
+      "mechanism": "Protein synthesis inhibition (30S ribosome)",
+      "gramPositive": ["Streptococci", "Actinomyces", "some Staph"],
+      "gramNegative": ["Broad coverage including Rickettsiae", "Mycoplasma", "Chlamydia", "Brucella", "Borrelia"],
+      "atypicals": ["Mycoplasma pneumoniae", "Chlamydia species", "Bartonella", "Borrelia burgdorferi (Lyme)"],
+      "anaerobes": ["Some coverage"],
+      "notCovered": ["Streptococcus pyogenes (unreliable)", "Pseudomonas"],
+      "pedsUses": ["Rocky Mountain Spotted Fever (FIRST-LINE at ANY age despite age <8 restriction)", "Lyme disease (if >8 years)", "Atypical pneumonia", "Cat scratch disease (if >8 years)"],
+      "pedsNotes": "CRITICAL SHELF EXAM POINT: Doxycycline is CONTRAINDICATED in children <8 years due to permanent tooth discoloration and enamel hypoplasia. EXCEPTION: Rocky Mountain Spotted Fever (RMSF) is life-threatening and doxycycline is first-line at ANY age. This exception is HIGH-YIELD for NBME.",
+      "sideEffects": ["Permanent tooth discoloration and enamel hypoplasia (if <8 years)", "Photosensitivity (severe)", "Esophageal ulceration if not taken with water", "Yeast infections"],
+      "contraindications": "Age <8 years (with RMSF exception), pregnancy, esophageal obstruction"
+    },
+    {
+      "id": "as-12",
+      "drug": "Gentamicin",
+      "class": "Aminoglycoside",
+      "mechanism": "Protein synthesis inhibition and cell wall disruption (30S ribosome)",
+      "gramPositive": ["Synergy with beta-lactams (gram-positive) for serious infections"],
+      "gramNegative": ["Excellent: Enterobacteriaceae, Pseudomonas aeruginosa", "H. influenzae", "Neisseria"],
+      "atypicals": [],
+      "anaerobes": ["No coverage"],
+      "notCovered": ["Anaerobes", "Streptococci (as monotherapy)"],
+      "pedsUses": ["Neonatal sepsis (with ampicillin)", "Febrile infant workup (with ampicillin)", "Gram-negative rod coverage (with beta-lactam)", "Pseudomonas infections (with antipseudomonal beta-lactam)"],
+      "pedsNotes": "Used synergistically with ampicillin/amoxicillin in neonates and febrile infants. Extended-interval dosing preferred (once daily) for convenience and possibly better outcomes. Requires TDM. Peak/trough monitoring essential.",
+      "sideEffects": ["Nephrotoxicity (acute tubular necrosis)—monitor SCr, UOP", "Ototoxicity (irreversible—monitor hearing)", "Neuromuscular blockade"],
+      "contraindications": "Aminoglycoside allergy, renal disease (caution), hearing impairment"
+    },
+    {
+      "id": "as-13",
+      "drug": "Metronidazole",
+      "class": "Nitroimidazole",
+      "mechanism": "DNA/RNA strand breaking in anaerobes",
+      "gramPositive": [],
+      "gramNegative": [],
+      "atypicals": [],
+      "anaerobes": ["Excellent: Bacteroides, Clostridium, Prevotella, Peptostreptococcus, Fusobacterium"],
+      "notCovered": ["Aerobes (no activity)"],
+      "pedsUses": ["C. difficile (mild-moderate colitis)", "Anaerobic infections (abdominal, CNS)", "Combination therapy for polymicrobial infections"],
+      "pedsNotes": "NO activity against aerobes—must be combined with beta-lactam or other agents for mixed infections. Poorly tolerated in children (taste, GI upset). IV form available for serious infections.",
+      "sideEffects": ["Metallic taste (very common in children)", "Nausea/vomiting", "Peripheral neuropathy (with prolonged use)", "Dark urine"],
+      "contraindications": "Nitroimidazole allergy, first trimester pregnancy"
+    },
+    {
+      "id": "as-14",
+      "drug": "Acyclovir",
+      "class": "Nucleoside analogue",
+      "mechanism": "Inhibits viral DNA polymerase (requires viral thymidine kinase)",
+      "gramPositive": [],
+      "gramNegative": [],
+      "atypicals": [],
+      "anaerobes": [],
+      "notCovered": ["All bacteria (antiviral only)"],
+      "pedsUses": ["Neonatal herpes simplex (IV)—CRITICAL for early recognition", "Varicella-zoster (IV if severe/immunocompromised)", "HSV encephalitis", "Disseminated HSV"],
+      "pedsNotes": "IV formulation critical for neonatal HSV. High doses required (10-15 mg/kg/dose Q8h for meningitis). CNS penetration adequate. Nephrotoxicity if dehydrated—ensure good urine output.",
+      "sideEffects": ["Nephrotoxicity (acute kidney injury—IV formulation)", "Tremors, confusion, hallucinations (encephalopathy, especially if renal failure)", "Local phlebitis (IV site)"],
+      "contraindications": "Acyclovir allergy, severe renal disease (adjust dosing)"
+    }
+  ],
+  "whatsTheBug": [
+    {
+      "id": "wtb-1",
+      "clues": ["2-day-old neonate", "Vesicular lesions on scalp and face", "Maternal history of genital herpes", "CSF pleocytosis with RBCs (xanthochromic)", "Seizures and altered mental status"],
+      "answer": "Herpes Simplex Virus (HSV), neonatal",
+      "explanation": "Neonatal HSV presents with skin vesicles, CNS disease (encephalitis with temporal lobe predilection), and disseminated disease. Risk is vertical transmission from maternal genital herpes, especially during delivery. CSF shows elevated WBCs with both lymphocytes and monocytes, and RBCs (hemorrhagic pattern). Mortality without treatment is >50%.",
+      "difficulty": "intermediate",
+      "distractors": ["Enterovirus", "GBS", "E. coli K1", "CMV"]
+    },
+    {
+      "id": "wtb-2",
+      "clues": ["1-day-old neonate", "Respiratory distress, tachypnea, grunting", "Temperature instability", "Maternal fever, rupture of membranes >18 hours", "Positive maternal GBS swab"],
+      "answer": "Group B Streptococcus (GBS), early-onset sepsis",
+      "explanation": "GBS is the most common cause of neonatal sepsis in the first 72 hours (early-onset). Vertical transmission from maternal colonization during delivery. Risk factors: maternal fever, prolonged ROM, prematurity, low birthweight. Presents with sepsis: respiratory distress, temperature instability, poor perfusion.",
+      "difficulty": "easy",
+      "distractors": ["E. coli", "Listeria", "Enterovirus", "CMV"]
+    },
+    {
+      "id": "wtb-3",
+      "clues": ["3-month-old with fever, altered mental status", "Petechial rash spreading rapidly", "Meningeal signs (neck stiffness, kernig)", "Rapid deterioration", "No prior vaccinations"],
+      "answer": "Neisseria meningitidis (meningococcemia)",
+      "explanation": "N. meningitidis is a rapidly progressive bacterial meningitis with characteristic petechial/purpuric rash. Presents with meningeal signs, sepsis, and potential meningococcemia (sepsis with rash). Rash may evolve to purpura fulminans (DIC). Requires immediate antibiotics before LP if suspected clinically.",
+      "difficulty": "easy",
+      "distractors": ["Viral meningitis", "H. influenzae", "S. pneumoniae"]
+    },
+    {
+      "id": "wtb-4",
+      "clues": ["2-month-old with persistent cough (3 weeks)", "Staccato cough pattern", "Bilateral diffuse infiltrates on CXR", "History of maternal exposure to sexually transmitted disease", "Conjunctivitis at 2 weeks of life"],
+      "answer": "Chlamydia trachomatis pneumonia",
+      "explanation": "Chlamydia trachomatis causes inclusion conjunctivitis at 1-2 weeks (mild, non-purulent) and can progress to pneumonia at 3-8 weeks with characteristic staccato cough and hyperinflation/interstitial infiltrates on CXR. Prophylaxis with erythromycin ointment at birth prevents infection.",
+      "difficulty": "intermediate",
+      "distractors": ["RSV bronchiolitis", "GBS", "Pertussis"]
+    },
+    {
+      "id": "wtb-5",
+      "clues": ["6-week-old with paroxysmal cough", "Inspiratory 'whoop' sound", "Cough starts after runny nose (catarrhal phase)", "Fever and coryza in first 2 weeks", "Cough for 2+ weeks"],
+      "answer": "Bordetella pertussis (Pertussis, whooping cough)",
+      "explanation": "Pertussis progresses through catarrhal phase (mild URI symptoms), paroxysmal phase (severe paroxysmal cough with post-tussive vomiting, inspiratory whoop), and convalescent phase. Post-exposure prophylaxis with azithromycin is important for contacts. Vaccine-preventable (DTaP).",
+      "difficulty": "easy",
+      "distractors": ["RSV", "Parainfluenza", "Viral bronchitis"]
+    },
+    {
+      "id": "wtb-6",
+      "clues": ["3-year-old with maculopapular rash starting on face", "Cough, coryza, conjunctivitis (3 Cs)", "Koplik spots on buccal mucosa (white spots)"],
+      "answer": "Measles (Rubeola)",
+      "explanation": "Measles presents with prodrome of fever, cough, coryza, and conjunctivitis (3 Cs). Koplik spots (small white spots with red halos on buccal mucosa) appear 2-3 days before rash and are pathognomonic. Rash starts at hairline/face and spreads cephalocaudally (head to toe). Vaccine-preventable (MMR).",
+      "difficulty": "easy",
+      "distractors": ["Rubella", "Roseola", "Drug rash"]
+    },
+    {
+      "id": "wtb-7",
+      "clues": ["5-year-old with pink maculopapular rash on face/trunk", "Mild fever", "Arthralgia/arthritis (especially in adolescent girls)", "No prodrome"],
+      "answer": "Rubella",
+      "explanation": "Rubella presents with mild systemic symptoms, pink-red maculopapular rash starting on face and spreading downward, and arthralgias/arthritis (more common in older children and adults). Koplik spots are absent (unlike measles). Congenital rubella causes cataracts, heart defects, and deafness.",
+      "difficulty": "intermediate",
+      "distractors": ["Measles", "Roseola", "Drug rash", "Erythema infectiosum"]
+    },
+    {
+      "id": "wtb-8",
+      "clues": ["2-year-old with high fever (39-40°C) for 3-5 days", "Rose-pink maculopapular rash AFTER fever resolves", "Mild respiratory symptoms", "Febrile seizure"],
+      "answer": "Roseola infantum (Exanthem subitum, HHV-6)",
+      "explanation": "Roseola is classically high fever followed by rash defervescence (fever breaks, then rash appears). Rose-pink maculopapular rash on trunk and neck. Most common in children 6 months to 3 years. Febrile seizures common during high fever phase. Self-limited.",
+      "difficulty": "intermediate",
+      "distractors": ["Measles", "Rubella", "Drug rash", "Scarlet fever"]
+    },
+    {
+      "id": "wtb-9",
+      "clues": ["4-year-old with vesicular rash in handprint distribution", "Recent enterovirus exposure", "Oral ulcers and hand/foot vesicles"],
+      "answer": "Hand-foot-mouth disease (Coxsackievirus A)",
+      "explanation": "Hand-foot-mouth disease presents with oral ulcers on soft palate/anterior oral pillars, and vesicular rash on hands, feet, and buttocks in a painful/clustered pattern. Usually mild systemic symptoms. Most common cause is Coxsackievirus A16.",
+      "difficulty": "easy",
+      "distractors": ["Varicella", "Impetigo", "Herpes gingivostomatitis"]
+    },
+    {
+      "id": "wtb-10",
+      "clues": ["6-year-old with lacy reticular rash on cheeks", "Slapped-cheek appearance", "Recent viral prodrome", "History of fifth disease exposure in classroom"],
+      "answer": "Erythema infectiosum (Fifth disease, Parvovirus B19)",
+      "explanation": "Parvovirus B19 causes erythema infectiosum with characteristic slapped-cheek appearance (bright red confluent erythema on cheeks) and lacy reticular rash on trunk/extremities. Mild systemic symptoms. Arthralgia more common in adults. Self-limited.",
+      "difficulty": "easy",
+      "distractors": ["Measles", "Rubella", "Roseola", "Scarlet fever"]
+    },
+    {
+      "id": "wtb-11",
+      "clues": ["8-year-old with diffuse vesicular rash in crops", "Fever and mild systemic symptoms", "Lesions in different stages of healing", "History of chicken pox exposure"],
+      "answer": "Varicella (Chickenpox)",
+      "explanation": "Varicella presents with crops of vesicular lesions in different stages (macules, papules, vesicles, crusts all present simultaneously). Preceded by fever and malaise. Highly contagious. Vaccine-preventable (Varicella). Complications: secondary bacterial infection, encephalitis, pneumonia.",
+      "difficulty": "easy",
+      "distractors": ["Smallpox (eradicated)", "Enterovirus", "Coxsackievirus"]
+    },
+    {
+      "id": "wtb-12",
+      "clues": ["4-year-old with sandpaper-like rash on trunk/flexor surfaces", "Pharyngitis with strawberry tongue", "Fever, headache", "Positive rapid strep test"],
+      "answer": "Scarlet fever (Group A Streptococcal pharyngitis with toxin)",
+      "explanation": "Scarlet fever is Group A Streptococcal pharyngitis complicated by rash from erythrogenic toxin. Presents with pharyngitis, fever, and fine sandpaper-like rash starting on trunk and spreading. Strawberry tongue (red papillae on white coating early, then coated red tongue). Pastia lines (darker in skin folds).",
+      "difficulty": "intermediate",
+      "distractors": ["Measles", "Rubella", "Drug rash"]
+    },
+    {
+      "id": "wtb-13",
+      "clues": ["3-year-old with honey-crusted lesions on shins", "Non-bullous appearance", "Preceded by insect bite/skin trauma", "Mild fever"],
+      "answer": "Impetigo (non-bullous)",
+      "explanation": "Non-bullous impetigo presents with golden/honey-crusted lesions, often on lower extremities. Usually caused by Streptococcus pyogenes or Staphylococcus aureus. Follows minor skin trauma or insect bites. Highly contagious. Bullous impetigo is caused by S. aureus (exfoliative toxins).",
+      "difficulty": "easy",
+      "distractors": ["Varicella", "Pemphigus", "Dermatitis herpetiformis"]
+    },
+    {
+      "id": "wtb-14",
+      "clues": ["10-year-old with fever, conjunctival injection (non-exudative)", "Cervical lymphadenopathy", "Strawberry tongue", "Polymorphous rash", "Peeling on hands/feet in recovery phase"],
+      "answer": "Kawasaki disease (mucocutaneous lymph node syndrome)",
+      "explanation": "Kawasaki disease is a systemic vasculitis presenting with fever >5 days, polymorphous rash (not vesicular), conjunctival injection (non-exudative), oral changes (strawberry tongue, cracked lips), cervical lymphadenopathy, and extremity edema. Peak incidence 1-5 years, but also older children. Can cause coronary artery aneurysms—requires urgent treatment with IVIG and aspirin.",
+      "difficulty": "intermediate",
+      "distractors": ["Measles", "Scarlet fever", "Viral exanthem", "Drug rash"]
+    },
+    {
+      "id": "wtb-15",
+      "clues": ["5-year-old with regional lymphadenopathy in axilla", "History of cat scratch 2-3 weeks ago", "No systemic toxicity", "Normal blood cultures"],
+      "answer": "Cat scratch disease (Bartonella henselae)",
+      "explanation": "Cat scratch disease presents with regional lymphadenopathy (usually 2-3 weeks after inoculation) without systemic toxicity. Most common in children. Caused by Bartonella henselae. Diagnosis by PCR, culture on special media, or serology. Usually self-limited but can be treated with azithromycin.",
+      "difficulty": "intermediate",
+      "distractors": ["Lymphoma", "Tuberculosis", "Acute leukemia"]
+    },
+    {
+      "id": "wtb-16",
+      "clues": ["7-year-old with erythema migrans rash (bull's-eye appearance)", "Recent tick exposure in endemic area", "Fever and mild arthralgias", "Joint effusion"],
+      "answer": "Lyme disease (Borrelia burgdorferi), early disseminated",
+      "explanation": "Lyme disease presents with erythema migrans (expanding erythematous rash, often with central clearing—bull's-eye appearance) after tick bite in endemic area. Early disseminated: multiple EM lesions, arthralgia/arthritis, cranial nerve palsies. Treated with doxycycline (if >8 years) or amoxicillin (if <8 years).",
+      "difficulty": "intermediate",
+      "distractors": ["Cellulitis", "Erysipelas", "Drug rash", "Parvovirus B19"]
+    },
+    {
+      "id": "wtb-17",
+      "clues": ["3-year-old with acute limp (refusing to bear weight)", "Fever", "Hip/thigh pain with internal rotation", "Limited range of motion of hip"],
+      "answer": "Septic arthritis (hip joint), likely Staphylococcus aureus or Kingella kingae",
+      "explanation": "Septic arthritis presents with acute monoarticular joint pain, fever, and refusal to bear weight. Hip is most common in young children. Kingella kingae is now most common cause in toddlers (1-4 years). Requires joint aspiration for gram stain, culture, and cell count. Treatment: IV antibiotics ± surgical drainage.",
+      "difficulty": "intermediate",
+      "distractors": ["Toxic synovitis", "Leukemia", "JIA"]
+    },
+    {
+      "id": "wtb-18",
+      "clues": ["5-year-old with acute onset bone pain (femur/tibia)", "Fever, malaise", "Edema and erythema over bone", "Elevated ESR/CRP"],
+      "answer": "Acute hematogenous osteomyelitis (metaphyseal long bone)",
+      "explanation": "Acute osteomyelitis presents with fever, acute bone pain (usually femur or tibia metaphysis), edema/erythema, and elevated inflammatory markers. Usually preceded by bacteremia. Most common cause: Staphylococcus aureus (including MRSA). Requires blood cultures, imaging (X-ray, MRI), and IV antibiotics ± surgical drainage.",
+      "difficulty": "easy",
+      "distractors": ["Leukemia", "Thrombocytopenia", "Toxic synovitis"]
+    },
+    {
+      "id": "wtb-19",
+      "clues": ["4-year-old with acute onset stridor and respiratory distress", "Drooling, difficulty swallowing", "Tripod positioning", "High fever", "Toxic appearance"],
+      "answer": "Epiglottitis (acute)",
+      "explanation": "Epiglottitis is a medical emergency presenting with stridor, drooling, dysphagia, respiratory distress, and toxic appearance. AIRWAY is at risk. Classically caused by Haemophilus influenzae type b (now rare due to vaccination). Diagnosis: lateral neck X-ray (thumb sign). Treatment: airway management, antibiotics, dexamethasone. Do NOT agitate patient.",
+      "difficulty": "intermediate",
+      "distractors": ["Croup", "Foreign body aspiration", "Retropharyngeal abscess"]
+    },
+    {
+      "id": "wtb-20",
+      "clues": ["3-year-old with barky seal-like cough", "Inspiratory stridor", "Hoarseness", "Fever", "Recent URI prodrome"],
+      "answer": "Croup (laryngotracheobronchitis), parainfluenza virus",
+      "explanation": "Croup presents with barky seal-like cough, inspiratory stridor, and hoarseness. Usually viral (parainfluenza most common). Follows URI prodrome. Most common in 6 months to 3 years. Mild cases treat with dexamethasone; severe cases may need epinephrine. Rarely requires intubation.",
+      "difficulty": "easy",
+      "distractors": ["Epiglottitis", "Foreign body aspiration", "Bacterial tracheitis"]
+    },
+    {
+      "id": "wtb-21",
+      "clues": ["3-month-old with wheezing and respiratory distress", "Cough", "Crackles on exam", "Hyperinflation on CXR", "Recent RSV exposure in daycare"],
+      "answer": "Bronchiolitis (Respiratory Syncytial Virus—RSV)",
+      "explanation": "Bronchiolitis presents with wheezing, crackles, respiratory distress, and hyperinflation in infants <2 years. Most common cause: RSV, but also parainfluenza, influenza, parainfluenza. Viral disease—antibiotics not indicated unless bacterial superinfection. Supportive care (oxygen, hydration). Ribavirin reserved for severe/immunocompromised.",
+      "difficulty": "easy",
+      "distractors": ["Asthma", "Pneumonia", "Foreign body aspiration"]
+    },
+    {
+      "id": "wtb-22",
+      "clues": ["Neonate, 1-2 weeks old", "Purulent eye discharge", "Eyelid edema", "Conjunctival erythema", "No vesicles (unlike HSV)"],
+      "answer": "Gonococcal ophthalmia neonatorum (Neisseria gonorrhoeae)",
+      "explanation": "Gonococcal ophthalmia presents with profuse purulent conjunctivitis at 2-5 days of life (acute onset). Much more severe than chlamydial conjunctivitis. Risk of corneal scarring if untreated. Prophylaxis with silver nitrate or antibiotics at birth prevents infection. Treatment: single-dose IV or IM ceftriaxone.",
+      "difficulty": "intermediate",
+      "distractors": ["Chlamydial conjunctivitis", "HSV ophthalmia", "Chemical conjunctivitis"]
+    },
+    {
+      "id": "wtb-23",
+      "clues": ["10-year-old girl with severe itching in perianal region at night", "Worm-like threads visible on perianal area", "Mild abdominal discomfort", "Family members also affected"],
+      "answer": "Pinworm infection (Enterobius vermicularis)",
+      "explanation": "Pinworm infection presents with severe perianal itching especially at night (female worms migrate out to lay eggs). Patients may complain of visible worms. Most common helminth in developed countries. Diagnosis: Scotch tape test. Treatment: mebendazole or pyrantel pamoate (treat family members).",
+      "difficulty": "easy",
+      "distractors": ["Hemorrhoids", "Anal fissure", "Dermatitis"]
+    }
+  ],
+  "rashToDiagnosis": [
+    {
+      "id": "rtd-1",
+      "rashDescription": "Erythematous macules starting at hairline and face, spreading cephalocaudally (head to toe). Non-blanching. Preceded by cough, coryza, conjunctivitis (3 Cs). Koplik spots (white spots with red halos on buccal mucosa) appear BEFORE rash.",
+      "diagnosis": "Measles (Rubeola)",
+      "pathogen": "Paramyxovirus (measles virus)",
+      "keyFeature": "Koplik spots appear 2-3 days BEFORE rash—pathognomonic. Cephalocaudal spread.",
+      "treatment": "Supportive + Vitamin A supplementation (prevents complications)",
+      "complications": ["Pneumonia (most common complication)", "Encephalitis", "Subacute sclerosing panencephalitis (SSPE, rare late)", "Croup", "Otitis media"],
+      "buzzwords": ["3 Cs", "Koplik spots", "cephalocaudal spread", "paramyxovirus"]
+    },
+    {
+      "id": "rtd-2",
+      "rashDescription": "Pink-red maculopapular rash starting on face, spreading downward. Usually on trunk and extremities. Milder than measles. No Koplik spots.",
+      "diagnosis": "Rubella (German measles)",
+      "pathogen": "Rubivirus (togavirus family)",
+      "keyFeature": "Absence of Koplik spots (unlike measles). Milder prodrome. Arthralgia/arthritis especially in adolescent girls.",
+      "treatment": "Supportive care (self-limited)",
+      "complications": ["Arthralgia/arthritis (more common in adolescents)", "Congenital rubella (if maternal infection in first trimester): cataracts, cardiac defects, deafness, microcephaly"],
+      "buzzwords": ["Pink-red rash", "no Koplik spots", "arthritis in adolescents", "congenital rubella triad"]
+    },
+    {
+      "id": "rtd-3",
+      "rashDescription": "Rose-pink maculopapular rash appearing AFTER high fever (3-5 days) resolves. Non-pruritic. Trunk and neck predominance. Blanching.",
+      "diagnosis": "Roseola infantum (Exanthem subitum)",
+      "pathogen": "Human Herpesvirus 6 (HHV-6)",
+      "keyFeature": "Fever THEN rash (fever defervescence followed by rash appearance). Febrile seizures common during high fever phase.",
+      "treatment": "Supportive care (self-limited)",
+      "complications": ["Febrile seizures (during high fever phase)", "Hepatosplenomegaly rare"],
+      "buzzwords": ["Fever then rash", "roseola", "HHV-6", "febrile seizures"]
+    },
+    {
+      "id": "rtd-4",
+      "rashDescription": "Lacy reticular rash ('lace-like' pattern) on trunk and extremities. Bright red slapped-cheek appearance on face with circumoral pallor. Blanching.",
+      "diagnosis": "Erythema infectiosum (Fifth disease)",
+      "pathogen": "Parvovirus B19",
+      "keyFeature": "Slapped-cheek appearance (bright red confluent erythema on cheeks). Lacy reticular rash on trunk.",
+      "treatment": "Supportive care (self-limited)",
+      "complications": ["Arthralgia/arthritis (more common in adults, especially women)", "Hydrops fetalis (if maternal infection in first trimester)", "Aplastic crisis (in hemolytic anemias)"],
+      "buzzwords": ["Slapped-cheek", "lacy reticular", "parvovirus B19", "fifth disease"]
+    },
+    {
+      "id": "rtd-5",
+      "rashDescription": "Vesicular lesions in grouped clusters on hands, feet, and perioral region. Oral ulcers on soft palate and anterior pillars. Painful vesicles.",
+      "diagnosis": "Hand-foot-mouth disease (HFMD)",
+      "pathogen": "Enterovirus (Coxsackievirus A16 most common, also A5, A7, A9, A10; Enterovirus 71)",
+      "keyFeature": "Vesicles on hands, feet, and perioral region (not generalized). Oral ulcers on soft palate (NOT on hard palate as in herpes).",
+      "treatment": "Supportive care (self-limited), pain management",
+      "complications": ["Rarely: myocarditis, meningitis, brainstem encephalitis (Enterovirus 71)"],
+      "buzzwords": ["Coxsackievirus A", "hand-foot-mouth", "soft palate ulcers", "enterovirus"]
+    },
+    {
+      "id": "rtd-6",
+      "rashDescription": "Crops of vesicles in different stages of development (macules, papules, vesicles, pustules, crusts all present simultaneously). Centripetal distribution (trunk >> face/extremities). Very pruritic.",
+      "diagnosis": "Varicella (Chickenpox)",
+      "pathogen": "Varicella-zoster virus (VZV)",
+      "keyFeature": "'Dew drops on rose petals'—lesions in different stages simultaneously. Centripetal distribution.",
+      "treatment": "Supportive care. Acyclovir if severe or immunocompromised (or >12 hours after onset if immunocompromised).",
+      "complications": ["Secondary bacterial infection (most common)", "Encephalitis", "Pneumonia", "Guillain-Barré Syndrome (rare)"],
+      "buzzwords": ["Dew drops on rose petals", "centripetal", "varicella-zoster", "VZV"]
+    },
+    {
+      "id": "rtd-7",
+      "rashDescription": "Fine sandpaper-like rash starting on trunk and flexor surfaces (antecubital/inguinal areas, etc.). Pastia lines (darker in skin folds). Associated with strawberry tongue and pharyngitis.",
+      "diagnosis": "Scarlet fever",
+      "pathogen": "Streptococcus pyogenes (Group A Strep) with erythrogenic toxin production",
+      "keyFeature": "Sandpaper-like texture. Strawberry tongue (red papillae early, then coated red tongue). Pastia lines in skin folds.",
+      "treatment": "Penicillin or Amoxicillin (10-day course to prevent acute rheumatic fever)",
+      "complications": ["Acute rheumatic fever (if untreated for GAS)", "Post-streptococcal glomerulonephritis", "Suppurative complications (abscess)"],
+      "buzzwords": ["Sandpaper rash", "strawberry tongue", "pastia lines", "GAS", "acute rheumatic fever"]
+    },
+    {
+      "id": "rtd-8",
+      "rashDescription": "Golden/honey-crusted lesions, non-bullous appearance. Usually on lower extremities (legs, shins). Preceded by minor skin trauma or insect bite.",
+      "diagnosis": "Non-bullous impetigo",
+      "pathogen": "Streptococcus pyogenes (most common) or Staphylococcus aureus (including MRSA)",
+      "keyFeature": "Golden/honey-crusted lesions (pathognomonic). Non-bullous type is more common (70-80%).",
+      "treatment": "Topical antibiotics (mupirocin) for localized; systemic antibiotics if widespread or bullous form",
+      "complications": ["Secondary bacterial infection", "Post-streptococcal glomerulonephritis (GAS)", "Cellulitis"],
+      "buzzwords": ["Honey crusts", "non-bullous impetigo", "GAS", "post-streptococcal GN"]
+    },
+    {
+      "id": "rtd-9",
+      "rashDescription": "Petechial rash (small non-blanching red/purple spots) spreading rapidly from trunk to extremities. May progress to purpura fulminans (large purpuric lesions, necrotic centers). Associated with sepsis symptoms.",
+      "diagnosis": "Meningococcemia (Neisseria meningitidis sepsis)",
+      "pathogen": "Neisseria meningitidis (meningococcus)",
+      "keyFeature": "Non-blanching petechial/purpuric rash. Rapid progression. Associated with meningeal signs and sepsis.",
+      "treatment": "IV Cefotaxime or Ceftriaxone STAT, plus Vancomycin if resistant meningococcus possible. Consider Dexamethasone.",
+      "complications": ["Meningitis", "Septic shock", "Purpura fulminans with DIC", "Adrenal hemorrhage (Waterhouse-Friderichsen syndrome)"],
+      "buzzwords": ["Non-blanching petechiae", "meningococcemia", "purpura fulminans", "Waterhouse-Friderichsen"]
+    },
+    {
+      "id": "rtd-10",
+      "rashDescription": "Polymorphous rash (multiple morphologies—macular, urticarial, vesicular) not conforming to any single pattern. Associated with fever >5 days, conjunctival injection (non-exudative), oral changes, extremity edema.",
+      "diagnosis": "Kawasaki disease (mucocutaneous lymph node syndrome)",
+      "pathogen": "Unknown etiology (possibly infectious trigger + genetic predisposition)",
+      "keyFeature": "Polymorphous rash + fever >5 days + conjunctival injection (non-exudative) + oral changes (strawberry tongue, cracked lips) + extremity edema. Peak age 1-5 years.",
+      "treatment": "IVIG + high-dose aspirin (urgent to prevent coronary artery aneurysms)",
+      "complications": ["Coronary artery aneurysms (most serious)", "Myocarditis", "Valvulitis", "Sudden cardiac death"],
+      "buzzwords": ["Kawasaki", "polymorphous rash", "strawberry tongue", "non-exudative conjunctivitis", "coronary aneurysms"]
+    },
+    {
+      "id": "rtd-11",
+      "rashDescription": "Erythema migrans: expanding erythematous macule or patch, often with central clearing (bull's-eye appearance). Usually >5 cm, solitary or multiple. Associated with tick exposure in endemic area.",
+      "diagnosis": "Lyme disease (Borrelia burgdorferi), early localized or disseminated",
+      "pathogen": "Borrelia burgdorferi (spirochete), transmitted by Ixodes dammini tick",
+      "keyFeature": "Erythema migrans (bull's-eye appearance) at site of tick bite. Tick exposure in endemic area (Northeast, Midwest US).",
+      "treatment": "Doxycycline (if >8 years) or Amoxicillin (if <8 years) for early Lyme; later stages may require IV Ceftriaxone",
+      "complications": ["Early disseminated: multiple EM lesions, arthritis, carditis (AV block), cranial nerve palsies", "Late: Lyme arthritis, acrodermatitis chronica atrophicans"],
+      "buzzwords": ["Erythema migrans", "bull's-eye", "Borrelia burgdorferi", "tick", "Lyme disease"]
+    },
+    {
+      "id": "rtd-12",
+      "rashDescription": "Petechial and pustular rash, small vesicles on face/trunk. Associated with fever, headache, and joint pain. Eschar (black necrotic center) may be present at tick bite site.",
+      "diagnosis": "Rocky Mountain Spotted Fever (RMSF)",
+      "pathogen": "Rickettsia rickettsii (obligate intracellular bacterium), transmitted by Dermacentor tick",
+      "keyFeature": "Petechial rash starting on wrists/ankles, spreading centripetally (trunk). Eschar at bite site. Tick exposure.",
+      "treatment": "Doxycycline (FIRST-LINE even if <8 years—RMSF is life-threatening exception to doxycycline age restriction). Start empirically if suspected.",
+      "complications": ["Encephalitis", "Myocarditis", "Respiratory distress", "Renal failure", "High mortality if untreated"],
+      "buzzwords": ["RMSF", "doxycycline at any age", "petechial rash wrists/ankles", "eschar", "Rickettsia"]
+    }
+  ],
+  "vaccineSchedule": [
+    {
+      "id": "vs-1",
+      "vaccine": "DTaP",
+      "fullName": "Diphtheria, Tetanus, acellular Pertussis",
+      "schedule": ["2 months", "4 months", "6 months", "15-18 months", "4-6 years"],
+      "booster": "Tdap at 11-12 years",
+      "type": "Inactivated/toxoid",
+      "contraindications": ["Encephalopathy within 7 days of prior dose", "Severe allergic reaction"],
+      "pedsNotes": "Acellular pertussis now standard. Pregnant women get Tdap (27-36 weeks) each pregnancy for neonatal protection.",
+      "highYield": "Pertussis immunity wanes. Adolescent Tdap booster critical. Pregnant women receive Tdap each pregnancy."
+    },
+    {
+      "id": "vs-2",
+      "vaccine": "IPV",
+      "fullName": "Inactivated Poliovirus Vaccine",
+      "schedule": ["2 months", "4 months", "6-18 months", "4-6 years"],
+      "booster": "None if complete by 18 months",
+      "type": "Inactivated (injected)",
+      "contraindications": ["Severe allergic reaction to any component"],
+      "pedsNotes": "Replaced OPV in US. No VDPV risk. Polio endemic in only Afghanistan and Pakistan as of 2024.",
+      "highYield": "IPV standard in US. Polio near eradication globally."
+    },
+    {
+      "id": "vs-3",
+      "vaccine": "MMR",
+      "fullName": "Measles, Mumps, Rubella",
+      "schedule": ["12-15 months", "4-6 years"],
+      "booster": "Two doses = lifelong immunity",
+      "type": "Live attenuated",
+      "contraindications": ["Severe immunocompromise", "Pregnancy", "Severe allergic reaction"],
+      "pedsNotes": "Live vaccine—space 28 days from other live vaccines. Measles extremely contagious (R0 ~15).",
+      "highYield": "Live vaccine—critical contraindication in immunocompromised. Pregnancy is absolute contraindication."
+    },
+    {
+      "id": "vs-4",
+      "vaccine": "Varicella",
+      "fullName": "Varicella-Zoster Virus Vaccine",
+      "schedule": ["12-18 months", "4-6 years"],
+      "booster": "Two doses provide ~90% efficacy",
+      "type": "Live attenuated",
+      "contraindications": ["Severe immunocompromise", "Pregnancy"],
+      "pedsNotes": "Live vaccine. Can give same day as MMR. Post-exposure prophylaxis within 3-5 days of varicella exposure.",
+      "highYield": "Live vaccine. Immunocompromised children get VariZIG (varicella-zoster immunoglobulin) for post-exposure instead."
+    },
+    {
+      "id": "vs-5",
+      "vaccine": "Hepatitis B",
+      "fullName": "Hepatitis B Virus Vaccine",
+      "schedule": ["Birth", "1-2 months", "6-18 months"],
+      "booster": "Age 11-12 years if not boosted",
+      "type": "Inactivated (recombinant)",
+      "contraindications": ["Severe allergic reaction (yeast allergy)"],
+      "pedsNotes": "All neonates vaccinated at birth. Maternal HBsAg+ requires HBIg + vaccine at birth. Prevents chronic HBV (90% if infected as infant).",
+      "highYield": "Universal neonatal HBV. Maternal HBsAg+ = HBIg + vaccine. Prevents chronic infection and liver cancer."
+    },
+    {
+      "id": "vs-6",
+      "vaccine": "Hepatitis A",
+      "fullName": "Hepatitis A Virus Vaccine",
+      "schedule": ["12-23 months", "6-12 months after first"],
+      "booster": "Two-dose series = lifelong immunity",
+      "type": "Inactivated",
+      "contraindications": ["Severe allergic reaction to any component"],
+      "pedsNotes": "Recommended for all children, travelers, PWID, MSM, chronic liver disease.",
+      "highYield": "HAV vaccine routine for all children >12 months. Safe and effective."
+    },
+    {
+      "id": "vs-7",
+      "vaccine": "Haemophilus influenzae type b (Hib)",
+      "fullName": "Haemophilus influenzae type b Conjugate Vaccine",
+      "schedule": ["2 months", "4 months", "6 months", "12-15 months"],
+      "booster": "Complete by 15 months",
+      "type": "Inactivated (conjugate)",
+      "contraindications": ["Severe allergic reaction to any component"],
+      "pedsNotes": "Hib meningitis, epiglottitis now rare in vaccinated populations. Non-typeable H. influenzae not covered.",
+      "highYield": "One of most successful vaccines. Epiglottitis now rare due to Hib vaccination."
+    },
+    {
+      "id": "vs-8",
+      "vaccine": "Pneumococcal (PCV13/PPSV23)",
+      "fullName": "Pneumococcal Conjugate and Polysaccharide Vaccines",
+      "schedule": ["PCV13: 2, 4, 6 months, 12-15 months", "PPSV23: >=2 years (risk factors)"],
+      "booster": "PPSV23 for chronic disease, immunocompromise",
+      "type": "Inactivated",
+      "contraindications": ["Severe allergic reaction to any component"],
+      "pedsNotes": "PCV13 covers 13 serotypes. Serotype 19A resistance—high-dose amoxicillin compensates.",
+      "highYield": "PCV13 reduced invasive disease. Serotype replacement important. Watch emerging resistant serotypes."
+    },
+    {
+      "id": "vs-9",
+      "vaccine": "Rotavirus",
+      "fullName": "Rotavirus Vaccine (RotaTeq or Rotarix)",
+      "schedule": ["2 months", "4 months", "6 months"],
+      "booster": "None after series",
+      "type": "Live attenuated (oral)",
+      "contraindications": ["Severe immunocompromise (SCID)", "History of intussusception"],
+      "pedsNotes": "Oral live vaccine. Must complete before age window (8 months RotaTeq, 6 months Rotarix) due to intussusception risk.",
+      "highYield": "Rotavirus vaccine prevents severe gastroenteritis. Live vaccine with specific age window."
+    },
+    {
+      "id": "vs-10",
+      "vaccine": "Human Papillomavirus (HPV)",
+      "fullName": "HPV Vaccine (Gardasil-9)",
+      "schedule": ["Age 11-12 years", "Dose 2: 1-2 months", "Dose 3: 6 months"],
+      "booster": "Three-dose series complete",
+      "type": "Inactivated (recombinant VLPs)",
+      "contraindications": ["Severe allergic reaction", "Pregnancy"],
+      "pedsNotes": "Prevents HPV-related cancers (cervical, anal, oropharyngeal). Boys AND girls vaccinated. Give up to age 26 if not previously vaccinated.",
+      "highYield": "HPV vaccine prevents cancer. Age 11-12 recommended. Girls and boys both need vaccination."
+    },
+    {
+      "id": "vs-11",
+      "vaccine": "Meningococcal Conjugate (MenACWY)",
+      "fullName": "MenACWY Vaccine (Menactra, Menveo)",
+      "schedule": ["Age 11-12 years", "Booster: 16-18 years"],
+      "booster": "Booster at 16-18 years or 1 year after first",
+      "type": "Inactivated (conjugate)",
+      "contraindications": ["Severe allergic reaction to any component"],
+      "pedsNotes": "Covers serogroups A, C, W, Y. Does NOT cover B (needs separate MenB). College students highly recommended.",
+      "highYield": "MenACWY at 11-12y, booster 16-18y. MenB is SEPARATE. Both recommended for adolescents."
+    },
+    {
+      "id": "vs-12",
+      "vaccine": "Meningococcal B (MenB)",
+      "fullName": "MenB Vaccine (Bexsero, Numenrix)",
+      "schedule": ["Age 11-12 years recommended", "Dose 2: 1 month later"],
+      "booster": "None routinely after primary",
+      "type": "Inactivated (recombinant)",
+      "contraindications": ["Severe allergic reaction to any component"],
+      "pedsNotes": "Separate from MenACWY. Covers serogroup B (common in developed countries). Meningococcal disease has rapid progression.",
+      "highYield": "MenB SEPARATE from MenACWY. Give both. Serogroup B has high mortality if untreated."
+    }
+  ],
+  "clinicalPearls": [
+    {
+      "id": "cp-1",
+      "pearl": "In neonatal meningitis, AVOID ceftriaxone—use cefotaxime instead. Ceftriaxone displaces bilirubin from albumin and can cause kernicterus.",
+      "category": "antibiotics",
+      "highYield": true
+    },
+    {
+      "id": "cp-2",
+      "pearl": "Cephalosporins DO NOT cover Listeria monocytogenes. Neonatal meningitis requires Ampicillin to cover Listeria.",
+      "category": "antibiotics",
+      "highYield": true
+    },
+    {
+      "id": "cp-3",
+      "pearl": "Doxycycline causes permanent tooth discoloration in children <8 years—EXCEPT for Rocky Mountain Spotted Fever (RMSF), which is a life-threatening exception. Use doxycycline at ANY age for RMSF.",
+      "category": "shelf-traps",
+      "highYield": true
+    },
+    {
+      "id": "cp-4",
+      "pearl": "Kingella kingae is now the MOST common cause of septic arthritis in toddlers (1-4 years), replacing Staphylococcus aureus.",
+      "category": "diagnosis",
+      "highYield": true
+    },
+    {
+      "id": "cp-5",
+      "pearl": "Salmonella osteomyelitis is PATHOGNOMONIC for sickle cell disease. Other patients get S. aureus osteomyelitis.",
+      "category": "diagnosis",
+      "highYield": true
+    },
+    {
+      "id": "cp-6",
+      "pearl": "GBS (Group B Streptococcus) causes early-onset sepsis (<72 hours), while Listeria and gram-negatives cause both early- and late-onset sepsis. Late-onset GBS (≥7 days) requires different empiric coverage.",
+      "category": "diagnosis",
+      "highYield": true
+    },
+    {
+      "id": "cp-7",
+      "pearl": "Neonatal conjunctivitis prophylaxis with erythromycin ointment prevents chlamydial inclusion conjunctivitis AND gonococcal ophthalmia.",
+      "category": "prevention",
+      "highYield": true
+    },
+    {
+      "id": "cp-8",
+      "pearl": "Koplik spots (white spots with red halos on buccal mucosa) appear BEFORE measles rash and are pathognomonic. They precede the rash by 2-3 days.",
+      "category": "diagnosis",
+      "highYield": true
+    },
+    {
+      "id": "cp-9",
+      "pearl": "Chlamydia trachomatis pneumonia presents with STACCATO cough (repetitive bursts of short coughs) at 3-8 weeks of life. Bilateral diffuse infiltrates on CXR.",
+      "category": "diagnosis",
+      "highYield": true
+    },
+    {
+      "id": "cp-10",
+      "pearl": "Roseola infantum (HHV-6) presents with FEVER THEN RASH (unlike other exanthems). Rash appears AFTER fever resolves, hence 'roseola' presentation.",
+      "category": "diagnosis",
+      "highYield": true
+    },
+    {
+      "id": "cp-11",
+      "pearl": "Varicella lesions are in DIFFERENT STAGES simultaneously ('dew drops on rose petals'), with centripetal distribution (trunk >> face/extremities).",
+      "category": "diagnosis",
+      "highYield": true
+    },
+    {
+      "id": "cp-12",
+      "pearl": "Amoxicillin rash with EBV/mononucleosis is NOT a true penicillin allergy and does not contraindicate future penicillin use.",
+      "category": "treatment",
+      "highYield": true
+    },
+    {
+      "id": "cp-13",
+      "pearl": "High-dose amoxicillin (80-90 mg/kg/day) for acute otitis media compensates for resistant pneumococcus. First-line for AOM.",
+      "category": "treatment",
+      "highYield": true
+    },
+    {
+      "id": "cp-14",
+      "pearl": "In meningitis, dexamethasone (0.15 mg/kg Q6h x 4 days) improves outcomes, especially pneumococcal meningitis. Reduces hearing loss and neurologic complications.",
+      "category": "treatment",
+      "highYield": true
+    },
+    {
+      "id": "cp-15",
+      "pearl": "Start antibiotics BEFORE lumbar puncture if bacterial meningitis suspected clinically (petechiae, altered mental status, meningeal signs). Do NOT delay for imaging/LP.",
+      "category": "treatment",
+      "highYield": true
+    },
+    {
+      "id": "cp-16",
+      "pearl": "Epiglottitis is an AIRWAY EMERGENCY. Do NOT agitate child, do NOT look in throat at bedside. Visualize only in OR with airway equipment ready. Lateral neck X-ray shows 'thumb sign.'",
+      "category": "diagnosis",
+      "highYield": true
+    },
+    {
+      "id": "cp-17",
+      "pearl": "Pertussis has limited role for antibiotics if already in paroxysmal phase. Most benefit is post-exposure prophylaxis with azithromycin.",
+      "category": "treatment",
+      "highYield": true
+    },
+    {
+      "id": "cp-18",
+      "pearl": "Pregnancy during ANY trimester—give Tdap (27-36 weeks preferred) to boost infant immunity and prevent neonatal pertussis.",
+      "category": "prevention",
+      "highYield": true
+    },
+    {
+      "id": "cp-19",
+      "pearl": "Purulent cellulitis with drainage now presume MRSA until proven otherwise. Incise and drain; culture; start Vancomycin or Clindamycin empirically.",
+      "category": "treatment",
+      "highYield": true
+    },
+    {
+      "id": "cp-20",
+      "pearl": "Scarlet fever rash spares the circumoral area (pastia lines are darkening in skin folds, not absence of rash there). Strawberry tongue is pathognomonic.",
+      "category": "diagnosis",
+      "highYield": true
+    },
+    {
+      "id": "cp-21",
+      "pearl": "Kawasaki disease requires IVIG + high-dose aspirin URGENTLY to prevent coronary artery aneurysms. Diagnosis is clinical: fever >5 days + rash + conjunctival injection + oral changes.",
+      "category": "treatment",
+      "highYield": true
+    },
+    {
+      "id": "cp-22",
+      "pearl": "Erythema migrans (bull's-eye rash) in Lyme disease is pathognomonic. Treat immediately with doxycycline (if >8y) or amoxicillin (if <8y) for early disease.",
+      "category": "diagnosis",
+      "highYield": true
+    },
+    {
+      "id": "cp-23",
+      "pearl": "Post-exposure rabies prophylaxis and meningococcal chemoprophylaxis require quick action. Rifampin or cephalosporin prophylaxis for meningococcal contacts.",
+      "category": "prevention",
+      "highYield": true
+    },
+    {
+      "id": "cp-24",
+      "pearl": "Varicella vaccine (live) can be given within 3-5 days of varicella exposure for post-exposure prophylaxis. VariZIG (immunoglobulin) for immunocompromised.",
+      "category": "prevention",
+      "highYield": true
+    },
+    {
+      "id": "cp-25",
+      "pearl": "TMP-SMX avoided in neonates <2 months due to kernicterus risk (bilirubin displacement). Also contraindicated in G6PD deficiency (hemolysis).",
+      "category": "antibiotics",
+      "highYield": true
+    }
+  ],
+  "associations": [
+    {
+      "id": "assoc-1",
+      "clue": "Staccato cough + bilateral diffuse infiltrates in 2-month-old",
+      "answer": "Chlamydia trachomatis pneumonia",
+      "buzzword": "staccato cough"
+    },
+    {
+      "id": "assoc-2",
+      "clue": "Barky seal-like cough + inspiratory stridor + hoarseness in 2-year-old",
+      "answer": "Croup (laryngotracheobronchitis), parainfluenza virus",
+      "buzzword": "barky seal cough"
+    },
+    {
+      "id": "assoc-3",
+      "clue": "Wheezing + crackles + hyperinflation in 6-month-old",
+      "answer": "Bronchiolitis, RSV",
+      "buzzword": "bronchiolitis"
+    },
+    {
+      "id": "assoc-4",
+      "clue": "Koplik spots + cough + coryza + conjunctivitis",
+      "answer": "Measles (Rubeola)",
+      "buzzword": "Koplik spots"
+    },
+    {
+      "id": "assoc-5",
+      "clue": "Slapped-cheek + lacy reticular rash",
+      "answer": "Erythema infectiosum (Parvovirus B19), Fifth disease",
+      "buzzword": "slapped cheek"
+    },
+    {
+      "id": "assoc-6",
+      "clue": "Fever then rash after fever breaks",
+      "answer": "Roseola infantum (HHV-6)",
+      "buzzword": "fever then rash"
+    },
+    {
+      "id": "assoc-7",
+      "clue": "Dew drops on rose petals + centripetal distribution",
+      "answer": "Varicella (Chickenpox)",
+      "buzzword": "dew drops on rose petals"
+    },
+    {
+      "id": "assoc-8",
+      "clue": "Sandpaper rash + strawberry tongue + pastia lines",
+      "answer": "Scarlet fever (GAS with toxin)",
+      "buzzword": "sandpaper rash"
+    },
+    {
+      "id": "assoc-9",
+      "clue": "Honey crusts on lower extremities",
+      "answer": "Non-bullous impetigo",
+      "buzzword": "honey crusts"
+    },
+    {
+      "id": "assoc-10",
+      "clue": "Non-blanching petechial rash + meningeal signs",
+      "answer": "Neisseria meningitidis (meningococcemia)",
+      "buzzword": "petechial rash"
+    },
+    {
+      "id": "assoc-11",
+      "clue": "Fever >5 days + polymorphous rash + conjunctival injection + strawberry tongue",
+      "answer": "Kawasaki disease",
+      "buzzword": "Kawasaki"
+    },
+    {
+      "id": "assoc-12",
+      "clue": "Bull's-eye erythema migrans + tick exposure in endemic area",
+      "answer": "Lyme disease (Borrelia burgdorferi)",
+      "buzzword": "bull's eye rash"
+    },
+    {
+      "id": "assoc-13",
+      "clue": "Petechial rash on wrists/ankles + eschar + tick exposure",
+      "answer": "Rocky Mountain Spotted Fever (Rickettsia rickettsii)",
+      "buzzword": "RMSF"
+    },
+    {
+      "id": "assoc-14",
+      "clue": "Drooling + stridor + tripod positioning + toxic appearance",
+      "answer": "Epiglottitis",
+      "buzzword": "epiglottitis"
+    },
+    {
+      "id": "assoc-15",
+      "clue": "Acutely limp with hip/knee pain + fever",
+      "answer": "Septic arthritis",
+      "buzzword": "septic joint"
+    },
+    {
+      "id": "assoc-16",
+      "clue": "Acute bone pain (femur/tibia) + fever + edema",
+      "answer": "Acute hematogenous osteomyelitis",
+      "buzzword": "osteomyelitis"
+    },
+    {
+      "id": "assoc-17",
+      "clue": "Regional lymphadenopathy 2-3 weeks after cat scratch",
+      "answer": "Cat scratch disease (Bartonella henselae)",
+      "buzzword": "cat scratch disease"
+    },
+    {
+      "id": "assoc-18",
+      "clue": "Vesicular lesions in hand/foot/mouth region + oral ulcers",
+      "answer": "Hand-foot-mouth disease (Coxsackievirus A)",
+      "buzzword": "hand-foot-mouth"
+    },
+    {
+      "id": "assoc-19",
+      "clue": "Pink-red rash on face/trunk + arthralgia (especially adolescent girls)",
+      "answer": "Rubella",
+      "buzzword": "rubella"
+    },
+    {
+      "id": "assoc-20",
+      "clue": "Osteomyelitis in sickle cell child",
+      "answer": "Salmonella (bone tropism unique to SCD)",
+      "buzzword": "Salmonella osteomyelitis"
+    },
+    {
+      "id": "assoc-21",
+      "clue": "Septic arthritis in 2-year-old",
+      "answer": "Kingella kingae (now most common in this age)",
+      "buzzword": "Kingella kingae"
+    },
+    {
+      "id": "assoc-22",
+      "clue": "Early-onset sepsis <72 hours + GBS + vertical transmission",
+      "answer": "Group B Streptococcus (GBS)",
+      "buzzword": "early-onset sepsis"
+    },
+    {
+      "id": "assoc-23",
+      "clue": "Vesicular skin lesions + seizures + maternal genital herpes history",
+      "answer": "Neonatal HSV",
+      "buzzword": "neonatal herpes"
+    },
+    {
+      "id": "assoc-24",
+      "clue": "Purulent eye discharge at 2-5 days of life",
+      "answer": "Gonococcal ophthalmia neonatorum",
+      "buzzword": "gonococcal ophthalmia"
+    },
+    {
+      "id": "assoc-25",
+      "clue": "Perianal itching at night + visible threadlike worms",
+      "answer": "Pinworm (Enterobius vermicularis)",
+      "buzzword": "pinworm"
+    },
+    {
+      "id": "assoc-26",
+      "clue": "Walking pneumonia + minimal CXR findings + X-ray worse than clinical picture",
+      "answer": "Mycoplasma pneumoniae",
+      "buzzword": "walking pneumonia"
+    },
+    {
+      "id": "assoc-27",
+      "clue": "Paroxysmal cough with inspiratory whoop after URI",
+      "answer": "Pertussis (Bordetella pertussis)",
+      "buzzword": "whooping cough"
+    },
+    {
+      "id": "assoc-28",
+      "clue": "Purulent drainage from cellulitis",
+      "answer": "MRSA until proven otherwise",
+      "buzzword": "purulent drainage"
+    },
+    {
+      "id": "assoc-29",
+      "clue": "Non-purulent cellulitis",
+      "answer": "Streptococcus pyogenes (Group A Strep)",
+      "buzzword": "non-purulent cellulitis"
+    },
+    {
+      "id": "assoc-30",
+      "clue": "Neonatal conjunctivitis at 1-2 weeks with mild discharge",
+      "answer": "Chlamydia trachomatis (inclusion conjunctivitis)",
+      "buzzword": "chlamydial conjunctivitis"
+    }
+  ],
+  "sideEffectsContraindications": [
+    {
+      "id": "sec-1",
+      "drug": "Doxycycline",
+      "sideEffect": "Permanent tooth discoloration and enamel hypoplasia",
+      "ageRestriction": "Generally avoided in children <8 years",
+      "exception": "Rocky Mountain Spotted Fever—doxycycline is first-line at ANY age because RMSF is life-threatening",
+      "shelfTrap": "HIGH-YIELD NBME trap: Always offer doxycycline for RMSF regardless of age"
+    },
+    {
+      "id": "sec-2",
+      "drug": "Fluoroquinolones (Ciprofloxacin, Levofloxacin)",
+      "sideEffect": "Cartilage toxicity (affects articular cartilage)",
+      "ageRestriction": "Generally avoided in children; reserved for serious Pseudomonas infections or cystic fibrosis when no alternatives",
+      "exception": "Serious Pseudomonas infection, cystic fibrosis, inhalational anthrax exposure",
+      "shelfTrap": "Fluoroquinolones contraindicated in most pediatric infections but acceptable for specific life-threatening gram-negative infections"
+    },
+    {
+      "id": "sec-3",
+      "drug": "Chloramphenicol",
+      "sideEffect": "Aplastic anemia (dose-independent, rare but fatal) and gray baby syndrome in neonates",
+      "ageRestriction": "Avoid in neonates; rarely used in modern pediatrics",
+      "exception": "Severe rickettsial infections or infections in penicillin-allergic patients (but doxycycline preferred if possible)",
+      "shelfTrap": "Gray baby syndrome: ashy color, cardiovascular collapse in neonates receiving chloramphenicol—metabolic immaturity causes drug accumulation"
+    },
+    {
+      "id": "sec-4",
+      "drug": "Trimethoprim-Sulfamethoxazole (TMP-SMX)",
+      "sideEffect": "Stevens-Johnson Syndrome (severe rash), bilirubin displacement (kernicterus in neonates), hemolysis in G6PD deficiency",
+      "ageRestriction": "Avoid in neonates <2 months (kernicterus risk) and G6PD-deficient patients",
+      "exception": "PCP prophylaxis/treatment in HIV (gold standard despite risks)",
+      "shelfTrap": "Bilirubin displacement kernicterus risk in neonates—same mechanism as ceftriaxone/sulfonamides"
+    },
+    {
+      "id": "sec-5",
+      "drug": "Aminoglycosides (Gentamicin, Tobramycin)",
+      "sideEffect": "Nephrotoxicity (acute tubular necrosis) and ototoxicity (permanent hearing loss—irreversible)",
+      "ageRestriction": "Use with caution; requires therapeutic drug monitoring (TDM)",
+      "exception": "Essential for gram-negative coverage in neonatal sepsis/meningitis and Pseudomonas infections",
+      "shelfTrap": "Toxicity increased when combined with Vancomycin. Monitor peak/trough levels. Extended-interval dosing may reduce toxicity."
+    },
+    {
+      "id": "sec-6",
+      "drug": "Ceftriaxone",
+      "sideEffect": "Bilirubin displacement—causes kernicterus in neonates",
+      "ageRestriction": "AVOID in neonates (<28 days); use cefotaxime instead",
+      "exception": "Can use in neonates >28 days or for brief courses if bilirubin low",
+      "shelfTrap": "Common NBME trap: Using ceftriaxone instead of cefotaxime in neonate with meningitis. Cefotaxime preferred in neonates."
+    },
+    {
+      "id": "sec-7",
+      "drug": "Metronidazole",
+      "sideEffect": "Metallic taste (very common in children—affects compliance), nausea/vomiting, peripheral neuropathy with prolonged use",
+      "ageRestriction": "Can use at any age but poorly tolerated in children",
+      "exception": "Necessary for anaerobic coverage in abdominal/CNS infections",
+      "shelfTrap": "Metallic taste so common in children that alternative agents (clindamycin) often preferred despite efficacy"
+    },
+    {
+      "id": "sec-8",
+      "drug": "Sulfonamides (Sulfa-containing drugs: TMP-SMX, sulfadiazine)",
+      "sideEffect": "Kernicterus in neonates, hemolysis in G6PD deficiency, Stevens-Johnson Syndrome",
+      "ageRestriction": "AVOID in neonates <2 months (bilirubin displacement)",
+      "exception": "PCP prophylaxis in HIV (gold standard despite risks)",
+      "shelfTrap": "Same kernicterus mechanism as ceftriaxone in neonates"
+    },
+    {
+      "id": "sec-9",
+      "drug": "Tetracyclines (Doxycycline, Tetracycline)",
+      "sideEffect": "Permanent tooth discoloration/enamel hypoplasia (especially <8 years), photosensitivity, esophageal ulceration if not taken with water",
+      "ageRestriction": "Generally avoided in children <8 years",
+      "exception": "Doxycycline FIRST-LINE for RMSF at ANY age (life-threatening disease)",
+      "shelfTrap": "The RMSF exception is HIGH-YIELD for shelf exams"
+    },
+    {
+      "id": "sec-10",
+      "drug": "Amoxicillin with EBV/Mononucleosis",
+      "sideEffect": "Maculopapular rash (often diffuse, non-pruritic)",
+      "ageRestriction": "Rash appears in ~60% of EBV patients given amoxicillin",
+      "exception": "Rash is NOT an IgE-mediated allergy; safe to use penicillins in future",
+      "shelfTrap": "Parents and patients often label as 'penicillin allergy' but it is NOT a true allergy. Document clearly: 'amoxicillin rash with EBV—not true allergy'"
+    }
+  ],
+  "ageBasedBugs": [
+    {
+      "id": "abb-1",
+      "ageGroup": "Neonate (0-28 days)",
+      "commonBugs": [
+        {
+          "organism": "Group B Streptococcus (GBS)",
+          "presentations": ["Early-onset sepsis (EOS, <72 hours)", "Meningitis", "Pneumonia"],
+          "notes": "Most common cause of neonatal sepsis. Vertical transmission from maternal GBS colonization (35-40% of women colonized). Risk factors: maternal fever, prolonged rupture of membranes, prematurity. Treatment: Ampicillin + Gentamicin or Cefotaxime."
+        },
+        {
+          "organism": "Escherichia coli (K1 capsule strain)",
+          "presentations": ["Meningitis", "UTI", "Sepsis"],
+          "notes": "Second most common cause of neonatal meningitis. K1 capsular antigen crosses blood-brain barrier. Treatment: Ampicillin + Gentamicin or Cefotaxime. Do NOT use ceftriaxone in neonates (kernicterus risk)."
+        },
+        {
+          "organism": "Listeria monocytogenes",
+          "presentations": ["Meningitis", "Sepsis (can present as 'granulomatosis infantisepticum' with widespread lesions)"],
+          "notes": "Critical neonatal pathogen especially if mother had fever/diarrhea during pregnancy. CEPHALOSPORINS DO NOT COVER—must use Ampicillin. Treat with Ampicillin + Gentamicin."
+        },
+        {
+          "organism": "Herpes Simplex Virus (HSV)",
+          "presentations": ["Neonatal herpes (skin vesicles)", "CNS disease (meningitis/encephalitis)", "Disseminated (hepatitis, coagulopathy)"],
+          "notes": "Vertical transmission during delivery, especially if maternal primary infection or ruptured vesicles at delivery. Mortality >50% if untreated. Vesicular lesions at 5-14 days of life. CSF with lymphocytes and RBCs (hemorrhagic). Treatment: IV Acyclovir empirically if HSV suspected."
+        },
+        {
+          "organism": "Candida species (C. albicans, C. auris)",
+          "presentations": ["Oral thrush", "Invasive infection (bloodstream, meningitis)", "Diaper dermatitis"],
+          "notes": "Risk factors: prematurity, prolonged antibiotics, central line, immunodeficiency. Fluconazole or Amphotericin B IV for invasive. Oral fluconazole for thrush."
+        }
+      ]
+    },
+    {
+      "id": "abb-2",
+      "ageGroup": "Infant (1-12 months)",
+      "commonBugs": [
+        {
+          "organism": "Group B Streptococcus (GBS) late-onset",
+          "presentations": ["Sepsis (7-90 days)", "Meningitis", "Bacteremia"],
+          "notes": "Late-onset GBS differs from early-onset: different capsular types, no maternal fever association. Empiric coverage: Cefotaxime or Ceftriaxone + Vancomycin (Listeria coverage less critical but may still be given)."
+        },
+        {
+          "organism": "Streptococcus pneumoniae",
+          "presentations": ["Meningitis", "Bacteremia", "Otitis media", "Pneumonia"],
+          "notes": "Increasing antibiotic resistance. Some serotypes resistant to penicillin. Empiric coverage for meningitis: high-dose cephalosporin + Vancomycin. Vaccine-preventable (PCV13)."
+        },
+        {
+          "organism": "Haemophilus influenzae type b (Hib)",
+          "presentations": ["Meningitis", "Epiglottitis", "Pneumonia", "Septic arthritis"],
+          "notes": "Now rare in vaccinated populations. Still see unvaccinated/under-vaccinated children. Cephalosporin coverage essential. Hib vaccine highly successful."
+        },
+        {
+          "organism": "Respiratory Syncytial Virus (RSV)",
+          "presentations": ["Bronchiolitis", "Pneumonia", "Croup"],
+          "notes": "Peak age 2-12 months. Wheezing, crackles, hyperinflation. Viral—supportive care. Palivizumab (monoclonal antibody) prophylaxis for high-risk preemies."
+        },
+        {
+          "organism": "Rotavirus",
+          "presentations": ["Gastroenteritis (severe)", "Dehydration"],
+          "notes": "Vaccine-preventable (rotavirus vaccine). Less severe now with vaccination. Presents with watery diarrhea, vomiting, fever."
+        }
+      ]
+    },
+    {
+      "id": "abb-3",
+      "ageGroup": "Young Child (1-5 years)",
+      "commonBugs": [
+        {
+          "organism": "Streptococcus pneumoniae",
+          "presentations": ["Meningitis", "Bacteremia", "Otitis media (very common)", "Pneumonia (CAP most common bacterial cause)"],
+          "notes": "Still leading cause of bacterial meningitis in this age despite vaccination. High-dose amoxicillin for AOM (80-90 mg/kg/day). Vaccine: PCV13."
+        },
+        {
+          "organism": "Neisseria meningitidis",
+          "presentations": ["Meningitis", "Meningococcemia (petechial/purpuric rash)", "Sepsis"],
+          "notes": "Can cause rapid progression to septic shock. Characteristic non-blanching petechial rash. Cephalosporin coverage. Vaccine: MenACWY and MenB (separate)."
+        },
+        {
+          "organism": "Haemophilus influenzae (non-typeable)",
+          "presentations": ["Otitis media", "Sinusitis", "Pneumonia"],
+          "notes": "Type b rare with Hib vaccine. Non-typeable increasingly common cause of AOM. Often beta-lactamase positive (resistant to ampicillin). Treat with high-dose amoxicillin-clavulanate or cephalosporin."
+        },
+        {
+          "organism": "Kingella kingae",
+          "presentations": ["Septic arthritis (most common in 1-4 years)", "Osteomyelitis"],
+          "notes": "Fastidious gram-negative coccobacillus. Replaced S. aureus as most common cause of septic arthritis in toddlers. Requires longer treatment. Cephalosporin or susceptible Ampicillin."
+        },
+        {
+          "organism": "Staphylococcus aureus (MSSA and MRSA)",
+          "presentations": ["Skin/soft tissue", "Osteomyelitis", "Septic arthritis (less common than Kingella in toddlers)", "Pneumonia", "Impetigo"],
+          "notes": "MRSA increasingly common. Purulent infections likely MRSA—do I&D and start Vancomycin or Clindamycin (if susceptible). MSSA: nafcillin or cephalosporin preferred."
+        }
+      ]
+    },
+    {
+      "id": "abb-4",
+      "ageGroup": "School-age Child (5-12 years)",
+      "commonBugs": [
+        {
+          "organism": "Streptococcus pneumoniae",
+          "presentations": ["Pneumonia (CAP)", "Otitis media (less common than in younger kids)", "Meningitis (less common)", "Sinusitis"],
+          "notes": "Still leading cause of bacterial pneumonia. Vaccine: PCV13 (all children should have completed series), PPSV23 (for chronic disease/immunocompromise)."
+        },
+        {
+          "organism": "Mycoplasma pneumoniae",
+          "presentations": ["Community-acquired pneumonia ('walking pneumonia')", "Bronchitis", "Tracheobronchitis"],
+          "notes": "Increasingly common in school-age and adolescents. Minimal findings on exam but extensive infiltrates on CXR. Treated with azithromycin or doxycycline (if >8 years)."
+        },
+        {
+          "organism": "Streptococcus pyogenes (Group A Strep)",
+          "presentations": ["Pharyngitis (most common cause in 5-15 years)", "Impetigo", "Scarlet fever (if toxin-producing strain)", "Cellulitis"],
+          "notes": "Gold standard diagnosis: throat culture. Treat with 10-day Amoxicillin/Penicillin course to prevent acute rheumatic fever and post-streptococcal GN."
+        },
+        {
+          "organism": "Borrelia burgdorferi",
+          "presentations": ["Lyme disease (erythema migrans rash)", "Arthritis", "Neurologic manifestations if untreated"],
+          "notes": "Tick exposure in endemic areas (Northeast, Midwest US). Bull's-eye rash (erythema migrans) pathognomonic. Treat with doxycycline (if >8y) or amoxicillin (if <8y) for early disease."
+        },
+        {
+          "organism": "Staphylococcus aureus (MRSA)",
+          "presentations": ["Skin and soft tissue (purulent)", "Osteomyelitis", "Pneumonia"],
+          "notes": "MRSA presume if purulent drainage present. Culture and susceptibilities guide therapy. I&D essential for abscesses."
+        }
+      ]
+    },
+    {
+      "id": "abb-5",
+      "ageGroup": "Adolescent (12-18 years)",
+      "commonBugs": [
+        {
+          "organism": "Streptococcus pneumoniae",
+          "presentations": ["Pneumonia", "Meningitis", "Bacteremia"],
+          "notes": "Still cause of serious infections. Vaccination status important (should have completed PCV13 + PPSV23 if appropriate)."
+        },
+        {
+          "organism": "Mycoplasma pneumoniae",
+          "presentations": ["Community-acquired pneumonia (very common in this age)", "Bronchitis"],
+          "notes": "'Walking pneumonia.' Minimal exam findings, extensive CXR infiltrates (X-ray looks worse than patient). Treat with azithromycin or doxycycline."
+        },
+        {
+          "organism": "Neisseria gonorrhoeae",
+          "presentations": ["Urethritis/cervicitis", "PID (pelvic inflammatory disease)", "Pharyngitis (often asymptomatic)"],
+          "notes": "STI screening essential in sexually active adolescents. Dual therapy: Ceftriaxone + Azithromycin (or Doxycycline). Fluoroquinolones no longer recommended due to resistance."
+        },
+        {
+          "organism": "Chlamydia trachomatis",
+          "presentations": ["Urethritis/cervicitis (often asymptomatic)", "PID", "Conjunctivitis (rare)"],
+          "notes": "Often co-infected with gonorrhea. Azithromycin or doxycycline. Screen all sexually active adolescents."
+        },
+        {
+          "organism": "Treponema pallidum",
+          "presentations": ["Primary syphilis (chancre)", "Secondary syphilis (rash on trunk/palms/soles, systemic symptoms)"],
+          "notes": "Resurgence in adolescents. Screen all sexually active. Treat with benzathine Penicillin G IM single dose or doxycycline."
+        }
+      ]
+    }
+  ]
+}

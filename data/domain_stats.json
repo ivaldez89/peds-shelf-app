@@ -1,0 +1,120 @@
+{
+  "newborn": {
+    "name": "Newborn / Neonatology",
+    "count": 27,
+    "difficulties": {
+      "advanced": 8,
+      "intermediate": 18,
+      "beginner": 1
+    }
+  },
+  "gi_nutrition": {
+    "name": "GI / Nutrition",
+    "count": 18,
+    "difficulties": {
+      "intermediate": 16,
+      "advanced": 2
+    }
+  },
+  "infectious_disease": {
+    "name": "Infectious Disease",
+    "count": 18,
+    "difficulties": {
+      "advanced": 5,
+      "intermediate": 13
+    }
+  },
+  "renal": {
+    "name": "Renal",
+    "count": 17,
+    "difficulties": {
+      "intermediate": 14,
+      "advanced": 3
+    }
+  },
+  "cardiology": {
+    "name": "Cardiology",
+    "count": 14,
+    "difficulties": {
+      "intermediate": 11,
+      "advanced": 3
+    }
+  },
+  "heme_onc": {
+    "name": "Hematology / Oncology",
+    "count": 12,
+    "difficulties": {
+      "intermediate": 7,
+      "advanced": 5
+    }
+  },
+  "growth_development": {
+    "name": "Growth & Development",
+    "count": 11,
+    "difficulties": {
+      "intermediate": 11
+    }
+  },
+  "pulmonology": {
+    "name": "Pulmonology",
+    "count": 10,
+    "difficulties": {
+      "intermediate": 6,
+      "advanced": 4
+    }
+  },
+  "rheum_immunology": {
+    "name": "Rheumatology / Immunology",
+    "count": 9,
+    "difficulties": {
+      "intermediate": 5,
+      "advanced": 4
+    }
+  },
+  "neurology": {
+    "name": "Neurology",
+    "count": 8,
+    "difficulties": {
+      "advanced": 2,
+      "intermediate": 6
+    }
+  },
+  "adolescent": {
+    "name": "Adolescent Medicine",
+    "count": 8,
+    "difficulties": {
+      "intermediate": 7,
+      "advanced": 1
+    }
+  },
+  "endocrine": {
+    "name": "Endocrine",
+    "count": 7,
+    "difficulties": {
+      "intermediate": 6,
+      "advanced": 1
+    }
+  },
+  "child_abuse_ethics": {
+    "name": "Child Abuse / Ethics",
+    "count": 3,
+    "difficulties": {
+      "intermediate": 2,
+      "advanced": 1
+    }
+  },
+  "general": {
+    "name": "General Pediatrics",
+    "count": 1,
+    "difficulties": {
+      "intermediate": 1
+    }
+  },
+  "genetics_metabolic": {
+    "name": "Genetics / Metabolic",
+    "count": 1,
+    "difficulties": {
+      "intermediate": 1
+    }
+  }
+}

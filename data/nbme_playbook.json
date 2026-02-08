@@ -1,0 +1,25 @@
+{
+  "taskTypes": [
+    "1. DX — Most likely diagnosis / explanation",
+    "2. MGMT-NEXT (treatment) — Next best step in management",
+    "3. MGMT-NEXT (diagnostic) — Next best step in workup",
+    "4. MECH — Pathophysiology / mechanism (\"why is this happening?\")",
+    "5. DISTINGUISH — Rule in/out; key differentiator; common trap avoidance",
+    "6. SCREENING/PREVENTION/COUNSELING — vaccines, screening tests, anticipatory guidance, prevention"
+  ],
+  "triageAlgorithm": [
+    {
+      "step": 1,
+      "content": "If unstable, NBME usually wants stabilization before anything else:\n- Airway/Breathing first (e.g., respiratory depression, tension pneumothorax)\n- Circulation first (e.g., shock physiology)\n- Cardiac membrane first when needed (e.g., hyperkalemia with ECG changes → IV calcium)\n\n### Step 2: Is this a \"can't-miss\" surgical emergency?\nWhen present, immediate surgical pathway overrides \"best test\" thinking:\n- Bilious vomiting in neonate/young infant → volvulus until proven otherwise\n- Testicular torsion pattern → urgent surgery evaluation\n- Intussusception pattern → enema reduction (diagnostic + therapeutic)"
+    }
+  ],
+  "commonTraps": [
+    "- Wrong priority: insulin before fluids in DKA; antihistamines before epinephrine in anaphylaxis; imaging before decompression in tension pneumothorax",
+    "- Wrong timing: IgA nephropathy (during infection) vs PSGN (weeks later)",
+    "- Wrong physiology: serum hyperkalemia in DKA may reflect shift, not total-body excess",
+    "- Wrong site of care: neonates and unstable patients often require broader evaluation and higher-acuity management",
+    "- Normal variant vs pathology: common in pediatrics (development, sleep, newborn transitional findings)"
+  ],
+  "siteOfCareFraming": [],
+  "usageGuidance": []
+}
