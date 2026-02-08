@@ -1,0 +1,114 @@
+
+=== AUDIT & FIX SUMMARY: ID & Antibiotics Hub ===
+
+FILE: /sessions/fervent-relaxed-dijkstra/mnt/1_Pediatrics/peds-shelf-app/index.html
+BACKUP: index.html.backup (created before changes)
+
+STEP 1: JSON DATA STRUCTURE ANALYSIS ✓
+Location: data/peds_id_antibiotics.json
+
+Verified JSON field names:
+- bugDrugPairs: id, bug, drug, context, hint, ageGroup
+- whatsTheBug: id, clues, answer, explanation, difficulty, distractors
+- rashToDiagnosis: id, rashDescription, diagnosis, pathogen, keyFeature, treatment, complications, buzzwords
+- empiricTherapy: id, syndrome, empiricRegimen, targetOrganisms, keyConsiderations, whenToNarrow, duration
+
+STEP 2: COMPONENT FIELD REFERENCES ✓
+Verified all references match JSON fields:
+
+BugDrugMatcher (lines 1335-1458):
+- ✓ current.bug (display in h2)
+- ✓ current.drug (comparison logic)
+- ✓ current.context (description)
+- ✓ current.hint (optional italic note)
+- ✓ current.ageGroup (display with capitalize)
+
+WhatsTheBugQuiz (lines 1461-1591):
+- ✓ current.clues (mapped with .map() for display)
+- ✓ current.answer (comparison for answers)
+- ✓ current.distractors (in options array)
+- ✓ current.difficulty (badge styling)
+- ✓ current.explanation (FormattedText component)
+
+RashGallery (lines 1594-1628):
+- ✓ r.id (key prop)
+- ✓ r.rashDescription (description text)
+- ✓ r.diagnosis (h3 title)
+- ✓ r.pathogen (bold text)
+- ✓ r.keyFeature (emoji + text)
+- ✓ r.treatment (span text)
+- ✓ r.complications (uses .join(', ') for array)
+- ✓ r.buzzwords (mapped with .map() for spans)
+
+STEP 3: ARRAY HANDLING ✓
+Verified all arrays properly handled:
+- ✓ current.clues: mapped in quiz display
+- ✓ current.clues: joined with ' → ' for missed cases display
+- ✓ r.buzzwords: mapped to individual span tags
+- ✓ r.complications: uses .join(', ') for display
+
+STEP 4: COLOR SCHEME CONVERSION (Light Mode) ✓
+Converted all dark-mode Tailwind classes to light-mode equivalents:
+
+Text Colors:
+- text-white → text-slate-900 (main headings)
+- text-slate-300 → text-slate-700 (emphasis text)
+- text-slate-400 → text-slate-600 (body text)
+- text-slate-500 → text-slate-500 (hint text - kept same)
+
+Background Colors:
+- bg-slate-800/50 → bg-white (main containers)
+- bg-slate-800/30 → bg-slate-50 (secondary containers)
+- bg-slate-900/20 → bg-slate-100 (tertiary containers)
+- bg-slate-800/40 → bg-slate-50 (sub-sections)
+
+Border Colors:
+- border-slate-700/40 → border-slate-300 (main borders)
+- border-slate-700/30 → border-slate-300 (secondary borders)
+- border-slate-700/20 → border-slate-300 (tertiary borders)
+
+Hover States:
+- hover:bg-slate-800 → hover:bg-slate-200
+- hover:text-slate-200 → hover:text-slate-700
+
+STEP 5: FIXED COMPONENTS
+
+IDHubView (header section):
+- ✓ Title text-white → text-slate-900
+- ✓ Description text-slate-400 → text-slate-600
+- ✓ Border border-slate-700/40 → border-slate-300
+- ✓ Inactive tabs: bg-slate-800/40 → bg-slate-200/50, text-slate-400 → text-slate-600
+
+BugDrugMatcher:
+- ✓ Container: bg-slate-800/50 → bg-white
+- ✓ Option buttons: bg-slate-800/30 → bg-slate-50
+- ✓ Borders: border-slate-700/40 → border-slate-300
+- ✓ Headers: text-white → text-slate-900
+
+WhatsTheBugQuiz:
+- ✓ Container: bg-slate-800/50 → bg-white
+- ✓ Clue numbers: text-cyan-500 → text-cyan-600
+- ✓ Clue text: text-slate-300 → text-slate-700
+- ✓ Option buttons: bg-slate-800/30 → bg-slate-50
+- ✓ Result container: bg-slate-800/30 → bg-slate-50
+
+RashGallery:
+- ✓ Description text: text-slate-300 → text-slate-700
+- ✓ Buzzwords: bg-rose-950/300/15 → bg-rose-500/15
+- ✓ Pathogen/treatment text: text-slate-300 → text-slate-700
+- ✓ Complications: text-slate-400 → text-slate-600
+
+EmpiricTherapyCards & AntibioticSpectrum:
+- ✓ Container backgrounds: bg-slate-800/30 → bg-slate-50
+- ✓ Borders: border-slate-300
+- ✓ Text: text-slate-400 → text-slate-600
+- ✓ Hovers: hover:bg-slate-800/50 → hover:bg-slate-100
+
+RESULT: ALL FIXES APPLIED ✓
+
+The ID & Antibiotics Hub now displays correctly in light mode with:
+✓ All data fields matching JSON structure
+✓ All arrays properly rendered with .map() or .join()
+✓ All dark-mode colors converted to light-mode equivalents
+✓ No remaining dark-mode classes in text, backgrounds, or borders
+✓ Proper contrast for readability on light background

@@ -52,7 +52,7 @@
     body.theme-light .text-slate-200 { color: #334155 !important; }
     body.theme-light .text-slate-300 { color: #475569 !important; }
     body.theme-light .text-slate-400 { color: #64748b !important; }
-    body.theme-light .text-slate-400 { color: #94a3b8 !important; }
+    body.theme-light .text-slate-500 { color: #94a3b8 !important; }
     body.theme-light .text-slate-600 { color: #94a3b8 !important; }
     body.theme-light .text-slate-700 { color: #94a3b8 !important; }
 
@@ -288,7 +288,7 @@
       endocrine: { label: 'Endocrine', icon: '⚗️', color: 'bg-violet-500/20 text-violet-300 border-violet-500/30' },
       infectious_disease: { label: 'Infectious Disease', icon: '🦠', color: 'bg-lime-500/20 text-lime-300 border-lime-500/30' },
       neurology: { label: 'Neurology', icon: '🧠', color: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' },
-      heme_onc: { label: 'Hematology / Oncology', icon: '🩸', color: 'bg-rose-950/300/20 text-rose-300 border-rose-500/30' },
+      heme_onc: { label: 'Hematology / Oncology', icon: '🩸', color: 'bg-rose-500/20 text-rose-300 border-rose-500/30' },
       rheum_immunology: { label: 'Rheumatology / Immunology', icon: '🛡️', color: 'bg-teal-500/20 text-teal-300 border-teal-500/30' },
       genetics_metabolic: { label: 'Genetics / Metabolic', icon: '🧬', color: 'bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-500/30' },
       adolescent: { label: 'Adolescent Medicine', icon: '🧑‍⚕️', color: 'bg-orange-500/20 text-orange-300 border-orange-500/30' },
@@ -463,7 +463,7 @@
                 <Icons.Search />
                 <input autoFocus value={searchQuery} onChange={e => { setSearchQuery(e.target.value); if (e.target.value) setView({ type: 'search', query: e.target.value }); }}
                   placeholder="Search topics, tags..." className="bg-transparent border-none outline-none text-sm text-slate-200 w-52 placeholder-slate-500" />
-                <button onClick={() => { setShowSearch(false); setSearchQuery(''); }} className="text-slate-400 hover:text-white"><Icons.X /></button>
+                <button onClick={() => { setShowSearch(false); setSearchQuery(''); }} className="text-slate-500 hover:text-white"><Icons.X /></button>
               </div>
             ) : (
               <button onClick={() => setShowSearch(true)} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-md"><Icons.Search /></button>
@@ -486,7 +486,7 @@
       else if (currentView.type === 'all_vignettes') parts.push({ label: 'All Vignettes' });
       else if (currentView.type === 'search') parts.push({ label: `Search: "${currentView.query}"` });
       return (
-        <div className="flex items-center gap-1.5 text-sm text-slate-400">
+        <div className="flex items-center gap-1.5 text-sm text-slate-500">
           {parts.map((p, i) => (
             <React.Fragment key={i}>
               {i > 0 && <Icons.ChevronRight />}
@@ -523,7 +523,7 @@
               { type: 'all_vignettes', icon: <Icons.Book />, bg: 'bg-blue-500/20', title: 'Practice Vignettes', desc: 'Shelf-style clinical stems with branching decisions' },
               { type: 'nbme_strategy', icon: <Icons.Target />, bg: 'bg-emerald-500/20', title: 'NBME Strategy', desc: 'Task patterns, common traps, and timing optimization' },
               { type: 'id_hub', icon: <span className="text-sm">🦠</span>, bg: 'bg-lime-500/20', title: 'ID & Antibiotics Hub', desc: 'Deep-dive: bug-drug matching, rash gallery, empiric therapy, vaccines & more' },
-              { type: 'cardio_hub', icon: <span className="text-sm">❤️</span>, bg: 'bg-rose-950/300/20', title: 'Cardiology Hub', desc: 'CHD lesions, murmurs, ECGs, fetal circulation, shelf scenarios & more' },
+              { type: 'cardio_hub', icon: <span className="text-sm">❤️</span>, bg: 'bg-rose-500/20', title: 'Cardiology Hub', desc: 'CHD lesions, murmurs, ECGs, fetal circulation, shelf scenarios & more' },
             ].map(a => (
               <button key={a.type} onClick={() => setView({ type: a.type })} className="flex items-start gap-4 p-5 bg-white border border-slate-300 rounded-lg hover:bg-slate-800/80 hover:border-slate-600/60 text-left transition">
                 <div className={`p-2.5 ${a.bg} rounded-lg shrink-0 mt-0.5`}>{a.icon}</div>
@@ -532,7 +532,7 @@
             ))}
           </div>
           <div>
-            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Study by System</h2>
+            <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Study by System</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {DOMAIN_ORDER.filter(d => stats[d]).map(domain => {
                 const meta = DOMAIN_META[domain]; const stat = stats[domain];
@@ -556,7 +556,7 @@
           </div>
           {data.frequency && (
             <div>
-              <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">NBME High-Frequency Topics</h2>
+              <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">NBME High-Frequency Topics</h2>
               <div className="bg-slate-800/40 border border-slate-300 rounded-lg p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {Object.entries(data.frequency).slice(0, 6).map(([section, concepts]) => (
@@ -566,7 +566,7 @@
                         {(Array.isArray(concepts) ? concepts : []).slice(0, 4).map((c, i) => (
                           <div key={i} className="text-xs text-slate-400 flex justify-between items-center">
                             <span className="truncate pr-2">{c.concept || c.name || c}</span>
-                            {c.frequency && <span className="text-slate-400 font-mono text-[10px] shrink-0 bg-slate-800 px-1.5 py-0.5 rounded">{c.frequency}x</span>}
+                            {c.frequency && <span className="text-slate-500 font-mono text-[10px] shrink-0 bg-slate-800 px-1.5 py-0.5 rounded">{c.frequency}x</span>}
                           </div>
                         ))}
                       </div>
@@ -585,7 +585,7 @@
         <div className="bg-slate-800/40 border border-slate-300 rounded-lg p-5">
           <div className="text-3xl font-bold text-white tabular-nums">{value}</div>
           <div className="text-sm text-slate-300 mt-1 font-medium">{label}</div>
-          <div className="text-xs text-slate-400 mt-0.5">{sub}</div>
+          <div className="text-xs text-slate-500 mt-0.5">{sub}</div>
         </div>
       );
     }
@@ -617,7 +617,7 @@
           <div className="flex gap-1 mb-8 border-b border-slate-700/50 pb-px">
             {tabs.map(t => (
               <button key={t.id} onClick={() => setTab(t.id)}
-                className={`flex items-center gap-2 px-5 py-2.5 text-sm rounded-t-md border-b-2 transition ${tab === t.id ? 'border-blue-400 text-white bg-slate-800/40 font-medium' : 'border-transparent text-slate-400 hover:text-slate-300'}`}>
+                className={`flex items-center gap-2 px-5 py-2.5 text-sm rounded-t-md border-b-2 transition ${tab === t.id ? 'border-blue-400 text-white bg-slate-800/40 font-medium' : 'border-transparent text-slate-500 hover:text-slate-300'}`}>
                 {t.icon} {t.label} {t.count != null && <span className="text-xs text-slate-600 tabular-nums">({t.count})</span>}
               </button>
             ))}
@@ -660,7 +660,7 @@
                         {(v.tags || []).slice(0, 5).map((t, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-slate-700/40 text-slate-400 rounded">{t}</span>)}
                       </div>
                     </div>
-                    <div className="text-slate-400 flex items-center gap-1.5 text-xs shrink-0"><Icons.Clock /> {v.estimatedMinutes}m</div>
+                    <div className="text-slate-500 flex items-center gap-1.5 text-xs shrink-0"><Icons.Clock /> {v.estimatedMinutes}m</div>
                   </div>
                 </button>
               );
@@ -689,7 +689,7 @@
               <option value="all">All Difficulties</option>
               <option value="introductory">Introductory</option><option value="intermediate">Intermediate</option><option value="advanced">Advanced</option>
             </select>
-            <span className="text-xs text-slate-400 self-center ml-1 tabular-nums">{filtered.length} results</span>
+            <span className="text-xs text-slate-500 self-center ml-1 tabular-nums">{filtered.length} results</span>
           </div>
           <VignetteList vignettes={filtered} domain="all" setView={setView} />
         </div>
@@ -723,7 +723,7 @@
                     <span className={`shrink-0 mt-0.5 text-lg ${h.wasOptimal ? 'text-emerald-400' : 'text-red-400'}`}>{h.wasOptimal ? '✓' : '✗'}</span>
                     <div>
                       <div className="text-slate-300 leading-relaxed">{h.question?.substring(0, 100)}{h.question?.length > 100 ? '...' : ''}</div>
-                      <div className="text-slate-400 text-xs mt-1">Your answer: <span className="text-slate-400">{h.choiceText?.substring(0, 60)}</span></div>
+                      <div className="text-slate-500 text-xs mt-1">Your answer: <span className="text-slate-400">{h.choiceText?.substring(0, 60)}</span></div>
                     </div>
                   </div>
                 ))}
@@ -785,7 +785,7 @@
                   </div>
                   {showFeedback && (choice.id === selectedChoice?.id || choice.isOptimal) && choice.feedback && (
                     <div className={`mt-4 ml-10 p-4 rounded-lg border-l-[3px] ${choice.isOptimal ? 'bg-emerald-950/20 border-emerald-500/50' : 'bg-slate-900/50 border-blue-500/40'}`}>
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
                         {choice.isOptimal ? (choice.id === selectedChoice?.id ? 'Correct — Explanation' : 'Best Answer — Explanation') : 'Why This Is Incorrect'}
                       </div>
                       <FormattedText text={choice.feedback} className="feedback-text" />
@@ -827,7 +827,7 @@
         DX: 'Recognize from presentation', MGMT: 'Select next step', MECH: 'Explain pathophysiology',
         DISTINGUISH: 'Differentiate entities', NUMBERS: 'Recall thresholds', SCREENING: 'Preventive care', ETHICS: 'Ethical reasoning',
       };
-      if (concepts.length === 0) return <p className="text-slate-400 text-sm py-4">No concepts mapped to this domain yet.</p>;
+      if (concepts.length === 0) return <p className="text-slate-500 text-sm py-4">No concepts mapped to this domain yet.</p>;
       // Group by intent
       const grouped = {};
       concepts.forEach(c => { const k = c.intent || 'OTHER'; if (!grouped[k]) grouped[k] = []; grouped[k].push(c); });
@@ -837,7 +837,7 @@
             <div key={intent}>
               <div className="flex items-center gap-3 mb-4">
                 <span className={`text-xs px-2.5 py-1 rounded-md font-bold border ${intentColors[intent] || 'bg-slate-700 text-slate-300 border-slate-600'}`}>{intent}</span>
-                <span className="text-xs text-slate-400">{intentDescriptions[intent] || ''} &middot; {list.length} concepts</span>
+                <span className="text-xs text-slate-500">{intentDescriptions[intent] || ''} &middot; {list.length} concepts</span>
               </div>
               <div className="space-y-2.5">
                 {list.map((c, i) => (
@@ -847,7 +847,7 @@
                       {c.id && <span className="text-[10px] text-slate-600 font-mono">{c.id}</span>}
                     </div>
                     {c.sourceCards && c.sourceCards.length > 0 && (
-                      <div className="text-[11px] text-slate-400 mt-2">Source cards: <span className="font-mono text-slate-600">{c.sourceCards.join(', ')}</span></div>
+                      <div className="text-[11px] text-slate-500 mt-2">Source cards: <span className="font-mono text-slate-600">{c.sourceCards.join(', ')}</span></div>
                     )}
                   </div>
                 ))}
@@ -871,7 +871,7 @@
         }));
         if (mode === 'shuffle') return [...c].sort(() => Math.random() - 0.5); return c;
       }, [concepts, domain, mode]);
-      if (cards.length === 0) return <p className="text-slate-400 text-sm py-4">No flashcards available for this domain.</p>;
+      if (cards.length === 0) return <p className="text-slate-500 text-sm py-4">No flashcards available for this domain.</p>;
       const card = cards[currentIdx]; const state = getFlashcardState(card.id);
       const handleRate = (quality) => { updateFlashcard(card.id, quality); setFlipped(false); setCurrentIdx(prev => (prev + 1) % cards.length); };
       return (
@@ -905,7 +905,7 @@
             </div>
           )}
           {state.reps > 0 && (
-            <div className="text-center mt-4 text-xs text-slate-400 tabular-nums">
+            <div className="text-center mt-4 text-xs text-slate-500 tabular-nums">
               Interval: <strong className="text-slate-400">{state.interval}d</strong> &middot; Ease: <strong className="text-slate-400">{state.ease?.toFixed(2)}</strong> &middot; Reps: <strong className="text-slate-400">{state.reps}</strong>
             </div>
           )}
@@ -925,7 +925,7 @@
           {oneLiners.length > 0 && (
             <div>
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2"><Icons.Zap /> If You See → Think</h3>
-              <div className="bg-slate-50 border border-slate-300 rounded-xl overflow-hidden divide-y divide-slate-700/30">
+              <div className="bg-slate-800/30 border border-slate-300 rounded-xl overflow-hidden divide-y divide-slate-700/30">
                 {oneLiners.map((o, i) => (
                   <div key={i} className="flex items-center px-5 py-3.5 text-sm hover:bg-slate-100 transition">
                     <span className="text-amber-300 flex-1 leading-relaxed">{o.clue}</span>
@@ -963,7 +963,7 @@
             </div>
           )}
           {mnemonics.length === 0 && pearls.length === 0 && oneLiners.length === 0 && (
-            <div className="text-center py-8"><p className="text-slate-400 text-sm">No rapid review content specifically tagged for this domain.</p><p className="text-slate-600 text-xs mt-1">Check the global Rapid Review section in the sidebar.</p></div>
+            <div className="text-center py-8"><p className="text-slate-500 text-sm">No rapid review content specifically tagged for this domain.</p><p className="text-slate-600 text-xs mt-1">Check the global Rapid Review section in the sidebar.</p></div>
           )}
         </div>
       );
@@ -986,11 +986,11 @@
               { id: 'pearls', label: `Pearls (${(data.pearls || []).length})` },
             ].map(t => (
               <button key={t.id} onClick={() => setTab(t.id)}
-                className={`px-5 py-2.5 text-sm rounded-t-md border-b-2 transition font-medium ${tab === t.id ? 'border-amber-400 text-white' : 'border-transparent text-slate-400 hover:text-slate-300'}`}>{t.label}</button>
+                className={`px-5 py-2.5 text-sm rounded-t-md border-b-2 transition font-medium ${tab === t.id ? 'border-amber-400 text-white' : 'border-transparent text-slate-500 hover:text-slate-300'}`}>{t.label}</button>
             ))}
           </div>
           {tab === 'oneliners' && (
-            <div className="bg-slate-50 border border-slate-300 rounded-xl overflow-hidden divide-y divide-slate-700/20">
+            <div className="bg-slate-800/30 border border-slate-300 rounded-xl overflow-hidden divide-y divide-slate-700/20">
               {oneLiners.map((o, i) => (
                 <div key={i} className="flex items-center px-5 py-3.5 text-sm hover:bg-slate-100 transition">
                   <span className="w-8 text-xs text-slate-600 tabular-nums shrink-0">{i + 1}</span>
@@ -1081,11 +1081,11 @@
               </div>
             </div>
           )}
-          <div className="bg-slate-50 border border-slate-300 rounded-xl p-7">
+          <div className="bg-slate-800/30 border border-slate-300 rounded-xl p-7">
             <h2 className="text-sm font-bold text-slate-300 mb-5 uppercase tracking-wider flex items-center gap-2"><Icons.Clock /> Exam Timing Strategy</h2>
             <div className="space-y-4">
               <p className="text-sm text-slate-300 leading-relaxed">NBME Pediatrics Shelf: <strong className="text-white">110 questions</strong> in ~2h45m = approximately <strong className="text-blue-300">90 seconds per question</strong>.</p>
-              <p className="text-xs text-slate-400 leading-relaxed">Budget: <strong className="text-slate-400">60s</strong> reading + <strong className="text-slate-400">20s</strong> elimination + <strong className="text-slate-400">10s</strong> selection. Flag and return for complex vignettes.</p>
+              <p className="text-xs text-slate-500 leading-relaxed">Budget: <strong className="text-slate-400">60s</strong> reading + <strong className="text-slate-400">20s</strong> elimination + <strong className="text-slate-400">10s</strong> selection. Flag and return for complex vignettes.</p>
               <div className="grid grid-cols-3 gap-3 mt-4">
                 {[
                   { label: 'DX', pct: '~42%', color: 'bg-emerald-950/30 border-emerald-800/25 text-emerald-300' },
@@ -1094,14 +1094,14 @@
                 ].map(d => (
                   <div key={d.label} className={`p-4 ${d.color} border rounded-lg text-center`}>
                     <div className="text-xl font-bold">{d.label}</div>
-                    <div className="text-[11px] text-slate-400 mt-1">{d.pct} of exam</div>
+                    <div className="text-[11px] text-slate-500 mt-1">{d.pct} of exam</div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
           {playbook.siteOfCareFraming && (
-            <div className="bg-slate-50 border border-slate-300 rounded-xl p-7">
+            <div className="bg-slate-800/30 border border-slate-300 rounded-xl p-7">
               <h2 className="text-sm font-bold text-slate-300 mb-3 uppercase tracking-wider">Site of Care Distribution</h2>
               <p className="text-sm text-slate-400 leading-relaxed">{typeof playbook.siteOfCareFraming === 'string' ? playbook.siteOfCareFraming : JSON.stringify(playbook.siteOfCareFraming)}</p>
             </div>
@@ -1133,7 +1133,7 @@
                       <span className="text-sm font-semibold text-white">{r.item.title}</span>
                       <span className="text-sm text-slate-600">{DOMAIN_META[r.domain]?.icon}</span>
                     </div>
-                    <div className="text-xs text-slate-400 leading-relaxed">{r.item.stem?.substring(0, 150)}{r.item.stem?.length > 150 ? '...' : ''}</div>
+                    <div className="text-xs text-slate-500 leading-relaxed">{r.item.stem?.substring(0, 150)}{r.item.stem?.length > 150 ? '...' : ''}</div>
                   </button>
                 )}
                 {r.type === 'concept' && (
@@ -1152,7 +1152,7 @@
                 )}
               </div>
             ))}
-            {results.length === 0 && <div className="text-center py-8"><p className="text-slate-400 text-sm">No results found.</p><p className="text-slate-600 text-xs mt-1">Try a different search term.</p></div>}
+            {results.length === 0 && <div className="text-center py-8"><p className="text-slate-500 text-sm">No results found.</p><p className="text-slate-600 text-xs mt-1">Try a different search term.</p></div>}
           </div>
         </div>
       );
@@ -1238,7 +1238,7 @@
         fetch('/api/id-antibiotics').then(r => r.json()).then(d => { setIdData(d); setLoading(false); }).catch(() => setLoading(false));
       }, []);
       if (loading) return <LoadingScreen />;
-      if (!idData) return <div className="p-8 text-slate-600">Failed to load ID data.</div>;
+      if (!idData) return <div className="p-8 text-slate-400">Failed to load ID data.</div>;
 
       const tabs = [
         { id: 'overview', label: 'Overview', icon: '🦠' },
@@ -1261,10 +1261,10 @@
             </div>
             <p className="text-sm text-slate-600 leading-relaxed">Deep-dive into pediatric ID — master bugs, drugs, empiric therapy, and shelf-exam patterns through <strong className="text-slate-700">10 interactive modules</strong>.</p>
           </div>
-          <div className="flex flex-wrap gap-1.5 mb-8 pb-3 border-b border-slate-700">
+          <div className="flex flex-wrap gap-1.5 mb-8 pb-3 border-b border-slate-300">
             {tabs.map(t => (
               <button key={t.id} onClick={() => setTab(t.id)}
-                className={`flex items-center gap-1.5 px-3.5 py-2 text-xs rounded-lg font-medium transition ${tab === t.id ? 'bg-lime-500/20 text-lime-300 border border-lime-500/30' : 'bg-slate-800/40 text-slate-400 border border-slate-700 hover:text-slate-300 hover:bg-slate-800'}`}>
+                className={`flex items-center gap-1.5 px-3.5 py-2 text-xs rounded-lg font-medium transition ${tab === t.id ? 'bg-lime-500/20 text-lime-300 border border-lime-500/30' : 'bg-slate-200/50 text-slate-600 border border-slate-300 hover:text-slate-700 hover:bg-slate-200'}`}>
                 <span className="text-sm">{t.icon}</span> {t.label}
               </button>
             ))}
@@ -1289,7 +1289,7 @@
       const modules = [
         { id: 'bug_drug', icon: '🎯', title: 'Bug-Drug Matcher', desc: 'Match organisms to first-line antibiotics in a timed game', count: `${(idData.bugDrugPairs||[]).length} pairs`, color: 'bg-lime-500/20 text-lime-300 border-lime-500/30' },
         { id: 'whats_the_bug', icon: '🔬', title: "What's the Bug?", desc: 'Progressive clue reveal — identify the organism from clinical findings', count: `${(idData.whatsTheBug||[]).length} cases`, color: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' },
-        { id: 'rash_gallery', icon: '🔴', title: 'Rash Gallery', desc: 'Match classic pediatric rash descriptions to diagnoses', count: `${(idData.rashToDiagnosis||[]).length} rashes`, color: 'bg-rose-950/300/20 text-rose-300 border-rose-500/30' },
+        { id: 'rash_gallery', icon: '🔴', title: 'Rash Gallery', desc: 'Match classic pediatric rash descriptions to diagnoses', count: `${(idData.rashToDiagnosis||[]).length} rashes`, color: 'bg-rose-500/20 text-rose-300 border-rose-500/30' },
         { id: 'empiric', icon: '💊', title: 'Empiric Therapy', desc: 'Syndrome-based empiric antibiotic selection with reasoning', count: `${(idData.empiricTherapy||[]).length} syndromes`, color: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
         { id: 'spectrum', icon: '📊', title: 'Antibiotic Spectrum', desc: 'Visual coverage profiles for key pediatric antibiotics', count: `${(idData.antibioticSpectrum||[]).length} drugs`, color: 'bg-violet-500/20 text-violet-300 border-violet-500/30' },
         { id: 'age_bugs', icon: '👶', title: 'Age-Based Bugs', desc: 'Which organisms to suspect at each pediatric age group', count: `${(idData.ageBasedBugs||[]).length} age groups`, color: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
@@ -1364,7 +1364,7 @@
               <h2 className="text-xl font-bold text-slate-900 mb-1">Round Complete!</h2>
               <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
               <p className="text-slate-600 text-sm">{score.correct} / {score.total} correct · Best streak: {bestStreak}</p>
-              {best.attempts.length > 1 && <p className="text-xs text-slate-400 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
+              {best.attempts.length > 1 && <p className="text-xs text-slate-500 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
             </div>
             {missed.length > 0 && (
               <div className="mb-8">
@@ -1373,7 +1373,7 @@
                   {missed.map((m, i) => (
                     <div key={i} className="flex items-center gap-3 p-3 bg-red-950/20 border border-red-800/20 rounded-lg text-sm">
                       <span className="text-red-400">✗</span>
-                      <span className="text-slate-700 flex-1">{m.bug}</span>
+                      <span className="text-slate-300 flex-1">{m.bug}</span>
                       <span className="text-slate-600">→</span>
                       <span className="text-emerald-400 font-medium">{m.correctDrug}</span>
                       <span className="text-[10px] text-red-300/50">(you: {m.yourAnswer})</span>
@@ -1419,15 +1419,15 @@
               <span className="text-sm text-slate-600 tabular-nums font-medium">{idx + 1} / {queue.length}</span>
               {streak >= 3 && <span className="text-xs px-2.5 py-1 bg-amber-500/20 text-amber-300 rounded-full font-bold animate-fadeIn">🔥 {streak} streak!</span>}
             </div>
-            <span className="text-sm text-slate-400 tabular-nums">{score.correct} correct</span>
+            <span className="text-sm text-slate-500 tabular-nums">{score.correct} correct</span>
           </div>
 
           <div className="bg-white border border-slate-300 rounded-xl p-7 mb-6">
             <div className="text-[10px] font-bold uppercase tracking-widest text-lime-400/70 mb-3">Identify the First-Line Treatment</div>
             <h2 className="text-lg font-bold text-slate-900 mb-2">{current.bug}</h2>
             <p className="text-sm text-slate-600 leading-relaxed">{current.context}</p>
-            {current.hint && <p className="text-xs text-slate-400 mt-3 italic">💡 {current.hint}</p>}
-            <div className="text-[10px] text-slate-600 mt-3">Age group: <span className="text-slate-400 capitalize">{current.ageGroup}</span></div>
+            {current.hint && <p className="text-xs text-slate-500 mt-3 italic">💡 {current.hint}</p>}
+            <div className="text-[10px] text-slate-600 mt-3">Age group: <span className="text-slate-500 capitalize">{current.ageGroup}</span></div>
           </div>
 
           <div className="space-y-2.5">
@@ -1489,7 +1489,7 @@
               <h2 className="text-xl font-bold text-slate-900 mb-1">Quiz Complete!</h2>
               <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
               <p className="text-slate-600 text-sm">{score.correct} / {score.total} correct</p>
-              {best.attempts.length > 1 && <p className="text-xs text-slate-400 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
+              {best.attempts.length > 1 && <p className="text-xs text-slate-500 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
             </div>
             {missed.length > 0 && (
               <div className="mb-8">
@@ -1497,7 +1497,7 @@
                 <div className="space-y-2">
                   {missed.map((m, i) => (
                     <div key={i} className="flex flex-col gap-2 p-3 bg-red-950/20 border border-red-800/20 rounded-lg text-sm">
-                      <span className="text-slate-700 text-xs"><strong>Clues:</strong> {m.clue}</span>
+                      <span className="text-slate-300 text-xs"><strong>Clues:</strong> {m.clue}</span>
                       <div className="flex items-center gap-2">
                         <span className="text-red-400">✗</span>
                         <span className="text-red-300/70 text-xs">Your answer:</span>
@@ -1561,7 +1561,7 @@
             )}
           </div>
 
-          <div className="text-xs text-slate-400 uppercase tracking-widest mb-3 font-bold">What's the organism?</div>
+          <div className="text-xs text-slate-500 uppercase tracking-widest mb-3 font-bold">What's the organism?</div>
           <div className="grid grid-cols-2 gap-2.5">
             {options.map((opt, i) => {
               let cls = 'bg-slate-50 border-slate-300 hover:border-slate-400';
@@ -1616,7 +1616,7 @@
                     <div className="text-xs text-slate-600 mb-3">Pathogen: <strong className="text-slate-700">{r.pathogen}</strong></div>
                     <div className="text-xs text-amber-300/80 mb-2 font-medium">🔑 {r.keyFeature}</div>
                     <div className="text-xs text-slate-600">Tx: <span className="text-slate-700">{r.treatment}</span></div>
-                    {r.complications && <div className="mt-3 text-xs text-slate-600">Complications: {r.complications.join(', ')}</div>}
+                    {r.complications && <div className="mt-3 text-xs text-slate-500">Complications: {r.complications.join(', ')}</div>}
                     <div className="text-[10px] text-slate-600 mt-3 italic">tap to flip back →</div>
                   </div>
                 )}
@@ -1632,34 +1632,34 @@
       const [expanded, setExpanded] = useState(null);
       return (
         <div>
-          <p className="text-sm text-slate-600 mb-6 leading-relaxed">Syndrome-based empiric antibiotic selection — click any syndrome for the full regimen, target organisms, and clinical reasoning.</p>
+          <p className="text-sm text-slate-400 mb-6 leading-relaxed">Syndrome-based empiric antibiotic selection — click any syndrome for the full regimen, target organisms, and clinical reasoning.</p>
           <div className="space-y-3">
             {syndromes.map(et => (
-              <div key={et.id} className="bg-slate-50 border border-slate-300 rounded-xl overflow-hidden">
+              <div key={et.id} className="bg-slate-800/30 border border-slate-300 rounded-xl overflow-hidden">
                 <button onClick={() => setExpanded(expanded === et.id ? null : et.id)}
-                  className="w-full text-left p-5 flex items-center justify-between hover:bg-slate-100 transition">
+                  className="w-full text-left p-5 flex items-center justify-between hover:bg-slate-800/50 transition">
                   <div className="pr-4">
-                    <span className="text-sm font-semibold text-slate-900">{et.syndrome}</span>
+                    <span className="text-sm font-semibold text-white">{et.syndrome}</span>
                     <span className="text-xs text-blue-300/80 ml-3 hidden sm:inline">{et.empiricRegimen}</span>
                   </div>
-                  <span className={`text-slate-400 transition-transform shrink-0 ${expanded === et.id ? 'rotate-90' : ''}`}><Icons.ChevronRight /></span>
+                  <span className={`text-slate-500 transition-transform shrink-0 ${expanded === et.id ? 'rotate-90' : ''}`}><Icons.ChevronRight /></span>
                 </button>
                 {expanded === et.id && (
-                  <div className="px-5 pb-5 border-t border-slate-300 pt-4 animate-fadeIn space-y-4">
+                  <div className="px-5 pb-5 border-t border-slate-700/20 pt-4 animate-fadeIn space-y-4">
                     <div>
-                      <div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Empiric Regimen</div>
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Empiric Regimen</div>
                       <div className="text-sm text-blue-300 font-semibold">{et.empiricRegimen}</div>
                     </div>
                     <div>
-                      <div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Target Organisms</div>
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Target Organisms</div>
                       <div className="flex flex-wrap gap-1.5">{(et.targetOrganisms || []).map((o, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-lime-500/15 text-lime-300 rounded">{o}</span>)}</div>
                     </div>
                     <div>
-                      <div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Key Considerations</div>
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Key Considerations</div>
                       <FormattedText text={et.keyConsiderations} className="feedback-text" />
                     </div>
-                    {et.whenToNarrow && <div><div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">When to Narrow</div><p className="text-xs text-slate-600 leading-relaxed">{et.whenToNarrow}</p></div>}
-                    {et.duration && <div><div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1">Duration</div><p className="text-xs text-slate-600 leading-relaxed">{et.duration}</p></div>}
+                    {et.whenToNarrow && <div><div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">When to Narrow</div><p className="text-xs text-slate-400 leading-relaxed">{et.whenToNarrow}</p></div>}
+                    {et.duration && <div><div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Duration</div><p className="text-xs text-slate-400 leading-relaxed">{et.duration}</p></div>}
                   </div>
                 )}
               </div>
@@ -1675,7 +1675,7 @@
       const current = drugs.find(d => d.id === selected) || drugs[0];
       return (
         <div>
-          <p className="text-sm text-slate-600 mb-6 leading-relaxed">Visual coverage profiles for key pediatric antibiotics. Select a drug to see its full spectrum.</p>
+          <p className="text-sm text-slate-400 mb-6 leading-relaxed">Visual coverage profiles for key pediatric antibiotics. Select a drug to see its full spectrum.</p>
           <div className="flex flex-wrap gap-2 mb-6">
             {drugs.map(d => (
               <button key={d.id} onClick={() => setSelected(d.id)}
@@ -1685,12 +1685,12 @@
             ))}
           </div>
           {current && (
-            <div className="bg-slate-50 border border-slate-300 rounded-xl p-6 animate-fadeIn">
+            <div className="bg-slate-800/30 border border-slate-300 rounded-xl p-6 animate-fadeIn">
               <div className="flex items-baseline gap-3 mb-1">
                 <h3 className="text-lg font-bold text-violet-300">{current.drug}</h3>
-                <span className="text-xs text-slate-400">{current.class}</span>
+                <span className="text-xs text-slate-500">{current.class}</span>
               </div>
-              <p className="text-xs text-slate-400 mb-5 italic">{current.mechanism}</p>
+              <p className="text-xs text-slate-500 mb-5 italic">{current.mechanism}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
                 <div className="p-4 bg-emerald-950/20 border border-emerald-800/20 rounded-lg">
                   <div className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider mb-2">Gram-Positive</div>
@@ -1715,12 +1715,12 @@
               </div>
               <div className="space-y-3">
                 <div>
-                  <div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Pediatric Uses</div>
-                  <div className="flex flex-wrap gap-1.5">{(current.pedsUses || []).map((u, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-slate-300 text-slate-700 rounded">{u}</span>)}</div>
+                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Pediatric Uses</div>
+                  <div className="flex flex-wrap gap-1.5">{(current.pedsUses || []).map((u, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-slate-700/50 text-slate-300 rounded">{u}</span>)}</div>
                 </div>
                 {current.pedsNotes && <div className="p-3 bg-amber-950/15 border-l-[3px] border-amber-500/40 rounded-r-lg"><p className="text-xs text-amber-200/80 leading-relaxed">📝 {current.pedsSpecific}</p></div>}
                 {(current.sideEffects || []).length > 0 && (
-                  <div><div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Side Effects</div><p className="text-xs text-slate-400">{current.sideEffects.join(' · ')}</p></div>
+                  <div><div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Side Effects</div><p className="text-xs text-slate-400">{current.sideEffects.join(' · ')}</p></div>
                 )}
                 {current.contraindications && (
                   <div><div className="text-[10px] font-bold text-red-400/80 uppercase tracking-wider mb-1.5">Contraindications</div><p className="text-xs text-red-300/70">{current.contraindications}</p></div>
@@ -1799,13 +1799,13 @@
                 <div key={v.id} className="p-5 bg-slate-800/30 border border-slate-300 rounded-xl">
                   <div className="flex items-baseline gap-2.5 mb-2">
                     <span className="text-sm font-bold text-emerald-300">{v.vaccine}</span>
-                    <span className="text-[10px] text-slate-400">{v.fullName}</span>
+                    <span className="text-[10px] text-slate-500">{v.fullName}</span>
                   </div>
                   <div className="flex flex-wrap gap-1.5 mb-2">
                     {(v.schedule || []).map((s, si) => <span key={si} className="text-[11px] px-2 py-0.5 bg-emerald-500/10 text-emerald-200/80 rounded tabular-nums">{s}</span>)}
                   </div>
-                  {v.booster && <p className="text-xs text-slate-400 mb-1"><strong className="text-slate-400">Booster:</strong> {v.booster}</p>}
-                  <p className="text-xs text-slate-400"><strong className="text-slate-400">Type:</strong> {v.type}</p>
+                  {v.booster && <p className="text-xs text-slate-500 mb-1"><strong className="text-slate-400">Booster:</strong> {v.booster}</p>}
+                  <p className="text-xs text-slate-500"><strong className="text-slate-400">Type:</strong> {v.type}</p>
                   {v.contraindications && v.contraindications.length > 0 && <p className="text-xs text-red-300/60 mt-1"><strong>CI:</strong> {v.contraindications.join('; ')}</p>}
                   {v.highYield && <div className="mt-3 p-2.5 bg-amber-950/15 border-l-[3px] border-amber-500/30 rounded-r-lg"><p className="text-[11px] text-amber-200/80 leading-relaxed">⭐ {v.highYield}</p></div>}
                 </div>
@@ -1828,7 +1828,7 @@
               <h2 className="text-xl font-bold text-slate-900 mb-1">Quiz Complete!</h2>
               <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
               <p className="text-slate-600 text-sm">{qScore.correct} / {qScore.total} correct</p>
-              {best.attempts.length > 1 && <p className="text-xs text-slate-400 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
+              {best.attempts.length > 1 && <p className="text-xs text-slate-500 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
             </div>
             {qMissed.length > 0 && (
               <div className="mb-8">
@@ -1836,7 +1836,7 @@
                 <div className="space-y-2">
                   {qMissed.map((m, i) => (
                     <div key={i} className="flex flex-col gap-2 p-3 bg-red-950/20 border border-red-800/20 rounded-lg text-sm">
-                      <span className="text-slate-700 font-medium">{m.vaccine}</span>
+                      <span className="text-slate-300 font-medium">{m.vaccine}</span>
                       <div className="flex items-center gap-2 text-xs">
                         <span className="text-red-400">✗</span>
                         <span className="text-red-300/70">Your answer:</span>
@@ -1873,12 +1873,12 @@
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <span className="text-sm text-slate-600 tabular-nums">{qIdx + 1} / {quizQueue.length}</span>
-            <button onClick={() => setMode('study')} className="text-xs text-slate-400 hover:text-slate-300 transition">← Back to Study</button>
+            <button onClick={() => setMode('study')} className="text-xs text-slate-500 hover:text-slate-300 transition">← Back to Study</button>
           </div>
           <div className="bg-white border border-slate-300 rounded-xl p-7 mb-6">
             <div className="text-[10px] font-bold uppercase tracking-widest text-emerald-400/70 mb-3">When is this vaccine given?</div>
-            <h2 className="text-lg font-bold text-slate-900 mb-1">{q.vaccine}</h2>
-            <p className="text-xs text-slate-400">{q.fullName} · {q.type}</p>
+            <h2 className="text-lg font-bold text-white mb-1">{q.vaccine}</h2>
+            <p className="text-xs text-slate-500">{q.fullName} · {q.type}</p>
           </div>
           <div className="space-y-2.5">
             {scheduleOptions.map((opt, i) => {
@@ -1923,12 +1923,12 @@
           {sub === 'associations' && (
             <div>
               <div className="flex items-center justify-between mb-4">
-                <p className="text-xs text-slate-400">Classic "if you see → think" shelf-exam patterns</p>
-                <button onClick={() => setHideAnswers(!hideAnswers)} className="text-xs text-slate-400 hover:text-slate-300 transition font-medium">
+                <p className="text-xs text-slate-500">Classic "if you see → think" shelf-exam patterns</p>
+                <button onClick={() => setHideAnswers(!hideAnswers)} className="text-xs text-slate-500 hover:text-slate-300 transition font-medium">
                   {hideAnswers ? '👁 Show Answers' : '🙈 Hide Answers'}
                 </button>
               </div>
-              <div className="bg-slate-50 border border-slate-300 rounded-xl overflow-hidden divide-y divide-slate-700/20">
+              <div className="bg-slate-800/30 border border-slate-300 rounded-xl overflow-hidden divide-y divide-slate-700/20">
                 {associations.map((a, i) => (
                   <div key={a.id || i} className="flex items-center px-5 py-3.5 text-sm hover:bg-slate-100 transition">
                     <span className="w-8 text-xs text-slate-600 tabular-nums shrink-0">{i + 1}</span>
@@ -2006,17 +2006,17 @@
               <div className="p-4 bg-slate-800/50 border border-slate-300 rounded-xl">
                 <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Attempts</div>
                 <div className="text-2xl font-bold text-white">{totalAttempts}</div>
-                <div className="text-[10px] text-slate-400 mt-1">quiz rounds completed</div>
+                <div className="text-[10px] text-slate-500 mt-1">quiz rounds completed</div>
               </div>
               <div className="p-4 bg-slate-800/50 border border-slate-300 rounded-xl">
                 <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Average Score</div>
                 <div className="text-2xl font-bold text-cyan-400">{avgScore}%</div>
-                <div className="text-[10px] text-slate-400 mt-1">across all modules</div>
+                <div className="text-[10px] text-slate-500 mt-1">across all modules</div>
               </div>
               <div className="p-4 bg-slate-800/50 border border-slate-300 rounded-xl">
                 <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">Modules Started</div>
                 <div className="text-2xl font-bold text-emerald-400">{Object.keys(all).length}</div>
-                <div className="text-[10px] text-slate-400 mt-1">of 10 available</div>
+                <div className="text-[10px] text-slate-500 mt-1">of 10 available</div>
               </div>
             </div>
           </div>
@@ -2084,7 +2084,7 @@
                       className={`w-full text-left p-3 rounded-lg border transition ${isOverdue ? 'bg-red-950/15 border-red-800/30 hover:bg-red-950/25' : 'bg-slate-50 border-slate-300 hover:bg-slate-800/50'}`}>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-slate-300">{moduleId.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}</span>
-                        <span className={`text-xs ${isOverdue ? 'text-red-300 font-medium' : 'text-slate-400'}`}>
+                        <span className={`text-xs ${isOverdue ? 'text-red-300 font-medium' : 'text-slate-500'}`}>
                           {daysSince === 0 ? 'Today' : daysSince === 1 ? 'Yesterday' : `${daysSince} days ago`}
                           {isOverdue && <span className="ml-2">🔔 Time to review</span>}
                         </span>
@@ -2117,7 +2117,7 @@
         fetch('/api/cardiology').then(r => r.json()).then(d => { setCardioData(d); setLoading(false); }).catch(() => setLoading(false));
       }, []);
       if (loading) return <LoadingScreen />;
-      if (!cardioData) return <div className="p-8 text-slate-400">Failed to load cardiology data.</div>;
+      if (!cardioData) return <div className="p-8 text-slate-500">Failed to load cardiology data.</div>;
 
       const tabs = [
         { id: 'overview', label: 'Overview', icon: '❤️' },
@@ -2136,14 +2136,14 @@
         <div className="animate-fadeIn p-8 max-w-6xl mx-auto">
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-2"><span className="text-3xl">❤️</span>
-              <h1 className="text-2xl font-bold text-white tracking-tight">Pediatric Cardiology Hub</h1>
+              <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Pediatric Cardiology Hub</h1>
             </div>
-            <p className="text-sm text-slate-400 leading-relaxed">Master pediatric heart disease — from <strong className="text-slate-300">congenital defects</strong> to <strong className="text-slate-300">murmurs, ECGs, and shelf scenarios</strong> through <strong className="text-slate-300">11 interactive modules</strong>.</p>
+            <p className="text-sm text-slate-500 leading-relaxed">Master pediatric heart disease — from <strong className="text-slate-700">congenital defects</strong> to <strong className="text-slate-700">murmurs, ECGs, and shelf scenarios</strong> through <strong className="text-slate-700">11 interactive modules</strong>.</p>
           </div>
-          <div className="flex flex-wrap gap-1.5 mb-8 pb-3 border-b border-slate-700">
+          <div className="flex flex-wrap gap-1.5 mb-8 pb-3 border-b border-slate-200">
             {tabs.map(t => (
               <button key={t.id} onClick={() => setTab(t.id)}
-                className={`flex items-center gap-1.5 px-3.5 py-2 text-xs rounded-lg font-medium transition ${tab === t.id ? 'bg-rose-950/30 text-rose-300 border border-rose-800/30' : 'bg-slate-800/50 text-slate-400 border border-slate-700 hover:text-slate-300 hover:bg-slate-800/30'}`}>
+                className={`flex items-center gap-1.5 px-3.5 py-2 text-xs rounded-lg font-medium transition ${tab === t.id ? 'bg-rose-50 text-rose-600 border border-rose-300' : 'bg-white text-slate-500 border border-slate-200 hover:text-slate-700 hover:bg-slate-50'}`}>
                 <span className="text-sm">{t.icon}</span> {t.label}
               </button>
             ))}
@@ -2166,7 +2166,7 @@
     // ─── CARDIO OVERVIEW ──────────────────────────────────────────────
     function CardioOverview({ data, setTab }) {
       const modules = [
-        { id: 'chd_cards', icon: '🫀', title: 'CHD Cards', desc: 'Cyanotic & acyanotic congenital lesions with hemodynamics', count: `${(data.chdLesions||[]).length} lesions`, color: 'bg-rose-950/30 text-rose-300 border-rose-800/30' },
+        { id: 'chd_cards', icon: '🫀', title: 'CHD Cards', desc: 'Cyanotic & acyanotic congenital lesions with hemodynamics', count: `${(data.chdLesions||[]).length} lesions`, color: 'bg-rose-50 text-rose-600 border-rose-300' },
         { id: 'murmur_quiz', icon: '🩺', title: 'Name That Murmur', desc: 'Progressive clue reveal quiz on cardiac murmurs', count: `${(data.murmurQuiz||[]).length} cases`, color: 'bg-pink-50 text-pink-600 border-pink-300' },
         { id: 'acquired', icon: '🔥', title: 'Acquired Heart Disease', desc: 'Myocarditis, pericarditis, rheumatic fever & more', count: `${(data.acquiredHeartDisease||[]).length} conditions`, color: 'bg-red-50 text-red-600 border-red-300' },
         { id: 'ecg', icon: '📈', title: 'ECG Patterns', desc: 'Age-appropriate ECG findings and arrhythmias', count: `${(data.ecgPatterns||[]).length} patterns`, color: 'bg-purple-50 text-purple-600 border-purple-300' },
@@ -2220,34 +2220,34 @@
         <div>
           <div className="flex gap-2 mb-6">
             <button onClick={() => setTab('cyanotic')}
-              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${tab === 'cyanotic' ? 'bg-red-600 text-white' : 'bg-slate-800/30 text-slate-400 hover:text-slate-300'}`}>
+              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${tab === 'cyanotic' ? 'bg-red-600 text-white' : 'bg-slate-50 text-slate-500 hover:text-slate-700'}`}>
               🔴 Cyanotic
             </button>
             <button onClick={() => setTab('acyanotic')}
-              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${tab === 'acyanotic' ? 'bg-blue-600 text-white' : 'bg-slate-800/30 text-slate-400 hover:text-slate-300'}`}>
+              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${tab === 'acyanotic' ? 'bg-blue-600 text-white' : 'bg-slate-50 text-slate-500 hover:text-slate-700'}`}>
               🔵 Acyanotic
             </button>
           </div>
           <div className="space-y-4">
             {filtered.map(l => (
               <div key={l.id} onClick={() => toggle(l.id)} className="cursor-pointer">
-                <div className={`p-4 rounded-xl border transition ${expanded[l.id] ? (l.category === 'cyanotic' ? 'bg-red-50 border-red-300' : 'bg-blue-50 border-blue-300') : 'bg-slate-800/50 border-slate-700 hover:border-slate-400'}`}>
+                <div className={`p-4 rounded-xl border transition ${expanded[l.id] ? (l.category === 'cyanotic' ? 'bg-red-50 border-red-300' : 'bg-blue-50 border-blue-300') : 'bg-white border-slate-200 hover:border-slate-400'}`}>
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-semibold text-white">{l.lesion}</h3>
-                      <p className="text-xs text-slate-400 mt-1">{l.category}</p>
+                      <h3 className="font-semibold text-slate-800">{l.lesion}</h3>
+                      <p className="text-xs text-slate-500 mt-1">{l.category}</p>
                     </div>
                     <span className={`text-lg transition ${expanded[l.id] ? 'rotate-90' : ''}`}>▶</span>
                   </div>
                   {expanded[l.id] && (
-                    <div className="mt-4 pt-4 border-t border-slate-700 space-y-3">
-                      <div className="text-sm"><span className="text-slate-400">Hemodynamics:</span> <span className="text-slate-300">{l.hemodynamics}</span></div>
-                      <div className="text-sm"><span className="text-slate-400">Presentation:</span> <span className="text-slate-300">{l.presentation}</span></div>
-                      <div className="text-sm"><span className="text-slate-400">Murmur:</span> <span className="text-slate-300">{l.murmur}</span></div>
-                      <div className="text-sm"><span className="text-slate-400">Management:</span> <span className="text-slate-300">{l.management}</span></div>
-                      {l.ageGroup && <div className="text-sm"><span className="text-slate-400">Age Group:</span> <span className="text-slate-300">{l.ageGroup}</span></div>}
+                    <div className="mt-4 pt-4 border-t border-slate-200 space-y-3">
+                      <div className="text-sm"><span className="text-slate-500">Hemodynamics:</span> <span className="text-slate-700">{l.hemodynamics}</span></div>
+                      <div className="text-sm"><span className="text-slate-500">Presentation:</span> <span className="text-slate-700">{l.presentation}</span></div>
+                      <div className="text-sm"><span className="text-slate-500">Murmur:</span> <span className="text-slate-700">{l.murmur}</span></div>
+                      <div className="text-sm"><span className="text-slate-500">Management:</span> <span className="text-slate-700">{l.management}</span></div>
+                      {l.ageGroup && <div className="text-sm"><span className="text-slate-500">Age Group:</span> <span className="text-slate-700">{l.ageGroup}</span></div>}
                       {l.associations && (
-                        <div className="text-sm"><span className="text-slate-400">Associations:</span> <span className="text-slate-300">{l.associations}</span></div>
+                        <div className="text-sm"><span className="text-slate-500">Associations:</span> <span className="text-slate-700">{l.associations}</span></div>
                       )}
                       {l.buzzwords && (
                         <div className="flex flex-wrap gap-1.5 mt-3">
@@ -2295,9 +2295,9 @@
           <div className="max-w-2xl mx-auto py-8">
             <div className="text-center mb-8">
               <div className="text-5xl mb-4">{pct >= 80 ? '🎯' : pct >= 60 ? '🔍' : '📚'}</div>
-              <h2 className="text-xl font-bold text-white mb-1">Quiz Complete!</h2>
+              <h2 className="text-xl font-bold text-slate-800 mb-1">Quiz Complete!</h2>
               <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
-              <p className="text-slate-400 text-sm">{score.correct} / {score.total} correct</p>
+              <p className="text-slate-500 text-sm">{score.correct} / {score.total} correct</p>
               {best.attempts.length > 1 && <p className="text-xs text-slate-400 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
             </div>
             {missed.length > 0 && (
@@ -2322,7 +2322,7 @@
             )}
             <div className="flex gap-3 justify-center">
               <button onClick={() => { setQueue([...items].sort(() => Math.random() - 0.5)); setIdx(0); setRevealedClues(1); setGuessed(false); setSelected(null); setScore({ correct: 0, total: 0 }); setMissed([]); savedRef.current = false; }}
-                className="px-6 py-2.5 bg-rose-600 hover:bg-rose-950/300 text-white rounded-lg text-sm font-medium transition">Play Again</button>
+                className="px-6 py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-sm font-medium transition">Play Again</button>
             </div>
           </div>
         );
@@ -2343,51 +2343,51 @@
       return (
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-6">
-            <span className="text-sm text-slate-400 tabular-nums">{idx + 1} / {queue.length}</span>
+            <span className="text-sm text-slate-500 tabular-nums">{idx + 1} / {queue.length}</span>
             <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current.difficulty === 'advanced' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>{current.difficulty}</span>
           </div>
 
-          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-7 mb-6">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-rose-300 mb-4">Murmur Clues</div>
+          <div className="bg-white border border-slate-200 rounded-xl p-7 mb-6">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-rose-600 mb-4">Murmur Clues</div>
             <div className="space-y-2.5">
               {(current.clues || []).map((clue, ci) => (
                 <div key={ci} className={`flex items-start gap-3 transition-all duration-300 ${ci < revealedClues ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-                  <span className="text-xs text-rose-300 font-mono mt-0.5 shrink-0 w-4">{ci + 1}.</span>
-                  <span className="text-sm text-slate-300 leading-relaxed">{clue}</span>
+                  <span className="text-xs text-rose-600 font-mono mt-0.5 shrink-0 w-4">{ci + 1}.</span>
+                  <span className="text-sm text-slate-700 leading-relaxed">{clue}</span>
                 </div>
               ))}
             </div>
             {!guessed && revealedClues < (current.clues || []).length && (
               <button onClick={() => setRevealedClues(prev => prev + 1)}
-                className="mt-4 text-xs text-rose-300 hover:text-rose-700 font-medium transition">
+                className="mt-4 text-xs text-rose-600 hover:text-rose-700 font-medium transition">
                 + Reveal next clue ({revealedClues}/{current.clues.length})
               </button>
             )}
           </div>
 
-          <div className="text-xs text-slate-400 uppercase tracking-widest mb-3 font-bold">What murmur is this?</div>
+          <div className="text-xs text-slate-600 uppercase tracking-widest mb-3 font-bold">What murmur is this?</div>
           <div className="grid grid-cols-2 gap-2.5">
             {options.map((opt, i) => {
-              let cls = 'bg-slate-800/30 border-slate-700 hover:border-slate-400';
+              let cls = 'bg-slate-50 border-slate-200 hover:border-slate-400';
               if (guessed) {
                 if (opt === current.answer) cls = 'bg-emerald-50 border-emerald-400';
                 else if (opt === selected) cls = 'bg-red-50 border-red-400';
-                else cls = 'bg-slate-800/30 border-slate-700 opacity-40';
+                else cls = 'bg-slate-50 border-slate-200 opacity-40';
               }
               return (
                 <button key={i} onClick={() => handleGuess(opt)} disabled={guessed}
-                  className={`choice-btn text-left p-3.5 rounded-xl border transition text-sm text-slate-300 ${cls}`}>{opt}</button>
+                  className={`choice-btn text-left p-3.5 rounded-xl border transition text-sm text-slate-700 ${cls}`}>{opt}</button>
               );
             })}
           </div>
 
           {guessed && (
             <div className="mt-5">
-              <div className={`p-5 rounded-xl border ${selected === current.answer ? 'bg-emerald-50 border-emerald-200' : 'bg-slate-800/30 border-slate-700'}`}>
+              <div className={`p-5 rounded-xl border ${selected === current.answer ? 'bg-emerald-50 border-emerald-200' : 'bg-slate-50 border-slate-200'}`}>
                 <FormattedText text={current.explanation} className="feedback-text" />
               </div>
               <button onClick={() => { setIdx(prev => prev + 1); setRevealedClues(1); setGuessed(false); setSelected(null); }}
-                className="w-full mt-4 py-3 bg-rose-600 hover:bg-rose-950/300 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
+                className="w-full mt-4 py-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
             </div>
           )}
         </div>
@@ -2402,18 +2402,18 @@
         <div className="space-y-3">
           {conditions.map(c => (
             <div key={c.id} onClick={() => toggle(c.id)} className="cursor-pointer">
-              <div className={`p-4 rounded-xl border transition ${expanded[c.id] ? 'bg-red-50 border-red-300' : 'bg-slate-800/50 border-slate-700 hover:border-slate-400'}`}>
+              <div className={`p-4 rounded-xl border transition ${expanded[c.id] ? 'bg-red-50 border-red-300' : 'bg-white border-slate-200 hover:border-slate-400'}`}>
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold text-white">{c.condition}</h3>
+                  <h3 className="font-semibold text-slate-800">{c.condition}</h3>
                   <span className={`text-lg transition ${expanded[c.id] ? 'rotate-90' : ''}`}>▶</span>
                 </div>
                 {expanded[c.id] && (
-                  <div className="mt-4 pt-4 border-t border-slate-700 space-y-2">
-                    <div className="text-sm"><span className="text-slate-400">Presentation:</span> <span className="text-slate-300">{c.presentation}</span></div>
-                    <div className="text-sm"><span className="text-slate-400">Diagnostics:</span> <span className="text-slate-300">{c.diagnostics}</span></div>
-                    <div className="text-sm"><span className="text-slate-400">Treatment:</span> <span className="text-slate-300">{c.treatment}</span></div>
-                    <div className="text-sm"><span className="text-slate-400">Complications:</span> <span className="text-slate-300">{c.complications}</span></div>
-                    {c.ageGroup && <div className="text-sm"><span className="text-slate-400">Age Group:</span> <span className="text-slate-300">{c.ageGroup}</span></div>}
+                  <div className="mt-4 pt-4 border-t border-slate-200 space-y-2">
+                    <div className="text-sm"><span className="text-slate-500">Presentation:</span> <span className="text-slate-700">{c.presentation}</span></div>
+                    <div className="text-sm"><span className="text-slate-500">Diagnostics:</span> <span className="text-slate-700">{c.diagnostics}</span></div>
+                    <div className="text-sm"><span className="text-slate-500">Treatment:</span> <span className="text-slate-700">{c.treatment}</span></div>
+                    <div className="text-sm"><span className="text-slate-500">Complications:</span> <span className="text-slate-700">{c.complications}</span></div>
+                    {c.ageGroup && <div className="text-sm"><span className="text-slate-500">Age Group:</span> <span className="text-slate-700">{c.ageGroup}</span></div>}
                     {c.pearlsForShelf && <div className="text-sm mt-2"><span className="text-amber-600">💡</span> <span className="text-amber-700">{c.pearlsForShelf}</span></div>}
                   </div>
                 )}
@@ -2436,20 +2436,20 @@
               const colorClass = isNormal ? 'bg-emerald-100 border-emerald-400 hover:border-emerald-500' : 'bg-red-50 border-red-300 hover:border-red-400';
               return (
                 <button key={p.id} onClick={() => setSelected(p.id)}
-                  className={`text-left p-3.5 rounded-lg border transition ${selected === p.id ? colorClass : 'bg-slate-800/50 border-slate-700 hover:border-slate-400'}`}>
-                  <div className="font-medium text-sm text-white">{p.pattern}</div>
-                  <div className="text-xs text-slate-400 mt-0.5">{isNormal ? '✅ Normal variant' : '⚠️ Pathologic'}</div>
+                  className={`text-left p-3.5 rounded-lg border transition ${selected === p.id ? colorClass : 'bg-white border-slate-200 hover:border-slate-400'}`}>
+                  <div className="font-medium text-sm text-slate-800">{p.pattern}</div>
+                  <div className="text-xs text-slate-500 mt-0.5">{isNormal ? '✅ Normal variant' : '⚠️ Pathologic'}</div>
                 </button>
               );
             })}
           </div>
           {current && (
-            <div className="lg:col-span-2 bg-slate-800/50 border border-slate-700 rounded-xl p-6 shadow-sm">
-              <h3 className="text-lg font-bold text-white mb-4">{current.pattern}</h3>
+            <div className="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-800 mb-4">{current.pattern}</h3>
               <div className="space-y-4">
-                <div><span className="text-slate-400 text-sm font-medium">Description:</span> <span className="text-slate-300 text-sm block mt-1">{current.description}</span></div>
-                <div><span className="text-slate-400 text-sm font-medium">Associations:</span> <span className="text-slate-300 text-sm block mt-1">{Array.isArray(current.associations) ? current.associations.join(', ') : current.associations}</span></div>
-                <div><span className="text-slate-300 text-sm font-medium">Peds Notes:</span> <span className="text-slate-300 text-sm block mt-1">{current.pedsNote}</span></div>
+                <div><span className="text-slate-500 text-sm font-medium">Description:</span> <span className="text-slate-700 text-sm block mt-1">{current.description}</span></div>
+                <div><span className="text-slate-500 text-sm font-medium">Associations:</span> <span className="text-slate-700 text-sm block mt-1">{Array.isArray(current.associations) ? current.associations.join(', ') : current.associations}</span></div>
+                <div><span className="text-slate-700 text-sm font-medium">Peds Notes:</span> <span className="text-slate-700 text-sm block mt-1">{current.pedsNote}</span></div>
                 {current.shelfTrap && <div><span className="text-amber-600 text-sm font-medium">🚨 Shelf Trap:</span> <span className="text-amber-700 text-sm block mt-1">{current.shelfTrap}</span></div>}
               </div>
             </div>
@@ -2474,7 +2474,7 @@
           </div>
           {current && (
             <div className="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-6">
-              <h3 className="text-lg font-bold text-slate-800 mb-4">{current.drug}</h3>
+              <h3 className="text-lg font-bold text-slate-800 mb-4">{current.structure}</h3>
               <div className="space-y-4">
                 <div><span className="text-slate-700 text-sm font-medium">Mechanism:</span> <span className="text-slate-700 text-sm block mt-1">{current.mechanism}</span></div>
                 <div><span className="text-slate-700 text-sm font-medium">Indication:</span> <span className="text-slate-700 text-sm block mt-1">{current.indication}</span></div>
@@ -2494,7 +2494,6 @@
         const choices = [item.answer, ...item.wrongAnswers].sort(() => Math.random() - 0.5);
         return { ...item, choices, correctAnswer: item.answer };
       });
-      
       const [queue, setQueue] = useState(() => [...prepareShelfItems(items)].sort(() => Math.random() - 0.5));
       const [idx, setIdx] = useState(0);
       const [selected, setSelected] = useState(null);
@@ -2523,8 +2522,8 @@
               <div className="text-5xl mb-4">{pct >= 80 ? '🎖️' : pct >= 60 ? '📋' : '📚'}</div>
               <h2 className="text-xl font-bold text-slate-800 mb-1">Quiz Complete!</h2>
               <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
-              <p className="text-slate-600 text-sm">{score.correct} / {score.total} correct</p>
-              {best.attempts.length > 1 && <p className="text-xs text-slate-500 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
+              <p className="text-slate-500 text-sm">{score.correct} / {score.total} correct</p>
+              {best.attempts.length > 1 && <p className="text-xs text-slate-400 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
             </div>
             {missed.length > 0 && (
               <div className="mb-8">
@@ -2541,7 +2540,7 @@
               </div>
             )}
             <div className="flex gap-3 justify-center">
-              <button onClick={() => { setQueue([...prepareShelfItems(items)].sort(() => Math.random() - 0.5)); setIdx(0); setSelected(null); setAnswered(false); setScore({ correct: 0, total: 0 }); setMissed([]); savedRef.current = false; }}
+              <button onClick={() => { setQueue([...items].sort(() => Math.random() - 0.5)); setIdx(0); setSelected(null); setAnswered(false); setScore({ correct: 0, total: 0 }); setMissed([]); savedRef.current = false; }}
                 className="px-6 py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-sm font-medium transition">Play Again</button>
             </div>
           </div>
@@ -2551,9 +2550,9 @@
       const handleAnswer = (choice) => {
         setSelected(choice);
         setAnswered(true);
-        const correct = choice === current.answer;
+        const correct = choice === current.correctAnswer;
         setScore(prev => ({ correct: prev.correct + (correct ? 1 : 0), total: prev.total + 1 }));
-        if (!correct) setMissed(prev => [...prev, { stem: current.stem, correctAnswer: current.answer, yourAnswer: choice }]);
+        if (!correct) setMissed(prev => [...prev, { stem: current.stem, correctAnswer: current.correctAnswer, yourAnswer: choice }]);
       };
 
       return (
@@ -2574,7 +2573,7 @@
             {current.choices.map((choice, i) => {
               let cls = 'bg-slate-50 border-slate-200 hover:border-slate-400';
               if (answered) {
-                if (choice === current.answer) cls = 'bg-emerald-50 border-emerald-400';
+                if (choice === current.correctAnswer) cls = 'bg-emerald-50 border-emerald-400';
                 else if (choice === selected) cls = 'bg-red-50 border-red-400';
                 else cls = 'bg-slate-50 border-slate-200 opacity-40';
               }
@@ -2589,7 +2588,7 @@
 
           {answered && (
             <div className="space-y-4">
-              <div className={`p-5 rounded-xl border ${selected === current.answer ? 'bg-emerald-50 border-emerald-200' : 'bg-slate-50 border-slate-200'}`}>
+              <div className={`p-5 rounded-xl border ${selected === current.correctAnswer ? 'bg-emerald-50 border-emerald-200' : 'bg-slate-50 border-slate-200'}`}>
                 <FormattedText text={current.explanation} className="feedback-text" />
               </div>
               <button onClick={() => { setIdx(prev => prev + 1); setSelected(null); setAnswered(false); }}
@@ -2600,7 +2599,6 @@
       );
     }
 
-
     // ─── FETAL CIRCULATION ────────────────────────────────────────────
     function FetalCirculation({ structures }) {
       const [selected, setSelected] = useState(null);
@@ -2610,20 +2608,20 @@
           <div className="flex flex-col gap-2 h-fit">
             {structures.map(s => (
               <button key={s.id} onClick={() => setSelected(s.id)}
-                className={`text-left p-3.5 rounded-lg border transition ${selected === s.id ? 'bg-indigo-50 border-indigo-300 text-indigo-600 font-medium' : 'bg-slate-800/50 border-slate-700 hover:border-slate-400 text-slate-400'}`}>
+                className={`text-left p-3.5 rounded-lg border transition ${selected === s.id ? 'bg-indigo-50 border-indigo-300 text-indigo-600 font-medium' : 'bg-white border-slate-200 hover:border-slate-400 text-slate-500'}`}>
                 <div className="font-medium text-sm">{s.structure}</div>
               </button>
             ))}
           </div>
           {current && (
-            <div className="lg:col-span-2 bg-slate-800/50 border border-slate-700 rounded-xl p-6">
-              <h3 className="text-lg font-bold text-white mb-4">{current.structure}</h3>
+            <div className="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-slate-800 mb-4">{current.structure}</h3>
               <div className="space-y-4">
-                <div><span className="text-slate-400 text-sm font-medium">Fetal Function:</span> <span className="text-slate-300 text-sm block mt-1">{current.fetalFunction}</span></div>
-                <div><span className="text-slate-400 text-sm font-medium">Postnatal Fate:</span> <span className="text-slate-300 text-sm block mt-1">{current.postnatalFate}</span></div>
-                <div><span className="text-slate-400 text-sm font-medium">Closure Stimulus:</span> <span className="text-slate-300 text-sm block mt-1">{current.closureStimulus}</span></div>
-                {current.pathology && <div><span className="text-slate-400 text-sm font-medium">Pathology if Fails:</span> <span className="text-slate-300 text-sm block mt-1">{current.pathology}</span></div>}
-                {current.pharmacology && <div><span className="text-slate-400 text-sm font-medium">Pharmacology:</span> <span className="text-slate-300 text-sm block mt-1">{current.pharmacology}</span></div>}
+                <div><span className="text-slate-500 text-sm font-medium">Fetal Function:</span> <span className="text-slate-700 text-sm block mt-1">{current.fetalFunction}</span></div>
+                <div><span className="text-slate-500 text-sm font-medium">Postnatal Fate:</span> <span className="text-slate-700 text-sm block mt-1">{current.postnatalFate}</span></div>
+                <div><span className="text-slate-500 text-sm font-medium">Closure Stimulus:</span> <span className="text-slate-700 text-sm block mt-1">{current.closureStimulus}</span></div>
+                {current.pathology && <div><span className="text-slate-500 text-sm font-medium">Pathology if Fails:</span> <span className="text-slate-700 text-sm block mt-1">{current.pathology}</span></div>}
+                {current.pharmacology && <div><span className="text-slate-500 text-sm font-medium">Pharmacology:</span> <span className="text-slate-700 text-sm block mt-1">{current.pharmacology}</span></div>}
               </div>
             </div>
           )}
@@ -2639,18 +2637,18 @@
         <div className="space-y-3">
           {items.map(item => (
             <div key={item.id} onClick={() => toggle(item.id)} className="cursor-pointer">
-              <div className={`p-4 rounded-xl border transition ${expanded[item.id] ? 'bg-emerald-50 border-emerald-300' : 'bg-slate-800/50 border-slate-700 hover:border-slate-400'}`}>
+              <div className={`p-4 rounded-xl border transition ${expanded[item.id] ? 'bg-emerald-50 border-emerald-300' : 'bg-white border-slate-200 hover:border-slate-400'}`}>
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-white">{item.condition}</h3>
-                    <p className="text-xs text-slate-400 mt-1">{item.risk}</p>
+                    <h3 className="font-semibold text-slate-800">{item.condition}</h3>
+                    <p className="text-xs text-slate-600 mt-1">{item.risk}</p>
                   </div>
                   <span className={`text-lg transition ${expanded[item.id] ? 'rotate-90' : ''}`}>▶</span>
                 </div>
                 {expanded[item.id] && (
-                  <div className="mt-4 pt-4 border-t border-slate-700 space-y-2">
-                    <div className="text-sm"><span className="text-slate-400">Screening:</span> <span className="text-slate-300">{item.screening}</span></div>
-                    <div className="text-sm"><span className="text-slate-400">Management:</span> <span className="text-slate-300">{item.management}</span></div>
+                  <div className="mt-4 pt-4 border-t border-slate-200 space-y-2">
+                    <div className="text-sm"><span className="text-slate-500">Screening:</span> <span className="text-slate-700">{item.screening}</span></div>
+                    <div className="text-sm"><span className="text-slate-500">Management:</span> <span className="text-slate-700">{item.management}</span></div>
                     {item.shelfPearl && <div className="text-sm mt-2"><span className="text-amber-600">💡</span> <span className="text-amber-700">{item.shelfPearl}</span></div>}
                   </div>
                 )}
@@ -2670,19 +2668,19 @@
         <div>
           <div className="flex gap-2 mb-6">
             <button onClick={() => setSubTab('pearls')}
-              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${subTab === 'pearls' ? 'bg-rose-600 text-white' : 'bg-slate-800/50 text-slate-400 hover:text-slate-300'}`}>
+              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${subTab === 'pearls' ? 'bg-rose-600 text-white' : 'bg-white text-slate-500 hover:text-slate-700'}`}>
               💡 Clinical Pearls
             </button>
             <button onClick={() => setSubTab('associations')}
-              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${subTab === 'associations' ? 'bg-rose-600 text-white' : 'bg-slate-800/50 text-slate-400 hover:text-slate-300'}`}>
+              className={`px-4 py-2 text-sm rounded-lg font-medium transition ${subTab === 'associations' ? 'bg-rose-600 text-white' : 'bg-white text-slate-500 hover:text-slate-700'}`}>
               🔗 Buzzword Associations
             </button>
           </div>
           {subTab === 'pearls' && (
             <div className="space-y-3">
               {pearls.map(p => (
-                <div key={p.id} className="p-4 bg-slate-800/50 border border-slate-700 rounded-xl">
-                  <div className="text-sm text-slate-400">{p.pearl}</div>
+                <div key={p.id} className="p-4 bg-white border border-slate-200 rounded-xl">
+                  <div className="text-sm text-slate-600">{p.pearl}</div>
                 </div>
               ))}
             </div>
@@ -2691,14 +2689,14 @@
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {associations.map(a => (
                 <div key={a.id} onClick={() => toggle(a.id)} className="cursor-pointer">
-                  <div className={`p-4 rounded-xl border transition ${flipped[a.id] ? 'bg-rose-950/30 border-rose-800/30' : 'bg-slate-800/50 border-slate-700 hover:border-slate-400'}`}>
+                  <div className={`p-4 rounded-xl border transition ${flipped[a.id] ? 'bg-rose-50 border-rose-300' : 'bg-white border-slate-200 hover:border-slate-400'}`}>
                     <div className="flex items-center justify-between">
-                      <h4 className="font-semibold text-white text-sm">{a.clue}</h4>
+                      <h4 className="font-semibold text-slate-800 text-sm">{a.clue}</h4>
                       <span className={`text-lg transition ${flipped[a.id] ? 'rotate-90' : ''}`}>▶</span>
                     </div>
                     {flipped[a.id] && (
-                      <div className="mt-3 pt-3 border-t border-slate-700">
-                        <div className="text-sm text-slate-300">{a.answer}</div>
+                      <div className="mt-3 pt-3 border-t border-slate-200">
+                        <div className="text-sm text-slate-700">{a.answer}</div>
                       </div>
                     )}
                   </div>
@@ -2724,19 +2722,19 @@
       const recs = scores.filter(m => m.pct < 75 && m.attempts > 0).map(m => m.name);
       return (
         <div className="max-w-2xl mx-auto space-y-6">
-          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
-            <h3 className="text-lg font-bold text-white mb-4">Your Progress</h3>
+          <div className="bg-white border border-slate-200 rounded-xl p-6">
+            <h3 className="text-lg font-bold text-slate-800 mb-4">Your Progress</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {scores.map(m => (
-                <div key={m.moduleId} className="p-3 bg-slate-800/30 rounded-lg border border-slate-700">
-                  <div className="text-xs text-slate-400 mb-1">{m.name}</div>
+                <div key={m.moduleId} className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                  <div className="text-xs text-slate-500 mb-1">{m.name}</div>
                   <div className={`text-lg font-bold ${m.pct >= 80 ? 'text-emerald-600' : m.pct >= 60 ? 'text-amber-600' : m.pct > 0 ? 'text-red-600' : 'text-slate-400'}`}>{m.pct || '—'}%</div>
-                  {m.attempts > 0 && <div className="text-[10px] text-slate-400">{m.attempts} attempt{m.attempts !== 1 ? 's' : ''}</div>}
+                  {m.attempts > 0 && <div className="text-[10px] text-slate-500">{m.attempts} attempt{m.attempts !== 1 ? 's' : ''}</div>}
                 </div>
               ))}
             </div>
-            <div className="mt-4 pt-4 border-t border-slate-700">
-              <div className="text-sm"><span className="text-slate-400">Overall Mastery:</span> <span className={`text-lg font-bold ml-2 ${avgScore >= 80 ? 'text-emerald-600' : avgScore >= 60 ? 'text-amber-600' : 'text-red-600'}`}>{avgScore}%</span></div>
+            <div className="mt-4 pt-4 border-t border-slate-200">
+              <div className="text-sm"><span className="text-slate-500">Overall Mastery:</span> <span className={`text-lg font-bold ml-2 ${avgScore >= 80 ? 'text-emerald-600' : avgScore >= 60 ? 'text-amber-600' : 'text-red-600'}`}>{avgScore}%</span></div>
             </div>
           </div>
           {recs.length > 0 && (
