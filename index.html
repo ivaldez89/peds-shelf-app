@@ -288,7 +288,7 @@
       endocrine: { label: 'Endocrine', icon: '⚗️', color: 'bg-violet-500/20 text-violet-300 border-violet-500/30' },
       infectious_disease: { label: 'Infectious Disease', icon: '🦠', color: 'bg-lime-500/20 text-lime-300 border-lime-500/30' },
       neurology: { label: 'Neurology', icon: '🧠', color: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' },
-      heme_onc: { label: 'Hematology / Oncology', icon: '🩸', color: 'bg-rose-950/300/20 text-rose-300 border-rose-500/30' },
+      heme_onc: { label: 'Hematology / Oncology', icon: '🩸', color: 'bg-rose-950/20 text-rose-300 border-rose-500/30' },
       rheum_immunology: { label: 'Rheumatology / Immunology', icon: '🛡️', color: 'bg-teal-500/20 text-teal-300 border-teal-500/30' },
       genetics_metabolic: { label: 'Genetics / Metabolic', icon: '🧬', color: 'bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-500/30' },
       adolescent: { label: 'Adolescent Medicine', icon: '🧑‍⚕️', color: 'bg-orange-500/20 text-orange-300 border-orange-500/30' },
@@ -428,6 +428,10 @@
             <NavBtn type="id_hub" label="ID & Antibiotics" icon={<span className="text-sm">🦠</span>} />
             <NavBtn type="cardio_hub" label="Cardiology" icon={<span className="text-sm">❤️</span>} />
 
+            <div className="mt-4 mb-1.5 px-3"><span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Progress</span></div>
+            <NavBtn type="performance" label="Performance" icon="📊" />
+            <NavBtn type="smart_study" label="Smart Study" icon="🎯" />
+
             <div className="mt-4 mb-1.5 px-3"><span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Study Tools</span></div>
             <NavBtn type="rapid_review" label="Rapid Review" icon={<Icons.Zap />} />
             <NavBtn type="nbme_strategy" label="NBME Strategy" icon={<Icons.Target />} />
@@ -488,6 +492,8 @@
       else if (currentView.type === 'nbme_strategy') parts.push({ label: 'NBME Strategy' });
       else if (currentView.type === 'rapid_review') parts.push({ label: 'Rapid Review' });
       else if (currentView.type === 'all_vignettes') parts.push({ label: 'All Vignettes' });
+      else if (currentView.type === 'performance') parts.push({ label: 'Performance Summary' });
+      else if (currentView.type === 'smart_study') parts.push({ label: 'Smart Study Session' });
       else if (currentView.type === 'search') parts.push({ label: `Search: "${currentView.query}"` });
       return (
         <div className="flex items-center gap-1.5 text-sm text-slate-400">
@@ -543,6 +549,20 @@
           </div>
 
           <div>
+            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Your Progress</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <button onClick={() => setView({ type: 'performance' })} className="flex items-start gap-4 p-5 bg-white border border-slate-200 rounded-lg hover:border-slate-400 hover:shadow-sm text-left transition">
+                <div className="p-2.5 bg-violet-100 rounded-lg shrink-0 mt-0.5">📊</div>
+                <div><div className="text-sm font-semibold text-slate-800 mb-1">Performance Summary</div><div className="text-xs text-slate-500 leading-relaxed">View overall scores and weak areas across all modules</div></div>
+              </button>
+              <button onClick={() => setView({ type: 'smart_study' })} className="flex items-start gap-4 p-5 bg-white border border-slate-200 rounded-lg hover:border-slate-400 hover:shadow-sm text-left transition">
+                <div className="p-2.5 bg-pink-100 rounded-lg shrink-0 mt-0.5">🎯</div>
+                <div><div className="text-sm font-semibold text-slate-800 mb-1">Smart Study Session</div><div className="text-xs text-slate-500 leading-relaxed">Personalized quiz focusing on your weaknesses</div></div>
+              </button>
+            </div>
+          </div>
+
+          <div>
             <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Study Tools</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
@@ -586,7 +606,7 @@
               <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">NBME High-Frequency Topics</h2>
               <div className="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {Object.entries(data.frequency).slice(0, 6).map(([section, concepts]) => (
+                  {Object.entries(data.frequency || {}).slice(0, 6).map(([section, concepts]) => (
                     <div key={section}>
                       <div className="text-xs font-bold text-slate-700 mb-2 pb-1 border-b border-slate-200">{section}</div>
                       <div className="space-y-1.5">
@@ -730,6 +750,18 @@
       const [selectedChoice, setSelectedChoice] = useState(null);
       const [showFeedback, setShowFeedback] = useState(false);
       const [history, setHistory] = useState([]); const [score, setScore] = useState({ correct: 0, total: 0 });
+
+      useEffect(() => {
+        if (data.loading || !currentNodeId) return;
+        let vignette = null;
+        for (const [d, vigs] of Object.entries(data.vignettes || {})) { const found = vigs.find(v => v.id === vignetteId); if (found) { vignette = found; break; } }
+        if (!vignette) return;
+        const node = vignette.nodes[currentNodeId];
+        if (!node) {
+          markVignetteComplete(vignetteId, score);
+        }
+      }, [currentNodeId, vignetteId, score, markVignetteComplete, data.loading, data.vignettes]);
+
       if (data.loading) return <LoadingScreen />;
       let vignette = null;
       for (const [d, vigs] of Object.entries(data.vignettes || {})) { const found = vigs.find(v => v.id === vignetteId); if (found) { vignette = found; break; } }
@@ -738,7 +770,6 @@
 
       if (!node) {
         const isGood = activeNodeId?.includes('good') || activeNodeId?.includes('optimal');
-        markVignetteComplete(vignetteId, score);
         return (
           <div className="animate-fadeIn p-8 max-w-3xl mx-auto">
             <div className={`p-8 rounded-xl border ${isGood ? 'bg-emerald-950/30 border-emerald-700/40' : 'bg-red-950/30 border-red-700/40'}`}>
@@ -1316,7 +1347,7 @@
       const modules = [
         { id: 'bug_drug', icon: '🎯', title: 'Bug-Drug Matcher', desc: 'Match organisms to first-line antibiotics in a timed game', count: `${(idData.bugDrugPairs||[]).length} pairs`, color: 'bg-lime-500/20 text-lime-300 border-lime-500/30' },
         { id: 'whats_the_bug', icon: '🔬', title: "What's the Bug?", desc: 'Progressive clue reveal — identify the organism from clinical findings', count: `${(idData.whatsTheBug||[]).length} cases`, color: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' },
-        { id: 'rash_gallery', icon: '🔴', title: 'Rash Gallery', desc: 'Match classic pediatric rash descriptions to diagnoses', count: `${(idData.rashToDiagnosis||[]).length} rashes`, color: 'bg-rose-950/300/20 text-rose-300 border-rose-500/30' },
+        { id: 'rash_gallery', icon: '🔴', title: 'Rash Gallery', desc: 'Match classic pediatric rash descriptions to diagnoses', count: `${(idData.rashToDiagnosis||[]).length} rashes`, color: 'bg-rose-950/20 text-rose-300 border-rose-500/30' },
         { id: 'empiric', icon: '💊', title: 'Empiric Therapy', desc: 'Syndrome-based empiric antibiotic selection with reasoning', count: `${(idData.empiricTherapy||[]).length} syndromes`, color: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
         { id: 'spectrum', icon: '📊', title: 'Antibiotic Spectrum', desc: 'Visual coverage profiles for key pediatric antibiotics', count: `${(idData.antibioticSpectrum||[]).length} drugs`, color: 'bg-violet-500/20 text-violet-300 border-violet-500/30' },
         { id: 'age_bugs', icon: '👶', title: 'Age-Based Bugs', desc: 'Which organisms to suspect at each pediatric age group', count: `${(idData.ageBasedBugs||[]).length} age groups`, color: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
@@ -1380,6 +1411,24 @@
         }
       }, [isComplete]);
 
+      const options = useMemo(() => {
+        if (!current || !current.drug) return [];
+        const correct = current.drug;
+        const others = (pairs || []).filter(d => d.drug !== correct).map(d => d.drug);
+        const unique = [...new Set(others)].sort(() => Math.random() - 0.5).slice(0, 3);
+        return [...unique, correct].sort(() => Math.random() - 0.5);
+      }, [current, pairs]);
+
+      const handleSelect = (opt) => {
+        if (showResult) return;
+        setSelected(opt);
+        setShowResult(true);
+        const isCorrect = opt === current.drug;
+        setScore(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 }));
+        if (isCorrect) { const ns = streak + 1; setStreak(ns); if (ns > bestStreak) setBestStreak(ns); }
+        else { setStreak(0); setMissed(prev => [...prev, { bug: current.bug, correctDrug: current.drug, yourAnswer: opt }]); }
+      };
+
       if (isComplete) {
         const pct = Math.round(score.correct / Math.max(1, score.total) * 100);
         const best = IDProgress.getModule('bug_drug');
@@ -1421,23 +1470,6 @@
           </div>
         );
       }
-
-      const options = useMemo(() => {
-        const correct = current.drug;
-        const others = pairs.filter(d => d.drug !== correct).map(d => d.drug);
-        const unique = [...new Set(others)].sort(() => Math.random() - 0.5).slice(0, 3);
-        return [...unique, correct].sort(() => Math.random() - 0.5);
-      }, [current, pairs]);
-
-      const handleSelect = (opt) => {
-        if (showResult) return;
-        setSelected(opt);
-        setShowResult(true);
-        const isCorrect = opt === current.drug;
-        setScore(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 }));
-        if (isCorrect) { const ns = streak + 1; setStreak(ns); if (ns > bestStreak) setBestStreak(ns); }
-        else { setStreak(0); setMissed(prev => [...prev, { bug: current.bug, correctDrug: current.drug, yourAnswer: opt }]); }
-      };
 
       return (
         <div className="max-w-2xl mx-auto">
@@ -1505,6 +1537,19 @@
         }
       }, [isComplete]);
 
+      const options = useMemo(() => {
+        if (!current || !current.answer) return [];
+        return [current.answer, ...(current.distractors || [])].sort(() => Math.random() - 0.5);
+      }, [idx]);
+
+      const handleGuess = (opt) => {
+        if (guessed) return;
+        setSelected(opt);
+        setGuessed(true);
+        setScore(prev => ({ correct: prev.correct + (opt === current.answer ? 1 : 0), total: prev.total + 1 }));
+        if (opt !== current.answer) setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]);
+      };
+
       if (isComplete) {
         const pct = Math.round(score.correct / Math.max(1, score.total) * 100);
         const best = IDProgress.getModule('whats_the_bug');
@@ -1550,18 +1595,6 @@
           </div>
         );
       }
-
-      const options = useMemo(() => {
-        return [current.answer, ...(current.distractors || [])].sort(() => Math.random() - 0.5);
-      }, [idx]);
-
-      const handleGuess = (opt) => {
-        if (guessed) return;
-        setSelected(opt);
-        setGuessed(true);
-        setScore(prev => ({ correct: prev.correct + (opt === current.answer ? 1 : 0), total: prev.total + 1 }));
-        if (opt !== current.answer) setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]);
-      };
 
       return (
         <div className="max-w-2xl mx-auto">
@@ -1745,7 +1778,7 @@
                   <div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Pediatric Uses</div>
                   <div className="flex flex-wrap gap-1.5">{(current.pedsUses || []).map((u, i) => <span key={i} className="text-[11px] px-2 py-0.5 bg-slate-300 text-slate-700 rounded">{u}</span>)}</div>
                 </div>
-                {current.pedsNotes && <div className="p-3 bg-amber-950/15 border-l-[3px] border-amber-500/40 rounded-r-lg"><p className="text-xs text-amber-200/80 leading-relaxed">📝 {current.pedsSpecific}</p></div>}
+                {current.pedsNotes && <div className="p-3 bg-amber-950/15 border-l-[3px] border-amber-500/40 rounded-r-lg"><p className="text-xs text-amber-200/80 leading-relaxed">📝 {current.pedsNotes}</p></div>}
                 {(current.sideEffects || []).length > 0 && (
                   <div><div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">Side Effects</div><p className="text-xs text-slate-400">{current.sideEffects.join(' · ')}</p></div>
                 )}
@@ -1813,6 +1846,10 @@
         }
       }, [quizComplete]);
 
+      const scheduleOptions = useMemo(() => {
+        const others = vaccines.filter(d => d.id !== q.id).sort(() => Math.random() - 0.5).slice(0, 3).map(d => (d.schedule || []).join(', '));
+        return [...new Set([correctSchedule, ...others])].sort(() => Math.random() - 0.5);
+      }, [qIdx]);
       if (mode === 'study') {
         return (
           <div>
@@ -1889,12 +1926,6 @@
           </div>
         );
       }
-
-      const correctSchedule = (q.schedule || []).join(', ');
-      const scheduleOptions = useMemo(() => {
-        const others = vaccines.filter(d => d.id !== q.id).sort(() => Math.random() - 0.5).slice(0, 3).map(d => (d.schedule || []).join(', '));
-        return [...new Set([correctSchedule, ...others])].sort(() => Math.random() - 0.5);
-      }, [qIdx]);
 
       return (
         <div className="max-w-2xl mx-auto">
@@ -2204,7 +2235,14 @@
         { id: 'pearls', icon: '💡', title: 'Pearls & Associations', desc: 'High-yield buzzword associations and clinical pearls', count: `${(data.clinicalPearls||[]).length + (data.associations||[]).length} items`, color: 'bg-yellow-50 text-yellow-600 border-yellow-300' },
       ];
       const getProgressBadge = (moduleId) => {
-        const progress = IDProgress.getLatest('cardio_' + moduleId);
+        // Only murmur_quiz and scenarios have quiz progress tracking
+        const quizModuleMap = {
+          'murmur_quiz': 'cardio_murmur_quiz',
+          'scenarios': 'cardio_shelf_scenarios'
+        };
+        const key = quizModuleMap[moduleId];
+        if (!key) return null; // No progress tracked for reference modules
+        const progress = IDProgress.getLatest(key);
         if (!progress) return null;
         const color = progress.pct >= 80 ? 'bg-emerald-50 text-emerald-600' : progress.pct >= 60 ? 'bg-amber-50 text-amber-600' : 'bg-red-50 text-red-600';
         return <span className={`text-[10px] px-2 py-1 rounded-full font-medium ${color}`}>{progress.pct}%</span>;
@@ -2242,7 +2280,7 @@
       const [tab, setTab] = useState('cyanotic');
       const [expanded, setExpanded] = useState({});
       const toggle = (id) => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
-      const filtered = lesions.filter(l => (tab === 'cyanotic' ? l.category === 'cyanotic' : l.category === 'acyanotic'));
+      const filtered = (lesions || []).filter(l => (tab === 'cyanotic' ? l.category === 'cyanotic' : l.category === 'acyanotic'));
       return (
         <div>
           <div className="flex gap-2 mb-6">
@@ -2278,7 +2316,7 @@
                       )}
                       {l.buzzwords && (
                         <div className="flex flex-wrap gap-1.5 mt-3">
-                          {l.buzzwords.map((bw, i) => (
+                          {(l.buzzwords || []).map((bw, i) => (
                             <span key={i} className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${l.category === 'cyanotic' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>{bw}</span>
                           ))}
                         </div>
@@ -2314,6 +2352,18 @@
         }
       }, [isComplete]);
 
+      const options = useMemo(() => {
+        if (!current || !current.answer) return [];
+        return [current.answer, ...(current.distractors || [])].sort(() => Math.random() - 0.5);
+      }, [idx]);
+
+      const handleGuess = (opt) => {
+        if (guessed || !current) return;
+        setSelected(opt);
+        setGuessed(true);
+        setScore(prev => ({ correct: prev.correct + (opt === current.answer ? 1 : 0), total: prev.total + 1 }));
+        if (opt !== current.answer) setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]);
+      };
       if (isComplete) {
         const pct = Math.round(score.correct / Math.max(1, score.total) * 100);
         const best = IDProgress.getModule('cardio_murmur_quiz');
@@ -2349,45 +2399,33 @@
             )}
             <div className="flex gap-3 justify-center">
               <button onClick={() => { setQueue([...items].sort(() => Math.random() - 0.5)); setIdx(0); setRevealedClues(1); setGuessed(false); setSelected(null); setScore({ correct: 0, total: 0 }); setMissed([]); savedRef.current = false; }}
-                className="px-6 py-2.5 bg-rose-600 hover:bg-rose-950/300 text-white rounded-lg text-sm font-medium transition">Play Again</button>
+                className="px-6 py-2.5 bg-rose-600 hover:bg-rose-950/30 text-white rounded-lg text-sm font-medium transition">Play Again</button>
             </div>
           </div>
         );
       }
 
-      const options = useMemo(() => {
-        return [current.answer, ...(current.distractors || [])].sort(() => Math.random() - 0.5);
-      }, [idx]);
-
-      const handleGuess = (opt) => {
-        if (guessed) return;
-        setSelected(opt);
-        setGuessed(true);
-        setScore(prev => ({ correct: prev.correct + (opt === current.answer ? 1 : 0), total: prev.total + 1 }));
-        if (opt !== current.answer) setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]);
-      };
-
       return (
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <span className="text-sm text-slate-400 tabular-nums">{idx + 1} / {queue.length}</span>
-            <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current.difficulty === 'advanced' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>{current.difficulty}</span>
+            <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current?.difficulty === 'advanced' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>{current?.difficulty || 'normal'}</span>
           </div>
 
           <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-7 mb-6">
             <div className="text-[10px] font-bold uppercase tracking-widest text-rose-300 mb-4">Murmur Clues</div>
             <div className="space-y-2.5">
-              {(current.clues || []).map((clue, ci) => (
+              {(current?.clues || []).map((clue, ci) => (
                 <div key={ci} className={`flex items-start gap-3 transition-all duration-300 ${ci < revealedClues ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
                   <span className="text-xs text-rose-300 font-mono mt-0.5 shrink-0 w-4">{ci + 1}.</span>
                   <span className="text-sm text-slate-300 leading-relaxed">{clue}</span>
                 </div>
               ))}
             </div>
-            {!guessed && revealedClues < (current.clues || []).length && (
+            {!guessed && revealedClues < (current?.clues || []).length && (
               <button onClick={() => setRevealedClues(prev => prev + 1)}
                 className="mt-4 text-xs text-rose-300 hover:text-rose-700 font-medium transition">
-                + Reveal next clue ({revealedClues}/{current.clues.length})
+                + Reveal next clue ({revealedClues}/{current?.clues?.length || 0})
               </button>
             )}
           </div>
@@ -2414,7 +2452,7 @@
                 <FormattedText text={current.explanation} className="feedback-text" />
               </div>
               <button onClick={() => { setIdx(prev => prev + 1); setRevealedClues(1); setGuessed(false); setSelected(null); }}
-                className="w-full mt-4 py-3 bg-rose-600 hover:bg-rose-950/300 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
+                className="w-full mt-4 py-3 bg-rose-600 hover:bg-rose-950/30 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
             </div>
           )}
         </div>
@@ -2454,11 +2492,11 @@
     // ─── ECG PATTERNS ──────────────────────────────────────────────────
     function ECGPatterns({ patterns }) {
       const [selected, setSelected] = useState(null);
-      const current = patterns.find(p => p.id === selected);
+      const current = (patterns || []).find(p => p.id === selected);
       return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="flex flex-col gap-2 h-fit">
-            {patterns.map(p => {
+            {(patterns || []).map(p => {
               const isNormal = p.normalVariant === true;
               const colorClass = isNormal ? 'bg-emerald-100 border-emerald-400 hover:border-emerald-500' : 'bg-red-50 border-red-300 hover:border-red-400';
               return (
@@ -2474,9 +2512,9 @@
             <div className="lg:col-span-2 bg-slate-800/50 border border-slate-700 rounded-xl p-6 shadow-sm">
               <h3 className="text-lg font-bold text-white mb-4">{current.pattern}</h3>
               <div className="space-y-4">
-                <div><span className="text-slate-400 text-sm font-medium">Description:</span> <span className="text-slate-300 text-sm block mt-1">{current.description}</span></div>
-                <div><span className="text-slate-400 text-sm font-medium">Associations:</span> <span className="text-slate-300 text-sm block mt-1">{Array.isArray(current.associations) ? current.associations.join(', ') : current.associations}</span></div>
-                <div><span className="text-slate-300 text-sm font-medium">Peds Notes:</span> <span className="text-slate-300 text-sm block mt-1">{current.pedsNote}</span></div>
+                <div><span className="text-slate-400 text-sm font-medium">Description:</span> <span className="text-slate-300 text-sm block mt-1">{current.description || 'N/A'}</span></div>
+                <div><span className="text-slate-400 text-sm font-medium">Associations:</span> <span className="text-slate-300 text-sm block mt-1">{Array.isArray(current.associations) ? current.associations.join(', ') : current.associations || 'N/A'}</span></div>
+                <div><span className="text-slate-300 text-sm font-medium">Peds Notes:</span> <span className="text-slate-300 text-sm block mt-1">{current.pedsNote || 'N/A'}</span></div>
                 {current.shelfTrap && <div><span className="text-amber-600 text-sm font-medium">🚨 Shelf Trap:</span> <span className="text-amber-700 text-sm block mt-1">{current.shelfTrap}</span></div>}
               </div>
             </div>
@@ -2488,7 +2526,7 @@
     // ─── CARDIAC PHARMACOLOGY ─────────────────────────────────────────
     function CardiacPharm({ drugs }) {
       const [selected, setSelected] = useState(null);
-      const current = drugs.find(d => d.id === selected);
+      const current = (drugs || []).find(d => d.id === selected);
       return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="flex flex-col gap-2 h-fit">
@@ -2631,7 +2669,7 @@
     // ─── FETAL CIRCULATION ────────────────────────────────────────────
     function FetalCirculation({ structures }) {
       const [selected, setSelected] = useState(null);
-      const current = structures.find(s => s.id === selected);
+      const current = (structures || []).find(s => s.id === selected);
       return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="flex flex-col gap-2 h-fit">
@@ -2796,6 +2834,480 @@
       );
     }
 
+    // ─── PERFORMANCE SUMMARY VIEW ────────────────────────────────────
+    function PerformanceSummaryView({ setView }) {
+      const allProgress = IDProgress.getAll();
+
+      // Collect all module scores
+      const allModules = [
+        { key: 'bug_drug', label: 'Bug-Drug Matcher', category: 'ID' },
+        { key: 'whats_the_bug', label: "What's the Bug?", category: 'ID' },
+        { key: 'vaccines_quiz', label: 'Vaccine Trainer', category: 'ID' },
+        { key: 'cardio_murmur_quiz', label: 'Murmur Quiz', category: 'Cardio' },
+        { key: 'cardio_shelf_scenarios', label: 'Shelf Scenarios', category: 'Cardio' },
+      ];
+
+      const moduleScores = allModules.map(m => {
+        const data = IDProgress.getModule(m.key);
+        const attempts = (data?.attempts || []);
+        const latest = attempts.length > 0 ? attempts[attempts.length - 1] : null;
+        return {
+          ...m,
+          correct: latest?.correct || 0,
+          total: latest?.total || 0,
+          pct: latest?.pct || 0,
+          attempts: attempts.length,
+          missed: latest?.missed || [],
+          bestScore: data?.bestScore || 0,
+        };
+      }).filter(m => m.attempts > 0);
+
+      // Calculate overall stats
+      const totalCorrect = moduleScores.reduce((s, m) => s + m.correct, 0);
+      const totalQuestions = moduleScores.reduce((s, m) => s + m.total, 0);
+      const overallPct = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+      const avgScore = moduleScores.length > 0 ? Math.round(moduleScores.reduce((s, m) => s + m.pct, 0) / moduleScores.length) : 0;
+
+      // Identify weak areas (< 70%)
+      const weakAreas = moduleScores.filter(m => m.pct < 70).sort((a, b) => a.pct - b.pct);
+
+      // Group by category
+      const byCategory = {};
+      moduleScores.forEach(m => {
+        if (!byCategory[m.category]) byCategory[m.category] = [];
+        byCategory[m.category].push(m);
+      });
+
+      // Completion status
+      const notAttempted = allModules.filter(m => !moduleScores.find(ms => ms.key === m.key));
+      const percentCompleted = Math.round((moduleScores.length / allModules.length) * 100);
+
+      const getStatusColor = (pct) => {
+        if (pct >= 80) return 'bg-emerald-50 border-emerald-200';
+        if (pct >= 60) return 'bg-amber-50 border-amber-200';
+        return 'bg-red-50 border-red-200';
+      };
+
+      const getStatusBg = (pct) => {
+        if (pct >= 80) return 'bg-emerald-100 text-emerald-900';
+        if (pct >= 60) return 'bg-amber-100 text-amber-900';
+        return 'bg-red-100 text-red-900';
+      };
+
+      return (
+        <div className="animate-fadeIn p-8 max-w-5xl mx-auto space-y-8">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Performance Summary</h1>
+            <p className="text-slate-500 mt-2 text-sm leading-relaxed">Review your quiz performance across all modules and identify areas for focus.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+              <div className="text-3xl font-bold text-slate-800 tabular-nums">{overallPct}%</div>
+              <div className="text-sm text-slate-700 mt-1 font-medium">Overall Score</div>
+              <div className="text-xs text-slate-500 mt-0.5">{totalCorrect}/{totalQuestions} questions</div>
+            </div>
+            <div className="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+              <div className="text-3xl font-bold text-slate-800 tabular-nums">{avgScore}%</div>
+              <div className="text-sm text-slate-700 mt-1 font-medium">Average Module Score</div>
+              <div className="text-xs text-slate-500 mt-0.5">{moduleScores.length} modules attempted</div>
+            </div>
+            <div className="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+              <div className="text-3xl font-bold text-slate-800 tabular-nums">{percentCompleted}%</div>
+              <div className="text-sm text-slate-700 mt-1 font-medium">Completion</div>
+              <div className="text-xs text-slate-500 mt-0.5">{moduleScores.length}/{allModules.length} modules</div>
+            </div>
+            <div className="bg-white border border-slate-200 rounded-lg p-5 shadow-sm">
+              <div className="text-3xl font-bold text-slate-800 tabular-nums">{weakAreas.length}</div>
+              <div className="text-sm text-slate-700 mt-1 font-medium">Weak Areas</div>
+              <div className="text-xs text-slate-500 mt-0.5">below 70%</div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-lg font-bold text-slate-800 mb-4">Module-by-Module Breakdown</h2>
+              <div className="space-y-3">
+                {Object.entries(byCategory).map(([cat, mods]) => (
+                  <div key={cat}>
+                    <h3 className="text-sm font-semibold text-slate-700 mb-2 uppercase tracking-wide">{cat}</h3>
+                    <div className="space-y-2">
+                      {mods.map(m => (
+                        <div key={m.key} className={`p-4 border rounded-lg ${getStatusColor(m.pct)}`}>
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-slate-800">{m.label}</h4>
+                              <div className="text-sm text-slate-600 mt-1">{m.correct}/{m.total} correct</div>
+                            </div>
+                            <div className="text-right">
+                              <div className={`inline-block px-3 py-1 rounded-full font-bold text-sm ${getStatusBg(m.pct)}`}>{m.pct}%</div>
+                              <div className="text-xs text-slate-500 mt-1">{m.attempts} attempt{m.attempts !== 1 ? 's' : ''}</div>
+                            </div>
+                          </div>
+                          {m.missed.length > 0 && (
+                            <div className="mt-2 pt-2 border-t border-current border-opacity-20 text-xs text-slate-600">
+                              Missed {m.missed.length} item{m.missed.length !== 1 ? 's' : ''}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {weakAreas.length > 0 && (
+              <div>
+                <h2 className="text-lg font-bold text-slate-800 mb-4">Weak Areas (Below 70%)</h2>
+                <div className="space-y-3">
+                  {weakAreas.map(m => (
+                    <div key={m.key} className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h4 className="font-semibold text-slate-800">{m.label}</h4>
+                          <p className="text-sm text-slate-600 mt-1">Current score: {m.pct}% ({m.correct}/{m.total})</p>
+                        </div>
+                        <span className="text-2xl font-bold text-red-600">{m.pct}%</span>
+                      </div>
+                      {(m.missed || []).length > 0 && (
+                        <div className="mt-3 p-2 bg-white rounded border border-red-200 text-xs">
+                          <div className="font-medium text-slate-700 mb-1">Missed topics ({(m.missed || []).length}):</div>
+                          <ul className="space-y-1 text-slate-600">
+                            {(m.missed || []).slice(0, 5).map((item, i) => (
+                              <li key={i}>• {item}</li>
+                            ))}
+                            {(m.missed || []).length > 5 && <li>• ... and {(m.missed || []).length - 5} more</li>}
+                          </ul>
+                        </div>
+                      )}
+                      <button onClick={() => setView({ type: m.category === 'ID' ? 'id_hub' : 'cardio_hub' })}
+                        className="mt-3 px-3 py-1 text-xs font-medium bg-red-600 text-white rounded hover:bg-red-700 transition">
+                        Practice Again
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {notAttempted.length > 0 && (
+              <div>
+                <h2 className="text-lg font-bold text-slate-800 mb-4">Not Yet Attempted</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {notAttempted.map(m => (
+                    <div key={m.key} className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                      <h4 className="font-semibold text-slate-800">{m.label}</h4>
+                      <p className="text-xs text-slate-500 mt-1 mb-3">{m.category} Hub</p>
+                      <button onClick={() => setView({ type: m.category === 'ID' ? 'id_hub' : 'cardio_hub' })}
+                        className="px-3 py-1 text-xs font-medium bg-slate-200 text-slate-800 rounded hover:bg-slate-300 transition">
+                        Start Now
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="p-6 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 className="font-semibold text-slate-800 mb-2">Recommendations</h3>
+            <ul className="space-y-2 text-sm text-slate-700">
+              {weakAreas.length > 0 && (
+                <li>• Focus on <strong>{weakAreas[0].label}</strong> — scored {weakAreas[0].pct}%. Review the {weakAreas[0].missed.length} missed items and practice again.</li>
+              )}
+              {notAttempted.length > 0 && (
+                <li>• Complete {notAttempted.length} remaining module{notAttempted.length !== 1 ? 's' : ''} to get a full picture of your strengths and gaps.</li>
+              )}
+              {avgScore >= 80 && (
+                <li>• Excellent performance! Focus on maintaining consistency across all modules and deepening your understanding.</li>
+              )}
+              {avgScore < 60 && (
+                <li>• Aim to reach 70%+ on weak modules before moving to new material. Use spaced repetition for topics you've missed.</li>
+              )}
+            </ul>
+          </div>
+        </div>
+      );
+    }
+
+    // ─── SMART STUDY VIEW ────────────────────────────────────────────
+    function SmartStudyView({ setView }) {
+      const [activeQuestion, setActiveQuestion] = useState(0);
+      const [answers, setAnswers] = useState({});
+      const [showResults, setShowResults] = useState(false);
+      const allProgress = IDProgress.getAll();
+
+      // Build weak area questions from all modules
+      const getSmartQuestions = () => {
+        const questions = [];
+        const allModules = [
+          { key: 'bug_drug', items: [], type: 'bug_drug' },
+          { key: 'whats_the_bug', items: [], type: 'bug_case' },
+          { key: 'vaccines_quiz', items: [], type: 'vaccine' },
+          { key: 'cardio_murmur_quiz', items: [], type: 'murmur' },
+          { key: 'cardio_shelf_scenarios', items: [], type: 'scenario' },
+        ];
+
+        // Identify weak modules (< 70%)
+        const weakModules = [];
+        allModules.forEach(mod => {
+          const prog = IDProgress.getModule(mod.key);
+          const latest = prog?.attempts?.[prog.attempts.length - 1];
+          if (latest && latest.pct < 70) {
+            weakModules.push({ ...mod, score: latest.pct, missed: latest.missed || [] });
+          }
+        });
+
+        // If user has weak areas, prioritize them; otherwise sample from all modules
+        const priorityModules = weakModules.length > 0 ? weakModules : allModules.map(m => ({...m, score: 50}));
+
+        // Create synthetic questions based on weak areas
+        priorityModules.forEach((mod, idx) => {
+          if (mod.type === 'bug_drug') {
+            // Bug-drug matching style
+            const bugs = ['E. coli', 'S. aureus', 'Group B Strep', 'Pseudomonas', 'Listeria'];
+            const drugs = ['Ampicillin', 'Ceftriaxone', 'Vancomycin', 'Piperacillin-tazobactam', 'Amoxicillin'];
+            const correctDrug = drugs[idx % drugs.length];
+            const correctBug = bugs[idx % bugs.length];
+            questions.push({
+              id: `smart_${questions.length}`,
+              type: 'bug_drug',
+              question: `First-line empiric therapy for ${correctBug} infection?`,
+              options: [correctDrug, drugs[(idx+1) % drugs.length], drugs[(idx+2) % drugs.length], drugs[(idx+3) % drugs.length]].sort(() => Math.random() - 0.5),
+              correct: correctDrug,
+              explanation: `${correctDrug} provides excellent coverage for ${correctBug}.`
+            });
+          } else if (mod.type === 'bug_case') {
+            // Clinical presentation style
+            questions.push({
+              id: `smart_${questions.length}`,
+              type: 'bug_case',
+              question: `Neonate with fever at 36 hours of life, maternal GBS unknown. Most likely organism?`,
+              options: ['Group B Strep', 'E. coli', 'L. monocytogenes', 'S. aureus'].sort(() => Math.random() - 0.5),
+              correct: 'Group B Strep',
+              explanation: `GBS and E. coli are leading causes of neonatal sepsis. Always empirically cover GBS in neonates.`
+            });
+          } else if (mod.type === 'vaccine') {
+            // Vaccine timing/composition
+            questions.push({
+              id: `smart_${questions.length}`,
+              type: 'vaccine',
+              question: `At what age is the first dose of MMR vaccine typically given?`,
+              options: ['12 months', '6 weeks', '2 months', '24 months'].sort(() => Math.random() - 0.5),
+              correct: '12 months',
+              explanation: `MMR is first administered at 12-15 months of age. A second dose is given at 4-6 years.`
+            });
+          } else if (mod.type === 'murmur') {
+            // Murmur characteristics
+            questions.push({
+              id: `smart_${questions.length}`,
+              type: 'murmur',
+              question: `A 3-year-old has a continuous "machinery" murmur at the left infraclavicular area. Most likely diagnosis?`,
+              options: ['Patent Ductus Arteriosus', 'Ventricular Septal Defect', 'Atrial Septal Defect', 'Aortic Stenosis'].sort(() => Math.random() - 0.5),
+              correct: 'Patent Ductus Arteriosus',
+              explanation: `PDA produces a characteristic continuous "machinery" or "wash-and-wear" murmur heard throughout systole and diastole at the left infraclavicular area.`
+            });
+          } else if (mod.type === 'scenario') {
+            // Shelf-style scenario
+            questions.push({
+              id: `smart_${questions.length}`,
+              type: 'scenario',
+              question: `An 8-year-old with acute rheumatic fever presents with new onset ST-segment elevation. Which valve is most likely affected?`,
+              options: ['Mitral valve', 'Aortic valve', 'Tricuspid valve', 'Pulmonary valve'].sort(() => Math.random() - 0.5),
+              correct: 'Mitral valve',
+              explanation: `The mitral valve is most commonly affected in acute rheumatic fever (65%), followed by the aortic valve.`
+            });
+          }
+        });
+
+        // Fill remaining slots with diverse topics
+        while (questions.length < 12) {
+          const remaining = 12 - questions.length;
+          if (remaining >= 4) {
+            questions.push({
+              id: `smart_${questions.length}`,
+              type: 'bug_drug',
+              question: `Antibiotic choice for community-acquired pneumonia in a 2-year-old?`,
+              options: ['Amoxicillin-clavulanate', 'Ceftriaxone', 'Vancomycin', 'Fluoroquinolone'].sort(() => Math.random() - 0.5),
+              correct: 'Amoxicillin-clavulanate',
+              explanation: `Amoxicillin-clavulanate is first-line for community-acquired pneumonia in outpatient pediatric patients.`
+            });
+          }
+          if (questions.length < 12) {
+            questions.push({
+              id: `smart_${questions.length}`,
+              type: 'vaccine',
+              question: `Which vaccine is contraindicated in infants with severe egg allergy?`,
+              options: ['Yellow Fever', 'Influenza (inactivated)', 'Varicella', 'Hepatitis B'].sort(() => Math.random() - 0.5),
+              correct: 'Yellow Fever',
+              explanation: `Yellow Fever vaccine is grown in eggs and contraindicated in severe egg allergy.`
+            });
+          }
+        }
+
+        return questions.slice(0, 12);
+      };
+
+      const questions = getSmartQuestions();
+      const q = questions[activeQuestion] || { id: '', question: '', options: [], correct: '', explanation: '' };
+      const currentAnswer = q ? answers[q.id] : undefined;
+      const isCorrect = q && currentAnswer === q.correct;
+
+      const handleAnswer = (option) => {
+        if (q && q.id) setAnswers({ ...answers, [q.id]: option });
+      };
+
+      const handleNext = () => {
+        if (activeQuestion < questions.length - 1) {
+          setActiveQuestion(activeQuestion + 1);
+        } else {
+          setShowResults(true);
+        }
+      };
+
+      const score = Object.keys(answers).filter(qid => {
+        const question = questions.find(q => q.id === qid);
+        return question && answers[qid] === question.correct;
+      }).length;
+
+      if (showResults) {
+        const pct = Math.round((score / questions.length) * 100);
+        const weakTopics = questions
+          .map((q, i) => ({ ...q, idx: i, answered: answers[q.id], correct: answers[q.id] === q.correct }))
+          .filter(q => !q.correct);
+
+        return (
+          <div className="animate-fadeIn p-8 max-w-3xl mx-auto space-y-8">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Smart Study Results</h1>
+              <p className="text-slate-500 mt-2 text-sm">Review your performance on this mixed-topic study session.</p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-4">
+              <div className="bg-white border border-slate-200 rounded-lg p-5 shadow-sm text-center">
+                <div className={`text-3xl font-bold tabular-nums ${pct >= 80 ? 'text-emerald-600' : pct >= 60 ? 'text-amber-600' : 'text-red-600'}`}>{pct}%</div>
+                <div className="text-sm text-slate-700 mt-1 font-medium">Your Score</div>
+              </div>
+              <div className="bg-white border border-slate-200 rounded-lg p-5 shadow-sm text-center">
+                <div className="text-3xl font-bold text-slate-800 tabular-nums">{score}/{questions.length}</div>
+                <div className="text-sm text-slate-700 mt-1 font-medium">Correct</div>
+              </div>
+              <div className="bg-white border border-slate-200 rounded-lg p-5 shadow-sm text-center">
+                <div className="text-3xl font-bold text-slate-800 tabular-nums">{weakTopics.length}</div>
+                <div className="text-sm text-slate-700 mt-1 font-medium">To Review</div>
+              </div>
+            </div>
+
+            {weakTopics.length > 0 && (
+              <div>
+                <h2 className="text-lg font-bold text-slate-800 mb-4">Review Missed Questions</h2>
+                <div className="space-y-4">
+                  {weakTopics.map(q => (
+                    <div key={q.id} className="p-5 bg-red-50 border border-red-200 rounded-lg">
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="font-semibold text-slate-800">{q.question}</h3>
+                        <span className="text-xs font-bold text-red-600 bg-red-100 px-2 py-1 rounded">Wrong</span>
+                      </div>
+                      <div className="bg-white p-3 rounded border border-red-200 text-sm mt-2">
+                        <div className="text-red-700"><strong>Your answer:</strong> {q.answered}</div>
+                        <div className="text-emerald-700 mt-1"><strong>Correct answer:</strong> {q.correct}</div>
+                      </div>
+                      <div className="bg-blue-50 p-3 rounded border border-blue-200 text-sm mt-2">
+                        <strong className="text-blue-900">Explanation:</strong> {q.explanation}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {pct >= 80 && (
+              <div className="p-5 bg-emerald-50 border border-emerald-200 rounded-lg">
+                <h3 className="font-semibold text-slate-800 mb-2">Great job!</h3>
+                <p className="text-sm text-slate-700">You're demonstrating strong knowledge across multiple topics. Keep practicing to maintain your edge!</p>
+              </div>
+            )}
+
+            <div className="flex gap-3">
+              <button onClick={() => { setActiveQuestion(0); setAnswers({}); setShowResults(false); }}
+                className="px-4 py-2 bg-slate-200 text-slate-800 rounded-lg hover:bg-slate-300 transition font-medium">
+                Try Again
+              </button>
+              <button onClick={() => setView({ type: 'performance' })}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                View Full Summary
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div className="animate-fadeIn p-8 max-w-3xl mx-auto space-y-6">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Smart Study Session</h1>
+            <p className="text-slate-500 mt-2 text-sm leading-relaxed">Personalized quiz focusing on your weak areas and topics you haven't mastered yet. 12 questions covering ID, Antibiotics, Vaccines, and Cardiology.</p>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-lg p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-sm font-bold text-slate-700 uppercase tracking-widest">Question {activeQuestion + 1} of {questions.length}</h2>
+              <div className="w-64 h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div className="h-full bg-blue-600 transition-all" style={{ width: `${((activeQuestion + 1) / questions.length) * 100}%` }}></div>
+              </div>
+            </div>
+
+            <h3 className="text-lg font-semibold text-slate-800 mb-6">{q ? q.question : 'Loading...'}</h3>
+
+            <div className="space-y-2 mb-6">
+              {q && q.options && q.options.map((option, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleAnswer(option)}
+                  className={`w-full p-4 text-left rounded-lg border-2 transition ${
+                    currentAnswer === option
+                      ? 'border-blue-600 bg-blue-50'
+                      : 'border-slate-200 bg-white hover:border-slate-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                      currentAnswer === option ? 'border-blue-600 bg-blue-600' : 'border-slate-300'
+                    }`}>
+                      {currentAnswer === option && <div className="w-2 h-2 bg-white rounded-full"></div>}
+                    </div>
+                    <span className={`font-medium ${currentAnswer === option ? 'text-blue-900' : 'text-slate-800'}`}>{option}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            {currentAnswer && (
+              <div className={`p-4 rounded-lg mb-6 ${isCorrect ? 'bg-emerald-50 border border-emerald-200' : 'bg-red-50 border border-red-200'}`}>
+                <div className={`font-semibold mb-1 ${isCorrect ? 'text-emerald-900' : 'text-red-900'}`}>
+                  {isCorrect ? '✓ Correct!' : '✗ Incorrect'}
+                </div>
+                <p className={`text-sm ${isCorrect ? 'text-emerald-800' : 'text-red-800'}`}>{q ? q.explanation : 'No explanation available'}</p>
+              </div>
+            )}
+
+            <button
+              onClick={handleNext}
+              disabled={!currentAnswer}
+              className={`w-full py-2 rounded-lg font-medium transition ${
+                currentAnswer
+                  ? 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'
+                  : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+              }`}
+            >
+              {activeQuestion === questions.length - 1 ? 'See Results' : 'Next Question'}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     // ─── APP ────────────────────────────────────────────────────────
     function App() {
       const [currentView, setView] = useState({ type: 'dashboard' });
@@ -2818,6 +3330,8 @@
                 {currentView.type === 'cardio_hub' && <CardioHubView />}
                 {currentView.type === 'nbme_strategy' && <NBMEStrategyView />}
                 {currentView.type === 'rapid_review' && <RapidReviewView />}
+                {currentView.type === 'performance' && <PerformanceSummaryView setView={navigate} />}
+                {currentView.type === 'smart_study' && <SmartStudyView setView={navigate} />}
                 {currentView.type === 'search' && <SearchView query={currentView.query} setView={navigate} />}
               </main>
             </div>
