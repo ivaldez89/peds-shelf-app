@@ -431,6 +431,7 @@
             <div className="mt-4 mb-1.5 px-3"><span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Progress</span></div>
             <NavBtn type="performance" label="Performance" icon="📊" />
             <NavBtn type="smart_study" label="Smart Study" icon="🎯" />
+            <NavBtn type="achievements" label="Achievements" icon="🏆" />
 
             <div className="mt-4 mb-1.5 px-3"><span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Study Tools</span></div>
             <NavBtn type="rapid_review" label="Rapid Review" icon={<Icons.Zap />} />
@@ -494,6 +495,7 @@
       else if (currentView.type === 'all_vignettes') parts.push({ label: 'All Vignettes' });
       else if (currentView.type === 'performance') parts.push({ label: 'Performance Summary' });
       else if (currentView.type === 'smart_study') parts.push({ label: 'Smart Study Session' });
+      else if (currentView.type === 'achievements') parts.push({ label: 'Achievements' });
       else if (currentView.type === 'search') parts.push({ label: `Search: "${currentView.query}"` });
       return (
         <div className="flex items-center gap-1.5 text-sm text-slate-400">
@@ -517,9 +519,20 @@
       const reviewedCards = Object.keys(progress).filter(k => k.startsWith('fc_')).length;
       return (
         <div className="animate-fadeIn p-8 max-w-6xl mx-auto space-y-10">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Pediatrics Shelf Exam</h1>
-            <p className="text-slate-500 mt-2 text-sm leading-relaxed">NBME-aligned study guide — <strong className="text-slate-700">164 interactive vignettes</strong> across <strong className="text-slate-700">15 organ-system domains</strong>, with flashcards, rapid review, and shelf strategy.</p>
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Pediatrics Shelf Exam</h1>
+              <p className="text-slate-500 mt-2 text-sm leading-relaxed">NBME-aligned study guide — <strong className="text-slate-700">164 interactive vignettes</strong> across <strong className="text-slate-700">15 organ-system domains</strong>, with flashcards, rapid review, and shelf strategy.</p>
+            </div>
+            {(() => { const gs = GameEngine.getState(); const lv = GameEngine.getLevel(gs.totalXP); return (
+              <button onClick={() => setView({ type: 'achievements' })} className="flex items-center gap-3 px-4 py-2.5 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl hover:border-amber-400 transition shrink-0">
+                <span className="text-2xl">{lv.emoji}</span>
+                <div className="text-left">
+                  <div className="text-xs font-bold text-amber-800">{lv.name}</div>
+                  <div className="text-[10px] text-amber-600">{gs.totalXP} XP{gs.dailyStreak > 0 ? ` · 🔥${gs.dailyStreak}d` : ''}</div>
+                </div>
+              </button>
+            ); })()}
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <StatCard label="Vignettes" value={totalVignettes} sub={`${completedVigs} completed`} />
@@ -550,7 +563,7 @@
 
           <div>
             <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Your Progress</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <button onClick={() => setView({ type: 'performance' })} className="flex items-start gap-4 p-5 bg-white border border-slate-200 rounded-lg hover:border-slate-400 hover:shadow-sm text-left transition">
                 <div className="p-2.5 bg-violet-100 rounded-lg shrink-0 mt-0.5">📊</div>
                 <div><div className="text-sm font-semibold text-slate-800 mb-1">Performance Summary</div><div className="text-xs text-slate-500 leading-relaxed">View overall scores and weak areas across all modules</div></div>
@@ -558,6 +571,10 @@
               <button onClick={() => setView({ type: 'smart_study' })} className="flex items-start gap-4 p-5 bg-white border border-slate-200 rounded-lg hover:border-slate-400 hover:shadow-sm text-left transition">
                 <div className="p-2.5 bg-pink-100 rounded-lg shrink-0 mt-0.5">🎯</div>
                 <div><div className="text-sm font-semibold text-slate-800 mb-1">Smart Study Session</div><div className="text-xs text-slate-500 leading-relaxed">Personalized quiz focusing on your weaknesses</div></div>
+              </button>
+              <button onClick={() => setView({ type: 'achievements' })} className="flex items-start gap-4 p-5 bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 rounded-lg hover:border-amber-400 hover:shadow-sm text-left transition">
+                <div className="p-2.5 bg-amber-100 rounded-lg shrink-0 mt-0.5">🏆</div>
+                <div><div className="text-sm font-semibold text-amber-800 mb-1">Achievements</div><div className="text-xs text-amber-600 leading-relaxed">XP, levels, badges, streaks & mastery</div></div>
               </button>
             </div>
           </div>
@@ -1288,6 +1305,280 @@
       clearAll() { localStorage.removeItem(this._key); }
     };
 
+    // ═══════════════════════════════════════════
+    // GAME ENGINE — XP, Levels, Badges, Streaks, Mastery, Combos
+    // ═══════════════════════════════════════════
+    const GameEngine = {
+      _key: 'peds_game_state',
+      LEVELS: [
+        { name: 'MS3', xp: 0, emoji: '📚' },
+        { name: 'Sub-Intern', xp: 100, emoji: '🩺' },
+        { name: 'Intern', xp: 300, emoji: '💉' },
+        { name: 'PGY-2', xp: 600, emoji: '🔬' },
+        { name: 'PGY-3', xp: 1000, emoji: '🏥' },
+        { name: 'Chief Resident', xp: 1500, emoji: '⭐' },
+        { name: 'Attending', xp: 2500, emoji: '👨‍⚕️' },
+      ],
+      BADGES: [
+        { id: 'first_quiz', name: 'First Steps', desc: 'Complete your first quiz', icon: '👶' },
+        { id: 'perfect', name: 'Perfect Score', desc: '100% on any quiz', icon: '💯' },
+        { id: 'streak_3', name: 'On Fire', desc: '3 correct in a row', icon: '🔥' },
+        { id: 'streak_5', name: 'Unstoppable', desc: '5 correct in a row', icon: '⚡' },
+        { id: 'streak_10', name: 'God Mode', desc: '10 correct in a row', icon: '🌟' },
+        { id: 'bug_slayer', name: 'Bug Slayer', desc: 'Complete Bug-Drug Matcher', icon: '🦠' },
+        { id: 'heart_whisperer', name: 'Heart Whisperer', desc: 'Complete Murmur Quiz', icon: '❤️' },
+        { id: 'vaccine_hero', name: 'Vaccine Champion', desc: 'Complete Vaccine Trainer', icon: '💪' },
+        { id: 'detective', name: 'Clinical Detective', desc: "Complete What's the Bug", icon: '🔍' },
+        { id: 'scenario_master', name: 'Scenario Master', desc: 'Complete Shelf Scenarios', icon: '📋' },
+        { id: 'daily_3', name: 'Daily Devotion', desc: '3-day study streak', icon: '📅' },
+        { id: 'daily_7', name: 'Week Warrior', desc: '7-day study streak', icon: '🗓️' },
+        { id: 'daily_14', name: 'Fortnight Fighter', desc: '14-day study streak', icon: '🏆' },
+        { id: 'comeback', name: 'Comeback Kid', desc: 'Improve score on a retake', icon: '📈' },
+        { id: 'xp_500', name: 'Half a Grand', desc: 'Earn 500 XP', icon: '💎' },
+        { id: 'xp_1000', name: 'Grand Scholar', desc: 'Earn 1000 XP', icon: '👑' },
+        { id: 'all_modules', name: 'Renaissance Doc', desc: 'Complete all 5 quiz modules', icon: '🎓' },
+        { id: 'mastery_10', name: 'Mastery Seeker', desc: 'Master 10 questions', icon: '🧠' },
+        { id: 'mastery_25', name: 'Knowledge Base', desc: 'Master 25 questions', icon: '🏛️' },
+        { id: 'q_100', name: 'Centurion', desc: 'Answer 100 questions total', icon: '🗡️' },
+      ],
+      ALL_QUIZ_MODULES: ['bug_drug', 'whats_the_bug', 'vaccines_quiz', 'cardio_murmur_quiz', 'cardio_shelf_scenarios'],
+      getState() {
+        try { return JSON.parse(localStorage.getItem(this._key) || 'null') || this._defaultState(); } catch { return this._defaultState(); }
+      },
+      _defaultState() {
+        return { totalXP: 0, currentCombo: 0, bestCombo: 0, totalAnswered: 0, totalCorrect: 0, totalQuizzes: 0, perfectScores: 0, improvements: 0, completedModules: [], earnedBadges: [], dailyStreak: 0, lastPlayedDate: null, mastery: {}, moduleScores: {} };
+      },
+      _save(state) { localStorage.setItem(this._key, JSON.stringify(state)); },
+      getLevel(xp) {
+        let lvl = this.LEVELS[0];
+        for (const l of this.LEVELS) { if ((xp || 0) >= l.xp) lvl = l; else break; }
+        const idx = this.LEVELS.indexOf(lvl);
+        const next = this.LEVELS[idx + 1];
+        const progress = next ? (xp - lvl.xp) / (next.xp - lvl.xp) : 1;
+        return { ...lvl, index: idx, nextLevel: next, progress: Math.min(1, progress), xpToNext: next ? next.xp - xp : 0 };
+      },
+      getComboMultiplier(combo) { if (combo >= 10) return 3; if (combo >= 5) return 2; if (combo >= 3) return 1.5; return 1; },
+      recordAnswer(moduleId, questionId, correct) {
+        const s = this.getState();
+        const baseXP = correct ? 10 : 2;
+        const mult = correct ? this.getComboMultiplier(s.currentCombo + 1) : 1;
+        const xpEarned = Math.round(baseXP * mult);
+        s.totalXP += xpEarned; s.totalAnswered += 1;
+        if (correct) { s.totalCorrect += 1; s.currentCombo += 1; s.bestCombo = Math.max(s.bestCombo, s.currentCombo); } else { s.currentCombo = 0; }
+        if (questionId) {
+          if (!s.mastery[questionId]) s.mastery[questionId] = { correct: 0, wrong: 0, stage: 'new' };
+          const m = s.mastery[questionId];
+          if (correct) m.correct += 1; else m.wrong += 1;
+          const net = m.correct - m.wrong;
+          m.stage = net >= 3 ? 'mastered' : net >= 1 ? 'reviewing' : m.correct > 0 ? 'learning' : 'new';
+        }
+        this._save(s);
+        return { xpEarned, combo: s.currentCombo, multiplier: mult, totalXP: s.totalXP };
+      },
+      completeQuiz(moduleId, score) {
+        const s = this.getState();
+        s.totalQuizzes += 1; s.currentCombo = 0;
+        const pct = Math.round(score.correct / Math.max(1, score.total) * 100);
+        if (pct === 100) s.perfectScores += 1;
+        if (!s.completedModules.includes(moduleId)) s.completedModules.push(moduleId);
+        const prev = s.moduleScores[moduleId];
+        if (prev && pct > prev) s.improvements += 1;
+        s.moduleScores[moduleId] = Math.max(prev || 0, pct);
+        const bonusXP = pct === 100 ? 50 : pct >= 80 ? 30 : 15;
+        s.totalXP += bonusXP;
+        const today = new Date().toDateString();
+        if (s.lastPlayedDate !== today) {
+          const yesterday = new Date(Date.now() - 86400000).toDateString();
+          s.dailyStreak = (s.lastPlayedDate === yesterday) ? s.dailyStreak + 1 : 1;
+          s.lastPlayedDate = today;
+        }
+        this._save(s);
+        return { bonusXP, pct, newBadges: this.checkNewBadges(s) };
+      },
+      checkNewBadges(stateOverride) {
+        const s = stateOverride || this.getState();
+        const earned = s.earnedBadges || []; const newBadges = [];
+        const checks = {
+          first_quiz: s.totalQuizzes >= 1, perfect: s.perfectScores >= 1,
+          streak_3: s.bestCombo >= 3, streak_5: s.bestCombo >= 5, streak_10: s.bestCombo >= 10,
+          bug_slayer: (s.completedModules || []).includes('bug_drug'),
+          heart_whisperer: (s.completedModules || []).includes('cardio_murmur_quiz'),
+          vaccine_hero: (s.completedModules || []).includes('vaccines_quiz'),
+          detective: (s.completedModules || []).includes('whats_the_bug'),
+          scenario_master: (s.completedModules || []).includes('cardio_shelf_scenarios'),
+          daily_3: s.dailyStreak >= 3, daily_7: s.dailyStreak >= 7, daily_14: s.dailyStreak >= 14,
+          comeback: s.improvements >= 1, xp_500: s.totalXP >= 500, xp_1000: s.totalXP >= 1000,
+          all_modules: (s.completedModules || []).length >= 5,
+          mastery_10: Object.values(s.mastery || {}).filter(m => m.stage === 'mastered').length >= 10,
+          mastery_25: Object.values(s.mastery || {}).filter(m => m.stage === 'mastered').length >= 25,
+          q_100: s.totalAnswered >= 100,
+        };
+        for (const [id, met] of Object.entries(checks)) {
+          if (met && !earned.includes(id)) { earned.push(id); newBadges.push(this.BADGES.find(b => b.id === id)); }
+        }
+        if (newBadges.length > 0) { s.earnedBadges = earned; this._save(s); }
+        return newBadges;
+      },
+      getMasteryStats() {
+        const s = this.getState(); const m = s.mastery || {};
+        const counts = { new: 0, learning: 0, reviewing: 0, mastered: 0 };
+        Object.values(m).forEach(v => { counts[v.stage] = (counts[v.stage] || 0) + 1; });
+        return counts;
+      },
+      resetCombo() { const s = this.getState(); s.currentCombo = 0; this._save(s); },
+      clearAll() { localStorage.removeItem(this._key); }
+    };
+
+    // ═══════════════════════════════════════════
+    // GAMIFICATION UI COMPONENTS
+    // ═══════════════════════════════════════════
+    function XPToast({ xp, combo, show }) {
+      if (!show) return null;
+      return (<div className="fixed top-20 right-6 z-50 animate-fadeIn">
+        <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2.5 rounded-xl shadow-lg flex items-center gap-3">
+          <span className="text-lg font-black">+{xp} XP</span>
+          {combo >= 3 && <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full font-bold">{combo}x COMBO {'🔥'.repeat(Math.min(combo - 2, 3))}</span>}
+        </div>
+      </div>);
+    }
+    function BadgeToast({ badge, show }) {
+      if (!show || !badge) return null;
+      return (<div className="fixed top-32 right-6 z-50 animate-fadeIn">
+        <div className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-5 py-3 rounded-xl shadow-lg">
+          <div className="text-[10px] uppercase tracking-widest text-purple-200 mb-1">Badge Unlocked!</div>
+          <div className="flex items-center gap-3"><span className="text-2xl">{badge.icon}</span><div><div className="font-bold text-sm">{badge.name}</div><div className="text-xs text-purple-200">{badge.desc}</div></div></div>
+        </div>
+      </div>);
+    }
+    function LevelUpModal({ level, onClose }) {
+      if (!level) return null;
+      return (<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 animate-fadeIn">
+        <div className="bg-white rounded-2xl p-8 text-center max-w-sm mx-4 shadow-2xl">
+          <div className="text-6xl mb-4">{level.emoji}</div>
+          <div className="text-[10px] uppercase tracking-widest text-amber-600 font-bold mb-2">Level Up!</div>
+          <h2 className="text-2xl font-black text-slate-800 mb-2">{level.name}</h2>
+          <p className="text-sm text-slate-500 mb-6">Keep studying to reach {level.nextLevel ? level.nextLevel.name : 'the top'}!</p>
+          <button onClick={onClose} className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition">Continue</button>
+        </div>
+      </div>);
+    }
+    function GameHeader() {
+      const state = GameEngine.getState(); const level = GameEngine.getLevel(state.totalXP); const mastery = GameEngine.getMasteryStats();
+      return (<div className="mb-6 bg-gradient-to-r from-slate-50 to-slate-100 border border-slate-200 rounded-xl p-4">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2.5"><span className="text-xl">{level.emoji}</span><div><span className="text-sm font-bold text-slate-800">{level.name}</span><span className="text-xs text-slate-400 ml-2">{state.totalXP} XP</span></div></div>
+          <div className="flex items-center gap-3">
+            {state.dailyStreak > 0 && <div className="flex items-center gap-1 text-xs text-orange-600 font-bold bg-orange-50 px-2.5 py-1 rounded-full">🔥 {state.dailyStreak}d</div>}
+            <div className="flex items-center gap-1 text-xs text-slate-500"><span className="text-emerald-500 font-bold">{mastery.mastered}</span> mastered</div>
+          </div>
+        </div>
+        <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden"><div className="bg-gradient-to-r from-amber-400 to-orange-500 h-full rounded-full transition-all duration-500" style={{ width: `${Math.round(level.progress * 100)}%` }}></div></div>
+        {level.nextLevel && <div className="flex justify-between mt-1"><span className="text-[10px] text-slate-400">{level.name}</span><span className="text-[10px] text-slate-400">{level.xpToNext} XP to {level.nextLevel.name}</span></div>}
+      </div>);
+    }
+    function ComboDisplay({ combo }) {
+      if (combo < 2) return null;
+      const mult = GameEngine.getComboMultiplier(combo);
+      const flames = combo >= 10 ? '🌟🌟🌟' : combo >= 5 ? '⚡⚡' : '🔥';
+      return (<div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all ${combo >= 10 ? 'bg-gradient-to-r from-yellow-400 to-amber-500 text-white shadow-lg shadow-amber-200' : combo >= 5 ? 'bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-md' : 'bg-orange-100 text-orange-700'}`}>{flames} {combo} combo · {mult}x XP</div>);
+    }
+
+    // Hook: useGameQuiz — manages XP toasts, badge toasts, and level-ups during a quiz
+    function useGameQuiz(moduleId) {
+      const [xpToast, setXpToast] = useState(null);
+      const [badgeToast, setBadgeToast] = useState(null);
+      const [levelUp, setLevelUp] = useState(null);
+      const [combo, setCombo] = useState(0);
+      const [, forceUpdate] = useState(0);
+      const onAnswer = useCallback((questionId, correct) => {
+        const prevState = GameEngine.getState(); const prevLevel = GameEngine.getLevel(prevState.totalXP);
+        const result = GameEngine.recordAnswer(moduleId, questionId, correct);
+        setCombo(result.combo);
+        setXpToast({ xp: result.xpEarned, combo: result.combo });
+        setTimeout(() => setXpToast(null), 1500);
+        const newLevel = GameEngine.getLevel(result.totalXP);
+        if (newLevel.index > prevLevel.index) { setTimeout(() => setLevelUp(newLevel), 800); }
+        const newBadges = GameEngine.checkNewBadges();
+        if (newBadges.length > 0) { setTimeout(() => { setBadgeToast(newBadges[0]); setTimeout(() => setBadgeToast(null), 3000); }, 500); }
+        forceUpdate(n => n + 1);
+        return result;
+      }, [moduleId]);
+      const onComplete = useCallback((score) => {
+        const result = GameEngine.completeQuiz(moduleId, score);
+        if (result.newBadges.length > 0) { setTimeout(() => { setBadgeToast(result.newBadges[0]); setTimeout(() => setBadgeToast(null), 3000); }, 500); }
+        GameEngine.resetCombo(); setCombo(0); forceUpdate(n => n + 1);
+        return result;
+      }, [moduleId]);
+      const overlays = (<React.Fragment>
+        <XPToast xp={xpToast?.xp} combo={xpToast?.combo} show={!!xpToast} />
+        <BadgeToast badge={badgeToast} show={!!badgeToast} />
+        {levelUp && <LevelUpModal level={levelUp} onClose={() => setLevelUp(null)} />}
+      </React.Fragment>);
+      return { onAnswer, onComplete, combo, overlays };
+    }
+
+    // ═══════════════════════════════════════════
+    // ACHIEVEMENTS VIEW
+    // ═══════════════════════════════════════════
+    function AchievementsView() {
+      const state = GameEngine.getState(); const level = GameEngine.getLevel(state.totalXP); const mastery = GameEngine.getMasteryStats();
+      const earned = state.earnedBadges || []; const totalBadges = GameEngine.BADGES.length;
+      const accuracy = state.totalAnswered > 0 ? Math.round(state.totalCorrect / state.totalAnswered * 100) : 0;
+      return (
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-2xl p-8 text-white mb-8 shadow-lg">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-4"><span className="text-5xl">{level.emoji}</span><div><div className="text-[10px] uppercase tracking-widest text-white/60 mb-1">Current Rank</div><h1 className="text-3xl font-black">{level.name}</h1></div></div>
+              <div className="text-right"><div className="text-3xl font-black tabular-nums">{state.totalXP}</div><div className="text-xs text-white/60">Total XP</div></div>
+            </div>
+            <div className="w-full bg-white/20 rounded-full h-3 mb-2 overflow-hidden"><div className="bg-white h-full rounded-full transition-all duration-700" style={{ width: `${Math.round(level.progress * 100)}%` }}></div></div>
+            <div className="flex justify-between text-xs text-white/60"><span>{level.name} — Level {level.index + 1}</span><span>{level.nextLevel ? `${level.xpToNext} XP to ${level.nextLevel.name} ${level.nextLevel.emoji}` : 'Max Level!'}</span></div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            {[{ label: 'Questions', value: state.totalAnswered, icon: '📝' }, { label: 'Accuracy', value: `${accuracy}%`, icon: '🎯' }, { label: 'Best Combo', value: state.bestCombo, icon: '🔥' }, { label: 'Day Streak', value: state.dailyStreak, icon: '📅' }, { label: 'Quizzes Done', value: state.totalQuizzes, icon: '✅' }, { label: 'Perfect Scores', value: state.perfectScores, icon: '💯' }, { label: 'Improvements', value: state.improvements, icon: '📈' }, { label: 'Badges', value: `${earned.length}/${totalBadges}`, icon: '🏅' }].map((s, i) => (
+              <div key={i} className="bg-white border border-slate-200 rounded-xl p-4 text-center"><div className="text-xl mb-1">{s.icon}</div><div className="text-xl font-black text-slate-800 tabular-nums">{s.value}</div><div className="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">{s.label}</div></div>
+            ))}
+          </div>
+          <div className="bg-white border border-slate-200 rounded-xl p-6 mb-8">
+            <h3 className="text-sm font-bold text-slate-800 mb-4">Mastery Progress</h3>
+            <div className="grid grid-cols-4 gap-3 mb-4">
+              {[{ label: 'New', count: mastery.new, text: 'text-slate-500' }, { label: 'Learning', count: mastery.learning, text: 'text-blue-600' }, { label: 'Reviewing', count: mastery.reviewing, text: 'text-amber-600' }, { label: 'Mastered', count: mastery.mastered, text: 'text-emerald-600' }].map((s, i) => (
+                <div key={i} className="text-center"><div className={`text-2xl font-black ${s.text} tabular-nums`}>{s.count}</div><div className="text-[10px] text-slate-400 uppercase tracking-wider">{s.label}</div></div>
+              ))}
+            </div>
+            {(mastery.new + mastery.learning + mastery.reviewing + mastery.mastered) > 0 && (
+              <div className="flex h-3 rounded-full overflow-hidden bg-slate-100">
+                {mastery.mastered > 0 && <div className="bg-emerald-400 transition-all" style={{ width: `${mastery.mastered / (mastery.new + mastery.learning + mastery.reviewing + mastery.mastered) * 100}%` }}></div>}
+                {mastery.reviewing > 0 && <div className="bg-amber-400 transition-all" style={{ width: `${mastery.reviewing / (mastery.new + mastery.learning + mastery.reviewing + mastery.mastered) * 100}%` }}></div>}
+                {mastery.learning > 0 && <div className="bg-blue-400 transition-all" style={{ width: `${mastery.learning / (mastery.new + mastery.learning + mastery.reviewing + mastery.mastered) * 100}%` }}></div>}
+              </div>
+            )}
+          </div>
+          <div className="bg-white border border-slate-200 rounded-xl p-6 mb-8">
+            <h3 className="text-sm font-bold text-slate-800 mb-4">Rank Progression</h3>
+            <div className="space-y-2">
+              {GameEngine.LEVELS.map((l, i) => { const reached = state.totalXP >= l.xp; const current = level.index === i; return (
+                <div key={i} className={`flex items-center gap-3 p-2.5 rounded-lg transition ${current ? 'bg-amber-50 border border-amber-200' : reached ? 'bg-emerald-50/50' : 'opacity-40'}`}>
+                  <span className="text-xl w-8 text-center">{l.emoji}</span><div className="flex-1"><span className={`text-sm font-bold ${current ? 'text-amber-700' : reached ? 'text-emerald-700' : 'text-slate-400'}`}>{l.name}</span><span className="text-xs text-slate-400 ml-2">{l.xp} XP</span></div>
+                  {current && <span className="text-[10px] bg-amber-200 text-amber-700 px-2 py-0.5 rounded-full font-bold">CURRENT</span>}
+                  {reached && !current && <span className="text-emerald-500 text-sm">✓</span>}
+                </div>); })}
+            </div>
+          </div>
+          <div className="bg-white border border-slate-200 rounded-xl p-6">
+            <h3 className="text-sm font-bold text-slate-800 mb-4">Badge Collection — {earned.length}/{totalBadges}</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {GameEngine.BADGES.map(badge => { const unlocked = earned.includes(badge.id); return (
+                <div key={badge.id} className={`p-4 rounded-xl text-center border transition ${unlocked ? 'bg-gradient-to-br from-purple-50 to-indigo-50 border-purple-200 shadow-sm' : 'bg-slate-50 border-slate-200 opacity-40 grayscale'}`}>
+                  <div className="text-3xl mb-2">{badge.icon}</div><div className={`text-xs font-bold mb-0.5 ${unlocked ? 'text-purple-700' : 'text-slate-400'}`}>{badge.name}</div><div className="text-[10px] text-slate-400">{badge.desc}</div>
+                  {unlocked && <div className="text-[10px] text-purple-500 font-bold mt-1">✓ Unlocked</div>}
+                </div>); })}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     function IDHubView() {
       const [tab, setTab] = useState('overview');
       const [idData, setIdData] = useState(null);
@@ -1400,6 +1691,7 @@
       const [bestStreak, setBestStreak] = useState(0);
       const [missed, setMissed] = useState([]);
       const savedRef = useRef(false);
+      const game = useGameQuiz('bug_drug');
 
       const current = queue[idx];
       const isComplete = !current && score.total > 0;
@@ -1407,6 +1699,7 @@
       useEffect(() => {
         if (isComplete && !savedRef.current) {
           IDProgress.save('bug_drug', { correct: score.correct, total: score.total, missed, bestStreak });
+          game.onComplete({ correct: score.correct, total: score.total });
           savedRef.current = true;
         }
       }, [isComplete]);
@@ -1424,6 +1717,7 @@
         setSelected(opt);
         setShowResult(true);
         const isCorrect = opt === current.drug;
+        game.onAnswer(current.id, isCorrect);
         setScore(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 }));
         if (isCorrect) { const ns = streak + 1; setStreak(ns); if (ns > bestStreak) setBestStreak(ns); }
         else { setStreak(0); setMissed(prev => [...prev, { bug: current.bug, correctDrug: current.drug, yourAnswer: opt }]); }
@@ -1435,6 +1729,7 @@
         const color = pct >= 80 ? 'text-emerald-400' : pct >= 60 ? 'text-amber-400' : 'text-red-400';
         return (
           <div className="max-w-2xl mx-auto py-8">
+            <GameHeader />
             <div className="text-center mb-8">
               <div className="text-5xl mb-4">{pct >= 80 ? '🏆' : pct >= 60 ? '📈' : '📚'}</div>
               <h2 className="text-xl font-bold text-slate-900 mb-1">Round Complete!</h2>
@@ -1475,12 +1770,13 @@
 
       return (
         <div className="max-w-2xl mx-auto">
+          <GameHeader />
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
               <span className="text-sm text-slate-600 tabular-nums font-medium">{idx + 1} / {queue.length}</span>
               {streak >= 3 && <span className="text-xs px-2.5 py-1 bg-amber-500/20 text-amber-300 rounded-full font-bold animate-fadeIn">🔥 {streak} streak!</span>}
             </div>
-            <span className="text-sm text-slate-400 tabular-nums">{score.correct} correct</span>
+            <div className="flex items-center gap-3"><span className="text-sm text-slate-400 tabular-nums">{score.correct} correct</span><ComboDisplay combo={game.combo} /></div>
           </div>
 
           <div className="bg-white border border-slate-300 rounded-xl p-7 mb-6">
@@ -1514,6 +1810,7 @@
               Next Bug →
             </button>
           )}
+        {game.overlays}
         </div>
       );
     }
@@ -1528,6 +1825,7 @@
       const [score, setScore] = useState({ correct: 0, total: 0 });
       const [missed, setMissed] = useState([]);
       const savedRef = useRef(false);
+      const game = useGameQuiz('whats_the_bug');
 
       const current = queue[idx];
       const isComplete = !current && score.total > 0;
@@ -1535,6 +1833,7 @@
       useEffect(() => {
         if (isComplete && !savedRef.current) {
           IDProgress.save('whats_the_bug', { correct: score.correct, total: score.total, missed });
+          game.onComplete({ correct: score.correct, total: score.total });
           savedRef.current = true;
         }
       }, [isComplete]);
@@ -1548,8 +1847,10 @@
         if (guessed) return;
         setSelected(opt);
         setGuessed(true);
-        setScore(prev => ({ correct: prev.correct + (opt === current.answer ? 1 : 0), total: prev.total + 1 }));
-        if (opt !== current.answer) setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]);
+        const isCorrect = opt === current.answer;
+        setScore(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 }));
+        if (!isCorrect) setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]);
+        game.onAnswer(current.id, isCorrect);
       };
 
       if (isComplete) {
@@ -1602,9 +1903,11 @@
 
       return (
         <div className="max-w-2xl mx-auto">
+          <GameHeader />
           <div className="flex items-center justify-between mb-6">
             <span className="text-sm text-slate-600 tabular-nums">{idx + 1} / {queue.length}</span>
             <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current?.difficulty === 'advanced' ? 'bg-red-500/20 text-red-300' : 'bg-blue-500/20 text-blue-300'}`}>{current?.difficulty || 'normal'}</span>
+            <ComboDisplay combo={game.combo} />
           </div>
 
           <div className="bg-white border border-slate-300 rounded-xl p-7 mb-6">
@@ -1650,6 +1953,7 @@
                 className="w-full mt-4 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
             </div>
           )}
+          {game.overlays}
         </div>
       );
     }
@@ -1840,6 +2144,7 @@
       const [qMissed, setQMissed] = useState([]);
       const quizQueue = useMemo(() => [...vaccines].sort(() => Math.random() - 0.5), [vaccines]);
       const savedRef = useRef(false);
+      const game = useGameQuiz('vaccines_quiz');
 
       const q = quizQueue[qIdx];
       const correctSchedule = q ? (q.schedule || []).join(', ') : '';
@@ -1848,6 +2153,7 @@
       useEffect(() => {
         if (quizComplete && !savedRef.current) {
           IDProgress.save('vaccines_quiz', { correct: qScore.correct, total: qScore.total, missed: qMissed });
+          game.onComplete({ correct: qScore.correct, total: qScore.total });
           savedRef.current = true;
         }
       }, [quizComplete]);
@@ -1937,8 +2243,9 @@
 
       return (
         <div className="max-w-2xl mx-auto">
+          <GameHeader />
           <div className="flex items-center justify-between mb-6">
-            <span className="text-sm text-slate-600 tabular-nums">{qIdx + 1} / {quizQueue.length}</span>
+            <div className="flex items-center gap-3"><span className="text-sm text-slate-600 tabular-nums">{qIdx + 1} / {quizQueue.length}</span><ComboDisplay combo={game.combo} /></div>
             <button onClick={() => setMode('study')} className="text-xs text-slate-400 hover:text-slate-300 transition">← Back to Study</button>
           </div>
           <div className="bg-white border border-slate-300 rounded-xl p-7 mb-6">
@@ -1955,7 +2262,7 @@
                 else cls = 'bg-slate-100 border-slate-300 opacity-40';
               }
               return (
-                <button key={i} onClick={() => { if (qAnswer !== null) return; setQAnswer(opt); const isCorrect = opt === correctSchedule; setQScore(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 })); if (!isCorrect) setQMissed(prev => [...prev, { vaccine: q.vaccine, correctSchedule, yourAnswer: opt }]); }} disabled={qAnswer !== null}
+                <button key={i} onClick={() => { if (qAnswer !== null) return; setQAnswer(opt); const isCorrect = opt === correctSchedule; game.onAnswer(q?.id, isCorrect); setQScore(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 })); if (!isCorrect) setQMissed(prev => [...prev, { vaccine: q.vaccine, correctSchedule, yourAnswer: opt }]); }} disabled={qAnswer !== null}
                   className={`choice-btn w-full text-left p-4 rounded-xl border transition text-sm text-slate-200 ${cls}`}>{opt}</button>
               );
             })}
@@ -1967,6 +2274,7 @@
                 className="w-full mt-4 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-semibold transition">Next Vaccine →</button>
             </div>
           )}
+          {game.overlays}
         </div>
       );
     }
@@ -2349,6 +2657,7 @@
       const [score, setScore] = useState({ correct: 0, total: 0 });
       const [missed, setMissed] = useState([]);
       const savedRef = useRef(false);
+      const game = useGameQuiz('cardio_murmur_quiz');
 
       const current = queue[idx];
       const isComplete = !current && score.total > 0;
@@ -2356,6 +2665,7 @@
       useEffect(() => {
         if (isComplete && !savedRef.current) {
           IDProgress.save('cardio_murmur_quiz', { correct: score.correct, total: score.total, missed });
+          game.onComplete({ correct: score.correct, total: score.total });
           savedRef.current = true;
         }
       }, [isComplete]);
@@ -2369,7 +2679,9 @@
         if (guessed || !current) return;
         setSelected(opt);
         setGuessed(true);
-        setScore(prev => ({ correct: prev.correct + (opt === current.answer ? 1 : 0), total: prev.total + 1 }));
+        const isCorrect = opt === current.answer;
+        setScore(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 }));
+        game.onAnswer(current?.id, isCorrect);
         if (opt !== current.answer) setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]);
       };
       if (isComplete) {
@@ -2417,8 +2729,10 @@
 
       return (
         <div className="max-w-2xl mx-auto">
+          <GameHeader />
           <div className="flex items-center justify-between mb-6">
             <span className="text-sm text-slate-400 tabular-nums">{idx + 1} / {queue.length}</span>
+            <ComboDisplay combo={game.combo} />
             <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current?.difficulty === 'advanced' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>{current?.difficulty || 'normal'}</span>
           </div>
 
@@ -2465,6 +2779,7 @@
                 className="w-full mt-4 py-3 bg-rose-600 hover:bg-rose-950/30 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
             </div>
           )}
+          {game.overlays}
         </div>
       );
     }
@@ -2577,6 +2892,7 @@
       const [score, setScore] = useState({ correct: 0, total: 0 });
       const [missed, setMissed] = useState([]);
       const savedRef = useRef(false);
+      const game = useGameQuiz('cardio_shelf_scenarios');
 
       const current = queue[idx];
       const isComplete = !current && score.total > 0;
@@ -2584,6 +2900,7 @@
       useEffect(() => {
         if (isComplete && !savedRef.current) {
           IDProgress.save('cardio_shelf_scenarios', { correct: score.correct, total: score.total, missed });
+          game.onComplete({ correct: score.correct, total: score.total });
           savedRef.current = true;
         }
       }, [isComplete]);
@@ -2628,6 +2945,7 @@
         setSelected(choice);
         setAnswered(true);
         const correct = choice === current.answer;
+        game.onAnswer(current?.id, correct);
         setScore(prev => ({ correct: prev.correct + (correct ? 1 : 0), total: prev.total + 1 }));
         if (!correct) setMissed(prev => [...prev, { stem: current.stem, correctAnswer: current.answer, yourAnswer: choice }]);
       };
@@ -2636,8 +2954,9 @@
 
       return (
         <div className="max-w-3xl mx-auto">
+          <GameHeader />
           <div className="flex items-center justify-between mb-6">
-            <span className="text-sm text-slate-500 tabular-nums">{idx + 1} / {queue.length}</span>
+            <div className="flex items-center gap-3"><span className="text-sm text-slate-500 tabular-nums">{idx + 1} / {queue.length}</span><ComboDisplay combo={game.combo} /></div>
             <span className="text-sm text-slate-600 tabular-nums">{score.correct} correct</span>
           </div>
 
@@ -2674,6 +2993,7 @@
                 className="w-full py-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
             </div>
           )}
+          {game.overlays}
         </div>
       );
     }
@@ -3345,6 +3665,7 @@
                 {currentView.type === 'rapid_review' && <RapidReviewView />}
                 {currentView.type === 'performance' && <PerformanceSummaryView setView={navigate} />}
                 {currentView.type === 'smart_study' && <SmartStudyView setView={navigate} />}
+                {currentView.type === 'achievements' && <AchievementsView />}
                 {currentView.type === 'search' && <SearchView query={currentView.query} setView={navigate} />}
               </main>
             </div>
