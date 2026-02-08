@@ -1471,6 +1471,8 @@
         );
       }
 
+      if (!current) return null;
+
       return (
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-6">
@@ -1596,27 +1598,29 @@
         );
       }
 
+      if (!current) return null;
+
       return (
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <span className="text-sm text-slate-600 tabular-nums">{idx + 1} / {queue.length}</span>
-            <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current.difficulty === 'advanced' ? 'bg-red-500/20 text-red-300' : 'bg-blue-500/20 text-blue-300'}`}>{current.difficulty}</span>
+            <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current?.difficulty === 'advanced' ? 'bg-red-500/20 text-red-300' : 'bg-blue-500/20 text-blue-300'}`}>{current?.difficulty || 'normal'}</span>
           </div>
 
           <div className="bg-white border border-slate-300 rounded-xl p-7 mb-6">
             <div className="text-[10px] font-bold uppercase tracking-widest text-cyan-400/70 mb-4">Clinical Clues</div>
             <div className="space-y-2.5">
-              {(current.clues || []).map((clue, ci) => (
+              {(current?.clues || []).map((clue, ci) => (
                 <div key={ci} className={`flex items-start gap-3 transition-all duration-300 ${ci < revealedClues ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
                   <span className="text-xs text-cyan-600 font-mono mt-0.5 shrink-0 w-4">{ci + 1}.</span>
                   <span className="text-sm text-slate-700 leading-relaxed">{clue}</span>
                 </div>
               ))}
             </div>
-            {!guessed && revealedClues < (current.clues || []).length && (
+            {!guessed && revealedClues < (current?.clues || []).length && (
               <button onClick={() => setRevealedClues(prev => prev + 1)}
                 className="mt-4 text-xs text-cyan-400 hover:text-cyan-300 font-medium transition">
-                + Reveal next clue ({revealedClues}/{current.clues.length})
+                + Reveal next clue ({revealedClues}/{(current?.clues || []).length})
               </button>
             )}
           </div>
@@ -1837,7 +1841,9 @@
       const quizQueue = useMemo(() => [...vaccines].sort(() => Math.random() - 0.5), [vaccines]);
       const savedRef = useRef(false);
 
-      const quizComplete = mode === 'quiz' && !quizQueue[qIdx] && qScore.total > 0;
+      const q = quizQueue[qIdx];
+      const correctSchedule = q ? (q.schedule || []).join(', ') : '';
+      const quizComplete = mode === 'quiz' && !q && qScore.total > 0;
 
       useEffect(() => {
         if (quizComplete && !savedRef.current) {
@@ -1847,9 +1853,10 @@
       }, [quizComplete]);
 
       const scheduleOptions = useMemo(() => {
-        const others = vaccines.filter(d => d.id !== q.id).sort(() => Math.random() - 0.5).slice(0, 3).map(d => (d.schedule || []).join(', '));
+        if (!q) return [];
+        const others = (vaccines || []).filter(d => d && d.id !== q.id).sort(() => Math.random() - 0.5).slice(0, 3).map(d => (d.schedule || []).join(', '));
         return [...new Set([correctSchedule, ...others])].sort(() => Math.random() - 0.5);
-      }, [qIdx]);
+      }, [qIdx, q, correctSchedule]);
       if (mode === 'study') {
         return (
           <div>
@@ -1880,7 +1887,6 @@
       }
 
       // Quiz mode
-      const q = quizQueue[qIdx];
       if (quizComplete) {
         const pct = Math.round(qScore.correct / Math.max(1, qScore.total) * 100);
         const best = IDProgress.getModule('vaccines_quiz');
@@ -1926,6 +1932,8 @@
           </div>
         );
       }
+
+      if (!q) return null;
 
       return (
         <div className="max-w-2xl mx-auto">
@@ -2405,6 +2413,8 @@
         );
       }
 
+      if (!current) return null;
+
       return (
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-6">
@@ -2412,8 +2422,8 @@
             <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current?.difficulty === 'advanced' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>{current?.difficulty || 'normal'}</span>
           </div>
 
-          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-7 mb-6">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-rose-300 mb-4">Murmur Clues</div>
+          <div className="bg-white border border-slate-200 rounded-xl p-7 mb-6">
+            <div className="text-[10px] font-bold uppercase tracking-widest text-rose-600 mb-4">Murmur Clues</div>
             <div className="space-y-2.5">
               {(current?.clues || []).map((clue, ci) => (
                 <div key={ci} className={`flex items-start gap-3 transition-all duration-300 ${ci < revealedClues ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
@@ -2614,12 +2624,15 @@
       }
 
       const handleAnswer = (choice) => {
+        if (!current) return;
         setSelected(choice);
         setAnswered(true);
         const correct = choice === current.answer;
         setScore(prev => ({ correct: prev.correct + (correct ? 1 : 0), total: prev.total + 1 }));
         if (!correct) setMissed(prev => [...prev, { stem: current.stem, correctAnswer: current.answer, yourAnswer: choice }]);
       };
+
+      if (!current) return null;
 
       return (
         <div className="max-w-3xl mx-auto">
