@@ -1349,7 +1349,7 @@
         { id: 'mastery_25', name: 'Knowledge Base', desc: 'Master 25 questions', icon: '🏛️' },
         { id: 'q_100', name: 'Centurion', desc: 'Answer 100 questions total', icon: '🗡️' },
       ],
-      ALL_QUIZ_MODULES: ['bug_drug', 'whats_the_bug', 'vaccines_quiz', 'cardio_murmur_quiz', 'cardio_shelf_scenarios'],
+      ALL_QUIZ_MODULES: ['bug_drug', 'whats_the_bug', 'vaccines_quiz', 'cardio_murmur_quiz', 'cardio_shelf_scenarios', 'visual_cases'],
       getState() {
         try { return JSON.parse(localStorage.getItem(this._key) || 'null') || this._defaultState(); } catch { return this._defaultState(); }
       },
@@ -1587,6 +1587,884 @@
       );
     }
 
+    // SVG Body Diagrams
+    function InfantBody({ affectedAreas }) {
+      const getAreaStyle = (region) => {
+        if (affectedAreas?.some(a => a.region === region)) {
+          return { fill: '#fee2e2', stroke: '#dc2626', strokeWidth: 2 };
+        }
+        return { fill: 'none', stroke: '#94a3b8', strokeWidth: 1.5 };
+      };
+
+      return (
+        <svg viewBox="0 0 200 300" className="w-full h-auto">
+          <defs>
+            <filter id="infantGlow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          {/* Head */}
+          <circle cx="100" cy="50" r="25" {...getAreaStyle('head')} filter="url(#infantGlow)" />
+          {/* Eyes */}
+          <circle cx="92" cy="45" r="3" fill={affectedAreas?.some(a => a.region === 'eyes') ? '#dc2626' : '#475569'} />
+          <circle cx="108" cy="45" r="3" fill={affectedAreas?.some(a => a.region === 'eyes') ? '#dc2626' : '#475569'} />
+          {/* Ears */}
+          <ellipse cx="75" cy="45" rx="8" ry="12" {...getAreaStyle('ears')} />
+          <ellipse cx="125" cy="45" rx="8" ry="12" {...getAreaStyle('ears')} />
+          {/* Neck/Throat */}
+          <rect x="93" y="73" width="14" height="15" {...getAreaStyle('throat')} />
+          {/* Chest/Lungs */}
+          <ellipse cx="100" cy="110" rx="20" ry="25" {...getAreaStyle('chest')} />
+          {/* Heart */}
+          <path d="M 100 115 L 105 110 Q 108 107 107 105 Q 105 103 100 105 Q 95 103 93 105 Q 92 107 95 110 Z" {...getAreaStyle('heart')} />
+          {/* Abdomen/GI */}
+          <rect x="85" y="140" width="30" height="35" {...getAreaStyle('abdomen')} />
+          {/* GU Lower */}
+          <circle cx="100" cy="185" r="10" {...getAreaStyle('gu')} />
+          {/* Arms */}
+          <rect x="60" y="105" width="12" height="40" {...getAreaStyle('skin')} />
+          <rect x="128" y="105" width="12" height="40" {...getAreaStyle('skin')} />
+          {/* Legs */}
+          <rect x="88" y="180" width="10" height="50" {...getAreaStyle('msk')} />
+          <rect x="102" y="180" width="10" height="50" {...getAreaStyle('msk')} />
+        </svg>
+      );
+    }
+
+    function ChildBody({ affectedAreas }) {
+      const getAreaStyle = (region) => {
+        if (affectedAreas?.some(a => a.region === region)) {
+          return { fill: '#fee2e2', stroke: '#dc2626', strokeWidth: 2 };
+        }
+        return { fill: 'none', stroke: '#94a3b8', strokeWidth: 1.5 };
+      };
+
+      return (
+        <svg viewBox="0 0 200 400" className="w-full h-auto">
+          <defs>
+            <filter id="childGlow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          {/* Head */}
+          <circle cx="100" cy="50" r="22" {...getAreaStyle('head')} filter="url(#childGlow)" />
+          {/* Eyes */}
+          <circle cx="92" cy="45" r="3" fill={affectedAreas?.some(a => a.region === 'eyes') ? '#dc2626' : '#475569'} />
+          <circle cx="108" cy="45" r="3" fill={affectedAreas?.some(a => a.region === 'eyes') ? '#dc2626' : '#475569'} />
+          {/* Ears */}
+          <ellipse cx="76" cy="48" rx="7" ry="10" {...getAreaStyle('ears')} />
+          <ellipse cx="124" cy="48" rx="7" ry="10" {...getAreaStyle('ears')} />
+          {/* Neck/Throat */}
+          <rect x="94" y="70" width="12" height="12" {...getAreaStyle('throat')} />
+          {/* Chest/Lungs */}
+          <ellipse cx="100" cy="115" rx="22" ry="28" {...getAreaStyle('chest')} />
+          {/* Heart */}
+          <path d="M 100 120 L 105 115 Q 108 112 107 110 Q 105 108 100 110 Q 95 108 93 110 Q 92 112 95 115 Z" {...getAreaStyle('heart')} />
+          {/* Abdomen/GI */}
+          <rect x="82" y="150" width="36" height="50" {...getAreaStyle('abdomen')} />
+          {/* GU Lower */}
+          <circle cx="100" cy="215" r="12" {...getAreaStyle('gu')} />
+          {/* Arms */}
+          <rect x="55" y="110" width="14" height="60" {...getAreaStyle('skin')} />
+          <rect x="131" y="110" width="14" height="60" {...getAreaStyle('skin')} />
+          {/* Legs */}
+          <rect x="85" y="220" width="12" height="70" {...getAreaStyle('msk')} />
+          <rect x="103" y="220" width="12" height="70" {...getAreaStyle('msk')} />
+        </svg>
+      );
+    }
+
+    // Clinical Cases Data
+    const VISUAL_CASES = [
+      {
+        id: 'vc1',
+        title: 'Acute Otitis Media',
+        age: '18-month-old',
+        figure: 'infant',
+        presentation: ['Fever 38.5°C x2 days', 'Pulling at right ear', 'Irritable, sleep disrupted', 'Rhinorrhea x5 days prior'],
+        affectedAreas: [
+          { region: 'ears', label: 'Bulging, erythematous TM', side: 'right' },
+          { region: 'throat', label: 'Nasopharyngeal congestion' }
+        ],
+        question: 'What is the best initial management?',
+        options: ['High-dose amoxicillin', 'Observation only', 'Azithromycin', 'Amoxicillin-clavulanate'],
+        correct: 'High-dose amoxicillin',
+        treatment: {
+          drug: 'Amoxicillin',
+          dose: '80–90 mg/kg/day divided BID (max 4g/day)',
+          route: 'PO',
+          duration: '10 days (<2yo); 5–7 days (≥2yo with mild symptoms)'
+        },
+        additionalMgmt: ['Acetaminophen or ibuprofen for otalgia/fever', 'Follow-up exam if no improvement in 48–72h', 'Avoid insertion of ototoxic drops if TM perforated'],
+        pitfalls: ['DO NOT observe <2yo with bilateral AOM', 'Do NOT use amoxicillin-clavulanate as first-line (reserve for failures)', 'Tympanostomy tubes only if ≥3 episodes/6mo or ≥4/12mo'],
+        shelfPearl: 'Most shelf Qs expect treatment for <2yo with AOM. Observation is ONLY for unilateral, mild AOM in ≥2yo after shared decision-making. Amoxicillin dosing: 80–90 mg/kg/day is HIGH-dose.'
+      },
+      {
+        id: 'vc2',
+        title: 'Streptococcal Pharyngitis',
+        age: '6-year-old',
+        figure: 'child',
+        presentation: ['Sore throat x3 days', 'Fever 39°C, odynophagia', 'Exudative pharyngitis', 'Enlarged cervical lymph nodes'],
+        affectedAreas: [
+          { region: 'throat', label: 'Erythema, exudate on tonsils' },
+          { region: 'ears', label: 'Cervical lymphadenitis' }
+        ],
+        question: 'What antibiotic would you prescribe?',
+        options: ['Penicillin V or amoxicillin', 'Clarithromycin', 'Trimethoprim-sulfamethoxazole', 'Cephalexin only if PCN-allergy'],
+        correct: 'Penicillin V or amoxicillin',
+        treatment: {
+          drug: 'Penicillin V OR Amoxicillin',
+          dose: 'PCN V: 250 mg QID or 500 mg BID; Amox: 25–45 mg/kg/day divided BID–TID',
+          route: 'PO',
+          duration: '10 days'
+        },
+        additionalMgmt: ['Ibuprofen/acetaminophen for pain & fever', 'Throat lozenges, warm salt water gargles', 'Return precautions: severe dysphagia, drooling, stridor → eval for peritonsillar abscess'],
+        pitfalls: ['Azithromycin resistance rising; do NOT use if local prevalence >5%', 'TMP-SMX NOT effective for GAS', 'Early Abx reduces fever by 1–1.5d but mainly prevents complications (ARF, PSGN)'],
+        shelfPearl: 'Penicillin is first-line for GAS pharyngitis. Goal is to prevent rheumatic fever and post-streptococcal GN, NOT to shorten symptoms. Amoxicillin is acceptable PO alternative with better taste.'
+      },
+      {
+        id: 'vc3',
+        title: 'Neonatal Meningitis',
+        age: '2-week-old',
+        figure: 'infant',
+        presentation: ['Fever 38.2°C, poor feeding', 'High-pitched cry, irritability', 'Subtle bulge at anterior fontanel', 'GBS sepsis in mother during labor'],
+        affectedAreas: [
+          { region: 'head', label: 'Bulging fontanel, meningismus' },
+          { region: 'chest', label: 'Tachypnea, poor perfusion' }
+        ],
+        question: 'What is the empiric antibiotic regimen?',
+        options: ['Ampicillin + cefotaxime', 'Ceftriaxone + vancomycin', 'Ampicillin + gentamicin + acyclovir', 'Meropenem alone'],
+        correct: 'Ampicillin + gentamicin + acyclovir',
+        treatment: {
+          drug: 'Ampicillin + Gentamicin + Acyclovir',
+          dose: 'Amp: 50 mg/kg IV Q6h; Gent: 7.5 mg/kg IV Q12h; Acyclovir: 20 mg/kg IV Q8h',
+          route: 'IV',
+          duration: '10–14 days (or duration per organism & CSF sterilization)'
+        },
+        additionalMgmt: ['Lumbar puncture with CSF culture, Gram stain, glucose, protein', 'Empiric Abx given BEFORE LP if hemodynamically unstable', 'Consider dexamethasone 0.15 mg/kg IV Q6h x 4d if dexamethasone given WITH first Abx dose', 'Monitor for SIADH, DIC'],
+        pitfalls: ['Cephalosporins POOR CNS penetration in neonates; ampicillin + gentamicin required', 'DO NOT omit acyclovir (HSV meningitis in neonates ~5–10%)', 'Gentamicin dosing: q12h (immature renal clearance), NOT q8h'],
+        shelfPearl: 'Neonatal meningitis (<1mo) ALWAYS requires ampicillin (for Listeria monocytogenes) + gentamicin (for gram-negs) + acyclovir (HSV). Cephalosporins alone are inadequate.'
+      },
+      {
+        id: 'vc4',
+        title: 'Bacterial Meningitis (>3 months)',
+        age: '4-year-old',
+        figure: 'child',
+        presentation: ['Fever 39.5°C, altered mental status', 'Neck stiffness, photophobia', 'Petechial rash on trunk & extremities', 'Positive Kernig & Brudzinski signs'],
+        affectedAreas: [
+          { region: 'head', label: 'Meningismus, altered sensorium' },
+          { region: 'skin', label: 'Petechial/purpuric exanthem' }
+        ],
+        question: 'What is empiric therapy in a 4-year-old with meningitis?',
+        options: ['Ceftriaxone + vancomycin', 'Ceftriaxone + vancomycin + dexamethasone', 'Ampicillin + gentamicin', 'Chloramphenicol'],
+        correct: 'Ceftriaxone + vancomycin + dexamethasone',
+        treatment: {
+          drug: 'Ceftriaxone + Vancomycin + Dexamethasone',
+          dose: 'Ceftrx: 80–100 mg/kg/day div Q4–6h (max 4g/day); Van: 40–60 mg/kg/day div Q6h; Dex: 0.15 mg/kg IV Q6h',
+          route: 'IV',
+          duration: '10–14 days bacterial meningitis; dexamethasone x 4 days'
+        },
+        additionalMgmt: ['Dexamethasone MUST be given with or before first Abx dose (reduces mortality/morbidity)', 'CSF culture, glucose, protein, Gram stain', 'Respiratory isolation until 24h Abx therapy', 'Prophylaxis for close contacts: rifampin or ciprofloxacin'],
+        pitfalls: ['Starting dexamethasone >4h after Abx reduces benefit; must be early', 'Vancomycin needed to cover penicillin-resistant S. pneumoniae (PRSP)', 'If LP delayed >30min, give Abx first; do NOT defer empiric therapy'],
+        shelfPearl: 'Empiric meningitis in children >3mo = cephalosporin (ceftriaxone/cefotaxime) + vancomycin + dexamethasone. Dexamethasone EARLY (with 1st Abx) improves outcomes in pneumococcal meningitis.'
+      },
+      {
+        id: 'vc5',
+        title: 'Community-Acquired Pneumonia (CAP)',
+        age: '5-year-old',
+        figure: 'child',
+        presentation: ['Fever x4 days, cough productive', 'Tachypnea (RR 50), grunting', 'Focal consolidation on exam', 'No prior antibiotic use'],
+        affectedAreas: [
+          { region: 'chest', label: 'Lobar consolidation, dullness to percussion' }
+        ],
+        question: 'What is the initial empiric antibiotic?',
+        options: ['Amoxicillin', 'Amoxicillin-clavulanate', 'Azithromycin', 'High-dose amoxicillin'],
+        correct: 'High-dose amoxicillin',
+        treatment: {
+          drug: 'Amoxicillin (high-dose)',
+          dose: '80–90 mg/kg/day divided BID–TID (max 4g/day)',
+          route: 'PO (if non-toxic appearance, SpO₂ >90%)',
+          duration: '5–7 days'
+        },
+        additionalMgmt: ['Chest X-ray if clinical suspicion, but diagnosis often clinical', 'Supportive care: fluids, acetaminophen/ibuprofen', 'Oxygen if SpO₂ <90%', 'No routine suctioning or postural drainage'],
+        pitfalls: ['Amoxicillin-clavulanate NOT first-line for uncomplicated CAP (no H. influenzae coverage needed)', 'Azithromycin alone inadequate for streptococcus', 'Empiric coverage for gram-negatives (cephalosporin) only if risk factors (aspiration, immunocompromise)'],
+        shelfPearl: 'Most community-acquired pneumonia in children is viral or S. pneumoniae. Amoxicillin 80–90 mg/kg/day is first-line. Hospitalize if stridor, retractions at rest, SpO₂ <90%, altered sensorium, or dehydration.'
+      },
+      {
+        id: 'vc6',
+        title: 'Bronchiolitis',
+        age: '9-month-old',
+        figure: 'infant',
+        presentation: ['Viral URI x3 days → respiratory distress', 'Fever low-grade, cough, wheezing/crackles', 'Subcostal retractions, nasal flaring', 'RSV PCR positive'],
+        affectedAreas: [
+          { region: 'chest', label: 'Hyperinflation, small airway obstruction' },
+          { region: 'throat', label: 'Rhinitis, nasal congestion' }
+        ],
+        question: 'What is the cornerstone of management?',
+        options: ['Antibiotics + oxygen', 'Supportive care, oxygen, monitor hydration', 'Antiviral ribavirin', 'Systemic corticosteroids'],
+        correct: 'Supportive care, oxygen, monitor hydration',
+        treatment: {
+          drug: 'NO specific antiviral or antibiotic (viral illness)',
+          dose: 'Supportive care only',
+          route: 'Oxygen if SpO₂ <90%, IV hydration if unable to feed',
+          duration: 'Usually self-limited, 7–10 days; hospitalize if SpO₂ <90%, severe retractions, or <6wks old'
+        },
+        additionalMgmt: ['Nasal suctioning/saline to clear airway', 'Consider nebulized epinephrine if severe upper airway edema', 'Ribavirin reserved for severely immunocompromised', 'Avoid aggressive fluids (risk pulmonary edema from airway obstruction)'],
+        pitfalls: ['DO NOT give antibiotics (viral illness)', 'Corticosteroids have limited evidence; may consider dexamethasone if recurrent wheezing history', 'Albuterol/bronchodilators NOT routinely beneficial in first episode'],
+        shelfPearl: 'Bronchiolitis is VIRAL (RSV, parainfluenza, influenza) → supportive care only. Antiviral ribavirin rarely used. Hospitalize infants <6wks or if SpO₂ <90% or severe respiratory distress.'
+      },
+      {
+        id: 'vc7',
+        title: 'Croup (Laryngotracheobronchitis)',
+        age: '2-year-old',
+        figure: 'child',
+        presentation: ['Barky, seal-like cough', 'Inspiratory stridor', 'Mild fever, low-grade URI symptoms', 'Worse at night, self-limited'],
+        affectedAreas: [
+          { region: 'throat', label: 'Subglottic edema, erythema' }
+        ],
+        question: 'What is first-line treatment for moderate croup?',
+        options: ['Dexamethasone', 'Dexamethasone + nebulized epinephrine', 'Antibiotics + steroids', 'Intubation'],
+        correct: 'Dexamethasone + nebulized epinephrine',
+        treatment: {
+          drug: 'Dexamethasone + Nebulized Epinephrine (if moderate–severe)',
+          dose: 'Dex: 0.6 mg/kg single dose (max 10 mg); Epi: 0.5 mL/kg racemic (max 5 mL) or 1:1000 L-epi 0.05 mL/kg (max 1 mL)',
+          route: 'Dex: PO or IV; Epi: nebulized',
+          duration: 'Single dexamethasone dose; nebulized epi effect 15–30min, may repeat Q30min if needed'
+        },
+        additionalMgmt: ['Most croup mild & self-limiting; reassurance to parents', 'Cool mist/humidified air may provide comfort', 'Intubation only if complete airway obstruction (rare)'],
+        pitfalls: ['Antibiotics NOT indicated (viral)', 'Racemic epinephrine preferred over L-epinephrine (less cardiac side effects)', 'Watch for rebound edema 30min after epinephrine wears off—discharge only if safe'],
+        shelfPearl: 'Croup is parainfluenza → VIRAL. Dexamethasone reduces edema & shortens symptoms. Nebulized epi for acute airway obstruction. Intubation rare. Self-limiting in 3–7 days.'
+      },
+      {
+        id: 'vc8',
+        title: 'Pertussis (Whooping Cough)',
+        age: '3-month-old',
+        figure: 'infant',
+        presentation: ['Paroxysmal cough x2 weeks, post-tussive vomiting', 'Inspiratory "whoop" with gasping', 'Fever minimal, apnea spells', 'Leukocytosis 30–50k'],
+        affectedAreas: [
+          { region: 'chest', label: 'Severe paroxysmal cough, hyperinflation' }
+        ],
+        question: 'What antibiotic eradicates Bordetella pertussis?',
+        options: ['Azithromycin', 'Amoxicillin', 'Trimethoprim-sulfamethoxazole', 'Erythromycin'],
+        correct: 'Azithromycin',
+        treatment: {
+          drug: 'Azithromycin',
+          dose: '10 mg/kg day 1, then 5 mg/kg/day days 2–5 (max 500 mg/day)',
+          route: 'PO',
+          duration: '5 days'
+        },
+        additionalMgmt: ['Close contacts (family, classmates) need post-exposure prophylaxis with azithromycin', 'Supportive care: monitor for apnea (ICU admission if <3mo)', 'Pertussis vaccine (DTaP) at 2, 4, 6, 15–18mo, 4–6yo', 'Reportable disease to public health'],
+        pitfalls: ['Antibiotics reduce infectivity but NOT cough duration if given late (cough persists 2–8 weeks)', 'Trimethoprim-SMX less reliable; erythromycin less used (GI upset, macrolide-resistant strains rising)', 'Infants <1 year at highest risk for severe disease & apnea; consider ICU'],
+        shelfPearl: 'Pertussis = azithromycin (5-day course) for eradication & to reduce infectivity. Vaccination is BEST prevention (DTaP series). High-risk: infants <6mo (apnea, seizures, encephalopathy).'
+      },
+      {
+        id: 'vc9',
+        title: 'Febrile Infant UTI',
+        age: '4-month-old',
+        figure: 'infant',
+        presentation: ['Fever 38.5°C, no localizing signs', 'Irritability, poor feeding', 'No diarrhea or respiratory symptoms', 'UA: pyuria, bacteriuria'],
+        affectedAreas: [
+          { region: 'gu', label: 'Positive urine culture, bacteriuria' }
+        ],
+        question: 'What is the initial antibiotic for urosepsis concern in a 4-month-old?',
+        options: ['Oral cephalexin', 'IV ceftriaxone or ceftazidime', 'PO trimethoprim-SMX', 'Ampicillin alone'],
+        correct: 'IV ceftriaxone or ceftazidime',
+        treatment: {
+          drug: 'Ceftriaxone or Ceftazidime',
+          dose: 'Ceftrx: 50–80 mg/kg/day div Q8h; Ceftazidime: 30 mg/kg Q8h',
+          route: 'IV initially (can switch to PO after initial stabilization)',
+          duration: '7–14 days (IV or PO based on clinical improvement)'
+        },
+        additionalMgmt: ['Urine culture (suprapubic aspiration or straight catheterization for accuracy)', 'Blood culture', 'Renal ultrasound & voiding cystourethrogram (VCUG) to rule out anatomic anomalies', 'Close follow-up & repeat UA/culture to ensure sterilization'],
+        pitfalls: ['Oral Abx alone NOT reliable for febrile infant <2mo (high risk urosepsis)', 'Prophylactic Abx post-VCUG if vesicoureteral reflux (VUR) detected', 'Circumcision may reduce UTI risk in boys'],
+        shelfPearl: 'Febrile infant with UTI = empiric IV broad-spectrum cephalosporin (ceftriaxone/ceftazidime). After stabilization, switch to PO cephalexin based on culture sensitivities. Workup with renal ultrasound & VCUG.'
+      },
+      {
+        id: 'vc10',
+        title: 'UTI in Older Child',
+        age: '6-year-old (female)',
+        figure: 'child',
+        presentation: ['Dysuria, frequency, urgency x2 days', 'Low fever or afebrile', 'No renal angle tenderness', 'UA: WBCs, nitrites, leukocyte esterase'],
+        affectedAreas: [
+          { region: 'gu', label: 'Dysuria, pyuria, bacteriuria' }
+        ],
+        question: 'What is appropriate initial therapy?',
+        options: ['Trimethoprim-sulfamethoxazole', 'Cephalexin', 'Amoxicillin', 'Fluoroquinolone'],
+        correct: 'Trimethoprim-sulfamethoxazole',
+        treatment: {
+          drug: 'Trimethoprim-Sulfamethoxazole OR Cephalexin',
+          dose: 'TMP-SMX: 6–12 mg/kg/day (TMP component) div BID; Cephalexin: 25–50 mg/kg/day div QID',
+          route: 'PO',
+          duration: '3–5 days'
+        },
+        additionalMgmt: ['Urine culture (clean-catch or catheterization)', 'Encourage fluids, frequent voiding, wiping front-to-back', 'Renal ultrasound if recurrent UTI (>2 episodes) or abnormal exam', 'VCUG if ANY imaging abnormality or recurrent pyelonephritis'],
+        pitfalls: ['Amoxicillin NOT first-line (lower efficacy for gram-negatives)', 'Fluoroquinolones reserved for resistant organisms or severe infection', 'If pyelonephritis signs (fever, flank pain, CVA tenderness) → may need IV Abx & hospitalization'],
+        shelfPearl: 'Uncomplicated cystitis in school-age girls: TMP-SMX or cephalexin x 3–5 days PO. Pyelonephritis requires IV therapy initially (ceftriaxone/ceftazidime). Prophylaxis if recurrent or VUR.'
+      },
+      {
+        id: 'vc11',
+        title: 'Periorbital Cellulitis',
+        age: '3-year-old',
+        figure: 'child',
+        presentation: ['Eyelid swelling, erythema x1 day', 'Fever 38.8°C, moderate edema', 'Vision intact, no proptosis', 'No recent trauma or ocular disease'],
+        affectedAreas: [
+          { region: 'eyes', label: 'Lid erythema, edema, swelling' }
+        ],
+        question: 'What is the likely organism & initial treatment?',
+        options: ['Staphylococcus aureus; oral amoxicillin-clavulanate', 'H. influenzae; IV ceftriaxone + vancomycin', 'Streptococcus; oral penicillin V', 'Normal flora; observation only'],
+        correct: 'H. influenzae; IV ceftriaxone + vancomycin',
+        treatment: {
+          drug: 'IV Ceftriaxone + Vancomycin',
+          dose: 'Ceftrx: 50–80 mg/kg/day div Q8h; Van: 40–60 mg/kg/day div Q6h',
+          route: 'IV',
+          duration: '7–10 days, then PO cephalexin or amoxicillin-clavulanate to complete course'
+        },
+        additionalMgmt: ['Blood culture, consider imaging (CT or MRI) to rule out orbital cellulitis', 'Careful eye exam to ensure no proptosis, ophthalmoplegia, or vision change', 'Urgent ophthalmology referral if any signs of orbital involvement'],
+        pitfalls: ['H. influenzae was common pre-Hib vaccine; now often MRSA or GAS', 'DO NOT assume safe without imaging; if proptosis/vision loss → likely orbital cellulitis (surgical emergency)', 'Streptococcus aerobacillus or S. aureus from skin flora most common today'],
+        shelfPearl: 'Periorbital cellulitis = IV cephalosporin + vancomycin empirically. Must distinguish from orbital cellulitis (proptosis, ophthalmoplegia, severe vision change = emergent surgery). Hib vaccine has reduced H. influenzae.'
+      },
+      {
+        id: 'vc12',
+        title: 'Orbital Cellulitis',
+        age: '7-year-old',
+        figure: 'child',
+        presentation: ['Eyelid swelling, complete ophthalmoplegia', 'Vision loss, proptosis', 'Fever 39.2°C, severe systemic toxicity', 'History of sinusitis or trauma'],
+        affectedAreas: [
+          { region: 'eyes', label: 'Proptosis, ophthalmoplegia, chemosis' }
+        ],
+        question: 'What is the next immediate step?',
+        options: ['Start broad-spectrum IV Abx & urgent ophthalmology consult', 'Obtain emergent CT/MRI orbit & immediate surgical evaluation', 'Start oral antibiotics & follow-up imaging', 'Warm compress & observation'],
+        correct: 'Obtain emergent CT/MRI orbit & immediate surgical evaluation',
+        treatment: {
+          drug: 'IV Ceftriaxone + Vancomycin ± Ampicillin (if <3mo)',
+          dose: 'Ceftrx: 50–80 mg/kg/day div Q8h; Van: 40–60 mg/kg/day div Q6h',
+          route: 'IV',
+          duration: '2–3 weeks; surgical drainage if abscess'
+        },
+        additionalMgmt: ['Urgent CT/MRI orbits with contrast (define abscess, extent)', 'Sinus imaging if sinusitis source', 'Neurosurgery/ENT/Ophthalmology consultation for possible drainage', 'Blood & orbital fluid cultures if drained'],
+        pitfalls: ['Delayed diagnosis → blindness, cavernous sinus thrombosis, meningitis', 'Periorbital vs. orbital cellulitis distinction is CRITICAL; proptosis/ophthalmoplegia indicate orbital', 'Most common source = ethmoid sinusitis'],
+        shelfPearl: 'Orbital cellulitis = SURGICAL EMERGENCY. Proptosis, ophthalmoplegia, vision loss = must image & may need drainage. IV Abx empirically (cephalosporin + vancomycin) but imaging/surgery is priority.'
+      },
+      {
+        id: 'vc13',
+        title: 'Skin Abscess / MRSA',
+        age: '5-year-old',
+        figure: 'child',
+        presentation: ['Localized skin lesion with fluctuance', 'Erythema, warmth, tenderness', 'Low fever or afebrile', 'No systemic toxicity'],
+        affectedAreas: [
+          { region: 'skin', label: 'Fluctuant abscess on arm or leg' }
+        ],
+        question: 'What is the definitive & initial treatment?',
+        options: ['Oral TMP-SMX monotherapy', 'Incision & drainage alone', 'Incision & drainage + empiric cover for MRSA', 'Oral amoxicillin'],
+        correct: 'Incision & drainage + empiric cover for MRSA',
+        treatment: {
+          drug: 'Incision & Drainage + Trimethoprim-Sulfamethoxazole OR Clindamycin',
+          dose: 'TMP-SMX: 6–12 mg/kg/day (TMP component) BID; Clindamycin: 20–40 mg/kg/day div TID–QID',
+          route: 'I&D (may be office procedure if small); Abx: PO',
+          duration: '7–10 days Abx post-drainage'
+        },
+        additionalMgmt: ['Wound culture for culture-directed therapy if MRSA suspected', 'Pain control, local wound care, saline irrigation', 'Keep wound clean & dry', 'No need for hospitalization unless signs of systemic infection (fever, cellulitis extending >2cm, immunocompromised)'],
+        pitfalls: ['I&D is curative for localized abscess; Abx alone inadequate for fluctuant collections', 'MRSA resistance to beta-lactams high; use TMP-SMX or clindamycin empirically', 'If cellulitis spreads or systemic toxicity → escalate to IV Abx & hospitalization'],
+        shelfPearl: 'Skin abscess = I&D is KEY. Cover for MRSA with TMP-SMX or clindamycin. Small abscesses often resolve with I&D alone; reserve systemic Abx for surrounding cellulitis or immunocompromised host.'
+      },
+      {
+        id: 'vc14',
+        title: 'Impetigo',
+        age: '3-year-old',
+        figure: 'child',
+        presentation: ['Honey-crusted vesicles on exposed skin', 'Non-purulent initially → may progress', 'Minimal fever, well-appearing', 'Spread by direct contact'],
+        affectedAreas: [
+          { region: 'skin', label: 'Honey-crusted lesions on face, arms' }
+        ],
+        question: 'What is appropriate treatment?',
+        options: ['Observation; self-limited', 'Topical mupirocin', 'Topical mupirocin + oral antibiotic if extensive', 'IV cephalosporin'],
+        correct: 'Topical mupirocin + oral antibiotic if extensive',
+        treatment: {
+          drug: 'Mupirocin (topical) ± Oral Amoxicillin-clavulanate or Cephalexin',
+          dose: 'Mupirocin: apply TID; Amox-clav: 25–45 mg/kg/day div TID; Cephalexin: 25–50 mg/kg/day div QID',
+          route: 'Topical mupirocin; PO Abx if extensive or rapidly progressive',
+          duration: 'Mupirocin x 5–7 days; oral Abx x 7–10 days'
+        },
+        additionalMgmt: ['Gentle cleaning with soap & water, remove crusts', 'Cover lesions if in daycare (return after 24h topical Abx or 24h systemic Abx)', 'Avoid spread: fingernail trimming, handwashing'],
+        pitfalls: ['Topical mupirocin alone may fail if extensive (>5 lesions); add PO Abx', 'MRSA impetigo: use clindamycin or TMP-SMX instead of amoxicillin-clavulanate', 'Complications: cellulitis, lymphangitis, post-streptococcal GN (rare)'],
+        shelfPearl: 'Impetigo = typically topical mupirocin TID x 5–7 days. If extensive/rapidly progressive or MRSA, add oral antibiotic (clindamycin or TMP-SMX). Post-streptococcal GN risk if GAS impetigo.'
+      },
+      {
+        id: 'vc15',
+        title: 'Cellulitis',
+        age: '4-year-old',
+        figure: 'child',
+        presentation: ['Non-purulent erythema, edema, warmth', 'Fever 38.5°C, lymphangitis (red streak)', 'Recent varicella or skin breach', 'Spreading borders'],
+        affectedAreas: [
+          { region: 'skin', label: 'Diffuse erythema, edema, warmth on leg' }
+        ],
+        question: 'What is the first-line antibiotic for presumed streptococcal cellulitis?',
+        options: ['Oral amoxicillin', 'IV cefazolin', 'Oral cephalexin', 'IV ceftriaxone + vancomycin'],
+        correct: 'IV cefazolin',
+        treatment: {
+          drug: 'Cefazolin (if non-toxic) OR IV Cephalosporin (if systemic toxicity/rapid spread)',
+          dose: 'Cefazolin: 25–33 mg/kg Q8h; Ceftriaxone: 50–80 mg/kg/day div Q8h',
+          route: 'IV',
+          duration: '7–10 days; can switch to PO cephalexin after improvement'
+        },
+        additionalMgmt: ['Limb elevation, cool compress', 'Mark borders with pen to monitor progression', 'No aspiration/blood culture needed for uncomplicated cellulitis', 'If purulent (abscess) or MRSA suspected → add vancomycin'],
+        pitfalls: ['GAS cellulitis rapidly progressive; do NOT delay IV Abx for non-toxic appearing children', 'If recent varicella or immunocompromised → higher risk Staph.; cover with vancomycin', 'Oral Abx inadequate for systemic signs or rapid spread'],
+        shelfPearl: 'Non-purulent cellulitis = IV cephalosporin (cefazolin or ceftriaxone). GAS is most common cause; assumes streptococcal initially. If MRSA risk (recent doxycycline, varicella) → add vancomycin.'
+      },
+      {
+        id: 'vc16',
+        title: 'Kawasaki Disease',
+        age: '3-year-old',
+        figure: 'child',
+        presentation: ['Fever ≥5 days, unresponsive to Abx', 'Polymorphous rash, bilateral conjunctivitis', 'Strawberry tongue, lip cracking, peeling', 'Cervical lymphadenitis (unilateral)'],
+        affectedAreas: [
+          { region: 'throat', label: 'Strawberry tongue, pharyngitis' },
+          { region: 'eyes', label: 'Bilateral non-exudative conjunctivitis' },
+          { region: 'skin', label: 'Polymorphous rash' },
+          { region: 'heart', label: 'Risk of coronary artery aneurysm' }
+        ],
+        question: 'What is the immediate treatment to prevent coronary complications?',
+        options: ['Aspirin + antibiotics', 'IVIG + high-dose aspirin + echocardiography', 'Ibuprofen + observation', 'Penicillin V prophylaxis'],
+        correct: 'IVIG + high-dose aspirin + echocardiography',
+        treatment: {
+          drug: 'IVIG + Aspirin (high-dose initially, then low-dose)',
+          dose: 'IVIG: 2 g/kg single infusion; Aspirin: 80–100 mg/kg/day div QID (high-dose) x 14d, then 3–5 mg/kg/day single dose x 6–8 weeks',
+          route: 'IV (IVIG); PO (aspirin)',
+          duration: 'IVIG single dose; aspirin high-dose x 2 weeks, then low-dose x 6–8 weeks'
+        },
+        additionalMgmt: ['Baseline & repeat echocardiography at 2 weeks & 8 weeks to assess for coronary aneurysm', 'Aspirin for antiplatelet effect (reduces thrombosis risk)', 'Long-term anticoagulation if coronary aneurysm present', 'No antibiotics (viral, not bacterial)'],
+        pitfalls: ['DELAYED diagnosis & treatment → coronary aneurysm in 25% untreated', 'Often misdiagnosed as other rashes (scarlet fever, drug reaction); fever unresponsive to Abx is key clue', 'Echocardiography required to guide long-term anticoagulation'],
+        shelfPearl: 'Kawasaki = fever ≥5d + ≥4 of 6 criteria (rash, conjunctivitis, strawberry tongue, extremity edema/peeling, cervical LAD, lip/mouth changes). URGENT IVIG + high-dose aspirin to prevent CAA. Echo required.'
+      },
+      {
+        id: 'vc17',
+        title: 'Septic Arthritis',
+        age: '4-year-old',
+        figure: 'child',
+        presentation: ['Acute knee swelling, warmth, severe pain', 'Fever 39°C, refusal to walk', 'Toxic appearance, limited range of motion', 'ESR elevated, possible positive blood culture'],
+        affectedAreas: [
+          { region: 'msk', label: 'Swollen, hot joint (knee)' }
+        ],
+        question: 'What is the next diagnostic step?',
+        options: ['Start antibiotics without delay', 'Arthrocentesis with Gram stain, culture, cell count, glucose', 'MRI to confirm diagnosis', 'Ibuprofen & observe'],
+        correct: 'Arthrocentesis with Gram stain, culture, cell count, glucose',
+        treatment: {
+          drug: 'IV Ceftriaxone + Vancomycin (pending culture)',
+          dose: 'Ceftrx: 50–80 mg/kg/day div Q8h; Van: 40–60 mg/kg/day div Q6h',
+          route: 'IV',
+          duration: '2–4 weeks (longer if specific organism or complications)'
+        },
+        additionalMgmt: ['Urgent arthrocentesis for synovial analysis & culture', 'Blood culture', 'Imaging (ultrasound or MRI) if diagnosis unclear', 'Orthopedic consult if evidence of joint damage or need for washout', 'Immobilization, analgesia, physical therapy'],
+        pitfalls: ['Delayed diagnosis → permanent joint damage, cartilage loss', 'Do NOT wait for imaging; arthrocentesis & empiric Abx immediately', 'S. aureus most common (including MRSA); need vancomycin coverage', 'GAS (streptococcus) can also cause acute arthritis; cephalosporin covers both'],
+        shelfPearl: 'Septic arthritis = EMERGENCY. Arthrocentesis (not aspirate is diagnostic) → synovial WBC >50k (often >100k), positive Gram stain/culture. Start IV cephalosporin + vancomycin immediately. Orthopedic washout often needed.'
+      },
+      {
+        id: 'vc18',
+        title: 'Osteomyelitis',
+        age: '8-year-old',
+        figure: 'child',
+        presentation: ['Acute bone pain, limp, fever 38.8°C', 'Localized swelling, erythema over tibia', 'Elevated ESR & CRP, elevated WBC', 'Possible recent trauma or skin infection'],
+        affectedAreas: [
+          { region: 'msk', label: 'Focal bone pain, swelling (metaphyseal region)' }
+        ],
+        question: 'What is the appropriate initial therapy?',
+        options: ['Oral cephalexin at home', 'IV ceftriaxone + vancomycin', 'Ibuprofen & observation', 'Penicillin V only'],
+        correct: 'IV ceftriaxone + vancomycin',
+        treatment: {
+          drug: 'IV Ceftriaxone + Vancomycin',
+          dose: 'Ceftrx: 50–80 mg/kg/day div Q8h; Van: 40–60 mg/kg/day div Q6h',
+          route: 'IV initial; can transition to PO (cephalexin or clindamycin) after clinical improvement & sensitivities',
+          duration: '4–6 weeks (IV x 1–2 weeks, then PO to complete course)'
+        },
+        additionalMgmt: ['Blood culture & possible bone culture (aspiration or biopsy)', 'Imaging: X-ray (may be normal early), MRI or CT for confirmation & extent', 'Immobilization, pain control', 'Surgical drainage if large abscess or failed medical therapy'],
+        pitfalls: ['Oral Abx alone inadequate for acute osteomyelitis; IV required initially', 'S. aureus (including MRSA) most common; empiric vancomycin coverage essential', 'Prolonged course required (4–6 weeks) to prevent relapse & complications (septic arthritis)'],
+        shelfPearl: 'Acute osteomyelitis = fever + bone pain + elevated inflammatory markers. IV cephalosporin + vancomycin empirically (cover MRSA). Blood culture first. MRI confirms. 4–6 weeks total therapy (IV → PO transition).'
+      },
+      {
+        id: 'vc19',
+        title: 'Viral Gastroenteritis',
+        age: '14-month-old',
+        figure: 'infant',
+        presentation: ['Watery diarrhea x3 days, vomiting', 'Fever 38°C, mild dehydration', 'No blood in stool, no severe pain', 'Exposure to sick contacts'],
+        affectedAreas: [
+          { region: 'abdomen', label: 'Gastroenteritis, watery stools' }
+        ],
+        question: 'What is the cornerstone of management?',
+        options: ['Empiric antibiotics', 'Oral rehydration therapy (ORT)', 'NPO status & IV fluids', 'Antidiarrheal agents'],
+        correct: 'Oral rehydration therapy (ORT)',
+        treatment: {
+          drug: 'NO antibiotics (viral)',
+          dose: 'ORT: World Health Organization formula (sodium 75 mEq/L, glucose 75 mmol/L, osmolarity 245)',
+          route: 'PO small, frequent amounts; IV if moderate–severe dehydration or unable to tolerate PO',
+          duration: 'Continue until diarrhea resolves (typically 5–7 days)'
+        },
+        additionalMgmt: ['Continue breastfeeding if applicable', 'Resume age-appropriate diet (BRAT diet, soft foods) once oral intake tolerated', 'Monitor hydration status, urine output', 'Hand hygiene, infection control'],
+        pitfalls: ['DO NOT give antibiotics (viral illness)', 'Antidiarrheal agents (loperamide) contraindicated in young children & bloody diarrhea', 'Hypernatremic dehydration risk if high insensible losses; use hypotonic ORT carefully'],
+        shelfPearl: 'Viral gastroenteritis = ORT is FIRST-LINE. No antibiotics. Resume feeding early. IV fluids only if moderate–severe dehydration or unable to tolerate PO. Rotavirus vaccine has reduced severity.'
+      },
+      {
+        id: 'vc20',
+        title: 'Clostridioides difficile Colitis',
+        age: '6-year-old',
+        figure: 'child',
+        presentation: ['Profuse diarrhea x4 days after amoxicillin course', 'Fever 38.5°C, abdominal cramping', 'Positive C. difficile toxin PCR', 'No blood in stool initially'],
+        affectedAreas: [
+          { region: 'abdomen', label: 'Antibiotic-associated colitis, diarrhea' }
+        ],
+        question: 'What is the initial treatment?',
+        options: ['Continue amoxicillin', 'Metronidazole', 'Fidaxomicin or vancomycin', 'Loperamide'],
+        correct: 'Fidaxomicin or vancomycin',
+        treatment: {
+          drug: 'Fidaxomicin (preferred) OR Oral Vancomycin',
+          dose: 'Fidax: 10 mg/kg/day div BID (max 400 mg/day); Vanco: 15–25 mg/kg/day div QID (max 125 mg/dose)',
+          route: 'PO',
+          duration: '10 days'
+        },
+        additionalMgmt: ['Discontinue offending antibiotic (amoxicillin)', 'Supportive care: fluid repletion, electrolyte correction', 'Avoid antiperistaltic agents (loperamide)', 'Test of cure NOT recommended; repeat testing only if symptoms persist'],
+        pitfalls: ['Metronidazole inferior to vancomycin; reserved only for mild–moderate disease (toxin B-negative)', 'AVOID loperamide (toxic megacolon risk)', 'Fulminant colitis (toxic megacolon, perforation) = ICU care, possible colectomy'],
+        shelfPearl: 'C. difficile infection = fidaxomicin or vancomycin PO x 10 days. Discontinue causative Abx. Avoid antidiarrheals. Monitor for fulminant disease. Recurrence ~25%; consider probiotics (uncertain benefit).'
+      },
+      {
+        id: 'vc21',
+        title: 'Neonatal HSV Infection',
+        age: '2-week-old',
+        figure: 'infant',
+        presentation: ['Vesicular rash on scalp & face', 'Fever, irritability, poor feeding', 'Mother with history of genital herpes', 'HSV PCR positive on fluid/CSF'],
+        affectedAreas: [
+          { region: 'skin', label: 'Vesicular rash, pustules on face/scalp' },
+          { region: 'head', label: 'CNS involvement (meningitis, encephalitis)' }
+        ],
+        question: 'What is the immediate treatment?',
+        options: ['Observe & supportive care', 'IV acyclovir 20 mg/kg Q8h', 'Oral acyclovir', 'Topical antibiotic ointment'],
+        correct: 'IV acyclovir 20 mg/kg Q8h',
+        treatment: {
+          drug: 'IV Acyclovir',
+          dose: '20 mg/kg IV Q8h',
+          route: 'IV (slow infusion over ≥1 hour to prevent nephrotoxicity)',
+          duration: '10–14 days'
+        },
+        additionalMgmt: ['Lumbar puncture with CSF analysis (HSV PCR, culture, cell count)', 'Blood culture', 'Skin lesion culture/PCR', 'Monitor renal function & hydration (acyclovir nephrotoxicity risk)', 'Supportive care, temperature regulation'],
+        pitfalls: ['DELAYED treatment → high mortality & morbidity (CNS damage, disseminated disease)', 'HSV neonatalitis can present with disseminated disease (liver, lungs, CNS) without skin rash', 'Acyclovir nephrotoxicity; ensure adequate hydration & slow IV infusion'],
+        shelfPearl: 'Neonatal HSV = URGENT IV acyclovir (20 mg/kg Q8h). Skin vesicles OR maternal genital HSV history → assume HSV until proven otherwise. High mortality if untreated. CSF analysis & culture essential.'
+      },
+      {
+        id: 'vc22',
+        title: 'Congenital Syphilis',
+        age: '6 weeks (with manifestations)',
+        figure: 'infant',
+        presentation: ['Hepatosplenomegaly, jaundice', 'Maculopapular rash on palms/soles', 'Snuffles (nasal congestion), pseudoparalysis of limbs', 'Maternal untreated syphilis during pregnancy'],
+        affectedAreas: [
+          { region: 'abdomen', label: 'Hepatosplenomegaly' },
+          { region: 'skin', label: 'Maculopapular rash on palms, soles' },
+          { region: 'throat', label: 'Snuffles (mucopurulent nasal discharge)' },
+          { region: 'msk', label: 'Pseudoparalysis from osteochondritis' }
+        ],
+        question: 'What is the appropriate treatment?',
+        options: ['Oral penicillin V', 'IV Penicillin G 50,000 units/kg Q12h', 'Intramuscular benzathine penicillin G', 'Oral cephalexin'],
+        correct: 'IV Penicillin G 50,000 units/kg Q12h',
+        treatment: {
+          drug: 'IV Penicillin G',
+          dose: '50,000 units/kg IV Q12h',
+          route: 'IV',
+          duration: '10 days'
+        },
+        additionalMgmt: ['Serology: RPR/VDRL (titer comparison), FTA-ABS or TP-PA confirmation', 'Long bone X-rays (periostitis, osteochondritis)', 'CBC, LFTs, CSF analysis if neurosyphilis concern', 'Maternal partner treatment (benzathine PCN G 2.4 million units IM x 1)'],
+        pitfalls: ['Passive maternal antibodies complicate interpretation of serology; infant titers higher than mother\'s suggest active infection', 'Untreated → permanent sequelae (Hutchinson triad, blindness, deaf)', 'Penicillin is only proven effective agent'],
+        shelfPearl: 'Congenital syphilis = IV penicillin G x 10 days. Diagnose via maternal serology + infant titer comparison. Long-term follow-up: serology, developmental monitoring, audiometry. Prevention: prenatal maternal screening & treatment.'
+      },
+      {
+        id: 'vc23',
+        title: 'Infant Botulism',
+        age: '4-month-old',
+        figure: 'infant',
+        presentation: ['Constipation x1 week, then weakness', 'Weak cry, poor feeding, weak suck', 'Ptosis, dilated pupils, loss of facial expression', 'History of honey exposure'],
+        affectedAreas: [
+          { region: 'head', label: 'Ptosis, dilated pupils, weak facial muscles' },
+          { region: 'chest', label: 'Weak respiratory muscles, risk of respiratory failure' }
+        ],
+        question: 'What is the treatment for infant botulism?',
+        options: ['Antibiotics (amoxicillin)', 'Botulism immune globulin (BIG-IV)', 'Supportive care alone', 'Aminoglycosides'],
+        correct: 'Botulism immune globulin (BIG-IV)',
+        treatment: {
+          drug: 'Botulism Immune Globulin (BIG-IV) ± Supportive Care',
+          dose: 'BIG-IV: 50 mg/kg single IV infusion',
+          route: 'IV',
+          duration: 'Single infusion; supportive care ongoing until recovery (weeks to months)'
+        },
+        additionalMgmt: ['Monitor respiratory status; mechanical ventilation if needed', 'NO antibiotics (can worsen disease by lyzing spores)', 'Supportive feeding (nasogastric or parenteral nutrition)', 'Stool culture for toxin identification (confirmatory)'],
+        pitfalls: ['DO NOT give antibiotics; aminoglycosides contraindicated (worsen paralysis)', 'Gradual onset of weakness can mimic other conditions (SIDS risk; some infants die unexpectedly)', 'BIG-IV modifies toxin-SNARE binding; reduces duration of illness if given early'],
+        shelfPearl: 'Infant botulism = descending paralysis (ptosis, weak suck, weak cry) after constipation. NO antibiotics. BIG-IV shortens illness. Avoid honey <1 year (spore source). Monitor respiratory status; may need ICU support.'
+      },
+      {
+        id: 'vc24',
+        title: 'Epiglottitis',
+        age: '5-year-old',
+        figure: 'child',
+        presentation: ['Acute stridor, difficulty swallowing', 'Fever 39.2°C, tripod positioning', 'Drooling, anxious, toxic appearance', 'Classic "thumbprint" sign on X-ray (large epiglottis)'],
+        affectedAreas: [
+          { region: 'throat', label: 'Swollen epiglottis, airway compromise' }
+        ],
+        question: 'What is the immediate management?',
+        options: ['Nebulized dexamethasone & observe', 'DO NOT examine throat; secure airway & empiric Abx', 'Flexible laryngoscopy at bedside', 'Oral penicillin V'],
+        correct: 'DO NOT examine throat; secure airway & empiric Abx',
+        treatment: {
+          drug: 'IV Ceftriaxone (+ Vancomycin if MRSA risk)',
+          dose: 'Ceftrx: 50–80 mg/kg/day div Q8h; Van: 40–60 mg/kg/day div Q6h',
+          route: 'IV',
+          duration: '7–10 days'
+        },
+        additionalMgmt: ['DO NOT examine pharynx (can trigger complete obstruction)', 'Keep child calm; avoid agitation', 'Secure airway (endotracheal intubation) BEFORE giving Abx if stridor at rest', 'Direct visualization (fiberoptic laryngoscopy) only in OR setting if airway control available', 'Do NOT manipulate airway unless ready to intubate'],
+        pitfalls: ['WRONG: examining throat or removing foreign object without airway backup → complete airway loss', 'Hib vaccine has dramatically reduced epiglottitis; now rare but EMERGENCY when it occurs', 'Stridor at rest = imminent airway loss; intubate immediately'],
+        shelfPearl: 'Epiglottitis = AIRWAY EMERGENCY. Acute stridor + fever + toxic appearance = assume epiglottitis. DO NOT examine throat. Secure airway first (ideally fiberoptic intubation in OR), THEN give IV cephalosporin + vancomycin. Hib vaccine prophylaxis.'
+      },
+      {
+        id: 'vc25',
+        title: 'Cervical Lymphadenitis',
+        age: '4-year-old',
+        figure: 'child',
+        presentation: ['Unilateral neck swelling x3 days', 'Fever 38.5°C, tender node', 'No fluctuance, surrounding cellulitis', 'Recent upper respiratory infection'],
+        affectedAreas: [
+          { region: 'ears', label: 'Anterior cervical lymphadenitis, tender node' }
+        ],
+        question: 'What is the next diagnostic & therapeutic step?',
+        options: ['Warm compresses & observation', 'Ultrasound to assess for abscess; culture if fluctuant; empiric Abx if rapid progression', 'IV cephalosporin monotherapy', 'Incision & drainage'],
+        correct: 'Ultrasound to assess for abscess; culture if fluctuant; empiric Abx if rapid progression',
+        treatment: {
+          drug: 'Amoxicillin-clavulanate OR IV Cephalosporin + Vancomycin (if severe/immunocompromised)',
+          dose: 'Amox-clav: 25–45 mg/kg/day div TID; Ceftrx: 50–80 mg/kg/day div Q8h; Van: 40–60 mg/kg/day div Q6h',
+          route: 'PO (mild) or IV (severe, abscess)',
+          duration: '7–10 days'
+        },
+        additionalMgmt: ['Ultrasound to differentiate reactive lymphadenitis from suppurative (abscess)', 'If abscess present & fluctuant: ultrasound-guided aspiration/drainage ± culture', 'Warm compresses, analgesics', 'Evaluate for source (pharyngitis, skin infection, dental disease)'],
+        pitfalls: ['S. aureus (including MRSA) & GAS cause suppurative lymphadenitis; empiric cover needed', 'Non-suppurative lymphadenitis (reactive) may resolve with Abx + supportive care', 'TB lymphadenitis or atypical mycobacterial infection (MAC) can mimic; consider if chronic, minimal systemic symptoms, or immunocompromised'],
+        shelfPearl: 'Cervical lymphadenitis = unilateral node swelling + fever. Ultrasound to assess for abscess. Reactive lymphadenitis: oral amoxicillin-clavulanate. Suppurative: IV cephalosporin ± vancomycin ± I&D. Culture if purulent.'
+      }
+    ];
+
+    function VisualClinicalCases() {
+      const [caseIdx, setCaseIdx] = useState(0);
+      const [answered, setAnswered] = useState(false);
+      const [selectedAnswer, setSelectedAnswer] = useState(null);
+      const [score, setScore] = useState({ correct: 0, total: 0 });
+      const game = useGameQuiz('visual_cases');
+      const [, forceUpdate] = useState(0);
+
+      const shuffledCases = useMemo(() => {
+        return VISUAL_CASES.slice().sort(() => Math.random() - 0.5);
+      }, []);
+
+      const currentCase = shuffledCases[caseIdx];
+
+      const handleAnswer = (option) => {
+        if (answered) return;
+        const isCorrect = option === currentCase.correct;
+        setSelectedAnswer(option);
+        setAnswered(true);
+        setScore(s => ({ correct: s.correct + (isCorrect ? 1 : 0), total: s.total + 1 }));
+        game.onAnswer(currentCase.id, isCorrect);
+      };
+
+      const handleNext = () => {
+        if (caseIdx < shuffledCases.length - 1) {
+          setCaseIdx(caseIdx + 1);
+          setAnswered(false);
+          setSelectedAnswer(null);
+        } else {
+          const finalScore = score.correct / score.total;
+          game.onComplete(finalScore);
+          IDProgress.save('visual_cases', { correct: score.correct, total: score.total, missed: [] });
+          setCaseIdx(0);
+          setScore({ correct: 0, total: 0 });
+          setAnswered(false);
+          setSelectedAnswer(null);
+        }
+      };
+
+      if (!currentCase) return <div className="p-8 text-slate-800">No cases available.</div>;
+
+      const BodyDiagram = currentCase.figure === 'infant' ? InfantBody : ChildBody;
+
+      return (
+        <div className="animate-fadeIn p-8 max-w-7xl mx-auto space-y-6">
+          <GameHeader />
+          <div className="flex items-center justify-between">
+            <div className="text-sm font-semibold text-slate-700">
+              Case {caseIdx + 1} of {shuffledCases.length}
+            </div>
+            <ComboDisplay combo={game.combo} />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* LEFT: Body Diagram with Callouts */}
+            <div className="bg-slate-50 rounded-xl p-8 border border-slate-200">
+              <div className="mb-6 text-center">
+                <h3 className="text-lg font-bold text-slate-800 mb-1">{currentCase.title}</h3>
+                <p className="text-sm text-slate-600">{currentCase.age}</p>
+              </div>
+              <div className="h-96">
+                <BodyDiagram affectedAreas={currentCase.affectedAreas} />
+              </div>
+              <div className="mt-6 space-y-3">
+                {currentCase.affectedAreas.map((area, i) => (
+                  <div key={i} className="flex items-start gap-3 p-3 bg-white border border-red-200 rounded-lg">
+                    <div className="w-2 h-2 bg-red-500 rounded-full mt-1.5 shrink-0" />
+                    <div>
+                      <div className="text-xs font-semibold text-slate-800">{area.region.toUpperCase()}</div>
+                      <div className="text-xs text-slate-600">{area.label}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* RIGHT: Presentation, Question, MCQ */}
+            <div className="space-y-6">
+              {/* Presentation */}
+              <div className="bg-white border border-slate-200 rounded-xl p-6">
+                <h4 className="text-sm font-bold text-slate-700 mb-4">CLINICAL PRESENTATION</h4>
+                <div className="space-y-2">
+                  {currentCase.presentation.map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <span className="text-slate-400 text-xs font-bold mt-1">•</span>
+                      <span className="text-sm text-slate-700">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Question */}
+              <div className="bg-white border border-slate-200 rounded-xl p-6">
+                <h4 className="text-sm font-bold text-slate-800 mb-4">{currentCase.question}</h4>
+                <div className="space-y-3">
+                  {currentCase.options.map((option, i) => {
+                    const isSelected = selectedAnswer === option;
+                    const isCorrectOption = option === currentCase.correct;
+                    let btnClass = 'bg-white border-2 border-slate-200 text-slate-800 hover:border-blue-300 hover:bg-blue-50';
+
+                    if (answered) {
+                      if (isCorrectOption) {
+                        btnClass = 'bg-emerald-50 border-2 border-emerald-500 text-emerald-800 font-semibold';
+                      } else if (isSelected && !isCorrectOption) {
+                        btnClass = 'bg-red-50 border-2 border-red-500 text-red-800 font-semibold';
+                      }
+                    }
+
+                    return (
+                      <button
+                        key={i}
+                        onClick={() => handleAnswer(option)}
+                        disabled={answered}
+                        className={`w-full text-left p-4 rounded-lg transition ${btnClass}`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className={`w-5 h-5 rounded border-2 mt-0.5 shrink-0 flex items-center justify-center text-xs font-bold ${
+                            answered && isSelected ? (isCorrectOption ? 'bg-emerald-500 border-emerald-500 text-white' : 'bg-red-500 border-red-500 text-white') : 'border-slate-300'
+                          }`}>
+                            {answered && isSelected && (isCorrectOption ? '✓' : '✗')}
+                          </div>
+                          <span className="font-medium">{option}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* After Answer: Explanation */}
+              {answered && (
+                <div className="space-y-4 animate-fadeIn">
+                  {selectedAnswer === currentCase.correct && (
+                    <div className="bg-emerald-50 border-2 border-emerald-500 rounded-xl p-6">
+                      <div className="text-lg font-bold text-emerald-800 mb-2">Correct!</div>
+                    </div>
+                  )}
+                  {selectedAnswer !== currentCase.correct && (
+                    <div className="bg-red-50 border-2 border-red-500 rounded-xl p-6">
+                      <div className="text-sm font-bold text-red-800 mb-2">Incorrect</div>
+                      <div className="text-sm text-red-700">Correct answer: <strong>{currentCase.correct}</strong></div>
+                    </div>
+                  )}
+
+                  {/* Treatment Details */}
+                  <div className="bg-white border border-slate-200 rounded-xl p-6">
+                    <h4 className="text-sm font-bold text-slate-800 mb-4">TREATMENT</h4>
+                    <div className="space-y-3 text-sm">
+                      <div>
+                        <div className="font-semibold text-slate-700">Drug:</div>
+                        <div className="text-slate-600">{currentCase.treatment.drug}</div>
+                      </div>
+                      <div>
+                        <div className="font-semibold text-slate-700">Dose:</div>
+                        <div className="font-mono text-xs bg-slate-50 p-3 rounded border border-slate-200 text-slate-700">{currentCase.treatment.dose}</div>
+                      </div>
+                      <div>
+                        <div className="font-semibold text-slate-700">Route:</div>
+                        <div className="text-slate-600">{currentCase.treatment.route}</div>
+                      </div>
+                      <div>
+                        <div className="font-semibold text-slate-700">Duration:</div>
+                        <div className="text-slate-600">{currentCase.treatment.duration}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Additional Management */}
+                  <div className="bg-white border border-slate-200 rounded-xl p-6">
+                    <h4 className="text-sm font-bold text-slate-800 mb-4">ADDITIONAL MANAGEMENT</h4>
+                    <ul className="space-y-2 text-sm text-slate-700">
+                      {currentCase.additionalMgmt.map((item, i) => (
+                        <li key={i} className="flex items-start gap-3">
+                          <span className="text-slate-400 mt-1">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Pitfalls */}
+                  <div className="bg-red-50 border border-red-300 rounded-xl p-6">
+                    <h4 className="text-sm font-bold text-red-800 mb-4">COMMON PITFALLS</h4>
+                    <ul className="space-y-2 text-sm text-red-700">
+                      {currentCase.pitfalls.map((item, i) => (
+                        <li key={i} className="flex items-start gap-3">
+                          <span className="font-bold mt-0.5">⚠</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Shelf Pearl */}
+                  <div className="bg-amber-50 border border-amber-300 rounded-xl p-6">
+                    <h4 className="text-sm font-bold text-amber-800 mb-2">SHELF PEARL</h4>
+                    <p className="text-sm text-amber-700">{currentCase.shelfPearl}</p>
+                  </div>
+
+                  {/* Next Button */}
+                  <button
+                    onClick={handleNext}
+                    className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition"
+                  >
+                    {caseIdx < shuffledCases.length - 1 ? `Next Case (${caseIdx + 1}/${shuffledCases.length})` : 'Finish Quiz'}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {game.overlays}
+        </div>
+      );
+    }
+
     function IDHubView() {
       const [tab, setTab] = useState('overview');
       const [idData, setIdData] = useState(null);
@@ -1608,6 +2486,7 @@
         { id: 'vaccines', label: 'Vaccine Trainer', icon: '💉' },
         { id: 'pearls', label: 'Pearls & Associations', icon: '💡' },
         { id: 'side_effects', label: 'Side Effects', icon: '⚠️' },
+        { id: 'visual_cases', label: 'Visual Cases', icon: '🧍' },
         { id: 'study_guide', label: 'AI Study Guide', icon: '🧠' },
       ];
       return (
@@ -1616,7 +2495,7 @@
             <div className="flex items-center gap-3 mb-2"><span className="text-3xl">🦠</span>
               <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Infectious Disease & Antibiotics Hub</h1>
             </div>
-            <p className="text-sm text-slate-600 leading-relaxed">Deep-dive into pediatric ID — master bugs, drugs, empiric therapy, and shelf-exam patterns through <strong className="text-slate-700">10 interactive modules</strong>.</p>
+            <p className="text-sm text-slate-600 leading-relaxed">Deep-dive into pediatric ID — master bugs, drugs, empiric therapy, and shelf-exam patterns through <strong className="text-slate-700">11 interactive modules</strong>.</p>
           </div>
           <div className="flex flex-wrap gap-1.5 mb-8 pb-3 border-b border-slate-700">
             {tabs.map(t => (
@@ -1636,6 +2515,7 @@
           {tab === 'vaccines' && <VaccineTrainer vaccines={idData.vaccineSchedule || []} />}
           {tab === 'pearls' && <PearlsAssociations pearls={idData.clinicalPearls || []} associations={idData.associations || []} />}
           {tab === 'side_effects' && <SideEffectsView items={idData.sideEffectsContraindications || []} />}
+          {tab === 'visual_cases' && <VisualClinicalCases />}
           {tab === 'study_guide' && <StudyGuide idData={idData} setTab={setTab} />}
         </div>
       );
@@ -1653,6 +2533,7 @@
         { id: 'vaccines', icon: '💉', title: 'Vaccine Trainer', desc: 'Interactive quiz on pediatric immunization schedules', count: `${(idData.vaccineSchedule||[]).length} vaccines`, color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
         { id: 'pearls', icon: '💡', title: 'Pearls & Associations', desc: 'High-yield buzzword associations and clinical pearls', count: `${(idData.clinicalPearls||[]).length + (idData.associations||[]).length} items`, color: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30' },
         { id: 'side_effects', icon: '⚠️', title: 'Side Effects & Contraindications', desc: 'Age-specific drug restrictions and NBME trap exceptions', count: `${(idData.sideEffectsContraindications||[]).length} drugs`, color: 'bg-red-500/20 text-red-300 border-red-500/30' },
+        { id: 'visual_cases', icon: '🧍', title: 'Visual Clinical Cases', desc: 'Body-diagram cases with treatment decisions, dosing, pitfalls & shelf pearls', count: '25 cases', color: 'bg-teal-500/20 text-teal-300 border-teal-500/30' },
       ];
       const getProgressBadge = (moduleId) => {
         const progress = IDProgress.getLatest(moduleId);
