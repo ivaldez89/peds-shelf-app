@@ -832,12 +832,12 @@
             <span className="text-[10px] text-slate-600 font-mono bg-slate-800/50 px-2 py-1 rounded">{activeNodeId}</span>
           </div>
 
-          {/* Clinical stem */}
+          {/* Clinical stem — NBME format: stem + question only, no teaching content on root */}
           <div className="bg-white border border-slate-300 rounded-xl p-7">
             {activeNodeId === rootId && <FormattedText text={vignette.stem} className="vignette-stem" />}
-            {node.content && <div className={activeNodeId === rootId ? 'mt-5 pt-5 border-t border-slate-300' : ''}><FormattedText text={node.content} className="vignette-stem" /></div>}
-            <div className="mt-5 pt-4 border-t border-slate-300">
-              <p className="text-white font-semibold text-[15px] leading-relaxed">{node.question}</p>
+            {activeNodeId !== rootId && node.content && <FormattedText text={node.content} className="vignette-stem" />}
+            <div className={`mt-5 pt-4 border-t border-slate-300`}>
+              <p className="text-red-700 font-semibold text-[15px] leading-relaxed">{node.question}</p>
             </div>
           </div>
 
@@ -871,10 +871,18 @@
             })}
           </div>
 
+          {/* Teaching content — shown only AFTER answering on root node */}
+          {showFeedback && activeNodeId === rootId && node.content && (
+            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
+              <div className="text-[10px] font-bold uppercase tracking-wider text-blue-600 mb-3">Key Teaching Points</div>
+              <FormattedText text={node.content} className="vignette-stem" />
+            </div>
+          )}
+
           {/* Clinical pearl */}
           {showFeedback && node.clinicalPearl && (
-            <div className="bg-amber-950/20 border border-amber-700/30 rounded-xl p-6">
-              <div className="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-wider mb-3">
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
+              <div className="flex items-center gap-2 text-amber-700 text-xs font-bold uppercase tracking-wider mb-3">
                 <Icons.Lightbulb /> Clinical Pearl
               </div>
               <FormattedText text={node.clinicalPearl} className="pearl-text" />
@@ -3371,118 +3379,79 @@
       const [showResults, setShowResults] = useState(false);
       const allProgress = IDProgress.getAll();
 
-      // Build weak area questions from all modules
-      const getSmartQuestions = () => {
-        const questions = [];
-        const allModules = [
-          { key: 'bug_drug', items: [], type: 'bug_drug' },
-          { key: 'whats_the_bug', items: [], type: 'bug_case' },
-          { key: 'vaccines_quiz', items: [], type: 'vaccine' },
-          { key: 'cardio_murmur_quiz', items: [], type: 'murmur' },
-          { key: 'cardio_shelf_scenarios', items: [], type: 'scenario' },
-        ];
+      // Master question bank — 40 unique high-yield shelf questions across all modules
+      const QUESTION_BANK = [
+        // BUG-DRUG (8)
+        { id: 'sq1', type: 'bug_drug', question: 'First-line treatment for neonatal GBS meningitis?', options: ['Ampicillin + Gentamicin', 'Ceftriaxone', 'Vancomycin', 'Azithromycin'], correct: 'Ampicillin + Gentamicin', explanation: 'Ampicillin covers GBS and Listeria; gentamicin provides synergy. Ceftriaxone is avoided in neonates due to bilirubin displacement.' },
+        { id: 'sq2', type: 'bug_drug', question: 'A 7-year-old with periorbital cellulitis and sinus opacification. Empiric therapy?', options: ['Ampicillin-sulbactam', 'Clindamycin', 'Metronidazole', 'Fluconazole'], correct: 'Ampicillin-sulbactam', explanation: 'Periorbital cellulitis from sinusitis requires coverage of S. pneumoniae, H. influenzae, and M. catarrhalis.' },
+        { id: 'sq3', type: 'bug_drug', question: 'Empiric antibiotic for a febrile 3-week-old with UTI?', options: ['Ampicillin + Cefotaxime', 'Amoxicillin PO', 'TMP-SMX', 'Nitrofurantoin'], correct: 'Ampicillin + Cefotaxime', explanation: 'Neonates with UTI require IV antibiotics covering E. coli, GBS, and Enterococcus. Cefotaxime preferred over ceftriaxone in neonates.' },
+        { id: 'sq4', type: 'bug_drug', question: 'Treatment of choice for Mycoplasma pneumoniae in a 10-year-old?', options: ['Azithromycin', 'Amoxicillin', 'Ceftriaxone', 'Vancomycin'], correct: 'Azithromycin', explanation: 'Mycoplasma lacks a cell wall, making beta-lactams ineffective. Macrolides are first-line for atypical pneumonia.' },
+        { id: 'sq5', type: 'bug_drug', question: 'A child with cat scratch lymphadenopathy. Causative organism?', options: ['Bartonella henselae', 'Toxoplasma gondii', 'Staphylococcus aureus', 'Francisella tularensis'], correct: 'Bartonella henselae', explanation: 'Cat scratch disease from Bartonella henselae causes regional lymphadenopathy 1-3 weeks after inoculation.' },
+        { id: 'sq6', type: 'bug_drug', question: 'Antibiotic for MRSA skin abscess in a 5-year-old after I&D?', options: ['TMP-SMX', 'Amoxicillin', 'Cephalexin', 'Azithromycin'], correct: 'TMP-SMX', explanation: 'TMP-SMX or clindamycin are first-line for outpatient MRSA skin/soft tissue infections after incision and drainage.' },
+        { id: 'sq7', type: 'bug_drug', question: 'A 4-year-old with epiglottitis. Most likely pathogen?', options: ['H. influenzae type b', 'S. pyogenes', 'S. aureus', 'Moraxella catarrhalis'], correct: 'H. influenzae type b', explanation: 'Although rare post-Hib vaccine, H. influenzae type b remains the classic cause. Unvaccinated children are at highest risk.' },
+        { id: 'sq8', type: 'bug_drug', question: 'Treatment of congenital syphilis in a neonate?', options: ['IV penicillin G', 'IM ceftriaxone', 'Oral azithromycin', 'IV vancomycin'], correct: 'IV penicillin G', explanation: 'Aqueous crystalline penicillin G IV for 10 days is the standard treatment for congenital syphilis.' },
+        // VACCINES (8)
+        { id: 'sq9', type: 'vaccine', question: 'A 12-month-old is due for vaccines. Which is given at this visit?', options: ['MMR + Varicella + Hep A', 'DTaP + IPV + Hib', 'Meningococcal ACWY', 'HPV'], correct: 'MMR + Varicella + Hep A', explanation: 'At 12 months: MMR #1, Varicella #1, Hep A #1. DTaP/IPV/Hib are given earlier (2, 4, 6 months).' },
+        { id: 'sq10', type: 'vaccine', question: 'Which vaccine is a live attenuated vaccine?', options: ['MMR', 'DTaP', 'Hepatitis B', 'Pneumococcal conjugate'], correct: 'MMR', explanation: 'MMR and Varicella are live vaccines. DTaP is a toxoid/subunit vaccine. Hep B and PCV13 are inactivated/conjugate.' },
+        { id: 'sq11', type: 'vaccine', question: 'A premature infant born at 28 weeks is now 2 months old. Vaccination approach?', options: ['Vaccinate per chronological age', 'Delay until 6 months', 'Vaccinate per corrected age', 'Only give Hep B'], correct: 'Vaccinate per chronological age', explanation: 'Premature infants are vaccinated based on chronological age, not corrected gestational age, with the exception of Hep B in infants <2 kg.' },
+        { id: 'sq12', type: 'vaccine', question: 'Contraindication to receiving the MMR vaccine?', options: ['Severe immunodeficiency', 'Mild URI', 'Egg allergy', 'Family history of seizures'], correct: 'Severe immunodeficiency', explanation: 'Live vaccines (MMR, varicella) are contraindicated in severe immunodeficiency. Egg allergy is NOT a contraindication to MMR.' },
+        { id: 'sq13', type: 'vaccine', question: 'Post-exposure prophylaxis for an unvaccinated child exposed to measles?', options: ['MMR within 72 hours', 'Acyclovir', 'Oseltamivir', 'Ribavirin'], correct: 'MMR within 72 hours', explanation: 'MMR vaccine given within 72 hours of measles exposure can prevent disease. IG is used for immunocompromised or infants <6 months.' },
+        { id: 'sq14', type: 'vaccine', question: 'At what age is the first HPV vaccine dose recommended?', options: ['11-12 years', '6 months', '2 years', '16 years'], correct: '11-12 years', explanation: 'HPV vaccine is recommended starting at age 11-12, can be given as early as 9. Two doses if started before 15; three if 15 or older.' },
+        { id: 'sq15', type: 'vaccine', question: 'Rotavirus vaccine is contraindicated in which condition?', options: ['History of intussusception', 'Mild diarrhea', 'Breastfeeding', 'Prematurity'], correct: 'History of intussusception', explanation: 'Rotavirus vaccine carries a small risk of intussusception and is contraindicated in infants with prior intussusception or SCID.' },
+        { id: 'sq16', type: 'vaccine', question: 'An HIV-positive child with CD4 >15%. Which vaccine should be AVOIDED?', options: ['BCG', 'IPV', 'DTaP', 'Pneumococcal'], correct: 'BCG', explanation: 'BCG (live bacterial vaccine) is contraindicated in HIV. MMR and varicella CAN be given if CD4 >15%.' },
+        // MURMURS (8)
+        { id: 'sq17', type: 'murmur', question: 'A newborn with a harsh holosystolic murmur at the LLSB. Most likely?', options: ['VSD', 'ASD', 'PDA', 'Aortic stenosis'], correct: 'VSD', explanation: 'VSD produces a holosystolic murmur at the left lower sternal border, loudest with small restrictive defects.' },
+        { id: 'sq18', type: 'murmur', question: 'Fixed split S2 on auscultation. Diagnosis?', options: ['ASD', 'VSD', 'PDA', 'Tetralogy of Fallot'], correct: 'ASD', explanation: 'Fixed splitting of S2 is pathognomonic for ASD due to equalized atrial pressures preventing normal respiratory variation.' },
+        { id: 'sq19', type: 'murmur', question: 'Cyanotic infant with "boot-shaped" heart on CXR. Diagnosis?', options: ['Tetralogy of Fallot', 'Transposition of great arteries', 'Truncus arteriosus', 'Total anomalous pulmonary venous return'], correct: 'Tetralogy of Fallot', explanation: 'ToF shows boot-shaped heart (coeur en sabot) from RVH. It is the most common cyanotic CHD beyond infancy.' },
+        { id: 'sq20', type: 'murmur', question: 'A neonate with cyanosis unresponsive to O2 and an "egg on a string" CXR. Diagnosis?', options: ['Transposition of great arteries', 'Tetralogy of Fallot', 'Coarctation of aorta', 'Ebstein anomaly'], correct: 'Transposition of great arteries', explanation: 'TGA shows "egg on a string" CXR. Cyanosis is PGE1-responsive. Survival depends on mixing (ASD, VSD, or PDA).' },
+        { id: 'sq21', type: 'murmur', question: 'Still murmur in a 4-year-old. Characteristics?', options: ['Musical vibratory systolic, benign', 'Harsh holosystolic, pathologic', 'Continuous machinery murmur', 'Diastolic rumble'], correct: 'Musical vibratory systolic, benign', explanation: 'Still murmur is the most common innocent murmur in children — musical, vibratory, grade 1-2, loudest supine, disappears with Valsalva.' },
+        { id: 'sq22', type: 'murmur', question: 'Infant with differential cyanosis (pink upper, blue lower extremities). Diagnosis?', options: ['Coarctation with PDA', 'TGA', 'ToF', 'ASD'], correct: 'Coarctation with PDA', explanation: 'Differential cyanosis (upper body pink, lower blue) occurs with coarctation + PDA where deoxygenated blood flows through the PDA to the lower body.' },
+        { id: 'sq23', type: 'murmur', question: 'A systolic ejection murmur with a systolic click at the RUSB in a teenager. Diagnosis?', options: ['Bicuspid aortic valve', 'Mitral valve prolapse', 'Pulmonary stenosis', 'HCM'], correct: 'Bicuspid aortic valve', explanation: 'Bicuspid aortic valve presents with a systolic ejection click and crescendo-decrescendo murmur at the right upper sternal border.' },
+        { id: 'sq24', type: 'murmur', question: 'An infant fails to gain weight, sweats during feeding, and has hepatomegaly. Most likely CHD?', options: ['Large VSD with heart failure', 'Small ASD', 'Mild pulmonary stenosis', 'Innocent murmur'], correct: 'Large VSD with heart failure', explanation: 'Large left-to-right shunts (VSD) cause volume overload, CHF with poor feeding, diaphoresis, FTT, and hepatomegaly.' },
+        // SCENARIOS (8)
+        { id: 'sq25', type: 'scenario', question: 'A 6-year-old with migratory polyarthritis, fever, and new murmur 3 weeks after pharyngitis. Diagnosis?', options: ['Acute rheumatic fever', 'Kawasaki disease', 'JIA', 'Endocarditis'], correct: 'Acute rheumatic fever', explanation: 'Jones criteria: migratory polyarthritis + carditis + preceding strep pharyngitis = ARF. Treat with penicillin and aspirin.' },
+        { id: 'sq26', type: 'scenario', question: 'Kawasaki disease: which finding is MOST concerning for long-term complications?', options: ['Coronary artery aneurysm', 'Strawberry tongue', 'Conjunctivitis', 'Desquamation'], correct: 'Coronary artery aneurysm', explanation: 'Coronary artery aneurysms are the most serious complication. IVIG within 10 days of fever onset reduces risk from 25% to <5%.' },
+        { id: 'sq27', type: 'scenario', question: 'A 14-year-old athlete collapses during a basketball game. Most likely cause?', options: ['Hypertrophic cardiomyopathy', 'Acute MI', 'Pulmonary embolism', 'Vasovagal syncope'], correct: 'Hypertrophic cardiomyopathy', explanation: 'HCM is the #1 cause of sudden cardiac death in young athletes. It causes LVOT obstruction worsened by dehydration and exercise.' },
+        { id: 'sq28', type: 'scenario', question: 'A neonate presents with weak femoral pulses and upper extremity hypertension. Diagnosis?', options: ['Coarctation of the aorta', 'PDA', 'ASD', 'Aortic stenosis'], correct: 'Coarctation of the aorta', explanation: 'Coarctation classically presents with upper > lower extremity BP, weak femoral pulses, and rib notching on CXR in older children.' },
+        { id: 'sq29', type: 'scenario', question: 'A child with erythema marginatum, chorea, and subcutaneous nodules. Which criterion is MOST specific for ARF?', options: ['Chorea', 'Polyarthritis', 'Fever', 'Elevated ESR'], correct: 'Chorea', explanation: 'Sydenham chorea is highly specific for ARF and can appear months after the initial strep infection. It alone is sufficient for diagnosis.' },
+        { id: 'sq30', type: 'scenario', question: 'A 2-month-old with diaphoresis during feeds, tachycardia, and gallop rhythm. CXR shows cardiomegaly. Next step?', options: ['Echocardiogram', 'CT angiography', 'Cardiac catheterization', 'Observation'], correct: 'Echocardiogram', explanation: 'Echocardiogram is the first-line diagnostic study for suspected CHF or structural heart disease in infants.' },
+        { id: 'sq31', type: 'scenario', question: 'A child with prolonged fever >5 days, bilateral conjunctival injection, cervical lymphadenopathy, and rash. Treatment?', options: ['IVIG + high-dose aspirin', 'Antibiotics', 'Corticosteroids alone', 'NSAIDs'], correct: 'IVIG + high-dose aspirin', explanation: 'Kawasaki disease treatment: IVIG 2 g/kg single infusion + high-dose aspirin, then low-dose aspirin after fever resolves.' },
+        { id: 'sq32', type: 'scenario', question: 'A preterm infant develops cyanotic spells at 3 months. Echo shows ToF. Immediate management of a "tet spell"?', options: ['Knee-chest position + O2', 'IV furosemide', 'Emergency surgery', 'Adenosine'], correct: 'Knee-chest position + O2', explanation: 'Tet spells: knee-chest position (increases SVR), O2, IV fluids, morphine. Phenylephrine if refractory. Surgery is definitive but not emergent first step.' },
+        // MIXED ID (8)
+        { id: 'sq33', type: 'bug_case', question: 'An unvaccinated 3-year-old with barking cough, stridor, and steeple sign on CXR. Diagnosis?', options: ['Croup (parainfluenza)', 'Epiglottitis', 'Foreign body aspiration', 'Bacterial tracheitis'], correct: 'Croup (parainfluenza)', explanation: 'Croup from parainfluenza virus shows steeple sign (subglottic narrowing). Treat with dexamethasone; nebulized epinephrine for severe cases.' },
+        { id: 'sq34', type: 'bug_case', question: 'A 6-month-old with paroxysmal cough, post-tussive emesis, and inspiratory whoop. Only 1 DTaP received. Diagnosis?', options: ['Pertussis', 'RSV bronchiolitis', 'Croup', 'Asthma'], correct: 'Pertussis', explanation: 'Pertussis (B. pertussis): catarrhal → paroxysmal → convalescent. Incomplete vaccination is a key risk factor. Diagnose with PCR; treat with azithromycin.' },
+        { id: 'sq35', type: 'bug_case', question: 'A 2-year-old with high fever for 4 days that suddenly resolves, followed by a diffuse maculopapular rash. Diagnosis?', options: ['Roseola (HHV-6)', 'Measles', 'Rubella', 'Fifth disease'], correct: 'Roseola (HHV-6)', explanation: 'Roseola: high fever for 3-5 days → defervescence → rash appears. Caused by HHV-6. The rash spares the face and starts on the trunk.' },
+        { id: 'sq36', type: 'bug_case', question: 'A child with "slapped cheek" facial erythema and lacy reticular rash on extremities. Diagnosis?', options: ['Erythema infectiosum (Parvovirus B19)', 'Scarlet fever', 'Roseola', 'Measles'], correct: 'Erythema infectiosum (Parvovirus B19)', explanation: 'Fifth disease: slapped cheek rash + lacy reticular body rash. Risk: aplastic crisis in sickle cell disease; hydrops fetalis in pregnancy.' },
+        { id: 'sq37', type: 'bug_case', question: 'A 10-year-old with sandpaper rash, strawberry tongue, and pharyngitis. Treatment?', options: ['Penicillin or amoxicillin', 'Azithromycin', 'Ceftriaxone', 'Supportive care'], correct: 'Penicillin or amoxicillin', explanation: 'Scarlet fever from GAS: sandpaper rash + strawberry tongue + pharyngitis. Treat with penicillin to prevent rheumatic fever.' },
+        { id: 'sq38', type: 'bug_case', question: 'Infant with honey exposure now presents with descending paralysis, constipation, and poor feeding. Diagnosis?', options: ['Infant botulism', 'GBS meningitis', 'Spinal muscular atrophy', 'Myasthenia gravis'], correct: 'Infant botulism', explanation: 'Clostridium botulinum from honey causes infant botulism. Descending flaccid paralysis, constipation, weak cry. Treat with BabyBIG (botulism IG).' },
+        { id: 'sq39', type: 'bug_case', question: 'A 15-year-old with mononucleosis develops a rash after receiving amoxicillin. Cause?', options: ['EBV-induced drug rash', 'Amoxicillin allergy', 'Scarlet fever', 'Steven-Johnson syndrome'], correct: 'EBV-induced drug rash', explanation: 'EBV mononucleosis + aminopenicillin → maculopapular rash in ~80% of patients. This is NOT a true penicillin allergy.' },
+        { id: 'sq40', type: 'bug_case', question: 'A child in daycare with bloody diarrhea, fever, and HUS (hemolytic anemia, thrombocytopenia, renal failure). Organism?', options: ['E. coli O157:H7 (STEC)', 'Salmonella', 'C. difficile', 'Rotavirus'], correct: 'E. coli O157:H7 (STEC)', explanation: 'STEC produces Shiga toxin causing HUS. Do NOT give antibiotics — they increase toxin release and HUS risk. Supportive care only.' },
+      ];
 
-        // Identify weak modules (< 70%)
-        const weakModules = [];
-        allModules.forEach(mod => {
-          const prog = IDProgress.getModule(mod.key);
+      // Generate personalized quiz: prioritize weak areas, shuffle, no repeats
+      const questions = useMemo(() => {
+        const pool = [...QUESTION_BANK];
+        const weakTypes = new Set();
+        const moduleTypeMap = { bug_drug: 'bug_drug', whats_the_bug: 'bug_case', vaccines_quiz: 'vaccine', cardio_murmur_quiz: 'murmur', cardio_shelf_scenarios: 'scenario' };
+        // Identify weak modules
+        Object.entries(moduleTypeMap).forEach(([key, type]) => {
+          const prog = IDProgress.getModule(key);
           const latest = prog?.attempts?.[prog.attempts.length - 1];
-          if (latest && latest.pct < 70) {
-            weakModules.push({ ...mod, score: latest.pct, missed: latest.missed || [] });
-          }
+          if (!latest || latest.pct < 70) weakTypes.add(type);
         });
-
-        // If user has weak areas, prioritize them; otherwise sample from all modules
-        const priorityModules = weakModules.length > 0 ? weakModules : allModules.map(m => ({...m, score: 50}));
-
-        // Create synthetic questions based on weak areas
-        priorityModules.forEach((mod, idx) => {
-          if (mod.type === 'bug_drug') {
-            // Bug-drug matching style
-            const bugs = ['E. coli', 'S. aureus', 'Group B Strep', 'Pseudomonas', 'Listeria'];
-            const drugs = ['Ampicillin', 'Ceftriaxone', 'Vancomycin', 'Piperacillin-tazobactam', 'Amoxicillin'];
-            const correctDrug = drugs[idx % drugs.length];
-            const correctBug = bugs[idx % bugs.length];
-            questions.push({
-              id: `smart_${questions.length}`,
-              type: 'bug_drug',
-              question: `First-line empiric therapy for ${correctBug} infection?`,
-              options: [correctDrug, drugs[(idx+1) % drugs.length], drugs[(idx+2) % drugs.length], drugs[(idx+3) % drugs.length]].sort(() => Math.random() - 0.5),
-              correct: correctDrug,
-              explanation: `${correctDrug} provides excellent coverage for ${correctBug}.`
-            });
-          } else if (mod.type === 'bug_case') {
-            // Clinical presentation style
-            questions.push({
-              id: `smart_${questions.length}`,
-              type: 'bug_case',
-              question: `Neonate with fever at 36 hours of life, maternal GBS unknown. Most likely organism?`,
-              options: ['Group B Strep', 'E. coli', 'L. monocytogenes', 'S. aureus'].sort(() => Math.random() - 0.5),
-              correct: 'Group B Strep',
-              explanation: `GBS and E. coli are leading causes of neonatal sepsis. Always empirically cover GBS in neonates.`
-            });
-          } else if (mod.type === 'vaccine') {
-            // Vaccine timing/composition
-            questions.push({
-              id: `smart_${questions.length}`,
-              type: 'vaccine',
-              question: `At what age is the first dose of MMR vaccine typically given?`,
-              options: ['12 months', '6 weeks', '2 months', '24 months'].sort(() => Math.random() - 0.5),
-              correct: '12 months',
-              explanation: `MMR is first administered at 12-15 months of age. A second dose is given at 4-6 years.`
-            });
-          } else if (mod.type === 'murmur') {
-            // Murmur characteristics
-            questions.push({
-              id: `smart_${questions.length}`,
-              type: 'murmur',
-              question: `A 3-year-old has a continuous "machinery" murmur at the left infraclavicular area. Most likely diagnosis?`,
-              options: ['Patent Ductus Arteriosus', 'Ventricular Septal Defect', 'Atrial Septal Defect', 'Aortic Stenosis'].sort(() => Math.random() - 0.5),
-              correct: 'Patent Ductus Arteriosus',
-              explanation: `PDA produces a characteristic continuous "machinery" or "wash-and-wear" murmur heard throughout systole and diastole at the left infraclavicular area.`
-            });
-          } else if (mod.type === 'scenario') {
-            // Shelf-style scenario
-            questions.push({
-              id: `smart_${questions.length}`,
-              type: 'scenario',
-              question: `An 8-year-old with acute rheumatic fever presents with new onset ST-segment elevation. Which valve is most likely affected?`,
-              options: ['Mitral valve', 'Aortic valve', 'Tricuspid valve', 'Pulmonary valve'].sort(() => Math.random() - 0.5),
-              correct: 'Mitral valve',
-              explanation: `The mitral valve is most commonly affected in acute rheumatic fever (65%), followed by the aortic valve.`
-            });
-          }
-        });
-
-        // Fill remaining slots with diverse topics
-        while (questions.length < 12) {
-          const remaining = 12 - questions.length;
-          if (remaining >= 4) {
-            questions.push({
-              id: `smart_${questions.length}`,
-              type: 'bug_drug',
-              question: `Antibiotic choice for community-acquired pneumonia in a 2-year-old?`,
-              options: ['Amoxicillin-clavulanate', 'Ceftriaxone', 'Vancomycin', 'Fluoroquinolone'].sort(() => Math.random() - 0.5),
-              correct: 'Amoxicillin-clavulanate',
-              explanation: `Amoxicillin-clavulanate is first-line for community-acquired pneumonia in outpatient pediatric patients.`
-            });
-          }
-          if (questions.length < 12) {
-            questions.push({
-              id: `smart_${questions.length}`,
-              type: 'vaccine',
-              question: `Which vaccine is contraindicated in infants with severe egg allergy?`,
-              options: ['Yellow Fever', 'Influenza (inactivated)', 'Varicella', 'Hepatitis B'].sort(() => Math.random() - 0.5),
-              correct: 'Yellow Fever',
-              explanation: `Yellow Fever vaccine is grown in eggs and contraindicated in severe egg allergy.`
-            });
-          }
+        // Prioritize weak area questions first, then fill with others
+        const weakQs = pool.filter(q => weakTypes.has(q.type)).sort(() => Math.random() - 0.5);
+        const strongQs = pool.filter(q => !weakTypes.has(q.type)).sort(() => Math.random() - 0.5);
+        const combined = [...weakQs, ...strongQs];
+        // Ensure variety: max 4 from any single type
+        const result = []; const typeCounts = {};
+        for (const q of combined) {
+          typeCounts[q.type] = (typeCounts[q.type] || 0) + 1;
+          if (typeCounts[q.type] <= 4) result.push(q);
+          if (result.length >= 15) break;
         }
-
-        return questions.slice(0, 12);
-      };
-
-      const questions = getSmartQuestions();
+        return result;
+      }, []);
       const q = questions[activeQuestion] || { id: '', question: '', options: [], correct: '', explanation: '' };
       const currentAnswer = q ? answers[q.id] : undefined;
       const isCorrect = q && currentAnswer === q.correct;
