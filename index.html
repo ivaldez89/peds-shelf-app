@@ -3584,103 +3584,126 @@
 
     // ─── INTERACTIVE HEART DIAGRAM ───────────────────────────────────
     function HeartDiagram({ activeLocation, onLocationClick, highlightLocations }) {
-      // Anatomically: heart sits behind the sternum, tilted left.
-      // Auscultation points are on the CHEST WALL at the sternal borders.
-      // The sternum runs vertically through the middle of the chest.
-      // "Right sternal border" = patient's right = our left when facing patient,
-      // but in anterior view diagrams we show patient's right on OUR right.
+      // Realistic anterior chest with anatomical heart silhouette.
+      // The heart occupies the center-left of the chest. 2/3 is left of midline.
+      // Auscultation points are on the chest wall at the sternal borders.
+      // They sit at the EDGE of the heart, not in the center.
       //
-      // Layout: viewBox 0 0 400 420, sternum at x=200
-      // Heart is drawn BEHIND the sternal area, slightly left of center
-      // Points are ON the sternal borders, clearly outside/at edge of heart
-      const locations = [
-        { id: 'aortic', label: 'Aortic', abbr: 'A', cx: 228, cy: 108, desc: '2nd ICS, R sternal border', color: '#ef4444', side: 'right' },
-        { id: 'pulmonic', label: 'Pulmonic', abbr: 'P', cx: 172, cy: 108, desc: '2nd ICS, L sternal border', color: '#8b5cf6', side: 'left' },
-        { id: 'erbs', label: "Erb's Point", abbr: 'E', cx: 172, cy: 168, desc: '3rd ICS, L sternal border', color: '#f59e0b', side: 'left' },
-        { id: 'tricuspid', label: 'Tricuspid', abbr: 'T', cx: 172, cy: 228, desc: '4th ICS, L sternal border', color: '#06b6d4', side: 'left' },
-        { id: 'mitral', label: 'Mitral (Apex)', abbr: 'M', cx: 120, cy: 295, desc: '5th ICS, midclavicular line', color: '#10b981', side: 'left' },
-      ];
+      // Approach: Use a realistic anatomical heart outline (not a valentine).
+      // viewBox 0 0 500 400. Sternum centered at x=250.
       const active = highlightLocations || [];
+      const locations = [
+        { id: 'aortic', label: 'Aortic', abbr: 'A', x: 290, y: 100, desc: '2nd R ICS', color: '#ef4444' },
+        { id: 'pulmonic', label: 'Pulmonic', abbr: 'P', x: 210, y: 100, desc: '2nd L ICS', color: '#8b5cf6' },
+        { id: 'erbs', label: "Erb's Point", abbr: 'E', x: 210, y: 160, desc: '3rd L ICS', color: '#f59e0b' },
+        { id: 'tricuspid', label: 'Tricuspid', abbr: 'T', x: 230, y: 225, desc: '4th L ICS', color: '#06b6d4' },
+        { id: 'mitral', label: 'Mitral', abbr: 'M', x: 155, y: 300, desc: '5th ICS MCL', color: '#10b981' },
+      ];
       return (
-        <div className="relative mx-auto" style={{ width: 400, height: 420 }}>
-          <svg viewBox="0 0 400 420" className="w-full h-full">
+        <div className="relative mx-auto" style={{ maxWidth: 520 }}>
+          <svg viewBox="0 0 500 400" className="w-full h-auto">
             <defs>
-              <radialGradient id="heartGrad" cx="45%" cy="38%">
-                <stop offset="0%" stopColor="#fda4af" />
-                <stop offset="50%" stopColor="#e11d48" />
-                <stop offset="100%" stopColor="#881337" />
+              <radialGradient id="hgFill" cx="40%" cy="35%">
+                <stop offset="0%" stopColor="#fda4af" stopOpacity="0.9" />
+                <stop offset="45%" stopColor="#e11d48" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#881337" stopOpacity="0.55" />
               </radialGradient>
-              <filter id="heartShadow">
-                <feDropShadow dx="0" dy="3" stdDeviation="8" floodColor="#881337" floodOpacity="0.5" />
-              </filter>
+              <filter id="hgShadow"><feDropShadow dx="0" dy="4" stdDeviation="10" floodColor="#4c0519" floodOpacity="0.6" /></filter>
+              <filter id="hgGlow"><feGaussianBlur stdDeviation="3" /><feMerge><feMergeNode /><feMergeNode in="SourceGraphic" /></feMerge></filter>
             </defs>
-            {/* Chest outline */}
-            <ellipse cx="200" cy="215" rx="165" ry="180" fill="none" stroke="#334155" strokeWidth="1.5" strokeDasharray="5,4" opacity="0.25" />
-            <text x="200" y="28" textAnchor="middle" fontSize="12" fill="#64748b" fontWeight="600" letterSpacing="1.5">ANTERIOR CHEST</text>
-            {/* Sternum — thick vertical band */}
-            <rect x="192" y="60" width="16" height="270" rx="4" fill="#1e293b" stroke="#334155" strokeWidth="1" opacity="0.4" />
-            <text x="200" y="55" textAnchor="middle" fontSize="7" fill="#64748b" opacity="0.6">STERNUM</text>
-            {/* ICS rib lines with labels */}
-            {[{y:108,label:'2nd ICS'},{y:168,label:'3rd ICS'},{y:228,label:'4th ICS'},{y:295,label:'5th ICS'}].map((r,i) => (
-              <g key={i}>
-                <line x1="55" y1={r.y} x2="345" y2={r.y} stroke="#334155" strokeWidth="0.7" opacity="0.2" strokeDasharray="2,3" />
-                <text x="355" y={r.y+4} fontSize="8" fill="#475569" opacity="0.5">{r.label}</text>
+
+            {/* === CHEST WALL === */}
+            <ellipse cx="250" cy="210" rx="210" ry="185" fill="none" stroke="#334155" strokeWidth="1" strokeDasharray="6,4" opacity="0.2" />
+
+            {/* Sternum */}
+            <rect x="242" y="45" width="16" height="280" rx="5" fill="#1e293b" stroke="#475569" strokeWidth="0.8" opacity="0.5" />
+
+            {/* ICS rib lines */}
+            {[{y:100,l:'2nd ICS'},{y:160,l:'3rd ICS'},{y:225,l:'4th ICS'},{y:300,l:'5th ICS'}].map((r,i) => (
+              <g key={i} opacity="0.25">
+                <line x1="70" y1={r.y} x2="430" y2={r.y} stroke="#475569" strokeWidth="0.6" strokeDasharray="3,4" />
+                <text x="440" y={r.y+4} fontSize="9" fill="#475569">{r.l}</text>
               </g>
             ))}
-            {/* Midclavicular line hint for mitral */}
-            <line x1="120" y1="60" x2="120" y2="340" stroke="#10b981" strokeWidth="0.5" opacity="0.15" strokeDasharray="3,5" />
-            <text x="120" y="350" textAnchor="middle" fontSize="6" fill="#10b981" opacity="0.3">MCL</text>
-            {/* Heart — shifted LEFT of sternum, narrower so sternal border points are exposed */}
-            {/* Heart spans roughly x=75 to x=185 (entirely LEFT of sternum at x=192) */}
-            <path d="M 150 150 C 150 105, 185 90, 185 130 C 185 170, 160 235, 130 290 C 100 235, 70 170, 70 130 C 70 90, 150 105, 150 150 Z"
-              fill="url(#heartGrad)" stroke="#9f1239" strokeWidth="2.5" filter="url(#heartShadow)" opacity="0.75" />
-            {/* Septum line inside heart */}
-            <line x1="148" y1="150" x2="135" y2="270" stroke="#881337" strokeWidth="1.5" opacity="0.3" />
+
+            {/* Midclavicular line */}
+            <line x1="155" y1="50" x2="155" y2="365" stroke="#10b981" strokeWidth="0.6" opacity="0.12" strokeDasharray="4,6" />
+            <text x="155" y="378" textAnchor="middle" fontSize="7" fill="#10b981" opacity="0.3">MCL</text>
+
+            {/* === ANATOMICAL HEART === */}
+            {/* Heart fills most of the chest ellipse (rx=210, ry=185) */}
+            {/* Slight left offset since 2/3 of heart is left of midline */}
+            <path d={`
+              M 220 60
+              C 240 30, 340 25, 370 80
+              C 400 135, 380 210, 340 270
+              C 300 330, 230 370, 150 390
+              C 110 360, 75 300, 65 240
+              C 55 180, 70 110, 110 75
+              C 150 40, 200 35, 220 60
+              Z
+            `} fill="url(#hgFill)" stroke="#9f1239" strokeWidth="2" filter="url(#hgShadow)" />
+
+            {/* Internal anatomy hints */}
+            {/* Septum */}
+            <path d="M 230 75 Q 215 180, 185 330" fill="none" stroke="#881337" strokeWidth="1.5" opacity="0.25" />
+            {/* Valve plane */}
+            <path d="M 100 185 Q 220 160, 355 185" fill="none" stroke="#fda4af" strokeWidth="0.8" opacity="0.2" strokeDasharray="3,3" />
+
             {/* Chamber labels */}
-            <text x="115" y="195" textAnchor="middle" fontSize="9" fill="white" opacity="0.25" fontWeight="600">LV</text>
-            <text x="162" y="195" textAnchor="middle" fontSize="9" fill="white" opacity="0.25" fontWeight="600">RV</text>
-            <text x="118" y="160" textAnchor="middle" fontSize="8" fill="white" opacity="0.2">LA</text>
-            <text x="162" y="160" textAnchor="middle" fontSize="8" fill="white" opacity="0.2">RA</text>
-            {/* Great vessels — aorta curves right toward sternum, PA goes up-left */}
-            <path d="M 170 125 C 175 105, 200 90, 215 78" fill="none" stroke="#9f1239" strokeWidth="7" opacity="0.35" strokeLinecap="round" />
-            <path d="M 145 128 C 140 108, 125 92, 118 78" fill="none" stroke="#9f1239" strokeWidth="5" opacity="0.3" strokeLinecap="round" />
-            <text x="222" y="75" fontSize="7" fill="#ef4444" opacity="0.5">Ao</text>
-            <text x="105" y="75" fontSize="7" fill="#8b5cf6" opacity="0.5">PA</text>
-            {/* Auscultation points */}
+            <text x="170" y="150" textAnchor="middle" fontSize="13" fill="white" opacity="0.2" fontWeight="600">LA</text>
+            <text x="300" y="150" textAnchor="middle" fontSize="13" fill="white" opacity="0.2" fontWeight="600">RA</text>
+            <text x="160" y="280" textAnchor="middle" fontSize="14" fill="white" opacity="0.2" fontWeight="700">LV</text>
+            <text x="280" y="260" textAnchor="middle" fontSize="14" fill="white" opacity="0.2" fontWeight="700">RV</text>
+
+            {/* Great vessels */}
+            <path d="M 270 70 C 290 40, 330 25, 360 20" fill="none" stroke="#be123c" strokeWidth="10" opacity="0.3" strokeLinecap="round" />
+            <path d="M 200 65 C 180 40, 150 25, 120 22" fill="none" stroke="#be123c" strokeWidth="7" opacity="0.25" strokeLinecap="round" />
+            <text x="370" y="20" fontSize="10" fill="#ef4444" opacity="0.45" fontWeight="600">Ao</text>
+            <text x="100" y="20" fontSize="10" fill="#8b5cf6" opacity="0.45" fontWeight="600">PA</text>
+
+            {/* === AUSCULTATION POINTS === */}
             {locations.map(loc => {
               const isActive = activeLocation === loc.id || active.includes(loc.id);
+              const r = isActive ? 18 : 14;
               return (
                 <g key={loc.id} onClick={() => onLocationClick && onLocationClick(loc.id)} className="cursor-pointer">
-                  {/* Connector line from point to heart area */}
-                  <circle cx={loc.cx} cy={loc.cy} r={isActive ? 17 : 13} fill={isActive ? loc.color : '#0f172a'} stroke={loc.color} strokeWidth={isActive ? 3 : 2}
-                    opacity={isActive ? 1 : 0.85} className="transition-all duration-300" />
-                  <text x={loc.cx} y={loc.cy + 5} textAnchor="middle" fontSize="14" fill="white" fontWeight="bold">{loc.abbr}</text>
-                  {isActive && <circle cx={loc.cx} cy={loc.cy} r="22" fill="none" stroke={loc.color} strokeWidth="1.5" opacity="0.4">
-                    <animate attributeName="r" from="17" to="28" dur="1.2s" repeatCount="indefinite" />
-                    <animate attributeName="opacity" from="0.6" to="0" dur="1.2s" repeatCount="indefinite" />
+                  {/* Dark background circle for contrast */}
+                  <circle cx={loc.x} cy={loc.y} r={r+2} fill="#0f172a" opacity="0.7" />
+                  {/* Main circle */}
+                  <circle cx={loc.x} cy={loc.y} r={r} fill={isActive ? loc.color : '#0f172a'} stroke={loc.color}
+                    strokeWidth={isActive ? 3.5 : 2.5} opacity={isActive ? 1 : 0.9} className="transition-all duration-300" />
+                  {/* Letter */}
+                  <text x={loc.x} y={loc.y + 6} textAnchor="middle" fontSize="16" fill="white" fontWeight="bold" style={{ pointerEvents: 'none' }}>{loc.abbr}</text>
+                  {/* Pulse animation */}
+                  {isActive && <circle cx={loc.x} cy={loc.y} r={r} fill="none" stroke={loc.color} strokeWidth="2" opacity="0.5">
+                    <animate attributeName="r" from={r} to={r+14} dur="1.2s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" from="0.5" to="0" dur="1.2s" repeatCount="indefinite" />
                   </circle>}
                 </g>
               );
             })}
+
+            {/* === CALLOUT LABELS inside SVG === */}
+            {locations.map(loc => {
+              const isActive = activeLocation === loc.id || active.includes(loc.id);
+              // Labels: A goes right, P/E/T/M go left
+              const goRight = loc.id === 'aortic';
+              const lx = goRight ? loc.x + 28 : loc.x - 28;
+              const lineX1 = goRight ? loc.x + 16 : loc.x - 16;
+              const lineX2 = goRight ? lx - 4 : lx + 4;
+              const anchor = goRight ? 'start' : 'end';
+              return (
+                <g key={loc.id + '-lbl'} onClick={() => onLocationClick && onLocationClick(loc.id)} className="cursor-pointer" opacity={isActive ? 1 : 0.5}>
+                  <line x1={lineX1} y1={loc.y} x2={lineX2} y2={loc.y} stroke={isActive ? loc.color : '#475569'} strokeWidth="1.5" />
+                  <rect x={goRight ? lx - 2 : lx - (loc.label.length * 7.5) - 8} y={loc.y - 13} width={loc.label.length * 7.5 + 16} height="26" rx="6"
+                    fill={isActive ? loc.color + '25' : '#0f172a'} stroke={isActive ? loc.color : '#334155'} strokeWidth={isActive ? 1.5 : 1} opacity={isActive ? 1 : 0.7} />
+                  <text x={goRight ? lx + 6 : lx - 6} y={loc.y + 5} textAnchor={anchor} fontSize="12" fill={isActive ? 'white' : '#94a3b8'}
+                    fontWeight="700" style={{ pointerEvents: 'none' }}>{loc.label}</text>
+                </g>
+              );
+            })}
           </svg>
-          {/* Callout labels — positioned outside the SVG container */}
-          {locations.map(loc => {
-            const isActive = activeLocation === loc.id || active.includes(loc.id);
-            const isLeft = loc.side === 'left';
-            const pctTop = (loc.cy / 420) * 100;
-            return (
-              <div key={loc.id + '-label'} onClick={() => onLocationClick && onLocationClick(loc.id)}
-                className={`absolute cursor-pointer transition-all duration-200 ${isActive ? 'opacity-100 scale-105' : 'opacity-55 hover:opacity-90'}`}
-                style={{ top: `${pctTop}%`, left: isLeft ? 0 : undefined, right: isLeft ? undefined : 0, transform: `translateY(-50%) ${isLeft ? 'translateX(-105%)' : 'translateX(105%)'}` }}>
-                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold border whitespace-nowrap ${isActive ? 'text-white border-opacity-60' : 'text-slate-400 border-slate-700'}`}
-                  style={isActive ? { backgroundColor: loc.color + '30', borderColor: loc.color } : {}}>
-                  {!isLeft && <div className="w-8 h-px" style={{ backgroundColor: isActive ? loc.color : '#475569' }} />}
-                  <span>{loc.label}</span>
-                  {isLeft && <div className="w-8 h-px" style={{ backgroundColor: isActive ? loc.color : '#475569' }} />}
-                </div>
-              </div>
-            );
-          })}
         </div>
       );
     }
