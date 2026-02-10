@@ -330,1324 +330,1205 @@
   "murmurQuiz": [
     {
       "id": "mq-1",
-      "scenario": "2-year-old with failure to thrive and diaphoresis during feeding. Harsh holosystolic murmur loudest at LLSB. Pansystolic thrill palpable. CXR shows cardiomegaly with increased pulmonary vascular markings.",
+      "clues": [
+        "2-year-old with failure to thrive and diaphoresis during feeding",
+        "Harsh holosystolic murmur loudest at the LLSB",
+        "Pansystolic thrill palpable",
+        "CXR: cardiomegaly with increased pulmonary vascular markings"
+      ],
       "murmurType": "holosystolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Holosystolic murmur of VSD",
-          "distractors": [
-            "Continuous machinery murmur of PDA",
-            "Systolic ejection murmur of ASD",
-            "Crescendo-decrescendo murmur of AS"
-          ],
-          "explanation": "VSD produces a harsh holosystolic (pansystolic) murmur at the LLSB from LV\u2192RV shunting. The pressure gradient is constant throughout systole. A palpable thrill indicates hemodynamic significance.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "Why would a SMALLER VSD produce a LOUDER murmur?",
-          "answer": "Higher pressure gradient across the small defect = higher velocity jet = more turbulence",
-          "distractors": [
-            "Smaller defects are closer to the chest wall",
-            "Small VSDs cause more pulmonary hypertension",
-            "Restrictive VSDs have associated valve abnormalities"
-          ],
-          "explanation": "Small restrictive VSDs maintain a high LV-to-RV pressure gradient \u2192 high velocity jet through a small hole = loud turbulence. Large VSDs equalize pressures \u2192 lower gradient \u2192 SOFTER murmur but WORSE hemodynamics. This is a classic shelf pearl!",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "This child fails medical therapy (diuretics, ACE-I). What is the definitive management?",
-          "answer": "Surgical VSD closure (patch repair)",
-          "distractors": [
-            "Continued medical management and wait for spontaneous closure",
-            "IV indomethacin",
-            "Heart transplantation"
-          ],
-          "explanation": "Large VSDs failing medical therapy need surgical patch closure, ideally before irreversible pulmonary vascular disease (by 6-12 months of age). Small VSDs may close spontaneously. Indomethacin is for PDA, not VSD.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Holosystolic murmur of VSD",
+        "distractors": [
+          "Continuous machinery murmur of PDA",
+          "Systolic ejection murmur of ASD",
+          "Crescendo-decrescendo murmur of AS"
+        ]
+      },
+      "q2": {
+        "prompt": "Why would a SMALLER VSD produce a LOUDER murmur?",
+        "answer": "Higher pressure gradient across a small defect creates more turbulence",
+        "distractors": [
+          "Smaller defects are closer to the chest wall",
+          "Small VSDs cause more pulmonary hypertension",
+          "Acoustic resonance from the small defect"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Small restrictive VSDs maintain a high LV-to-RV pressure gradient \u2192 high velocity jet \u2192 loud turbulence. Large VSDs equalize pressures \u2192 lower gradient \u2192 SOFTER murmur but WORSE hemodynamics. Classic shelf pearl!"
+      }
     },
     {
       "id": "mq-2",
-      "scenario": "Premature neonate in NICU with worsening respiratory status. Continuous 'machine-like' murmur at left infraclavicular area. Bounding pulses with wide pulse pressure. Hyperactive precordium.",
+      "clues": [
+        "Premature neonate in NICU with worsening respiratory status",
+        "Continuous 'machine-like' murmur at left infraclavicular area",
+        "Bounding peripheral pulses with wide pulse pressure",
+        "Hyperactive precordium"
+      ],
       "murmurType": "continuous",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Continuous machinery murmur of PDA",
-          "distractors": [
-            "Holosystolic murmur of VSD",
-            "Venous hum",
-            "To-and-fro murmur of aortopulmonary window"
-          ],
-          "explanation": "The continuous 'machinery' murmur is pathognomonic for PDA. Aortic pressure exceeds PA pressure throughout the cardiac cycle \u2192 continuous shunting. Bounding pulses and wide pulse pressure from diastolic runoff into PA.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What is the first-line pharmacologic treatment?",
-          "answer": "Indomethacin (or ibuprofen) \u2014 inhibits prostaglandin synthesis",
-          "distractors": [
-            "PGE1 infusion",
-            "Furosemide alone",
-            "Sildenafil"
-          ],
-          "explanation": "NSAIDs (indomethacin or ibuprofen) inhibit prostaglandin synthesis \u2192 promote ductal closure. PGE1 does the OPPOSITE \u2014 keeps PDA open (used in ductal-dependent lesions). Surgical ligation is reserved for NSAID failure.",
-          "category": "management"
-        },
-        {
-          "questionPrompt": "What lab must be monitored during indomethacin therapy?",
-          "answer": "Renal function (BUN/Creatinine) \u2014 indomethacin is nephrotoxic",
-          "distractors": [
-            "Liver function tests",
-            "Blood glucose",
-            "Calcium levels"
-          ],
-          "explanation": "Indomethacin causes renal vasoconstriction \u2192 decreased GFR \u2192 oliguria and elevated creatinine. Monitor BUN/Cr, urine output, and electrolytes. Contraindicated if Cr >1.8, active bleeding, or NEC.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Continuous machinery murmur of PDA",
+        "distractors": [
+          "Holosystolic murmur of VSD",
+          "Venous hum (innocent)",
+          "To-and-fro murmur of aortopulmonary window"
+        ]
+      },
+      "q2": {
+        "prompt": "What is the first-line pharmacologic treatment?",
+        "answer": "Indomethacin or ibuprofen (inhibits prostaglandin synthesis \u2192 closes ductus)",
+        "distractors": [
+          "PGE1 infusion (keeps PDA open)",
+          "Furosemide alone",
+          "Sildenafil"
+        ],
+        "category": "management",
+        "explanation": "NSAIDs inhibit prostaglandin synthesis \u2192 promote ductal closure. PGE1 does the OPPOSITE \u2014 keeps the ductus OPEN (used in ductal-dependent CHD). Surgical ligation is for NSAID failure."
+      }
     },
     {
       "id": "mq-3",
-      "scenario": "4-year-old girl with dyspnea on exertion. Wide FIXED split S2 that does not vary with respiration. Soft systolic ejection murmur at LUSB. Mid-diastolic rumble at LLSB.",
+      "clues": [
+        "4-year-old girl with dyspnea on exertion",
+        "Wide FIXED split S2 that does not vary with respiration",
+        "Soft systolic ejection murmur at LUSB",
+        "Mid-diastolic rumble at LLSB"
+      ],
       "murmurType": "ejection",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Systolic ejection murmur of ASD (relative pulmonic flow murmur)",
-          "distractors": [
-            "Holosystolic murmur of VSD",
-            "Crescendo-decrescendo murmur of PS",
-            "Innocent Still's murmur"
-          ],
-          "explanation": "The murmur of ASD is from increased flow across the pulmonic valve (relative PS), NOT from blood crossing the septum. The hallmark is FIXED split S2 \u2014 RV volume is constantly elevated regardless of respiration.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What does the FIXED split S2 indicate?",
-          "answer": "Constant RV volume overload delays pulmonic valve closure regardless of respiratory phase",
-          "distractors": [
-            "Pulmonary hypertension causing delayed closure",
-            "Aortic stenosis causing early aortic valve closure",
-            "Bundle branch block"
-          ],
-          "explanation": "Normally, S2 splitting increases with inspiration (more RV filling \u2192 delayed P2). In ASD, the RV is ALWAYS volume-overloaded from left-to-right shunt \u2192 P2 is ALWAYS delayed \u2192 fixed splitting. This is the single most important finding for ASD on the shelf exam.",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Systolic ejection murmur of ASD (relative pulmonic flow murmur)",
+        "distractors": [
+          "Holosystolic murmur of VSD",
+          "Crescendo-decrescendo murmur of PS",
+          "Innocent Still's murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "What does the FIXED split S2 indicate?",
+        "answer": "Constant RV volume overload delays pulmonic valve closure regardless of respiratory phase",
+        "distractors": [
+          "Pulmonary hypertension causing delayed closure",
+          "Aortic stenosis causing early aortic closure",
+          "Right bundle branch block only"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Normally S2 splitting varies with respiration. In ASD, RV is ALWAYS volume-overloaded \u2192 P2 is ALWAYS delayed \u2192 FIXED splitting. This is the single most important finding for ASD on shelf."
+      }
     },
     {
       "id": "mq-4",
-      "scenario": "5-year-old with crescendo-decrescendo systolic murmur at RUSB. Ejection click early in systole. Murmur radiates to carotids. Narrow pulse pressure.",
+      "clues": [
+        "5-year-old with crescendo-decrescendo systolic murmur at RUSB",
+        "Ejection click heard early in systole",
+        "Murmur radiates to carotids bilaterally",
+        "Narrow pulse pressure"
+      ],
       "murmurType": "crescendo-decrescendo",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Crescendo-decrescendo (ejection) murmur of Aortic Stenosis",
-          "distractors": [
-            "Systolic ejection murmur of PS",
-            "Holosystolic murmur of VSD",
-            "Late systolic murmur of MVP"
-          ],
-          "explanation": "AS produces a diamond-shaped systolic ejection murmur at the RUSB. Radiation to carotids distinguishes it from PS. The ejection click occurs from opening of a stenotic but pliable valve. Narrow pulse pressure reflects reduced stroke volume.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "This child has elfin facies, friendly personality, and hypercalcemia. What syndrome?",
-          "answer": "Williams syndrome (supravalvular AS)",
-          "distractors": [
-            "Noonan syndrome",
-            "Turner syndrome",
-            "DiGeorge syndrome"
-          ],
-          "explanation": "Williams syndrome (7q11.23 deletion) causes supravalvular AS. Features: elfin facies, cocktail party personality, intellectual disability, hypercalcemia. Noonan = PS. Turner = CoA/bicuspid AV. DiGeorge = conotruncal defects.",
-          "category": "associations"
-        },
-        {
-          "questionPrompt": "What is the most common cause of AS in children?",
-          "answer": "Bicuspid aortic valve",
-          "distractors": [
-            "Rheumatic heart disease",
-            "Calcific degeneration",
-            "Endocarditis"
-          ],
-          "explanation": "Bicuspid aortic valve (BAV) is the most common cause of AS in children and young adults, present in ~1-2% of the population. Rheumatic AS is more common in developing countries. Calcific degeneration causes AS in elderly adults.",
-          "category": "associations"
-        }
-      ]
+      "q1": {
+        "answer": "Crescendo-decrescendo (ejection) murmur of Aortic Stenosis",
+        "distractors": [
+          "Systolic ejection murmur of PS",
+          "Holosystolic murmur of VSD",
+          "Late systolic murmur of MVP"
+        ]
+      },
+      "q2": {
+        "prompt": "This child has elfin facies, friendly 'cocktail party' personality, and hypercalcemia. What syndrome?",
+        "answer": "Williams syndrome (supravalvular AS)",
+        "distractors": [
+          "Noonan syndrome",
+          "Turner syndrome",
+          "DiGeorge syndrome"
+        ],
+        "category": "associations",
+        "explanation": "Williams syndrome (7q11.23 deletion) \u2192 supravalvular AS. Elfin facies, cocktail party personality, intellectual disability, hypercalcemia. Noonan=PS, Turner=CoA, DiGeorge=conotruncal."
+      }
     },
     {
       "id": "mq-5",
-      "scenario": "Newborn with systolic ejection murmur at LUSB. Ejection click present. Murmur intensity INCREASES with inspiration. RV heave noted, no cyanosis.",
+      "clues": [
+        "Newborn with systolic ejection murmur at LUSB",
+        "Ejection click present, no cyanosis",
+        "Murmur intensity INCREASES with inspiration",
+        "RV heave palpable"
+      ],
       "murmurType": "crescendo-decrescendo",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Systolic ejection murmur of Pulmonic Stenosis",
-          "distractors": [
-            "Crescendo-decrescendo murmur of AS",
-            "Holosystolic murmur of VSD",
-            "Innocent flow murmur"
-          ],
-          "explanation": "PS produces a systolic ejection murmur at the LUSB. KEY: it INCREASES with inspiration (more blood returns to RV \u2192 louder). This is part of the Carvallo sign. AS is at RUSB and radiates to carotids.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "This child has short stature, webbed neck, and wide-spaced nipples. What syndrome?",
-          "answer": "Noonan syndrome",
-          "distractors": [
-            "Turner syndrome",
-            "Williams syndrome",
-            "Marfan syndrome"
-          ],
-          "explanation": "PS is the hallmark cardiac lesion of Noonan syndrome. Features: short stature, webbed neck, wide-spaced nipples, pectus, cryptorchidism. Affects all genders (autosomal dominant). Turner (45,X) = females only with CoA/bicuspid AV.",
-          "category": "associations"
-        },
-        {
-          "questionPrompt": "Moderate-to-severe PS is confirmed. What is the treatment?",
-          "answer": "Balloon valvuloplasty (percutaneous)",
-          "distractors": [
-            "Surgical valve replacement",
-            "Medical therapy with beta-blockers",
-            "Observation only"
-          ],
-          "explanation": "Balloon valvuloplasty is the treatment of choice for moderate-severe PS with excellent outcomes. Mild PS can be observed. Surgical valvotomy is reserved for dysplastic valves (common in Noonan) that don't respond to balloon valvuloplasty.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Systolic ejection murmur of Pulmonary Stenosis",
+        "distractors": [
+          "Crescendo-decrescendo murmur of AS",
+          "Holosystolic murmur of VSD",
+          "Innocent flow murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "This child has short stature, webbed neck, wide-spaced nipples, and cryptorchidism. What syndrome?",
+        "answer": "Noonan syndrome",
+        "distractors": [
+          "Turner syndrome (45,X \u2014 females only)",
+          "Williams syndrome",
+          "Marfan syndrome"
+        ],
+        "category": "associations",
+        "explanation": "PS is the hallmark cardiac lesion of Noonan syndrome. Noonan affects ALL genders (autosomal dominant). Turner (45,X) = females only with CoA and bicuspid AV."
+      }
     },
     {
       "id": "mq-6",
-      "scenario": "3-year-old with musical/vibratory quality systolic murmur at LLSB. Grade 2/6, louder when supine, softer when standing. No diastolic component. Normal S1, S2. Asymptomatic, normal growth.",
+      "clues": [
+        "3-year-old with musical/vibratory quality systolic murmur at LLSB",
+        "Grade 2/6, louder when supine, softer when standing",
+        "No diastolic component, normal S1 and S2, no clicks",
+        "Asymptomatic with normal growth and development"
+      ],
       "murmurType": "innocent",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Still's murmur (innocent vibratory murmur)",
-          "distractors": [
-            "Holosystolic murmur of VSD",
-            "Systolic ejection murmur of AS",
-            "Late systolic murmur of MVP"
-          ],
-          "explanation": "Still's murmur is the most common innocent murmur in children (ages 2-7). Hallmark: musical/vibratory quality. Louder supine, softer standing. Disappears with Valsalva. No diastolic component, no clicks.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "Parents are anxious. What workup is indicated?",
-          "answer": "No workup needed \u2014 reassurance only",
-          "distractors": [
-            "Echocardiogram",
-            "Cardiology referral and ECG",
-            "Exercise stress test"
-          ],
-          "explanation": "Innocent murmurs with all reassuring features need NO workup. Refer for echo when: diastolic murmur, harsh quality, symptoms (syncope, cyanosis, FTT), abnormal S2, fixed splitting, or loud (\u22653/6) murmur.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Still's murmur (innocent vibratory murmur)",
+        "distractors": [
+          "Holosystolic murmur of VSD",
+          "Systolic ejection murmur of AS",
+          "Late systolic murmur of MVP"
+        ]
+      },
+      "q2": {
+        "prompt": "Parents are anxious. What workup is needed?",
+        "answer": "No workup \u2014 reassurance only",
+        "distractors": [
+          "Echocardiogram referral",
+          "Cardiology referral and ECG",
+          "Exercise stress test"
+        ],
+        "category": "management",
+        "explanation": "Innocent murmurs with all reassuring features (vibratory, soft, no diastolic, no symptoms, no clicks, normal S2) need NO workup. Refer for echo when: diastolic murmur, harsh quality, symptoms, abnormal S2, or fixed splitting."
+      }
     },
     {
       "id": "mq-7",
-      "scenario": "Teenage girl with mid-systolic click followed by late systolic murmur at apex. Click and murmur move EARLIER with Valsalva and standing. Click moves LATER with squatting. Tall, thin habitus.",
+      "clues": [
+        "Teenage girl with mid-systolic click followed by late systolic murmur at apex",
+        "Click and murmur move EARLIER with Valsalva and standing",
+        "Click and murmur move LATER with squatting",
+        "Tall, thin body habitus"
+      ],
       "murmurType": "late-systolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Mid-systolic click and late systolic murmur of MVP",
-          "distractors": [
-            "Holosystolic murmur of MR",
-            "Innocent Still's murmur",
-            "Crescendo-decrescendo murmur of HOCM"
-          ],
-          "explanation": "MVP produces a mid-systolic click from sudden tensing of chordae, followed by late systolic MR murmur. Valsalva/standing \u2192 less preload \u2192 smaller LV \u2192 earlier prolapse \u2192 click moves EARLIER. Squatting \u2192 more preload \u2192 later prolapse.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "This patient has arachnodactyly, pectus excavatum, and upward lens subluxation. What syndrome?",
-          "answer": "Marfan syndrome",
-          "distractors": [
-            "Ehlers-Danlos syndrome",
-            "Noonan syndrome",
-            "Homocystinuria"
-          ],
-          "explanation": "MVP is strongly associated with Marfan syndrome (FBN1 mutation). Features: tall stature, arm span > height, arachnodactyly, pectus, upward lens subluxation, aortic root dilation, and MVP. Homocystinuria has DOWNward lens subluxation.",
-          "category": "associations"
-        }
-      ]
+      "q1": {
+        "answer": "Mid-systolic click and late systolic murmur of MVP",
+        "distractors": [
+          "Holosystolic murmur of MR",
+          "Innocent Still's murmur",
+          "Crescendo-decrescendo murmur of HOCM"
+        ]
+      },
+      "q2": {
+        "prompt": "This patient has arachnodactyly, pectus excavatum, and upward lens subluxation. What connective tissue disorder?",
+        "answer": "Marfan syndrome (FBN1 mutation)",
+        "distractors": [
+          "Ehlers-Danlos syndrome",
+          "Homocystinuria (downward lens subluxation)",
+          "Loeys-Dietz syndrome"
+        ],
+        "category": "associations",
+        "explanation": "MVP is strongly associated with Marfan (FBN1 mutation). Upward lens subluxation distinguishes from homocystinuria (DOWNward). Also: aortic root dilation, arm span > height."
+      }
     },
     {
       "id": "mq-8",
-      "scenario": "12-year-old athlete with systolic murmur at Erb's point (LLSB). Murmur INCREASES with Valsalva and standing. DECREASES with squatting and leg elevation. ECG shows deep Q waves and LVH.",
+      "clues": [
+        "12-year-old athlete with systolic murmur at Erb's point",
+        "Murmur INCREASES with Valsalva and standing",
+        "Murmur DECREASES with squatting and leg elevation",
+        "ECG: deep Q waves in lateral leads, LVH"
+      ],
       "murmurType": "systolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Crescendo-decrescendo murmur of HOCM (dynamic LVOT obstruction)",
-          "distractors": [
-            "Crescendo-decrescendo murmur of fixed AS",
-            "Late systolic murmur of MVP",
-            "Holosystolic murmur of VSD"
-          ],
-          "explanation": "HOCM = dynamic LVOT obstruction. Valsalva/standing DECREASE preload \u2192 smaller LV \u2192 septum closer to mitral valve \u2192 MORE obstruction \u2192 LOUDER. Squatting INCREASES preload \u2192 LESS obstruction \u2192 SOFTER. This is OPPOSITE to most other murmurs.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "This athlete's father died suddenly at age 35. Can the patient continue competitive sports?",
-          "answer": "No \u2014 disqualification from competitive sports + consider ICD",
-          "distractors": [
-            "Yes, with annual echocardiogram monitoring",
-            "Yes, with beta-blocker prophylaxis",
-            "Yes, with activity modification only"
-          ],
-          "explanation": "HOCM is the #1 cause of sudden cardiac death in young athletes. Competitive sports are CONTRAINDICATED. Family history of SCD is a high-risk feature warranting ICD. Beta-blockers help symptoms but do NOT prevent SCD.",
-          "category": "management"
-        },
-        {
-          "questionPrompt": "Which medications should be AVOIDED in HOCM?",
-          "answer": "Diuretics and vasodilators (decrease preload \u2192 worsen obstruction)",
-          "distractors": [
-            "Beta-blockers",
-            "Calcium channel blockers (verapamil)",
-            "Disopyramide"
-          ],
-          "explanation": "Diuretics and vasodilators DECREASE preload/afterload \u2192 smaller LV cavity \u2192 MORE obstruction \u2192 worse symptoms. Beta-blockers (slow HR, increase filling time) and verapamil are used to TREAT HOCM. Disopyramide is a negative inotrope that reduces obstruction.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Crescendo-decrescendo murmur of HOCM (dynamic LVOT obstruction)",
+        "distractors": [
+          "Crescendo-decrescendo murmur of fixed AS",
+          "Late systolic murmur of MVP",
+          "Holosystolic murmur of VSD"
+        ]
+      },
+      "q2": {
+        "prompt": "This athlete's father died suddenly at age 35. Can the patient play competitive sports?",
+        "answer": "No \u2014 disqualify from competitive sports; consider ICD for SCD prevention",
+        "distractors": [
+          "Yes, with annual echocardiogram monitoring",
+          "Yes, with beta-blocker prophylaxis",
+          "Yes, low-contact sports only"
+        ],
+        "category": "management",
+        "explanation": "HOCM = #1 cause of sudden cardiac death in young athletes. ALL competitive sports contraindicated. Family history of SCD is a high-risk feature warranting ICD. Beta-blockers help symptoms but do NOT prevent SCD."
+      }
     },
     {
       "id": "mq-9",
-      "scenario": "6-month-old with holosystolic murmur at apex radiating to axilla. History of pharyngitis and fever 4 weeks ago. Carey-Coombs mid-diastolic rumble heard. Erythema marginatum rash on trunk.",
+      "clues": [
+        "6-month-old with holosystolic murmur at apex radiating to axilla",
+        "History of pharyngitis and fever 4 weeks ago",
+        "Carey-Coombs mid-diastolic rumble also heard",
+        "Erythema marginatum rash on trunk"
+      ],
       "murmurType": "holosystolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Holosystolic murmur of Mitral Regurgitation (from acute rheumatic fever)",
-          "distractors": [
-            "Holosystolic murmur of VSD",
-            "Continuous murmur of PDA",
-            "Innocent Still's murmur"
-          ],
-          "explanation": "MR from acute rheumatic fever produces a holosystolic murmur at the apex radiating to axilla. The Carey-Coombs murmur (soft mid-diastolic rumble) results from inflamed mitral leaflets. Erythema marginatum is pathognomonic for ARF.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What diagnostic criteria are used?",
-          "answer": "Jones criteria (2 major OR 1 major + 2 minor + evidence of prior GAS)",
-          "distractors": [
-            "Duke criteria",
-            "Kawasaki criteria",
-            "NYHA classification"
-          ],
-          "explanation": "Jones criteria Majors: Carditis, Polyarthritis, Chorea, Erythema marginatum, Subcutaneous nodules. Minors: fever, arthralgia, elevated ESR/CRP, prolonged PR. Must have evidence of prior GAS (throat culture, rapid strep, or elevated ASO/anti-DNase B).",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "How long should secondary prophylaxis continue?",
-          "answer": "10 years or until age 21 (without carditis: 5 years); lifelong if persistent valve disease",
-          "distractors": [
-            "6 months of amoxicillin",
-            "Until murmur resolves",
-            "Single dose of benzathine penicillin G"
-          ],
-          "explanation": "Secondary prophylaxis with benzathine penicillin G (IM q3-4 weeks) prevents recurrence. No carditis = 5 years or age 21. Carditis without valve disease = 10 years or age 21. Persistent valve disease = 10 years or age 40+ (some say lifelong).",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Holosystolic murmur of Mitral Regurgitation (from acute rheumatic fever)",
+        "distractors": [
+          "Holosystolic murmur of VSD",
+          "Continuous murmur of PDA",
+          "Innocent Still's murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "What diagnostic criteria are used for this disease?",
+        "answer": "Jones criteria (2 major OR 1 major + 2 minor + evidence of prior GAS infection)",
+        "distractors": [
+          "Duke criteria",
+          "Kawasaki criteria (5-day fever + 4/5)",
+          "NYHA classification"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Jones Majors: Carditis, Polyarthritis, Chorea, Erythema marginatum, Subcutaneous nodules. Must have evidence of prior GAS (throat culture, ASO/anti-DNase B). Erythema marginatum is pathognomonic."
+      }
     },
     {
       "id": "mq-10",
-      "scenario": "8-year-old with high-pitched blowing early diastolic decrescendo murmur. Best heard at Erb's point sitting up leaning forward at end-expiration. Wide pulse pressure. Bounding 'water-hammer' pulses.",
+      "clues": [
+        "8-year-old with high-pitched blowing early diastolic decrescendo murmur",
+        "Best heard at Erb's point with patient sitting up, leaning forward, at end-expiration",
+        "Wide pulse pressure and bounding 'water-hammer' pulses",
+        "History of prior rheumatic fever"
+      ],
       "murmurType": "diastolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Early diastolic decrescendo murmur of Aortic Regurgitation",
-          "distractors": [
-            "Mid-diastolic rumble of Mitral Stenosis",
-            "Continuous murmur of PDA",
-            "Crescendo-decrescendo murmur of AS"
-          ],
-          "explanation": "AR produces a high-pitched, blowing, early diastolic DECRESCENDO murmur best heard at Erb's point (3rd LICS) with patient sitting up, leaning forward, at end-expiration. Wide pulse pressure and water-hammer pulses from diastolic runoff into LV.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What is the most common cause of AR in a child?",
-          "answer": "Acute rheumatic fever (valvulitis damaging the aortic valve)",
-          "distractors": [
-            "Bicuspid aortic valve calcification",
-            "Marfan syndrome",
-            "Infective endocarditis"
-          ],
-          "explanation": "In pediatrics, ARF causing aortic valvulitis is the most common cause of AR. Other causes: bicuspid AV, endocarditis, Marfan (aortic root dilation), and connective tissue disorders. In adults, degenerative/calcific disease predominates.",
-          "category": "associations"
-        }
-      ]
+      "q1": {
+        "answer": "Early diastolic decrescendo murmur of Aortic Regurgitation",
+        "distractors": [
+          "Crescendo-decrescendo murmur of AS",
+          "Mid-diastolic rumble of Mitral Stenosis",
+          "Continuous murmur of PDA"
+        ]
+      },
+      "q2": {
+        "prompt": "What is the most common cause of AR in children?",
+        "answer": "Acute rheumatic fever (aortic valvulitis)",
+        "distractors": [
+          "Bicuspid aortic valve calcification",
+          "Infective endocarditis",
+          "Marfan syndrome"
+        ],
+        "category": "associations",
+        "explanation": "In pediatrics, ARF is the #1 cause of AR. Also: bicuspid AV, endocarditis (valve destruction), Marfan (aortic root dilation). In adults, degenerative/calcific disease predominates."
+      }
     },
     {
       "id": "mq-11",
-      "scenario": "Toddler with weak femoral pulses and strong brachial pulses. BP: right arm 130/85, right leg 80/60. Continuous murmur over left back/interscapular area. CXR: rib notching, figure-3 sign.",
+      "clues": [
+        "Toddler with weak femoral pulses and strong brachial pulses",
+        "BP: right arm 130/85, right leg 80/60",
+        "Systolic murmur over left back/interscapular area",
+        "CXR: rib notching, figure-3 sign"
+      ],
       "murmurType": "ejection",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Systolic/continuous murmur of Coarctation of the Aorta",
-          "distractors": [
-            "Continuous murmur of PDA",
-            "Crescendo-decrescendo murmur of AS",
-            "Systolic ejection murmur of PS"
-          ],
-          "explanation": "CoA produces a systolic (or continuous) murmur heard over the left back from turbulent flow through the narrowed aortic segment. Upper/lower extremity BP gradient >20 mmHg is classic. Rib notching = dilated intercostal collaterals. Figure-3 = pre/post-stenotic dilation.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What syndrome is associated with coarctation, bicuspid AV, and webbed neck in a female?",
-          "answer": "Turner syndrome (45,X)",
-          "distractors": [
-            "Noonan syndrome",
-            "Williams syndrome",
-            "DiGeorge syndrome"
-          ],
-          "explanation": "Turner syndrome (45,X) is classically associated with CoA and bicuspid AV. Features: short stature, webbed neck, shield chest, lymphedema, streak gonads. Noonan syndrome = PS (affects all genders). Williams = supravalvular AS.",
-          "category": "associations"
-        },
-        {
-          "questionPrompt": "This neonate with critical CoA is becoming acidotic and tachypneic. Emergency treatment?",
-          "answer": "PGE1 (prostaglandin E1) to reopen the ductus arteriosus",
-          "distractors": [
-            "Indomethacin to close PDA",
-            "Immediate balloon angioplasty",
-            "IV nitroprusside"
-          ],
-          "explanation": "In neonatal critical CoA with shock, PGE1 reopens the ductus \u2192 blood bypasses the coarctation to perfuse the lower body. Indomethacin would WORSEN the situation. Definitive repair is surgical (resection and end-to-end anastomosis or subclavian flap repair).",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Systolic murmur of Coarctation of the Aorta",
+        "distractors": [
+          "Continuous murmur of PDA",
+          "Crescendo-decrescendo murmur of AS",
+          "Systolic ejection murmur of PS"
+        ]
+      },
+      "q2": {
+        "prompt": "This is a female patient with short stature, webbed neck, and shield chest. What syndrome?",
+        "answer": "Turner syndrome (45,X)",
+        "distractors": [
+          "Noonan syndrome",
+          "Williams syndrome",
+          "DiGeorge syndrome"
+        ],
+        "category": "associations",
+        "explanation": "Turner syndrome (45,X) = CoA + bicuspid AV. Features: short stature, webbed neck, shield chest, lymphedema, streak gonads. Females only. Noonan = PS (all genders, autosomal dominant)."
+      }
     },
     {
       "id": "mq-12",
-      "scenario": "3-year-old with cyanosis since infancy. Now squatting during play. Systolic ejection murmur at LUSB that gets SOFTER during a crying spell. Boot-shaped heart on CXR with decreased pulmonary vascular markings.",
+      "clues": [
+        "3-year-old with cyanosis since infancy, now squatting during play",
+        "Systolic ejection murmur at LUSB that gets SOFTER during a crying spell",
+        "Boot-shaped heart on CXR with decreased pulmonary vascular markings",
+        "Child turns deeply cyanotic during the spell"
+      ],
       "murmurType": "systolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this and why does it get softer during the spell?",
-          "answer": "SEM of Tetralogy of Fallot \u2014 murmur softens because worsening RVOT obstruction reduces flow",
-          "distractors": [
-            "VSD murmur that decreases from lower gradient",
-            "PDA murmur that decreases from ductal closure",
-            "Innocent murmur that varies with respiration"
-          ],
-          "explanation": "ToF murmur = SEM from flow across stenotic RVOT. During a tet spell, RVOT obstruction INCREASES \u2192 less blood crosses \u2192 murmur SOFTENS/disappears \u2192 more R-to-L shunt through VSD \u2192 worse cyanosis. A softening murmur with worsening cyanosis = tet spell.",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "What is the immediate treatment of a tet spell?",
-          "answer": "Knee-to-chest positioning + oxygen + morphine + IV fluids",
-          "distractors": [
-            "IV indomethacin",
-            "Emergent cardiac catheterization",
-            "IV nitroglycerin"
-          ],
-          "explanation": "Tet spell management: 1) Knee-to-chest (increases SVR \u2192 reduces R-to-L shunt). 2) O2. 3) IV morphine (reduces hyperpnea). 4) IV fluids (increase preload). 5) Phenylephrine if refractory (increases SVR). Long-term: propranolol until surgical repair (complete repair by 3-6 months).",
-          "category": "management"
-        },
-        {
-          "questionPrompt": "This child has 22q11.2 deletion. What syndrome and other expected findings?",
-          "answer": "DiGeorge syndrome \u2014 thymic aplasia, hypocalcemia, cleft palate, abnormal facies",
-          "distractors": [
-            "Down syndrome \u2014 AV canal, Brushfield spots",
-            "Williams syndrome \u2014 supravalvular AS, elfin facies",
-            "Noonan syndrome \u2014 PS, webbed neck"
-          ],
-          "explanation": "22q11.2 deletion = DiGeorge/velocardiofacial syndrome. CATCH-22: Cardiac (conotruncal: ToF, truncus, interrupted arch), Abnormal facies, Thymic aplasia (T-cell deficiency), Cleft palate, Hypocalcemia (absent parathyroids). Most common microdeletion syndrome.",
-          "category": "associations"
-        }
-      ]
+      "q1": {
+        "answer": "SEM of Tetralogy of Fallot (murmur softens during tet spell = worsening RVOT obstruction)",
+        "distractors": [
+          "Holosystolic murmur of VSD that increases with crying",
+          "Continuous murmur of PDA",
+          "Crescendo-decrescendo murmur of AS"
+        ]
+      },
+      "q2": {
+        "prompt": "What is the immediate management of this tet spell?",
+        "answer": "Knee-to-chest positioning + oxygen + morphine + IV fluids",
+        "distractors": [
+          "IV indomethacin",
+          "Emergent cardiac catheterization",
+          "IV nitroglycerin"
+        ],
+        "category": "management",
+        "explanation": "Knee-to-chest increases SVR \u2192 reduces R-to-L shunt. Morphine reduces hyperpnea. Phenylephrine if refractory. Long-term: propranolol until surgical repair by 3-6 months."
+      }
     },
     {
       "id": "mq-13",
-      "scenario": "Newborn with severe cyanosis within hours of birth. Cyanosis does NOT improve with supplemental oxygen. Single loud S2. NO murmur. CXR: 'egg-on-a-string' appearance, narrow mediastinum.",
+      "clues": [
+        "Newborn with severe cyanosis within hours of birth",
+        "Cyanosis does NOT improve with supplemental oxygen",
+        "Single loud S2, NO audible murmur",
+        "CXR: 'egg-on-a-string' appearance, narrow mediastinum"
+      ],
       "murmurType": "none",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What is the diagnosis despite having NO murmur?",
-          "answer": "d-Transposition of the Great Arteries (parallel circulation, no turbulent flow)",
-          "distractors": [
-            "Tetralogy of Fallot",
-            "Total anomalous pulmonary venous return",
-            "Pulmonary atresia"
-          ],
-          "explanation": "d-TGA often has NO murmur because the two circuits run in parallel (aorta from RV, PA from LV) without turbulent flow across a defect. Single loud S2 from anterior aorta. Cyanosis unresponsive to O2 = parallel circulation without adequate mixing.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What is the initial stabilization procedure?",
-          "answer": "PGE1 + balloon atrial septostomy (Rashkind procedure) to allow mixing",
-          "distractors": [
-            "Indomethacin to close PDA",
-            "Immediate arterial switch operation",
-            "ECMO support only"
-          ],
-          "explanation": "PGE1 keeps the ductus open for some mixing. Balloon atrial septostomy (Rashkind procedure) creates/enlarges an ASD to allow oxygenated and deoxygenated blood to mix at the atrial level. Definitive: arterial switch operation (Jatene) within the first 2 weeks of life.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "No murmur \u2014 d-Transposition of the Great Arteries (parallel circuits, no turbulent flow)",
+        "distractors": [
+          "Continuous murmur of PDA",
+          "Systolic murmur of ToF",
+          "Diastolic murmur of AR"
+        ]
+      },
+      "q2": {
+        "prompt": "What is the initial stabilization?",
+        "answer": "PGE1 to maintain PDA + balloon atrial septostomy (Rashkind procedure)",
+        "distractors": [
+          "Indomethacin to close PDA",
+          "Immediate arterial switch operation",
+          "ECMO support only"
+        ],
+        "category": "management",
+        "explanation": "PGE1 keeps ductus open for some mixing. Rashkind balloon septostomy creates ASD for mixing at atrial level. Definitive: arterial switch operation (Jatene) within 2 weeks of life."
+      }
     },
     {
       "id": "mq-14",
-      "scenario": "Child with holosystolic murmur at LLSB. Murmur increases with INSPIRATION. Prominent v waves in JVP. Pulsatile liver on exam.",
+      "clues": [
+        "Child with holosystolic murmur at LLSB",
+        "Murmur INCREASES with inspiration (Carvallo sign positive)",
+        "Prominent v waves in JVP",
+        "Pulsatile liver on exam"
+      ],
       "murmurType": "holosystolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Holosystolic murmur of Tricuspid Regurgitation (increases with inspiration = Carvallo sign)",
-          "distractors": [
-            "Holosystolic murmur of VSD",
-            "Holosystolic murmur of MR",
-            "Systolic ejection murmur of PS"
-          ],
-          "explanation": "TR produces a holosystolic murmur at LLSB. Carvallo sign: increases with INSPIRATION (more venous return to RV \u2192 more regurgitant volume \u2192 louder). Prominent v waves in JVP and pulsatile liver = severe TR.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "The patient also has WPW on ECG and massive cardiomegaly. What underlying anomaly?",
-          "answer": "Ebstein anomaly (apical displacement of tricuspid valve)",
-          "distractors": [
-            "ASD secundum",
-            "Tetralogy of Fallot",
-            "Truncus arteriosus"
-          ],
-          "explanation": "Ebstein anomaly = apical displacement of tricuspid valve into RV \u2192 atrialized RV \u2192 severe TR. Classically associated with WPW (accessory pathway) and SVT. CXR: 'wall-to-wall' cardiomegaly. Associated with maternal lithium exposure.",
-          "category": "associations"
-        }
-      ]
+      "q1": {
+        "answer": "Holosystolic murmur of Tricuspid Regurgitation",
+        "distractors": [
+          "Holosystolic murmur of VSD",
+          "Holosystolic murmur of MR",
+          "Systolic ejection murmur of PS"
+        ]
+      },
+      "q2": {
+        "prompt": "Patient also has WPW on ECG and massive cardiomegaly. What underlying anomaly?",
+        "answer": "Ebstein anomaly (apical displacement of tricuspid valve)",
+        "distractors": [
+          "ASD secundum",
+          "Tetralogy of Fallot",
+          "Truncus arteriosus"
+        ],
+        "category": "associations",
+        "explanation": "Ebstein anomaly = apical displacement of tricuspid valve \u2192 atrialized RV \u2192 severe TR + WPW (accessory pathway). 'Wall-to-wall' cardiomegaly on CXR. Associated with maternal lithium exposure."
+      }
     },
     {
       "id": "mq-15",
-      "scenario": "10-year-old with new holosystolic murmur and early diastolic murmur. Fever for 2 weeks, fatigue. Janeway lesions on palms, Osler nodes on fingertips, splinter hemorrhages. Positive blood cultures.",
+      "clues": [
+        "10-year-old with new holosystolic murmur and early diastolic murmur",
+        "Fever for 2 weeks, fatigue, weight loss",
+        "Janeway lesions on palms, Osler nodes on fingertips",
+        "Splinter hemorrhages, positive blood cultures x 2"
+      ],
       "murmurType": "diastolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What is causing these new murmurs?",
-          "answer": "Infective endocarditis (valve destruction \u2192 new regurgitant murmurs)",
-          "distractors": [
-            "Innocent flow murmur from fever",
-            "Acute rheumatic fever",
-            "HOCM with new MR"
-          ],
-          "explanation": "Endocarditis causes NEW murmurs from valve destruction \u2014 vegetations destroy leaflets \u2192 regurgitation. Holosystolic = MR/TR. Early diastolic = AR. Janeway lesions (painless, palms/soles) and Osler nodes (painful, fingertips) are classic embolic/immunologic phenomena.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What diagnostic criteria are used?",
-          "answer": "Modified Duke criteria (2 major or 1 major + 3 minor or 5 minor)",
-          "distractors": [
-            "Jones criteria",
-            "Kawasaki criteria",
-            "Light criteria"
-          ],
-          "explanation": "Duke criteria. Major: positive blood cultures (typical organisms in 2 cultures), endocardial involvement on echo (vegetation, abscess, new regurgitation). Minor: predisposing condition, fever, vascular phenomena (Janeway, emboli), immunologic (Osler nodes, Roth spots, RF), positive cultures not meeting major.",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "What is the most common organism causing endocarditis in children with congenital heart disease?",
-          "answer": "Streptococcus viridans (alpha-hemolytic strep)",
-          "distractors": [
-            "Staphylococcus aureus",
-            "Enterococcus faecalis",
-            "HACEK organisms"
-          ],
-          "explanation": "Strep viridans is the #1 cause of subacute endocarditis in children with underlying CHD. Staph aureus is #1 in acute endocarditis, IV drug users, and prosthetic valves. HACEK organisms (Haemophilus, Aggregatibacter, Cardiobacterium, Eikenella, Kingella) cause culture-negative endocarditis.",
-          "category": "associations"
-        }
-      ]
+      "q1": {
+        "answer": "New regurgitant murmurs from infective endocarditis (valve destruction)",
+        "distractors": [
+          "Innocent flow murmur from fever",
+          "Acute rheumatic fever",
+          "HOCM with MR"
+        ]
+      },
+      "q2": {
+        "prompt": "What is the most common causative organism in children with underlying CHD?",
+        "answer": "Streptococcus viridans (alpha-hemolytic strep)",
+        "distractors": [
+          "Staphylococcus aureus",
+          "Enterococcus faecalis",
+          "HACEK organisms"
+        ],
+        "category": "associations",
+        "explanation": "Strep viridans = #1 in subacute IE with underlying CHD. Staph aureus = #1 in acute IE, IV drug use, prosthetic valves. HACEK = culture-negative endocarditis."
+      }
     },
     {
       "id": "mq-16",
-      "scenario": "Soft systolic murmur heard in healthy newborn nursery. Murmur radiates to bilateral axillae and back. Disappears completely by 6-month well-child visit. Normal echo, normal O2 saturations.",
+      "clues": [
+        "Soft systolic murmur heard in healthy newborn nursery",
+        "Murmur radiates to bilateral axillae and back",
+        "Disappears completely by 6-month visit",
+        "Normal echo, normal O2 saturations"
+      ],
       "murmurType": "innocent",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Peripheral pulmonic stenosis (innocent newborn flow murmur)",
-          "distractors": [
-            "Pathologic pulmonic stenosis",
-            "ASD flow murmur",
-            "Coarctation murmur"
-          ],
-          "explanation": "Peripheral pulmonic stenosis is an innocent newborn murmur caused by acute angle branching of the PAs. Radiates to axillae and back (where branch PAs are). Resolves by 3-6 months as PAs grow. No workup needed.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What feature would make you worry this is PATHOLOGIC rather than innocent?",
-          "answer": "Persistence beyond 6 months, associated cyanosis, or RV hypertrophy on ECG",
-          "distractors": [
-            "Murmur heard in the first week of life",
-            "Grade 1-2/6 intensity",
-            "Radiation to the back"
-          ],
-          "explanation": "Red flags for pathologic murmur: persistence > 6 months, cyanosis, RVH on ECG, failure to thrive, fixed split S2, diastolic component, or grade \u22653/6. Innocent murmurs are soft, systolic, vary with position, and the child is asymptomatic with normal growth.",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Peripheral pulmonic stenosis (innocent newborn flow murmur)",
+        "distractors": [
+          "Pathologic pulmonic stenosis",
+          "ASD flow murmur",
+          "Coarctation murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "What would make you suspect this is PATHOLOGIC instead of innocent?",
+        "answer": "Persistence beyond 6 months, associated cyanosis, or RV hypertrophy on ECG",
+        "distractors": [
+          "Murmur heard on day 1 of life",
+          "Grade 1-2/6 intensity",
+          "Radiation to the back alone"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Red flags: persistence > 6 months, cyanosis, RVH on ECG, FTT, fixed split S2, diastolic component, or loud (\u22653/6). Innocent PPS resolves by 3-6 months as PAs grow."
+      }
     },
     {
       "id": "mq-17",
-      "scenario": "Adolescent with continuous low-pitched murmur at right supraclavicular area. Disappears when patient turns head, lies down, or with light jugular vein compression. Asymptomatic.",
+      "clues": [
+        "Adolescent with continuous low-pitched murmur at right supraclavicular area",
+        "Murmur disappears when patient turns head or lies down",
+        "Disappears with light jugular vein compression",
+        "Completely asymptomatic"
+      ],
       "murmurType": "continuous",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What murmur is this?",
-          "answer": "Venous hum (innocent continuous murmur)",
-          "distractors": [
-            "Continuous murmur of PDA",
-            "Murmur of AV fistula",
-            "Murmur of coarctation collaterals"
-          ],
-          "explanation": "Venous hum is a common innocent continuous murmur from turbulent flow in jugular veins. Heard at right supraclavicular area. KEY: disappears with head turning, supine position, or jugular compression. PDA does NOT disappear with these maneuvers.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "How do you distinguish a venous hum from a PDA murmur?",
-          "answer": "Venous hum disappears with supine position/head turn/jugular compression; PDA does not",
-          "distractors": [
-            "PDA is softer than venous hum",
-            "Venous hum has wide pulse pressure",
-            "PDA is only heard in neonates"
-          ],
-          "explanation": "Both are continuous murmurs. Venous hum disappears with positional changes (interrupts jugular flow). PDA murmur persists regardless of position and has bounding pulses/wide pulse pressure. PDA is at left infraclavicular area; venous hum at supraclavicular area.",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Venous hum (innocent continuous murmur)",
+        "distractors": [
+          "Continuous murmur of PDA",
+          "Murmur of AV fistula",
+          "Murmur of coarctation collaterals"
+        ]
+      },
+      "q2": {
+        "prompt": "How do you distinguish this from a PDA murmur at the bedside?",
+        "answer": "Venous hum disappears with supine position/head turn/jugular compression; PDA persists",
+        "distractors": [
+          "Both disappear with Valsalva",
+          "PDA disappears with inspiration",
+          "Venous hum gets louder standing"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Venous hum = interrupted by anything that changes jugular flow. PDA = fixed anatomic shunt, persists regardless. PDA also has bounding pulses/wide pulse pressure."
+      }
     },
     {
       "id": "mq-18",
-      "scenario": "5-year-old girl with fever >5 days, bilateral non-exudative conjunctivitis, strawberry tongue, polymorphous rash, edema of hands/feet. New cardiac murmur. Echo: coronary artery dilation (z-score 2.8).",
+      "clues": [
+        "5-year-old girl with fever >5 days",
+        "Bilateral non-exudative conjunctivitis, strawberry tongue",
+        "Polymorphous rash, edema of hands and feet",
+        "Echo: coronary artery dilation (z-score 2.8)"
+      ],
       "murmurType": "variable",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What disease is causing this new murmur?",
-          "answer": "Kawasaki disease (medium-vessel vasculitis with coronary artery involvement)",
-          "distractors": [
-            "Acute rheumatic fever",
-            "Scarlet fever",
-            "Systemic lupus erythematosus"
-          ],
-          "explanation": "Kawasaki disease: fever \u22655 days + 4/5: conjunctivitis (bilateral, non-exudative), oral changes (strawberry tongue, cracked lips), rash (polymorphous), extremity changes (edema, desquamation), cervical lymphadenopathy. Coronary artery aneurysms are the major complication.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What is the treatment to prevent coronary complications?",
-          "answer": "IVIG (2 g/kg) + high-dose aspirin within 10 days of fever onset",
-          "distractors": [
-            "Antibiotics for 14 days",
-            "Corticosteroids alone",
-            "Indomethacin"
-          ],
-          "explanation": "IVIG 2 g/kg single infusion + high-dose aspirin (80-100 mg/kg/day). Reduces coronary aneurysm risk from 25% to <5%. After fever resolves \u2192 low-dose aspirin (3-5 mg/kg/day) for 6-8 weeks. IVIG-resistant (~10-20%) may need repeat IVIG or infliximab.",
-          "category": "management"
-        },
-        {
-          "questionPrompt": "What is the most feared long-term complication?",
-          "answer": "Coronary artery aneurysms \u2192 risk of thrombosis and myocardial infarction",
-          "distractors": [
-            "Mitral stenosis",
-            "Aortic dissection",
-            "Pulmonary hypertension"
-          ],
-          "explanation": "Coronary artery aneurysms (especially giant aneurysms >8mm) can thrombose \u2192 myocardial infarction and sudden death. Long-term aspirin and sometimes anticoagulation needed. Kawasaki is the #1 cause of acquired heart disease in developed countries in children.",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Variable murmur from Kawasaki disease (coronary vasculitis with possible myocarditis)",
+        "distractors": [
+          "Rheumatic MR murmur",
+          "Endocarditis murmur",
+          "Innocent flow murmur from fever"
+        ]
+      },
+      "q2": {
+        "prompt": "What treatment prevents coronary aneurysm formation?",
+        "answer": "IVIG (2 g/kg) + high-dose aspirin within 10 days of fever onset",
+        "distractors": [
+          "Antibiotics for 14 days",
+          "Corticosteroids alone",
+          "Indomethacin"
+        ],
+        "category": "management",
+        "explanation": "IVIG + high-dose aspirin reduces coronary aneurysm risk from 25% to <5%. After fever resolves \u2192 low-dose aspirin for 6-8 weeks. IVIG-resistant (~10-20%) \u2192 repeat IVIG or infliximab."
+      }
     },
     {
       "id": "mq-19",
-      "scenario": "6-week-old with poor feeding and tachypnea. Prominent S3 gallop at apex. Soft holosystolic murmur at apex. CXR: pulmonary edema, cardiomegaly. Echo: dilated LV with EF 25%.",
+      "clues": [
+        "6-week-old with poor feeding and tachypnea",
+        "Prominent S3 gallop at apex",
+        "Soft holosystolic murmur at apex",
+        "CXR: pulmonary edema, cardiomegaly; Echo: EF 25%"
+      ],
       "murmurType": "holosystolic",
       "difficulty": "advanced",
-      "parts": [
-        {
-          "questionPrompt": "What is causing this holosystolic murmur?",
-          "answer": "Mitral regurgitation from dilated cardiomyopathy (annular dilation)",
-          "distractors": [
-            "VSD murmur",
-            "PDA murmur",
-            "Rheumatic MR"
-          ],
-          "explanation": "DCM causes ventricular dilation \u2192 mitral annular dilation \u2192 MR \u2192 soft holosystolic murmur at apex. S3 gallop indicates rapid ventricular filling in a dilated, failing ventricle. The MR is functional (annular dilation), not structural (leaflet disease).",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What is the most common cause of DCM in children?",
-          "answer": "Viral myocarditis (enterovirus, adenovirus most common)",
-          "distractors": [
-            "Coronary artery disease",
-            "Hypertension",
-            "Valvular disease"
-          ],
-          "explanation": "Viral myocarditis (especially enterovirus/Coxsackie B and adenovirus) is the #1 cause of DCM in children. Other causes: genetic/familial, metabolic (carnitine deficiency), Duchenne muscular dystrophy, chemotherapy (doxorubicin). Unlike adults, CAD and HTN are rare causes in peds.",
-          "category": "associations"
-        }
-      ]
+      "q1": {
+        "answer": "Holosystolic murmur of MR from dilated cardiomyopathy (annular dilation)",
+        "distractors": [
+          "VSD murmur",
+          "PDA murmur",
+          "Rheumatic MR"
+        ]
+      },
+      "q2": {
+        "prompt": "What is the most common cause of DCM in children?",
+        "answer": "Viral myocarditis (enterovirus/Coxsackie B, adenovirus)",
+        "distractors": [
+          "Coronary artery disease",
+          "Hypertension",
+          "Alcohol abuse"
+        ],
+        "category": "associations",
+        "explanation": "Viral myocarditis = #1 cause of DCM in children. Other peds causes: genetic/familial, metabolic (carnitine deficiency), Duchenne muscular dystrophy, doxorubicin toxicity."
+      }
     },
     {
       "id": "mq-20",
-      "scenario": "Infant with Down syndrome. Holosystolic murmur at LLSB plus mid-diastolic rumble at apex. Echo shows complete atrioventricular canal defect (AVCD). Developing heart failure symptoms.",
+      "clues": [
+        "Infant with Down syndrome and holosystolic murmur at LLSB",
+        "Mid-diastolic rumble at apex",
+        "Echo: complete atrioventricular canal defect (AVCD)",
+        "Developing signs of heart failure at 4 months"
+      ],
       "murmurType": "holosystolic",
       "difficulty": "advanced",
-      "parts": [
-        {
-          "questionPrompt": "What murmurs are expected with a complete AV canal defect?",
-          "answer": "Holosystolic from VSD + MR/TR (regurgitation through common AV valve) + diastolic rumble from increased flow",
-          "distractors": [
-            "Only a systolic ejection murmur",
-            "Only a continuous murmur",
-            "Only an innocent flow murmur"
-          ],
-          "explanation": "Complete AVCD (endocardial cushion defect) produces multiple murmurs: holosystolic from VSD component, holosystolic from MR/TR (common AV valve regurgitation), and mid-diastolic rumble from increased AV valve flow. ~40% of cardiac defects in Down syndrome are AVCD.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "When should surgical repair be performed?",
-          "answer": "By 4-6 months of age (before irreversible pulmonary vascular disease)",
-          "distractors": [
-            "Wait until age 2-3 years",
-            "Only if symptomatic after age 1",
-            "Defer until weight >10 kg"
-          ],
-          "explanation": "Complete AVCD with large L-to-R shunt causes early CHF and rapid pulmonary vascular disease progression \u2014 especially in Down syndrome (higher risk of early Eisenmenger). Surgical repair by 4-6 months prevents irreversible pulmonary hypertension.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Holosystolic murmur of VSD + MR from complete AV canal defect",
+        "distractors": [
+          "Simple VSD murmur only",
+          "PDA murmur",
+          "Innocent flow murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "When should surgical repair be performed?",
+        "answer": "By 4-6 months of age (before irreversible pulmonary vascular disease)",
+        "distractors": [
+          "Wait until age 2-3 years",
+          "Only if symptomatic after age 1",
+          "Defer until weight >10 kg"
+        ],
+        "category": "management",
+        "explanation": "Complete AVCD with large L-to-R shunt \u2192 early CHF and rapid pulmonary vascular disease, especially in Down syndrome. Surgical repair by 4-6 months prevents irreversible Eisenmenger."
+      }
     },
     {
       "id": "mq-21",
-      "scenario": "A 4-month-old's VSD murmur is getting progressively SOFTER. The child is becoming MORE cyanotic with worsening tachypnea. Echo shows equalized ventricular pressures.",
+      "clues": [
+        "4-month-old with known large VSD",
+        "VSD murmur is getting progressively SOFTER",
+        "Child is becoming MORE cyanotic and more tachypneic",
+        "Echo: equalized ventricular pressures, PA pressure near systemic"
+      ],
       "murmurType": "holosystolic",
       "difficulty": "advanced",
-      "parts": [
-        {
-          "questionPrompt": "Why is the murmur getting softer despite worsening symptoms?",
-          "answer": "Eisenmenger progression \u2014 rising pulmonary vascular resistance equalizes pressures, eliminating the gradient",
-          "distractors": [
-            "VSD is closing spontaneously",
-            "Child is improving clinically",
-            "Measurement error from growth"
-          ],
-          "explanation": "RED FLAG: VSD murmur getting SOFTER + worsening cyanosis = Eisenmenger physiology. Chronic L-to-R shunt damages pulmonary vasculature \u2192 PVR rises \u2192 LV-RV gradient decreases \u2192 murmur softens \u2192 eventually R-to-L shunt (cyanosis). This is an indication for URGENT surgical repair.",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "What happens if surgical repair is delayed too long?",
-          "answer": "Irreversible pulmonary vascular disease (Eisenmenger syndrome) \u2014 surgery is then contraindicated",
-          "distractors": [
-            "Spontaneous VSD closure",
-            "Compensatory RV hypertrophy resolves the issue",
-            "Shunt reversal is always reversible with surgery"
-          ],
-          "explanation": "Once Eisenmenger syndrome is established (fixed elevated PVR with R-to-L shunt), surgical VSD closure is CONTRAINDICATED \u2014 removing the 'pop-off' valve would cause acute RV failure. Treatment at this stage is medical: pulmonary vasodilators (sildenafil, bosentan). Ultimately may need heart-lung transplant.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Softening holosystolic murmur of VSD \u2014 Eisenmenger progression (rising PVR eliminates gradient)",
+        "distractors": [
+          "VSD closing spontaneously (would improve, not worsen)",
+          "Improving hemodynamics",
+          "Measurement artifact"
+        ],
+        "category": "clinical_reasoning"
+      },
+      "q2": {
+        "prompt": "What happens if surgical repair is delayed too long?",
+        "answer": "Irreversible pulmonary vascular disease (Eisenmenger) \u2014 surgery becomes CONTRAINDICATED",
+        "distractors": [
+          "Spontaneous VSD closure",
+          "Compensatory RV hypertrophy resolves it",
+          "Shunt reversal is always surgically reversible"
+        ],
+        "category": "management",
+        "explanation": "Once Eisenmenger is established (fixed elevated PVR, R-to-L shunt), VSD closure is CONTRAINDICATED \u2014 would cause acute RV failure. Treatment: pulmonary vasodilators. May need heart-lung transplant."
+      }
     },
     {
       "id": "mq-22",
-      "scenario": "Newborn infant of a diabetic mother. Large for gestational age. Systolic murmur heard. Echo shows asymmetric septal hypertrophy with dynamic LVOT obstruction.",
+      "clues": [
+        "Newborn infant of a diabetic mother, LGA",
+        "Systolic murmur heard at left sternal border",
+        "Echo: asymmetric septal hypertrophy with dynamic LVOT obstruction",
+        "No family history of cardiomyopathy"
+      ],
       "murmurType": "systolic",
       "difficulty": "advanced",
-      "parts": [
-        {
-          "questionPrompt": "What murmur pattern would you expect?",
-          "answer": "Crescendo-decrescendo systolic murmur similar to HOCM (dynamic LVOT obstruction)",
-          "distractors": [
-            "Continuous murmur of PDA",
-            "Holosystolic murmur of VSD",
-            "Early diastolic murmur of AR"
-          ],
-          "explanation": "Infants of diabetic mothers (IDM) can develop transient hypertrophic cardiomyopathy with asymmetric septal hypertrophy causing dynamic LVOT obstruction \u2014 producing a systolic murmur identical to HOCM. This is transient and typically resolves within 2-4 months.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What is the management?",
-          "answer": "Supportive care \u2014 the septal hypertrophy is transient and resolves within months",
-          "distractors": [
-            "Surgical myectomy",
-            "Lifelong beta-blocker therapy",
-            "ICD placement"
-          ],
-          "explanation": "Unlike genetic HOCM, IDM hypertrophic cardiomyopathy is transient. The hypertrophy resolves as insulin levels normalize postnatally (typically 2-4 months). Avoid inotropes and volume depletion. If symptomatic, cautious beta-blocker use. No surgical intervention needed.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Crescendo-decrescendo murmur from transient hypertrophic cardiomyopathy (IDM)",
+        "distractors": [
+          "Continuous murmur of PDA",
+          "Holosystolic murmur of VSD",
+          "Genetic HOCM"
+        ],
+        "category": "identification"
+      },
+      "q2": {
+        "prompt": "What is the management?",
+        "answer": "Supportive care only \u2014 this is TRANSIENT and resolves within 2-4 months",
+        "distractors": [
+          "Surgical myectomy",
+          "Lifelong beta-blocker therapy",
+          "ICD placement"
+        ],
+        "category": "management",
+        "explanation": "Unlike genetic HOCM, IDM cardiomyopathy is TRANSIENT. Hypertrophy resolves as insulin normalizes postnatally. Avoid inotropes and volume depletion. No surgery needed."
+      }
     },
     {
       "id": "mq-23",
-      "scenario": "Infant with continuous murmur at upper left chest. Mother had rubella during first trimester. Child has cataracts and sensorineural hearing loss.",
+      "clues": [
+        "Infant with continuous murmur at upper left chest",
+        "Mother had rubella infection during first trimester",
+        "Child has cataracts and sensorineural hearing loss",
+        "Blueberry muffin rash noted at birth"
+      ],
       "murmurType": "continuous",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What cardiac lesion is most associated with congenital rubella?",
-          "answer": "PDA (most common cardiac defect in congenital rubella syndrome)",
-          "distractors": [
-            "VSD",
-            "Tetralogy of Fallot",
-            "Coarctation of the aorta"
-          ],
-          "explanation": "Congenital rubella syndrome classically causes PDA and peripheral pulmonic stenosis. The triad: cataracts/glaucoma, sensorineural deafness, cardiac defects (PDA, peripheral PS). Also: blueberry muffin rash, microcephaly, intellectual disability.",
-          "category": "associations"
-        },
-        {
-          "questionPrompt": "What other cardiac lesion (besides PDA) is characteristic of congenital rubella?",
-          "answer": "Peripheral pulmonic stenosis (branch PA stenosis)",
-          "distractors": [
-            "Aortic stenosis",
-            "Complete AV canal",
-            "Truncus arteriosus"
-          ],
-          "explanation": "Congenital rubella causes both PDA and peripheral (branch) pulmonary artery stenosis. The peripheral PS murmur radiates to the axillae and back, similar to the innocent peripheral PS of newborns but persists beyond 6 months.",
-          "category": "associations"
-        }
-      ]
+      "q1": {
+        "answer": "Continuous murmur of PDA (most common cardiac lesion in congenital rubella)",
+        "distractors": [
+          "VSD murmur",
+          "ToF murmur",
+          "Coarctation murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "What other cardiac lesion is classically associated with congenital rubella?",
+        "answer": "Peripheral pulmonic stenosis (branch PA stenosis)",
+        "distractors": [
+          "Aortic stenosis",
+          "Complete AV canal",
+          "Truncus arteriosus"
+        ],
+        "category": "associations",
+        "explanation": "Congenital rubella \u2192 PDA (most common) + peripheral pulmonic stenosis. Triad: cataracts/glaucoma, sensorineural deafness, cardiac defects. Blueberry muffin rash = extramedullary hematopoiesis."
+      }
     },
     {
       "id": "mq-24",
-      "scenario": "15-year-old competitive swimmer presents for sports physical. Systolic murmur heard. It INCREASES with Valsalva. She has no symptoms. Family history: uncle died suddenly at age 28 during a marathon.",
+      "clues": [
+        "15-year-old competitive swimmer at sports physical",
+        "Systolic murmur that INCREASES with Valsalva",
+        "No symptoms currently",
+        "Family history: uncle died suddenly at age 28 during marathon"
+      ],
       "murmurType": "systolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "The murmur increases with Valsalva. What is the most likely murmur?",
-          "answer": "HOCM murmur (dynamic LVOT obstruction)",
-          "distractors": [
-            "Fixed aortic stenosis",
-            "Mitral regurgitation",
-            "VSD"
-          ],
-          "explanation": "HOCM is the ONLY murmur that characteristically INCREASES with Valsalva. Decreased preload \u2192 smaller LV \u2192 more LVOT obstruction \u2192 louder murmur. Fixed AS, MR, and VSD all get SOFTER with Valsalva (less volume = less turbulence).",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What is the inheritance pattern of HOCM?",
-          "answer": "Autosomal dominant (mutations in sarcomeric proteins \u2014 beta-myosin heavy chain most common)",
-          "distractors": [
-            "Autosomal recessive",
-            "X-linked recessive",
-            "Sporadic only"
-          ],
-          "explanation": "HOCM is autosomal dominant with variable penetrance. Most common mutations involve sarcomeric proteins (beta-myosin heavy chain, myosin-binding protein C). First-degree relatives should be screened with echo and ECG. Family history of sudden death is a major red flag.",
-          "category": "associations"
-        },
-        {
-          "questionPrompt": "She wants to continue competitive swimming. Your recommendation?",
-          "answer": "Disqualify from competitive sports \u2014 HOCM is the #1 cause of SCD in young athletes",
-          "distractors": [
-            "Allow swimming only (low-risk sport)",
-            "Allow with annual echo monitoring",
-            "Allow with beta-blocker prophylaxis"
-          ],
-          "explanation": "ALL competitive sports are contraindicated in HOCM regardless of symptoms. HOCM is the #1 cause of SCD in young athletes. Exercise triggers ventricular arrhythmias in the hypertrophied heart. Recreational low-intensity activity may be discussed on a case-by-case basis.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "HOCM murmur (only murmur that increases with Valsalva)",
+        "distractors": [
+          "Fixed aortic stenosis",
+          "Mitral regurgitation",
+          "VSD"
+        ]
+      },
+      "q2": {
+        "prompt": "What is the inheritance pattern?",
+        "answer": "Autosomal dominant (sarcomeric protein mutations \u2014 beta-myosin heavy chain most common)",
+        "distractors": [
+          "Autosomal recessive",
+          "X-linked recessive",
+          "Sporadic only"
+        ],
+        "category": "associations",
+        "explanation": "HOCM is autosomal dominant with variable penetrance. First-degree relatives need screening with echo + ECG. Most common mutations: beta-myosin heavy chain, myosin-binding protein C."
+      }
     },
     {
       "id": "mq-25",
-      "scenario": "Teenage girl with normal exam develops a soft systolic murmur during pregnancy. Murmur was not present before pregnancy. No diastolic component, no symptoms. Normal echo.",
-      "murmurType": "innocent",
+      "clues": [
+        "8-year-old post strep pharyngitis presenting with carditis",
+        "Holosystolic murmur at apex, mid-diastolic rumble at apex",
+        "Subcutaneous nodules over elbows",
+        "Migratory polyarthritis of large joints"
+      ],
+      "murmurType": "holosystolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What is the cause of this new murmur?",
-          "answer": "Physiologic flow murmur (pregnancy increases cardiac output by 30-50%)",
-          "distractors": [
-            "New onset VSD",
-            "Pregnancy-induced aortic stenosis",
-            "Gestational cardiomyopathy"
-          ],
-          "explanation": "Pregnancy increases CO by 30-50% \u2192 can produce an innocent systolic flow murmur (grade 1-2, systolic, no diastolic component, normal S2). Resolves postpartum. Same concept applies to any high-output state (anemia, fever, thyrotoxicosis).",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "When should a murmur in pregnancy trigger concern?",
-          "answer": "Diastolic murmur \u2014 NEVER physiologic in pregnancy",
-          "distractors": [
-            "Any systolic murmur",
-            "Murmur heard in the third trimester",
-            "Murmur louder in supine position"
-          ],
-          "explanation": "A diastolic murmur in pregnancy is NEVER physiologic and warrants full evaluation (echo, cardiology referral). Systolic flow murmurs are common and usually benign. Other red flags: loud (\u22653/6) murmur, symptoms (dyspnea at rest, syncope, chest pain), or known cardiac history.",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Holosystolic MR murmur + Carey-Coombs murmur (acute rheumatic fever)",
+        "distractors": [
+          "VSD murmur",
+          "Endocarditis murmur",
+          "Kawasaki-related murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "How long should secondary prophylaxis with penicillin continue?",
+        "answer": "At least 10 years or until age 21 (no carditis: 5 years); lifelong if persistent valve disease",
+        "distractors": [
+          "6 months of amoxicillin",
+          "Until murmur resolves",
+          "One-time dose only"
+        ],
+        "category": "management",
+        "explanation": "Benzathine penicillin G IM q3-4 weeks prevents recurrence. Duration varies by severity: no carditis=5yr/age 21, carditis without valve disease=10yr/age 21, persistent valve disease=lifelong."
+      }
     },
     {
       "id": "mq-26",
-      "scenario": "Newborn with snowman sign (figure-8) on CXR. Mild cyanosis. Wide fixed split S2. Soft systolic ejection murmur at LUSB.",
-      "murmurType": "ejection",
+      "clues": [
+        "Newborn with cyanosis and a single S2 (no splitting)",
+        "Large truncal vessel overriding a VSD on echo",
+        "Harsh systolic murmur at LLSB",
+        "Absent thymic shadow on CXR"
+      ],
+      "murmurType": "systolic",
       "difficulty": "advanced",
-      "parts": [
-        {
-          "questionPrompt": "What congenital heart defect causes a 'snowman sign' on CXR?",
-          "answer": "Total Anomalous Pulmonary Venous Return (TAPVR) \u2014 supracardiac type",
-          "distractors": [
-            "ASD",
-            "Tetralogy of Fallot",
-            "d-TGA"
-          ],
-          "explanation": "Snowman (figure-8) sign is classic for supracardiac TAPVR \u2014 the dilated vertical vein and SVC form the 'head' of the snowman, and the heart is the 'body'. All pulmonary veins drain anomalously. Mixing occurs at an obligatory ASD/PFO. Fixed split S2 from RV volume overload.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What is the most critical presentation of TAPVR?",
-          "answer": "Obstructed TAPVR \u2014 presents with severe cyanosis, pulmonary edema, and hemodynamic collapse in the first days of life",
-          "distractors": [
-            "Mild heart failure at 6 months",
-            "Asymptomatic murmur at well-child visit",
-            "Exercise intolerance at age 5"
-          ],
-          "explanation": "Obstructed TAPVR (especially infracardiac type, drainage below diaphragm through liver) is a surgical emergency. Pulmonary venous return is obstructed \u2192 severe pulmonary edema, cyanosis, and shock. CXR shows white-out lungs without cardiomegaly. Requires emergent surgical repair.",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Systolic murmur of Truncus arteriosus (single truncal vessel with VSD)",
+        "distractors": [
+          "d-TGA murmur",
+          "ToF murmur",
+          "ASD murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "Absent thymic shadow and hypocalcemia. What genetic syndrome?",
+        "answer": "DiGeorge syndrome (22q11.2 deletion \u2014 CATCH-22)",
+        "distractors": [
+          "Down syndrome",
+          "Turner syndrome",
+          "Williams syndrome"
+        ],
+        "category": "associations",
+        "explanation": "22q11.2 deletion = CATCH-22: Cardiac (conotruncal), Abnormal facies, Thymic aplasia, Cleft palate, Hypocalcemia. Truncus arteriosus, ToF, and interrupted aortic arch are classic associations."
+      }
     },
     {
       "id": "mq-27",
-      "scenario": "7-year-old with a harsh systolic murmur. The murmur gets LOUDER when the child squats and SOFTER when standing. No click. Radiates to axilla.",
-      "murmurType": "holosystolic",
-      "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "Which murmur gets LOUDER with squatting?",
-          "answer": "Most murmurs (VSD, MR, AS) \u2014 squatting increases preload and afterload, increasing flow/gradient",
-          "distractors": [
-            "HOCM \u2014 squatting increases obstruction",
-            "MVP \u2014 squatting causes earlier prolapse",
-            "Innocent murmurs only"
-          ],
-          "explanation": "Squatting increases both preload (venous return) AND afterload (SVR) \u2192 increases flow volume and pressure gradients \u2192 MOST murmurs get LOUDER. The exceptions are HOCM (gets SOFTER \u2014 less obstruction) and MVP (click moves LATER, murmur shortens). This distinction is extremely high-yield.",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "Given that this murmur radiates to the axilla, where is the likely valve involved?",
-          "answer": "Mitral valve (MR radiates to axilla)",
-          "distractors": [
-            "Aortic valve (AS radiates to carotids)",
-            "Pulmonic valve",
-            "Tricuspid valve"
-          ],
-          "explanation": "Radiation to the axilla is characteristic of mitral regurgitation. AS radiates to carotids. TR and PS are right-sided and don't typically radiate to the axilla. The direction of radiation follows the jet of regurgitant/turbulent blood flow.",
-          "category": "identification"
-        }
-      ]
+      "clues": [
+        "Newborn with snowman sign (figure-8) on CXR",
+        "Mild cyanosis, wide fixed split S2",
+        "Soft systolic ejection murmur at LUSB",
+        "Echo shows all 4 pulmonary veins draining into vertical vein"
+      ],
+      "murmurType": "ejection",
+      "difficulty": "advanced",
+      "q1": {
+        "answer": "Flow murmur from TAPVR (total anomalous pulmonary venous return \u2014 supracardiac type)",
+        "distractors": [
+          "ASD flow murmur only",
+          "ToF murmur",
+          "d-TGA murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "Which subtype is a surgical emergency presenting with pulmonary edema and NO cardiomegaly?",
+        "answer": "Obstructed TAPVR (infracardiac type \u2014 drainage below diaphragm obstructed by liver)",
+        "distractors": [
+          "Supracardiac (snowman sign)",
+          "Cardiac type (drains to coronary sinus)",
+          "Mixed type"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Obstructed TAPVR (especially infracardiac) = surgical emergency. Pulmonary venous obstruction \u2192 severe pulmonary edema + cyanosis + shock. CXR: white-out lungs WITHOUT cardiomegaly. Requires emergent repair."
+      }
     },
     {
       "id": "mq-28",
-      "scenario": "Asymptomatic 4-year-old found to have a murmur at well-child visit. Soft systolic murmur that changes with position. Normal S1 and S2. No diastolic sounds, no clicks. Normal growth and development.",
-      "murmurType": "innocent",
+      "clues": [
+        "Premature infant with confirmed PDA murmur",
+        "Indomethacin given for 3 courses",
+        "PDA has NOT closed",
+        "Still hemodynamically significant with CHF signs"
+      ],
+      "murmurType": "continuous",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "Which features suggest this is an INNOCENT murmur?",
-          "answer": "All of the above \u2014 soft, systolic, position-dependent, normal S1/S2, no clicks, asymptomatic, normal growth",
-          "distractors": [
-            "Only the soft quality",
-            "Only the absence of diastolic sounds",
-            "Only the normal growth"
-          ],
-          "explanation": "Innocent murmur features (7 S's): Soft, Systolic, Short duration, Single (no extra sounds), Small (young child), Symptom-free, and Situation-dependent (changes with position/activity). ANY diastolic component, harsh quality, click, or symptoms should prompt evaluation.",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "Which finding would REQUIRE an echocardiogram?",
-          "answer": "Diastolic murmur",
-          "distractors": [
-            "Grade 1/6 systolic murmur",
-            "Murmur louder when supine",
-            "Murmur heard during a febrile illness"
-          ],
-          "explanation": "Diastolic murmurs are ALWAYS pathologic and require echo. Other indications: harsh/loud (\u22653/6), fixed split S2, abnormal S2, clicks, symptoms (syncope, cyanosis, FTT, exercise intolerance), or abnormal ECG/CXR. A systolic murmur louder when supine or during fever can be innocent.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Persistent continuous machinery murmur of PDA (refractory to medical therapy)",
+        "distractors": [
+          "New VSD murmur",
+          "Venous hum",
+          "Aortopulmonary window murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "What is the next step after failed indomethacin?",
+        "answer": "Surgical PDA ligation or transcatheter device closure",
+        "distractors": [
+          "Higher dose indomethacin (4th course)",
+          "PGE1 infusion",
+          "Observation until term age"
+        ],
+        "category": "management",
+        "explanation": "When pharmacologic closure fails (typically after 2-3 courses), surgical ligation or transcatheter closure is indicated. Continued observation risks persistent CHF and pulmonary overcirculation."
+      }
     },
     {
       "id": "mq-29",
-      "scenario": "Newborn with a single S2 (not split). Cyanosis present. Truncal arterial vessel overrides a large VSD on echo. Harsh systolic murmur at LLSB.",
-      "murmurType": "systolic",
-      "difficulty": "advanced",
-      "parts": [
-        {
-          "questionPrompt": "What congenital heart defect presents with a single S2 and a single truncal vessel?",
-          "answer": "Truncus arteriosus (single great vessel arising from heart with underlying VSD)",
-          "distractors": [
-            "d-TGA",
-            "Tetralogy of Fallot",
-            "ASD"
-          ],
-          "explanation": "Truncus arteriosus = single arterial trunk gives rise to both aorta and PA, arising from both ventricles over a large VSD. Single S2 because there is only one semilunar valve (truncal valve). Associated with 22q11.2 deletion (DiGeorge).",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What genetic syndrome is most commonly associated?",
-          "answer": "DiGeorge syndrome (22q11.2 deletion) \u2014 also associated with ToF and interrupted aortic arch",
-          "distractors": [
-            "Down syndrome",
-            "Turner syndrome",
-            "Williams syndrome"
-          ],
-          "explanation": "22q11.2 deletion causes conotruncal defects: truncus arteriosus, ToF, interrupted aortic arch, and VSD. CATCH-22 mnemonic. Truncus arteriosus has one of the strongest associations with DiGeorge. Always check calcium (hypocalcemia from absent parathyroids).",
-          "category": "associations"
-        }
-      ]
+      "clues": [
+        "Neonate with critical CoA diagnosed on echo",
+        "Becoming increasingly tachypneic and acidotic",
+        "Weak femoral pulses, mottled lower extremities",
+        "Pre-ductal O2 sat 98%, post-ductal 72%"
+      ],
+      "murmurType": "ejection",
+      "difficulty": "core",
+      "q1": {
+        "answer": "Systolic murmur of critical Coarctation of the Aorta",
+        "distractors": [
+          "PDA murmur",
+          "PS murmur",
+          "VSD murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "What is the emergency treatment?",
+        "answer": "PGE1 to reopen the ductus arteriosus (bypass coarctation to perfuse lower body)",
+        "distractors": [
+          "Indomethacin (would close PDA and worsen shock)",
+          "Immediate balloon angioplasty",
+          "IV nitroprusside"
+        ],
+        "category": "management",
+        "explanation": "PGE1 reopens the ductus \u2192 blood bypasses coarctation \u2192 perfuses lower body. Indomethacin would WORSEN by closing the ductus. Pre/post-ductal O2 sat difference confirms ductal-dependent lower body perfusion."
+      }
     },
     {
       "id": "mq-30",
-      "scenario": "Premature infant with a PDA murmur. You start indomethacin. The PDA does not close after 3 courses of indomethacin.",
-      "murmurType": "continuous",
+      "clues": [
+        "Newborn with ductal-dependent cyanotic heart lesion",
+        "PGE1 infusion started",
+        "Nurse calls because baby has become apneic",
+        "Vital signs otherwise stable"
+      ],
+      "murmurType": "none",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "Indomethacin has failed. What is the next step?",
-          "answer": "Surgical PDA ligation (or transcatheter device closure)",
-          "distractors": [
-            "Higher dose indomethacin",
-            "PGE1 infusion",
-            "Observation and wait for spontaneous closure"
-          ],
-          "explanation": "When pharmacologic closure fails (typically after 2-3 courses), surgical ligation or transcatheter device closure is indicated for hemodynamically significant PDA. Continued observation risks persistent heart failure and pulmonary overcirculation.",
-          "category": "management"
-        },
-        {
-          "questionPrompt": "In which situations would you want to KEEP a PDA OPEN with PGE1?",
-          "answer": "Ductal-dependent lesions (d-TGA, critical CoA, critical PS, HLHS, pulmonary atresia)",
-          "distractors": [
-            "All premature infants",
-            "Healthy term newborns with murmur",
-            "Children with ASD"
-          ],
-          "explanation": "PGE1 keeps the ductus open when systemic or pulmonary circulation DEPENDS on it. Ductal-dependent systemic circulation: critical CoA, HLHS, interrupted aortic arch. Ductal-dependent pulmonary circulation: critical PS, pulmonary atresia, severe ToF. d-TGA needs mixing via PDA.",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Apnea is a known side effect of PGE1 \u2014 not a new cardiac event",
+        "distractors": [
+          "Tet spell",
+          "Cardiac arrest from worsening CHD",
+          "Sepsis"
+        ]
+      },
+      "q2": {
+        "prompt": "Name three ductal-dependent lesions where PGE1 is life-saving.",
+        "answer": "Critical CoA, HLHS, d-TGA, pulmonary atresia, critical PS",
+        "distractors": [
+          "ASD, small VSD, innocent murmur",
+          "MVP, AR, MR",
+          "DCM, myocarditis, pericarditis"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Ductal-dependent systemic: critical CoA, HLHS, interrupted arch. Ductal-dependent pulmonary: critical PS, pulmonary atresia. Mixing: d-TGA. PGE1 side effects: APNEA (#1, ~12%), fever, hypotension, flushing. Always have intubation equipment ready."
+      }
     },
     {
       "id": "mq-31",
-      "scenario": "Newborn with murmur. Absent thymic shadow on CXR. Hypocalcemia causing seizures. Cleft palate noted on exam.",
-      "murmurType": "systolic",
+      "clues": [
+        "7-year-old with harsh systolic murmur at LLSB",
+        "Murmur gets LOUDER when the child squats",
+        "Murmur radiates to the axilla",
+        "No change with respiration"
+      ],
+      "murmurType": "holosystolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What syndrome and what type of cardiac defect is expected?",
-          "answer": "DiGeorge syndrome (22q11.2 deletion) \u2014 conotruncal defects (ToF, truncus, interrupted aortic arch)",
-          "distractors": [
-            "Down syndrome \u2014 AVCD",
-            "Williams syndrome \u2014 supravalvular AS",
-            "Noonan syndrome \u2014 PS"
-          ],
-          "explanation": "CATCH-22: Cardiac (conotruncal defects), Abnormal facies, Thymic aplasia (absent thymic shadow \u2192 T-cell deficiency), Cleft palate, Hypocalcemia (absent/hypoplastic parathyroids \u2192 seizures). Most common microdeletion syndrome.",
-          "category": "associations"
-        },
-        {
-          "questionPrompt": "What immune deficiency results from thymic aplasia?",
-          "answer": "T-cell deficiency (impaired cell-mediated immunity)",
-          "distractors": [
-            "B-cell deficiency",
-            "Neutrophil dysfunction",
-            "Complement deficiency"
-          ],
-          "explanation": "Absent thymus \u2192 deficient T-cell production \u2192 susceptibility to viral, fungal, and intracellular bacterial infections. Severity varies from partial (most common) to complete DiGeorge. Live vaccines are contraindicated in severe cases. Must check lymphocyte subsets.",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Holosystolic murmur of Mitral Regurgitation (louder with squatting = increased preload/afterload)",
+        "distractors": [
+          "HOCM murmur (gets SOFTER with squatting)",
+          "Innocent murmur",
+          "PS murmur (right-sided, changes with inspiration)"
+        ]
+      },
+      "q2": {
+        "prompt": "How does squatting affect HOCM differently from MR/VSD?",
+        "answer": "Squatting makes HOCM SOFTER (increased preload reduces LVOT obstruction) but MR/VSD LOUDER (more volume)",
+        "distractors": [
+          "Squatting affects all murmurs the same way",
+          "Squatting makes HOCM louder too",
+          "Squatting only affects right-sided murmurs"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Squatting \u2191 preload + \u2191 afterload \u2192 most murmurs LOUDER. Exception: HOCM gets SOFTER (larger LV = less LVOT obstruction). MVP click moves LATER (larger LV = delayed prolapse). This is extremely high-yield."
+      }
     },
     {
       "id": "mq-32",
-      "scenario": "Child presenting with migratory polyarthritis affecting large joints. Low-grade fever. Prolonged PR interval on ECG. History of untreated sore throat 3 weeks prior. No murmur initially, but carditis develops.",
+      "clues": [
+        "Holosystolic murmur at LLSB in a child",
+        "Murmur does NOT change with respiration",
+        "No JVP changes, no pulsatile liver",
+        "CXR shows increased pulmonary vascular markings"
+      ],
       "murmurType": "holosystolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What valve is MOST commonly affected in acute rheumatic fever?",
-          "answer": "Mitral valve (causing MR \u2014 most common valvular lesion)",
-          "distractors": [
-            "Aortic valve",
-            "Tricuspid valve",
-            "Pulmonic valve"
-          ],
-          "explanation": "The mitral valve is the most commonly affected valve in ARF. Acute phase: MR (holosystolic at apex). Chronic rheumatic heart disease: mitral STENOSIS (low-pitched diastolic rumble at apex). The aortic valve is the second most commonly affected.",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "What is the MOST common presentation of ARF?",
-          "answer": "Migratory polyarthritis (present in ~75% of cases)",
-          "distractors": [
-            "Carditis",
-            "Chorea",
-            "Erythema marginatum"
-          ],
-          "explanation": "Migratory polyarthritis of large joints is the MOST common manifestation (~75%). Carditis (~50%) is the most serious. Chorea (Sydenham) can appear months after infection. Erythema marginatum and subcutaneous nodules are rare but highly specific.",
-          "category": "identification"
-        }
-      ]
+      "q1": {
+        "answer": "Holosystolic murmur of VSD (left-sided, not affected by respiration)",
+        "distractors": [
+          "Tricuspid regurgitation (would increase with inspiration)",
+          "Pulmonic stenosis",
+          "Aortic stenosis"
+        ]
+      },
+      "q2": {
+        "prompt": "How do you distinguish a VSD murmur from a TR murmur at the same location (LLSB)?",
+        "answer": "TR increases with inspiration (Carvallo sign); VSD does not change with respiration",
+        "distractors": [
+          "VSD is louder than TR",
+          "TR is continuous and VSD is not",
+          "They cannot be distinguished on exam"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Left-sided murmurs (VSD, MR) are NOT affected by respiration. Right-sided murmurs (TR, PS) INCREASE with inspiration (more venous return). Carvallo sign helps distinguish TR from VSD at the LLSB."
+      }
     },
     {
       "id": "mq-33",
-      "scenario": "10-year-old with new murmur during a febrile illness. Previously well. The murmur is grade 2/6 systolic, heard at LLSB, disappears when the fever resolves. No other cardiac findings.",
+      "clues": [
+        "10-year-old with new murmur during a febrile illness",
+        "Grade 2/6 systolic murmur at LLSB",
+        "Murmur disappears when fever resolves",
+        "Normal S2, no clicks, no diastolic component"
+      ],
       "murmurType": "innocent",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What is this murmur?",
-          "answer": "Fever-accentuated innocent flow murmur (high cardiac output state)",
-          "distractors": [
-            "New VSD",
-            "Endocarditis",
-            "Myocarditis"
-          ],
-          "explanation": "Fever increases cardiac output \u2192 can unmask or accentuate an innocent flow murmur. Key features: disappears when fever resolves, soft grade, no diastolic component, no symptoms. Other high-output states causing this: anemia, anxiety, exercise, pregnancy, thyrotoxicosis.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What would make you suspect this murmur is NOT innocent?",
-          "answer": "Murmur persists after fever resolves, diastolic component present, or new symptoms develop",
-          "distractors": [
-            "Murmur heard during first fever episode",
-            "Grade 2/6 intensity",
-            "Child's age (10 years)"
-          ],
-          "explanation": "Red flags suggesting pathology: murmur persists after fever/illness resolves, diastolic component appears, new symptoms (exercise intolerance, syncope, chest pain), new cardiac findings (gallop, thrill, abnormal S2), or positive blood cultures (endocarditis).",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Fever-accentuated innocent flow murmur (high cardiac output state)",
+        "distractors": [
+          "New VSD",
+          "Endocarditis",
+          "Myocarditis"
+        ]
+      },
+      "q2": {
+        "prompt": "A DIASTOLIC murmur is found during a febrile illness. Is this ever innocent?",
+        "answer": "No \u2014 diastolic murmurs are ALWAYS pathologic and require full evaluation",
+        "distractors": [
+          "Yes, if it disappears with fever resolution",
+          "Yes, in children under 5",
+          "Yes, if it is soft (grade 1)"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Diastolic murmurs are NEVER physiologic/innocent regardless of context. Always require echo + cardiology referral. Systolic flow murmurs CAN be innocent in high-output states (fever, anemia, pregnancy, exercise)."
+      }
     },
     {
       "id": "mq-34",
-      "scenario": "A murmur is described as holosystolic, heard at LLSB, with NO change with respiration. Another murmur at the same location INCREASES with inspiration.",
-      "murmurType": "holosystolic",
+      "clues": [
+        "Asymptomatic 4-year-old at well-child visit",
+        "Soft systolic murmur that changes with position",
+        "Normal S1, S2, no clicks, no diastolic sounds",
+        "Normal growth, normal development, no FTT"
+      ],
+      "murmurType": "innocent",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "The murmur that does NOT change with respiration is most likely from which side of the heart?",
-          "answer": "Left-sided (VSD) \u2014 left-sided murmurs are NOT significantly affected by respiration",
-          "distractors": [
-            "Right-sided (TR)",
-            "Either side equally",
-            "Neither \u2014 all murmurs change with respiration"
-          ],
-          "explanation": "Left-sided murmurs (VSD, MR, AS, AR) are generally NOT affected by respiration because left heart filling is relatively constant. Right-sided murmurs (TR, PS, TS) change with respiration \u2014 they INCREASE with inspiration because inspiration increases venous return to the right heart.",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "The murmur that INCREASES with inspiration is most likely?",
-          "answer": "Tricuspid regurgitation (right-sided murmur \u2014 Carvallo sign positive)",
-          "distractors": [
-            "Mitral regurgitation",
-            "Aortic stenosis",
-            "VSD"
-          ],
-          "explanation": "Carvallo sign: right-sided murmurs increase with inspiration. TR increases because inspiration \u2192 increased venous return to RV \u2192 more regurgitant volume. PS also increases with inspiration. This maneuver helps distinguish TR from VSD or MR at the LLSB.",
-          "category": "identification"
-        }
-      ]
+      "q1": {
+        "answer": "Innocent murmur (all reassuring features present)",
+        "distractors": [
+          "VSD murmur",
+          "AS murmur",
+          "ASD murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "Which single finding would REQUIRE an echocardiogram?",
+        "answer": "Diastolic murmur (always pathologic)",
+        "distractors": [
+          "Grade 1/6 systolic murmur",
+          "Murmur louder when supine",
+          "Murmur heard during a fever"
+        ],
+        "category": "management",
+        "explanation": "Indications for echo: diastolic murmur (ALWAYS), harsh/loud \u22653/6, fixed split S2, abnormal S2, clicks, symptoms (syncope, cyanosis, FTT), abnormal ECG. A position-dependent soft systolic murmur in an asymptomatic child is innocent."
+      }
     },
     {
       "id": "mq-35",
-      "scenario": "Child with a history of Kawasaki disease treated 3 years ago. Now asymptomatic. Has mild coronary artery dilation persisting on echo.",
-      "murmurType": "variable",
+      "clues": [
+        "Child with known bicuspid aortic valve",
+        "Currently asymptomatic, grade 2/6 SEM at RUSB",
+        "Normal exercise tolerance",
+        "Echo shows mild aortic root dilation"
+      ],
+      "murmurType": "crescendo-decrescendo",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What long-term surveillance is needed?",
-          "answer": "Serial echocardiograms + long-term low-dose aspirin + possible stress testing",
-          "distractors": [
-            "No follow-up needed if asymptomatic",
-            "Annual ECG only",
-            "Repeat IVIG every year"
-          ],
-          "explanation": "Persistent coronary changes require long-term cardiology follow-up with serial echo. Low-dose aspirin (antiplatelet) continues until aneurysms resolve. Giant aneurysms (>8mm) may need anticoagulation. Stress testing assesses for ischemia. Activity restrictions depend on aneurysm size.",
-          "category": "management"
-        },
-        {
-          "questionPrompt": "What is Kawasaki disease the #1 cause of in developed countries?",
-          "answer": "Acquired heart disease in children",
-          "distractors": [
-            "Congenital heart disease",
-            "Sudden cardiac death in athletes",
-            "Pediatric hypertension"
-          ],
-          "explanation": "Kawasaki disease has surpassed acute rheumatic fever as the #1 cause of acquired heart disease in children in developed countries. Coronary artery aneurysms and stenosis can lead to myocardial ischemia, infarction, and sudden death \u2014 even years after the acute illness.",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Crescendo-decrescendo murmur of mild Aortic Stenosis (bicuspid AV)",
+        "distractors": [
+          "PS murmur (would be at LUSB)",
+          "VSD murmur (holosystolic)",
+          "Innocent murmur (no ejection click)"
+        ]
+      },
+      "q2": {
+        "prompt": "What is the most important long-term risk of bicuspid AV?",
+        "answer": "Progressive aortic stenosis + aortic root dilation with risk of dissection",
+        "distractors": [
+          "Spontaneous valve closure",
+          "Pulmonary hypertension",
+          "Coronary artery aneurysms"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Bicuspid AV (1-2% of population, most common congenital cardiac anomaly) \u2192 progressive AS from turbulent flow + calcification. Also aortic root dilation \u2192 dissection risk (like Marfan). Needs serial echo q1-2 years."
+      }
     },
     {
       "id": "mq-36",
-      "scenario": "Newborn with ductal-dependent cyanotic heart lesion. PGE1 is started. The nurse notices the baby becomes apneic.",
-      "murmurType": "none",
+      "clues": [
+        "Newborn with harsh systolic murmur at LUSB",
+        "22q11.2 deletion confirmed on genetic testing",
+        "Right aortic arch on CXR",
+        "Truncal cyanosis with feeding"
+      ],
+      "murmurType": "systolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What is the most important side effect of PGE1?",
-          "answer": "Apnea \u2014 be prepared to intubate when starting PGE1",
-          "distractors": [
-            "Hypertension",
-            "Hyperglycemia",
-            "Hypothermia"
-          ],
-          "explanation": "PGE1 side effects: APNEA (most important \u2014 always have intubation equipment ready), fever, hypotension, flushing, and diarrhea. Apnea occurs in ~12% of neonates receiving PGE1. Despite this risk, PGE1 is life-saving in ductal-dependent lesions.",
-          "category": "management"
-        },
-        {
-          "questionPrompt": "Name 3 ductal-dependent lesions where PGE1 is essential.",
-          "answer": "Critical CoA, HLHS, d-TGA, pulmonary atresia, critical PS",
-          "distractors": [
-            "ASD, VSD, innocent murmur",
-            "MVP, AR, MR",
-            "DCM, myocarditis, pericarditis"
-          ],
-          "explanation": "Ductal-dependent systemic flow: critical CoA, HLHS, interrupted aortic arch. Ductal-dependent pulmonary flow: critical PS, pulmonary atresia, severe ToF. Ductal-dependent mixing: d-TGA. These neonates will decompensate rapidly when the ductus closes (usually day 2-3 of life).",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Systolic ejection murmur of Tetralogy of Fallot (DiGeorge association)",
+        "distractors": [
+          "PS + Noonan syndrome",
+          "AS + Williams syndrome",
+          "PDA + Down syndrome"
+        ]
+      },
+      "q2": {
+        "prompt": "What immune deficiency results from thymic aplasia in this syndrome?",
+        "answer": "T-cell deficiency (impaired cell-mediated immunity \u2014 viral/fungal susceptibility)",
+        "distractors": [
+          "B-cell deficiency",
+          "Neutrophil dysfunction",
+          "Complement deficiency"
+        ],
+        "category": "associations",
+        "explanation": "DiGeorge: absent thymus \u2192 deficient T-cells \u2192 susceptible to viral, fungal, intracellular bacteria. Severity varies (partial to complete). Live vaccines contraindicated in severe cases."
+      }
     },
     {
       "id": "mq-37",
-      "scenario": "You are asked to differentiate two systolic murmurs on a shelf question. One is crescendo-decrescendo (diamond-shaped) and the other is holosystolic (plateau-shaped).",
-      "murmurType": "systolic",
+      "clues": [
+        "Child with history of Kawasaki disease treated 3 years ago",
+        "Currently asymptomatic",
+        "Echo shows persistent mild coronary artery dilation",
+        "No ischemic symptoms"
+      ],
+      "murmurType": "variable",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "Which defects cause a CRESCENDO-DECRESCENDO (diamond/ejection) systolic murmur?",
-          "answer": "AS, PS, HOCM, ASD (flow murmur), ToF \u2014 all involve flow across a stenotic or obstructed valve/outflow",
-          "distractors": [
-            "VSD, MR, TR",
-            "PDA, venous hum",
-            "MVP, innocent murmur only"
-          ],
-          "explanation": "Crescendo-decrescendo = ejection murmurs. Blood accelerates through stenosis, reaches peak velocity mid-systole, then decelerates. Causes: AS, PS, HOCM (dynamic obstruction), ASD (relative PS from increased flow), and ToF (RVOT obstruction). Innocent murmurs are also ejection-type.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "Which defects cause a HOLOSYSTOLIC (plateau/pansystolic) murmur?",
-          "answer": "VSD, MR, TR \u2014 all involve regurgitation/shunting through a constant pressure gradient",
-          "distractors": [
-            "AS, PS, HOCM",
-            "PDA, CoA",
-            "Innocent murmurs"
-          ],
-          "explanation": "Holosystolic = regurgitant murmurs. The pressure gradient is constant throughout systole \u2192 uniform turbulence from S1 to S2. VSD (LV\u2192RV shunt), MR (LV\u2192LA regurgitation), TR (RV\u2192RA regurgitation). The plateau shape distinguishes from the diamond shape of ejection murmurs.",
-          "category": "identification"
-        }
-      ]
+      "q1": {
+        "answer": "May have no murmur or soft flow murmur \u2014 the cardiac concern is coronary artery aneurysms, not valvular disease",
+        "distractors": [
+          "Loud holosystolic murmur of MR",
+          "Diastolic murmur of AR",
+          "Continuous PDA murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "What long-term management is needed?",
+        "answer": "Serial echocardiograms + continued low-dose aspirin + possible stress testing",
+        "distractors": [
+          "No follow-up if asymptomatic",
+          "Annual ECG only",
+          "Repeat IVIG annually"
+        ],
+        "category": "management",
+        "explanation": "Persistent coronary changes need long-term cardiology follow-up with serial echo. Low-dose aspirin continues until aneurysms resolve. Giant aneurysms (>8mm) may need anticoagulation. Kawasaki = #1 cause of acquired heart disease in developed countries."
+      }
     },
     {
       "id": "mq-38",
-      "scenario": "6-year-old with a continuous murmur. You need to determine if it is pathologic (PDA) or innocent (venous hum).",
-      "murmurType": "continuous",
+      "clues": [
+        "Teenage girl develops a soft systolic murmur during pregnancy",
+        "Murmur was NOT present before pregnancy",
+        "No diastolic component, no symptoms, normal S2",
+        "Normal echocardiogram"
+      ],
+      "murmurType": "innocent",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "Where is a venous hum typically heard?",
-          "answer": "Right supraclavicular area (from turbulent flow in jugular veins)",
-          "distractors": [
-            "Left infraclavicular area",
-            "Apex",
-            "Erb's point"
-          ],
-          "explanation": "Venous hum is heard at the right (sometimes left) supraclavicular fossa from turbulent flow in the jugular veins. PDA murmur is at the LEFT INFRACLAVICULAR area (where the ductus is located). Location is the first clue to differentiation.",
-          "category": "identification"
-        },
-        {
-          "questionPrompt": "What bedside maneuver differentiates the two?",
-          "answer": "Venous hum disappears with supine position, head turning, or jugular compression; PDA persists",
-          "distractors": [
-            "Both disappear with Valsalva",
-            "PDA disappears with inspiration",
-            "Venous hum gets louder with standing"
-          ],
-          "explanation": "Venous hum: interrupted by anything that changes jugular venous flow (lying flat, turning head to compress JV, direct compression). PDA: continuous regardless of position because it's a fixed anatomic shunt. Also, PDA has bounding pulses/wide pulse pressure \u2014 venous hum does not.",
-          "category": "clinical_reasoning"
-        }
-      ]
+      "q1": {
+        "answer": "Physiologic flow murmur (pregnancy increases cardiac output 30-50%)",
+        "distractors": [
+          "New-onset VSD",
+          "Pregnancy-induced aortic stenosis",
+          "Peripartum cardiomyopathy"
+        ]
+      },
+      "q2": {
+        "prompt": "When should a new murmur in pregnancy trigger concern?",
+        "answer": "Any diastolic murmur \u2014 NEVER physiologic in pregnancy",
+        "distractors": [
+          "Any systolic murmur at all",
+          "Only if heard in the third trimester",
+          "Only if louder than grade 3"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Systolic flow murmurs are common and usually benign in pregnancy (high CO state). Diastolic murmurs are NEVER physiologic \u2014 require full echo and cardiology evaluation regardless of trimester."
+      }
     },
     {
       "id": "mq-39",
-      "scenario": "Child with known bicuspid aortic valve. Currently asymptomatic with a grade 2/6 systolic ejection murmur at RUSB. Normal exercise tolerance.",
-      "murmurType": "crescendo-decrescendo",
+      "clues": [
+        "Child with migratory polyarthritis of large joints",
+        "Low-grade fever, prolonged PR interval on ECG",
+        "History of untreated sore throat 3 weeks prior",
+        "Developing a new holosystolic murmur at apex over days"
+      ],
+      "murmurType": "holosystolic",
       "difficulty": "core",
-      "parts": [
-        {
-          "questionPrompt": "What is the most important long-term risk of bicuspid AV?",
-          "answer": "Progressive aortic stenosis + risk of aortic root dilation and dissection",
-          "distractors": [
-            "Spontaneous valve closure",
-            "Pulmonary hypertension",
-            "Coronary artery aneurysms"
-          ],
-          "explanation": "Bicuspid AV (1-2% population, most common congenital cardiac anomaly) causes progressive AS over decades from turbulent flow \u2192 calcification. Also associated with aortic root dilation \u2192 risk of dissection (similar to Marfan). Requires serial echo monitoring even when asymptomatic.",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "What activity restriction is recommended?",
-          "answer": "Avoid heavy isometric exercise (weightlifting) if significant aortic root dilation, otherwise generally unrestricted",
-          "distractors": [
-            "Complete restriction from all sports",
-            "No restrictions at all",
-            "Only swimming allowed"
-          ],
-          "explanation": "Mild bicuspid AV without significant stenosis or aortic dilation \u2192 no activity restriction. If moderate-severe AS or significant aortic root dilation \u2192 avoid heavy isometric exercise (raises BP acutely \u2192 risk of dissection). Serial echo every 1-2 years monitors progression.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Holosystolic murmur of MR developing from acute rheumatic carditis",
+        "distractors": [
+          "VSD murmur",
+          "Endocarditis murmur",
+          "Innocent murmur"
+        ]
+      },
+      "q2": {
+        "prompt": "What valve is MOST commonly affected in acute rheumatic fever?",
+        "answer": "Mitral valve (MR acutely; MS in chronic rheumatic heart disease)",
+        "distractors": [
+          "Aortic valve",
+          "Tricuspid valve",
+          "Pulmonic valve"
+        ],
+        "category": "clinical_reasoning",
+        "explanation": "Mitral valve is #1 affected in ARF. Acute phase: MR (holosystolic at apex). Chronic rheumatic disease: mitral STENOSIS (low-pitched diastolic rumble at apex, opening snap). Aortic valve is second most common."
+      }
     },
     {
       "id": "mq-40",
-      "scenario": "You are reviewing a child's echocardiogram. There is a large VSD with left-to-right shunt. The estimated PA pressure is 70% of systemic.",
+      "clues": [
+        "Child with large VSD and L-to-R shunt on echo",
+        "PA pressure estimated at 70% of systemic",
+        "FTT despite diuretics and ACE inhibitors",
+        "Holosystolic murmur at LLSB, getting softer over recent weeks"
+      ],
       "murmurType": "holosystolic",
       "difficulty": "advanced",
-      "parts": [
-        {
-          "questionPrompt": "At what PA pressure ratio does irreversible pulmonary vascular disease become a concern?",
-          "answer": "When PA pressure exceeds 50-66% of systemic pressure \u2014 risk of Eisenmenger if not repaired",
-          "distractors": [
-            "Only when PA pressure exceeds systemic",
-            "Below 25% of systemic",
-            "PA pressure is never clinically relevant"
-          ],
-          "explanation": "When PA pressure is >50% of systemic, pulmonary vascular disease is progressing. Surgical repair should be performed BEFORE the PVR/SVR ratio exceeds 0.5 or the PA pressure exceeds 2/3 of systemic. Once Eisenmenger syndrome is established (fixed elevated PVR), surgical repair is contraindicated.",
-          "category": "clinical_reasoning"
-        },
-        {
-          "questionPrompt": "When should this VSD be repaired surgically?",
-          "answer": "Now \u2014 PA pressure at 70% of systemic indicates significant pulmonary hypertension requiring urgent repair",
-          "distractors": [
-            "Wait until age 5 for elective repair",
-            "Medical management only",
-            "Repair only if PA pressure exceeds 100% of systemic"
-          ],
-          "explanation": "PA pressure at 70% of systemic is an urgent indication for surgical repair to prevent irreversible Eisenmenger syndrome. Delay risks permanent pulmonary vascular disease. Post-repair, PA pressure typically normalizes if done before irreversible changes. The window for repair narrows with age.",
-          "category": "management"
-        }
-      ]
+      "q1": {
+        "answer": "Softening holosystolic murmur of VSD \u2014 rising PA pressure is eliminating the LV-RV gradient (Eisenmenger progression)",
+        "distractors": [
+          "VSD closing spontaneously (murmur would stay loud until closed)",
+          "Improving with medical therapy",
+          "Artifact from chest wall growth"
+        ]
+      },
+      "q2": {
+        "prompt": "What must be done NOW?",
+        "answer": "Urgent surgical VSD closure before PVR becomes irreversible",
+        "distractors": [
+          "Continue medical management and reassess in 6 months",
+          "Wait for PA pressure to exceed systemic before deciding",
+          "Start sildenafil and defer surgery indefinitely"
+        ],
+        "category": "management",
+        "explanation": "PA pressure at 70% of systemic = progressing toward Eisenmenger. Must repair NOW before irreversible. Once PVR is fixed (Eisenmenger), surgery is CONTRAINDICATED. A softening VSD murmur with worsening symptoms is a RED FLAG."
+      }
     }
   ],
   "acquiredHeartDisease": [
