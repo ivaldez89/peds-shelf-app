@@ -332,8 +332,8 @@
       "id": "mq-1",
       "clues": [
         "2-year-old with failure to thrive and diaphoresis during feeding",
-        "Harsh holosystolic murmur loudest at the LLSB",
-        "Pansystolic thrill palpable",
+        "Pansystolic thrill palpable at the lower left sternal border",
+        "Tachypnea and intercostal retractions worsen during feeding",
         "CXR: cardiomegaly with increased pulmonary vascular markings"
       ],
       "murmurType": "holosystolic",
@@ -362,9 +362,9 @@
       "id": "mq-2",
       "clues": [
         "Premature neonate in NICU with worsening respiratory status",
-        "Continuous 'machine-like' murmur at left infraclavicular area",
         "Bounding peripheral pulses with wide pulse pressure",
-        "Hyperactive precordium"
+        "Hyperactive precordium on examination",
+        "Murmur heard best at left infraclavicular area"
       ],
       "murmurType": "continuous",
       "difficulty": "core",
@@ -393,8 +393,8 @@
       "clues": [
         "4-year-old girl with dyspnea on exertion",
         "Wide FIXED split S2 that does not vary with respiration",
-        "Soft systolic ejection murmur at LUSB",
-        "Mid-diastolic rumble at LLSB"
+        "Murmur at LUSB with mid-diastolic rumble at LLSB",
+        "Frequent respiratory infections since infancy"
       ],
       "murmurType": "ejection",
       "difficulty": "core",
@@ -421,10 +421,10 @@
     {
       "id": "mq-4",
       "clues": [
-        "5-year-old with crescendo-decrescendo systolic murmur at RUSB",
-        "Ejection click heard early in systole",
+        "5-year-old with exertional fatigue and dizziness",
+        "Ejection click heard early in systole at RUSB",
         "Murmur radiates to carotids bilaterally",
-        "Narrow pulse pressure"
+        "Narrow pulse pressure and pulsus parvus et tardus"
       ],
       "murmurType": "crescendo-decrescendo",
       "difficulty": "core",
@@ -451,10 +451,10 @@
     {
       "id": "mq-5",
       "clues": [
-        "Newborn with systolic ejection murmur at LUSB",
-        "Ejection click present, no cyanosis",
+        "Newborn with murmur at LUSB and no cyanosis",
+        "Ejection click present on auscultation",
         "Murmur intensity INCREASES with inspiration",
-        "RV heave palpable"
+        "RV heave palpable on examination"
       ],
       "murmurType": "crescendo-decrescendo",
       "difficulty": "core",
@@ -481,7 +481,7 @@
     {
       "id": "mq-6",
       "clues": [
-        "3-year-old with musical/vibratory quality systolic murmur at LLSB",
+        "3-year-old with musical/vibratory quality murmur at LLSB",
         "Grade 2/6, louder when supine, softer when standing",
         "No diastolic component, normal S1 and S2, no clicks",
         "Asymptomatic with normal growth and development"
@@ -511,10 +511,10 @@
     {
       "id": "mq-7",
       "clues": [
-        "Teenage girl with mid-systolic click followed by late systolic murmur at apex",
+        "Teenage girl with click heard at the apex on auscultation",
         "Click and murmur move EARLIER with Valsalva and standing",
         "Click and murmur move LATER with squatting",
-        "Tall, thin body habitus"
+        "Tall, thin body habitus with pectus excavatum"
       ],
       "murmurType": "late-systolic",
       "difficulty": "core",
@@ -541,7 +541,7 @@
     {
       "id": "mq-8",
       "clues": [
-        "12-year-old athlete with systolic murmur at Erb's point",
+        "12-year-old athlete with murmur heard at Erb's point",
         "Murmur INCREASES with Valsalva and standing",
         "Murmur DECREASES with squatting and leg elevation",
         "ECG: deep Q waves in lateral leads, LVH"
@@ -571,7 +571,7 @@
     {
       "id": "mq-9",
       "clues": [
-        "6-month-old with holosystolic murmur at apex radiating to axilla",
+        "6-month-old with murmur at apex radiating to axilla",
         "History of pharyngitis and fever 4 weeks ago",
         "Carey-Coombs mid-diastolic rumble also heard",
         "Erythema marginatum rash on trunk"
@@ -601,8 +601,8 @@
     {
       "id": "mq-10",
       "clues": [
-        "8-year-old with high-pitched blowing early diastolic decrescendo murmur",
-        "Best heard at Erb's point with patient sitting up, leaning forward, at end-expiration",
+        "8-year-old with murmur best heard leaning forward at end-expiration",
+        "High-pitched blowing quality heard at Erb's point",
         "Wide pulse pressure and bounding 'water-hammer' pulses",
         "History of prior rheumatic fever"
       ],
@@ -633,7 +633,7 @@
       "clues": [
         "Toddler with weak femoral pulses and strong brachial pulses",
         "BP: right arm 130/85, right leg 80/60",
-        "Systolic murmur over left back/interscapular area",
+        "Murmur heard over left back/interscapular area",
         "CXR: rib notching, figure-3 sign"
       ],
       "murmurType": "ejection",
@@ -662,7 +662,7 @@
       "id": "mq-12",
       "clues": [
         "3-year-old with cyanosis since infancy, now squatting during play",
-        "Systolic ejection murmur at LUSB that gets SOFTER during a crying spell",
+        "Murmur at LUSB that gets SOFTER during a crying spell",
         "Boot-shaped heart on CXR with decreased pulmonary vascular markings",
         "Child turns deeply cyanotic during the spell"
       ],
@@ -721,7 +721,7 @@
     {
       "id": "mq-14",
       "clues": [
-        "Child with holosystolic murmur at LLSB",
+        "Child with murmur at LLSB",
         "Murmur INCREASES with inspiration (Carvallo sign positive)",
         "Prominent v waves in JVP",
         "Pulsatile liver on exam"
@@ -751,8 +751,8 @@
     {
       "id": "mq-15",
       "clues": [
-        "10-year-old with new holosystolic murmur and early diastolic murmur",
-        "Fever for 2 weeks, fatigue, weight loss",
+        "10-year-old with NEW murmur and fever for 2 weeks",
+        "Fatigue, weight loss, night sweats",
         "Janeway lesions on palms, Osler nodes on fingertips",
         "Splinter hemorrhages, positive blood cultures x 2"
       ],
@@ -781,7 +781,7 @@
     {
       "id": "mq-16",
       "clues": [
-        "Soft systolic murmur heard in healthy newborn nursery",
+        "Murmur heard in healthy newborn nursery",
         "Murmur radiates to bilateral axillae and back",
         "Disappears completely by 6-month visit",
         "Normal echo, normal O2 saturations"
@@ -811,7 +811,7 @@
     {
       "id": "mq-17",
       "clues": [
-        "Adolescent with continuous low-pitched murmur at right supraclavicular area",
+        "Adolescent with murmur at right supraclavicular area",
         "Murmur disappears when patient turns head or lies down",
         "Disappears with light jugular vein compression",
         "Completely asymptomatic"
@@ -873,7 +873,7 @@
       "clues": [
         "6-week-old with poor feeding and tachypnea",
         "Prominent S3 gallop at apex",
-        "Soft holosystolic murmur at apex",
+        "Soft murmur at apex with hepatomegaly",
         "CXR: pulmonary edema, cardiomegaly; Echo: EF 25%"
       ],
       "murmurType": "holosystolic",
@@ -901,7 +901,7 @@
     {
       "id": "mq-20",
       "clues": [
-        "Infant with Down syndrome and holosystolic murmur at LLSB",
+        "Infant with Down syndrome and murmur at LLSB",
         "Mid-diastolic rumble at apex",
         "Echo: complete atrioventricular canal defect (AVCD)",
         "Developing signs of heart failure at 4 months"
@@ -963,7 +963,7 @@
       "id": "mq-22",
       "clues": [
         "Newborn infant of a diabetic mother, LGA",
-        "Systolic murmur heard at left sternal border",
+        "Murmur heard at left sternal border",
         "Echo: asymmetric septal hypertrophy with dynamic LVOT obstruction",
         "No family history of cardiomyopathy"
       ],
@@ -993,7 +993,7 @@
     {
       "id": "mq-23",
       "clues": [
-        "Infant with continuous murmur at upper left chest",
+        "Infant with murmur at upper left chest",
         "Mother had rubella infection during first trimester",
         "Child has cataracts and sensorineural hearing loss",
         "Blueberry muffin rash noted at birth"
@@ -1024,7 +1024,7 @@
       "id": "mq-24",
       "clues": [
         "15-year-old competitive swimmer at sports physical",
-        "Systolic murmur that INCREASES with Valsalva",
+        "Murmur that INCREASES with Valsalva and standing",
         "No symptoms currently",
         "Family history: uncle died suddenly at age 28 during marathon"
       ],
@@ -1054,8 +1054,8 @@
       "id": "mq-25",
       "clues": [
         "8-year-old post strep pharyngitis presenting with carditis",
-        "Holosystolic murmur at apex, mid-diastolic rumble at apex",
-        "Subcutaneous nodules over elbows",
+        "Murmur at apex with mid-diastolic rumble",
+        "Subcutaneous nodules over elbows and extensor surfaces",
         "Migratory polyarthritis of large joints"
       ],
       "murmurType": "holosystolic",
@@ -1085,7 +1085,7 @@
       "clues": [
         "Newborn with cyanosis and a single S2 (no splitting)",
         "Large truncal vessel overriding a VSD on echo",
-        "Harsh systolic murmur at LLSB",
+        "Murmur at LLSB",
         "Absent thymic shadow on CXR"
       ],
       "murmurType": "systolic",
@@ -1115,7 +1115,7 @@
       "clues": [
         "Newborn with snowman sign (figure-8) on CXR",
         "Mild cyanosis, wide fixed split S2",
-        "Soft systolic ejection murmur at LUSB",
+        "Murmur at LUSB",
         "Echo shows all 4 pulmonary veins draining into vertical vein"
       ],
       "murmurType": "ejection",
@@ -1143,10 +1143,10 @@
     {
       "id": "mq-28",
       "clues": [
-        "Premature infant with confirmed PDA murmur",
-        "Indomethacin given for 3 courses",
-        "PDA has NOT closed",
-        "Still hemodynamically significant with CHF signs"
+        "Premature infant with confirmed PDA on echo",
+        "Indomethacin given for 3 courses without success",
+        "PDA has NOT closed, still hemodynamically significant",
+        "Continues with CHF signs (tachypnea, hepatomegaly)"
       ],
       "murmurType": "continuous",
       "difficulty": "core",
@@ -1233,7 +1233,7 @@
     {
       "id": "mq-31",
       "clues": [
-        "7-year-old with harsh systolic murmur at LLSB",
+        "7-year-old with murmur at LLSB",
         "Murmur gets LOUDER when the child squats",
         "Murmur radiates to the axilla",
         "No change with respiration"
@@ -1263,7 +1263,7 @@
     {
       "id": "mq-32",
       "clues": [
-        "Holosystolic murmur at LLSB in a child",
+        "Child with murmur at LLSB",
         "Murmur does NOT change with respiration",
         "No JVP changes, no pulsatile liver",
         "CXR shows increased pulmonary vascular markings"
@@ -1294,7 +1294,7 @@
       "id": "mq-33",
       "clues": [
         "10-year-old with new murmur during a febrile illness",
-        "Grade 2/6 systolic murmur at LLSB",
+        "Grade 2/6 murmur at LLSB",
         "Murmur disappears when fever resolves",
         "Normal S2, no clicks, no diastolic component"
       ],
@@ -1324,7 +1324,7 @@
       "id": "mq-34",
       "clues": [
         "Asymptomatic 4-year-old at well-child visit",
-        "Soft systolic murmur that changes with position",
+        "Soft murmur that changes with position (louder supine, softer standing)",
         "Normal S1, S2, no clicks, no diastolic sounds",
         "Normal growth, normal development, no FTT"
       ],
@@ -1353,9 +1353,9 @@
     {
       "id": "mq-35",
       "clues": [
-        "Child with known bicuspid aortic valve",
-        "Currently asymptomatic, grade 2/6 SEM at RUSB",
-        "Normal exercise tolerance",
+        "Child with known bicuspid aortic valve on prior echo",
+        "Currently asymptomatic, grade 2/6 murmur at RUSB",
+        "Normal exercise tolerance, no syncope or chest pain",
         "Echo shows mild aortic root dilation"
       ],
       "murmurType": "crescendo-decrescendo",
@@ -1383,7 +1383,7 @@
     {
       "id": "mq-36",
       "clues": [
-        "Newborn with harsh systolic murmur at LUSB",
+        "Newborn with murmur at LUSB and cyanosis",
         "22q11.2 deletion confirmed on genetic testing",
         "Right aortic arch on CXR",
         "Truncal cyanosis with feeding"
@@ -1443,7 +1443,7 @@
     {
       "id": "mq-38",
       "clues": [
-        "Teenage girl develops a soft systolic murmur during pregnancy",
+        "Teenage girl develops a new murmur during pregnancy",
         "Murmur was NOT present before pregnancy",
         "No diastolic component, no symptoms, normal S2",
         "Normal echocardiogram"
@@ -1476,7 +1476,7 @@
         "Child with migratory polyarthritis of large joints",
         "Low-grade fever, prolonged PR interval on ECG",
         "History of untreated sore throat 3 weeks prior",
-        "Developing a new holosystolic murmur at apex over days"
+        "Developing a new murmur at apex over days"
       ],
       "murmurType": "holosystolic",
       "difficulty": "core",
@@ -1506,7 +1506,7 @@
         "Child with large VSD and L-to-R shunt on echo",
         "PA pressure estimated at 70% of systemic",
         "FTT despite diuretics and ACE inhibitors",
-        "Holosystolic murmur at LLSB, getting softer over recent weeks"
+        "Murmur at LLSB getting softer over recent weeks"
       ],
       "murmurType": "holosystolic",
       "difficulty": "advanced",
