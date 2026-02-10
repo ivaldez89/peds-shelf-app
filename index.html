@@ -1334,7 +1334,7 @@
         { id: 'streak_5', name: 'Unstoppable', desc: '5 correct in a row', icon: '⚡' },
         { id: 'streak_10', name: 'God Mode', desc: '10 correct in a row', icon: '🌟' },
         { id: 'bug_slayer', name: 'Bug Slayer', desc: 'Complete Bug-Drug Matcher', icon: '🦠' },
-        { id: 'heart_whisperer', name: 'Heart Whisperer', desc: 'Complete Murmur Quiz', icon: '❤️' },
+        { id: 'heart_whisperer', name: 'Heart Whisperer', desc: 'Complete Murmur Master', icon: '❤️' },
         { id: 'vaccine_hero', name: 'Vaccine Champion', desc: 'Complete Vaccine Trainer', icon: '💪' },
         { id: 'detective', name: 'Clinical Detective', desc: "Complete What's the Bug", icon: '🔍' },
         { id: 'scenario_master', name: 'Scenario Master', desc: 'Complete Shelf Scenarios', icon: '📋' },
@@ -3385,7 +3385,7 @@
       const tabs = [
         { id: 'overview', label: 'Overview', icon: '❤️' },
         { id: 'chd_cards', label: 'CHD Cards', icon: '🫀' },
-        { id: 'murmur_quiz', label: 'Name That Murmur', icon: '🩺' },
+        { id: 'murmur_master', label: 'Murmur Master', icon: '🫀' },
         { id: 'acquired', label: 'Acquired Disease', icon: '🔥' },
         { id: 'ecg', label: 'ECG Patterns', icon: '📈' },
         { id: 'pharm', label: 'Cardiac Pharm', icon: '💊' },
@@ -3413,7 +3413,7 @@
           </div>
           {tab === 'overview' && <CardioOverview data={cardioData} setTab={setTab} />}
           {tab === 'chd_cards' && <CHDCards lesions={cardioData.chdLesions || []} />}
-          {tab === 'murmur_quiz' && <MurmurQuiz items={cardioData.murmurQuiz || []} />}
+          {tab === 'murmur_master' && <MurmurMaster items={cardioData.murmurQuiz || []} chdLesions={cardioData.chdLesions || []} />}
           {tab === 'acquired' && <AcquiredHeartDisease conditions={cardioData.acquiredHeartDisease || []} />}
           {tab === 'ecg' && <ECGPatterns patterns={cardioData.ecgPatterns || []} />}
           {tab === 'pharm' && <CardiacPharm drugs={cardioData.pharmacology || []} />}
@@ -3430,7 +3430,7 @@
     function CardioOverview({ data, setTab }) {
       const modules = [
         { id: 'chd_cards', icon: '🫀', title: 'CHD Cards', desc: 'Cyanotic & acyanotic congenital lesions with hemodynamics', count: `${(data.chdLesions||[]).length} lesions`, color: 'bg-rose-950/30 text-rose-300 border-rose-800/30' },
-        { id: 'murmur_quiz', icon: '🩺', title: 'Name That Murmur', desc: 'Progressive clue reveal quiz on cardiac murmurs', count: `${(data.murmurQuiz||[]).length} cases`, color: 'bg-pink-50 text-pink-600 border-pink-300' },
+        { id: 'murmur_master', icon: '🫀', title: 'Murmur Master', desc: 'Interactive heart diagram, waveforms, buzzwords & gamified murmur quiz', count: `${(data.murmurQuiz||[]).length} cases`, color: 'bg-pink-50 text-pink-600 border-pink-300' },
         { id: 'acquired', icon: '🔥', title: 'Acquired Heart Disease', desc: 'Myocarditis, pericarditis, rheumatic fever & more', count: `${(data.acquiredHeartDisease||[]).length} conditions`, color: 'bg-red-50 text-red-600 border-red-300' },
         { id: 'ecg', icon: '📈', title: 'ECG Patterns', desc: 'Age-appropriate ECG findings and arrhythmias', count: `${(data.ecgPatterns||[]).length} patterns`, color: 'bg-purple-50 text-purple-600 border-purple-300' },
         { id: 'pharm', icon: '💊', title: 'Cardiac Pharmacology', desc: 'Inotropes, vasodilators, and antiarrhythmics', count: `${(data.pharmacology||[]).length} drugs`, color: 'bg-cyan-50 text-cyan-600 border-cyan-300' },
@@ -3440,9 +3440,9 @@
         { id: 'pearls', icon: '💡', title: 'Pearls & Associations', desc: 'High-yield buzzword associations and clinical pearls', count: `${(data.clinicalPearls||[]).length + (data.associations||[]).length} items`, color: 'bg-yellow-50 text-yellow-600 border-yellow-300' },
       ];
       const getProgressBadge = (moduleId) => {
-        // Only murmur_quiz and scenarios have quiz progress tracking
+        // Only murmur_master and scenarios have quiz progress tracking
         const quizModuleMap = {
-          'murmur_quiz': 'cardio_murmur_quiz',
+          'murmur_master': 'cardio_murmur_quiz',
           'scenarios': 'cardio_shelf_scenarios'
         };
         const key = quizModuleMap[moduleId];
@@ -3456,7 +3456,7 @@
         <div className="space-y-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <StatCard label="CHD Lesions" value={(data.chdLesions||[]).length} sub="cyanotic & acyanotic" />
-            <StatCard label="Murmur Cases" value={(data.murmurQuiz||[]).length} sub="pattern recognition" />
+            <StatCard label="Murmur Master" value={(data.murmurQuiz||[]).length} sub="quiz cases + explore atlas" />
             <StatCard label="ECG Patterns" value={(data.ecgPatterns||[]).length} sub="peds-specific" />
             <StatCard label="Scenarios" value={(data.shelfScenarios||[]).length} sub="shelf exam style" />
           </div>
@@ -3536,8 +3536,142 @@
       );
     }
 
-    // ─── MURMUR QUIZ ──────────────────────────────────────────────────
-    function MurmurQuiz({ items }) {
+    // ─── MURMUR WAVEFORM SVG ─────────────────────────────────────────
+    function MurmurWaveform({ type, small }) {
+      const h = small ? 30 : 50;
+      const w = small ? 120 : 200;
+      const paths = {
+        'crescendo-decrescendo': `M0,${h} L${w*0.1},${h} L${w*0.3},${h*0.2} L${w*0.5},${h} L${w*0.55},${h} L${w*0.6},${h} L${w*0.95},${h} L${w},${h}`,
+        'holosystolic': `M0,${h} L${w*0.1},${h} L${w*0.12},${h*0.35} L${w*0.48},${h*0.35} L${w*0.5},${h} L${w*0.55},${h} L${w*0.95},${h} L${w},${h}`,
+        'continuous': `M0,${h} L${w*0.05},${h} Q${w*0.15},${h*0.3} ${w*0.25},${h*0.4} Q${w*0.35},${h*0.5} ${w*0.45},${h*0.3} Q${w*0.55},${h*0.15} ${w*0.65},${h*0.35} Q${w*0.75},${h*0.5} ${w*0.85},${h*0.45} L${w*0.95},${h} L${w},${h}`,
+        'ejection': `M0,${h} L${w*0.1},${h} L${w*0.2},${h*0.55} L${w*0.35},${h*0.2} L${w*0.48},${h*0.65} L${w*0.5},${h} L${w*0.55},${h} L${w*0.95},${h} L${w},${h}`,
+        'diastolic': `M0,${h} L${w*0.1},${h} L${w*0.15},${h*0.75} L${w*0.45},${h*0.75} L${w*0.5},${h} L${w*0.55},${h} L${w*0.58},${h*0.35} L${w*0.65},${h*0.5} L${w*0.85},${h*0.85} L${w*0.95},${h} L${w},${h}`,
+        'late-systolic': `M0,${h} L${w*0.1},${h} L${w*0.3},${h} L${w*0.32},${h*0.7} L${w*0.35},${h*0.4} L${w*0.48},${h*0.55} L${w*0.5},${h} L${w*0.55},${h} L${w*0.95},${h} L${w},${h}`,
+        'innocent': `M0,${h} L${w*0.1},${h} L${w*0.2},${h*0.7} Q${w*0.3},${h*0.5} ${w*0.35},${h*0.65} L${w*0.45},${h*0.85} L${w*0.5},${h} L${w*0.55},${h} L${w*0.95},${h} L${w},${h}`,
+        'none': `M0,${h} L${w},${h}`,
+        'variable': `M0,${h} L${w*0.1},${h} Q${w*0.2},${h*0.6} ${w*0.25},${h*0.7} Q${w*0.3},${h*0.8} ${w*0.35},${h*0.6} L${w*0.5},${h} L${w*0.55},${h} L${w*0.7},${h*0.75} L${w*0.8},${h*0.65} L${w*0.95},${h} L${w},${h}`,
+        'systolic': `M0,${h} L${w*0.1},${h} L${w*0.15},${h*0.5} L${w*0.3},${h*0.25} L${w*0.45},${h*0.6} L${w*0.5},${h} L${w*0.55},${h} L${w*0.95},${h} L${w},${h}`
+      };
+      const d = paths[type] || paths['systolic'];
+      const labels = { 'crescendo-decrescendo': 'Crescendo-Decrescendo', 'holosystolic': 'Holosystolic (Pansystolic)', 'continuous': 'Continuous (Machinery)', 'ejection': 'Systolic Ejection', 'diastolic': 'Diastolic', 'late-systolic': 'Late Systolic + Click', 'innocent': 'Innocent / Vibratory', 'none': 'No Murmur / Silent', 'variable': 'Variable', 'systolic': 'Systolic' };
+      return (
+        <div className="flex flex-col items-center">
+          <svg viewBox={`0 0 ${w} ${h+8}`} className={small ? 'w-28 h-8' : 'w-48 h-14'}>
+            <line x1={w*0.5} y1="0" x2={w*0.5} y2={h} stroke="#94a3b8" strokeWidth="1" strokeDasharray="2,2" />
+            <line x1={w*0.1} y1={h} x2={w*0.95} y2={h} stroke="#64748b" strokeWidth="1" />
+            <text x={w*0.08} y={h+7} fontSize="6" fill="#94a3b8">S1</text>
+            <text x={w*0.48} y={h+7} fontSize="6" fill="#94a3b8">S2</text>
+            <text x={w*0.08} y={h*0.15} fontSize="5" fill="#cbd5e1">sys</text>
+            <text x={w*0.56} y={h*0.15} fontSize="5" fill="#cbd5e1">dia</text>
+            <path d={d} fill="none" stroke="#f43f5e" strokeWidth={small ? 1.5 : 2} strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          {!small && <div className="text-[10px] text-rose-400 font-medium mt-1 text-center">{labels[type] || type}</div>}
+        </div>
+      );
+    }
+
+    // ─── INTERACTIVE HEART DIAGRAM ───────────────────────────────────
+    function HeartDiagram({ activeLocation, onLocationClick, highlightLocations }) {
+      const locations = [
+        { id: 'aortic', label: 'Aortic', abbr: 'A', cx: 138, cy: 72, desc: 'RUSB (2nd ICS, right)', color: '#ef4444' },
+        { id: 'pulmonic', label: 'Pulmonic', abbr: 'P', cx: 92, cy: 72, desc: 'LUSB (2nd ICS, left)', color: '#8b5cf6' },
+        { id: 'erbs', label: "Erb's Point", abbr: 'E', cx: 108, cy: 108, desc: '3rd ICS, left sternal border', color: '#f59e0b' },
+        { id: 'tricuspid', label: 'Tricuspid', abbr: 'T', cx: 118, cy: 145, desc: 'LLSB (4th ICS, left)', color: '#06b6d4' },
+        { id: 'mitral', label: 'Mitral (Apex)', abbr: 'M', cx: 85, cy: 175, desc: '5th ICS, midclavicular', color: '#10b981' },
+      ];
+      const active = highlightLocations || [];
+      return (
+        <div className="relative mx-auto" style={{ width: 220, height: 240 }}>
+          <svg viewBox="0 0 220 240" className="w-full h-full">
+            <defs>
+              <radialGradient id="heartGrad" cx="50%" cy="40%">
+                <stop offset="0%" stopColor="#fda4af" />
+                <stop offset="100%" stopColor="#be123c" />
+              </radialGradient>
+              <filter id="heartShadow">
+                <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#881337" floodOpacity="0.3" />
+              </filter>
+            </defs>
+            {/* Chest outline */}
+            <ellipse cx="115" cy="130" rx="90" ry="105" fill="none" stroke="#334155" strokeWidth="1.5" strokeDasharray="4,3" opacity="0.4" />
+            <text x="115" y="22" textAnchor="middle" fontSize="9" fill="#64748b" fontWeight="600">ANTERIOR CHEST</text>
+            {/* Rib hints */}
+            {[55,80,105,130,155].map((y,i) => <line key={i} x1="40" y1={y} x2="190" y2={y} stroke="#334155" strokeWidth="0.5" opacity="0.15" />)}
+            {/* Heart shape */}
+            <path d="M 110 85 C 110 55, 155 45, 155 80 C 155 110, 125 145, 110 175 C 95 145, 65 110, 65 80 C 65 45, 110 55, 110 85 Z"
+              fill="url(#heartGrad)" stroke="#9f1239" strokeWidth="2" filter="url(#heartShadow)" opacity="0.85" />
+            {/* Auscultation points */}
+            {locations.map(loc => {
+              const isActive = activeLocation === loc.id || active.includes(loc.id);
+              return (
+                <g key={loc.id} onClick={() => onLocationClick && onLocationClick(loc.id)} className="cursor-pointer">
+                  <circle cx={loc.cx} cy={loc.cy} r={isActive ? 14 : 10} fill={isActive ? loc.color : '#1e293b'} stroke={loc.color} strokeWidth={isActive ? 3 : 2}
+                    opacity={isActive ? 1 : 0.7} className="transition-all duration-300" />
+                  <text x={loc.cx} y={loc.cy + 4} textAnchor="middle" fontSize="10" fill="white" fontWeight="bold">{loc.abbr}</text>
+                  {isActive && <circle cx={loc.cx} cy={loc.cy} r="18" fill="none" stroke={loc.color} strokeWidth="1.5" opacity="0.4">
+                    <animate attributeName="r" from="14" to="22" dur="1.2s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" from="0.6" to="0" dur="1.2s" repeatCount="indefinite" />
+                  </circle>}
+                </g>
+              );
+            })}
+          </svg>
+          {/* Callout labels */}
+          {locations.map(loc => {
+            const isActive = activeLocation === loc.id || active.includes(loc.id);
+            const isLeft = loc.cx < 110;
+            return (
+              <div key={loc.id + '-label'} onClick={() => onLocationClick && onLocationClick(loc.id)}
+                className={`absolute cursor-pointer transition-all duration-200 ${isActive ? 'opacity-100 scale-105' : 'opacity-60 hover:opacity-90'}`}
+                style={{ top: loc.cy - 8, left: isLeft ? -4 : undefined, right: isLeft ? undefined : -4, transform: isLeft ? 'translateX(-100%)' : 'translateX(100%)' }}>
+                <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold border whitespace-nowrap ${isActive ? 'text-white border-opacity-60' : 'text-slate-400 border-slate-700'}`}
+                  style={isActive ? { backgroundColor: loc.color + '30', borderColor: loc.color } : {}}>
+                  {!isLeft && <div className="w-4 h-px" style={{ backgroundColor: isActive ? loc.color : '#475569' }} />}
+                  <span>{loc.label}</span>
+                  {isLeft && <div className="w-4 h-px" style={{ backgroundColor: isActive ? loc.color : '#475569' }} />}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    // ─── MURMUR MASTER — GAMIFIED MODULE ─────────────────────────────
+    function MurmurMaster({ items, chdLesions }) {
+      const [mode, setMode] = useState('explore'); // 'explore' | 'quiz'
+      const [exploredLocation, setExploredLocation] = useState(null);
+
+      // ── Explore mode data: murmurs organized by auscultation location ──
+      const MURMUR_ATLAS = [
+        { location: 'aortic', murmurs: [
+          { name: 'Aortic Stenosis', type: 'crescendo-decrescendo', timing: 'Systolic', buzzwords: ['systolic ejection murmur at RUSB', 'ejection click', 'narrow pulse pressure', 'crescendo-decrescendo', 'radiates to carotids'], shelfPearl: 'Bicuspid aortic valve is the most common cause in children. Supravalvular AS → think Williams syndrome (elfin facies, hypercalcemia).', associated: 'Bicuspid aortic valve, Williams syndrome' },
+          { name: 'Aortic Regurgitation', type: 'diastolic', timing: 'Early diastolic', buzzwords: ['early diastolic decrescendo murmur', 'wide pulse pressure', 'bounding pulses', 'Austin Flint murmur', 'water-hammer pulse'], shelfPearl: 'In peds, think acute rheumatic fever or endocarditis causing aortic valve damage. Austin Flint murmur = low-pitched diastolic rumble at apex.', associated: 'Rheumatic fever, Marfan, endocarditis' },
+        ]},
+        { location: 'pulmonic', murmurs: [
+          { name: 'Pulmonary Stenosis', type: 'crescendo-decrescendo', timing: 'Systolic', buzzwords: ['systolic ejection murmur at LUSB', 'ejection click', 'Carvallo sign', 'increases with inspiration', 'right axis deviation'], shelfPearl: 'Carvallo sign: murmur increases with inspiration (more RV filling). Associated with Noonan syndrome. Mild PS = observation; moderate-severe = balloon valvuloplasty.', associated: 'Noonan syndrome, congenital rubella' },
+          { name: 'Innocent Pulmonary Flow Murmur', type: 'innocent', timing: 'Systolic', buzzwords: ['soft systolic murmur', 'newborn', 'resolves by 6 months', 'peripheral pulmonic stenosis', 'benign'], shelfPearl: 'Very common in newborns due to branch PA angle. Disappears by 3-6 months. No workup needed if asymptomatic with normal exam.', associated: 'Normal variant in newborns' },
+          { name: 'ASD (relative PS)', type: 'ejection', timing: 'Systolic', buzzwords: ['fixed split S2', 'soft systolic ejection murmur at LUSB', 'increased pulmonary vascular markings', 'wide fixed split S2'], shelfPearl: 'The murmur in ASD is NOT from the septal defect itself — it is from increased flow across the pulmonic valve. The hallmark is FIXED split S2.', associated: 'Ostium secundum (70%), Holt-Oram' },
+        ]},
+        { location: 'erbs', murmurs: [
+          { name: 'Aortic Regurgitation (heard at Erb\'s)', type: 'diastolic', timing: 'Early diastolic', buzzwords: ['high-pitched blowing diastolic', 'best heard sitting up leaning forward', 'end-expiration'], shelfPearl: 'Erb\'s point is where AR is often best heard. Have the patient sit up, lean forward, and exhale.', associated: 'Rheumatic heart disease, bicuspid AV' },
+          { name: 'HOCM', type: 'systolic', timing: 'Systolic', buzzwords: ['increases with Valsalva', 'decreases with squatting', 'sudden cardiac death in athletes', 'asymmetric septal hypertrophy', 'SAM of mitral valve'], shelfPearl: 'HOCM = #1 cause of sudden cardiac death in young athletes. Murmur INCREASES with Valsalva (less preload → more obstruction). OPPOSITE of fixed AS. Disqualify from competitive sports.', associated: 'Autosomal dominant, sarcomeric mutations' },
+        ]},
+        { location: 'tricuspid', murmurs: [
+          { name: 'VSD', type: 'holosystolic', timing: 'Holosystolic', buzzwords: ['harsh holosystolic murmur at LLSB', 'pansystolic thrill', 'louder with smaller VSD', 'increased pulmonary vascular markings'], shelfPearl: 'Small restrictive VSDs = LOUDER murmur (higher gradient). Large VSDs = softer murmur but worse hemodynamics (FTT, CHF). Many small VSDs close spontaneously.', associated: 'Down syndrome, FAS, DiGeorge' },
+          { name: 'Tricuspid Regurgitation', type: 'holosystolic', timing: 'Holosystolic', buzzwords: ['holosystolic at LLSB', 'increases with inspiration', 'Carvallo sign positive', 'prominent v wave in JVP', 'pulsatile liver'], shelfPearl: 'Carvallo sign also applies to TR (louder with inspiration). Think Ebstein anomaly if associated with WPW on ECG.', associated: 'Ebstein anomaly, pulmonary HTN' },
+        ]},
+        { location: 'mitral', murmurs: [
+          { name: 'Mitral Regurgitation', type: 'holosystolic', timing: 'Holosystolic', buzzwords: ['holosystolic murmur at apex', 'radiates to axilla', 'S3 gallop', 'acute rheumatic fever'], shelfPearl: 'In peds, MR is most commonly from acute rheumatic fever (pancarditis). Carey-Coombs murmur = mid-diastolic murmur in acute RF from inflamed mitral valve.', associated: 'Rheumatic fever, AV canal defect' },
+          { name: 'Mitral Valve Prolapse', type: 'late-systolic', timing: 'Mid-to-late systolic', buzzwords: ['mid-systolic click', 'late systolic murmur', 'click moves earlier with Valsalva', 'click moves later with squatting', 'Marfan'], shelfPearl: 'Click + late SEM. Valsalva (less preload) → prolapse earlier → click/murmur earlier. Squatting (more preload) → prolapse later → click/murmur later. Common in teenage girls, Marfan, Ehlers-Danlos.', associated: 'Marfan, Ehlers-Danlos, adolescent girls' },
+          { name: 'Still\'s Murmur (Innocent)', type: 'innocent', timing: 'Systolic', buzzwords: ['musical vibratory', 'grade 1-2', 'louder when supine', 'disappears with Valsalva', 'most common innocent murmur'], shelfPearl: 'Most common innocent murmur in children (2-7 years). Musical/vibratory quality. Louder supine, softer standing. Disappears with Valsalva. NO diastolic component, NO associated symptoms.', associated: 'Normal variant, ages 2-7' },
+        ]},
+      ];
+
+      // ── EXPLORE MODE ──
+      const activeAtlas = MURMUR_ATLAS.find(a => a.location === exploredLocation);
+
+      // ── QUIZ MODE ──
       const [queue, setQueue] = useState(() => [...items].sort(() => Math.random() - 0.5));
       const [idx, setIdx] = useState(0);
       const [revealedClues, setRevealedClues] = useState(1);
@@ -3545,15 +3679,17 @@
       const [selected, setSelected] = useState(null);
       const [score, setScore] = useState({ correct: 0, total: 0 });
       const [missed, setMissed] = useState([]);
+      const [streak, setStreak] = useState(0);
+      const [bestStreak, setBestStreak] = useState(0);
       const savedRef = useRef(false);
       const game = useGameQuiz('cardio_murmur_quiz');
 
       const current = queue[idx];
-      const isComplete = !current && score.total > 0;
+      const isComplete = mode === 'quiz' && !current && score.total > 0;
 
       useEffect(() => {
         if (isComplete && !savedRef.current) {
-          IDProgress.save('cardio_murmur_quiz', { correct: score.correct, total: score.total, missed });
+          IDProgress.save('cardio_murmur_quiz', { correct: score.correct, total: score.total, missed, bestStreak });
           game.onComplete({ correct: score.correct, total: score.total });
           savedRef.current = true;
         }
@@ -3562,7 +3698,7 @@
       const options = useMemo(() => {
         if (!current || !current.answer) return [];
         return [current.answer, ...(current.distractors || [])].sort(() => Math.random() - 0.5);
-      }, [idx]);
+      }, [idx, mode]);
 
       const handleGuess = (opt) => {
         if (guessed || !current) return;
@@ -3571,104 +3707,257 @@
         const isCorrect = opt === current.answer;
         setScore(prev => ({ correct: prev.correct + (isCorrect ? 1 : 0), total: prev.total + 1 }));
         game.onAnswer(current?.id, isCorrect);
-        if (opt !== current.answer) setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]);
+        if (isCorrect) { const ns = streak + 1; setStreak(ns); if (ns > bestStreak) setBestStreak(ns); }
+        else { setStreak(0); setMissed(prev => [...prev, { clue: (current.clues||[]).join(' → '), correctAnswer: current.answer, yourAnswer: opt }]); }
       };
-      if (isComplete) {
-        const pct = Math.round(score.correct / Math.max(1, score.total) * 100);
-        const best = IDProgress.getModule('cardio_murmur_quiz');
-        const color = pct >= 80 ? 'text-emerald-600' : pct >= 60 ? 'text-amber-600' : 'text-red-600';
-        return (
-          <div className="max-w-2xl mx-auto py-8">
-            <div className="text-center mb-8">
-              <div className="text-5xl mb-4">{pct >= 80 ? '🎯' : pct >= 60 ? '🔍' : '📚'}</div>
-              <h2 className="text-xl font-bold text-white mb-1">Quiz Complete!</h2>
-              <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
-              <p className="text-slate-400 text-sm">{score.correct} / {score.total} correct</p>
-              {best.attempts.length > 1 && <p className="text-xs text-slate-400 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
-            </div>
-            {missed.length > 0 && (
-              <div className="mb-8">
-                <h3 className="text-xs font-bold text-red-600 uppercase tracking-wider mb-3">Missed Cases — Study These Clue Patterns</h3>
-                <div className="space-y-2">
-                  {missed.map((m, i) => (
-                    <div key={i} className="flex flex-col gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-sm">
-                      <span className="text-slate-700 text-xs"><strong>Clues:</strong> {m.clue}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-red-600">✗</span>
-                        <span className="text-red-500 text-xs">Your answer:</span>
-                        <span className="text-red-600">{m.yourAnswer}</span>
-                        <span className="text-slate-400 mx-1">→</span>
-                        <span className="text-emerald-600 font-medium text-xs">Correct:</span>
-                        <span className="text-emerald-600">{m.correctAnswer}</span>
+
+      const resetQuiz = () => {
+        setQueue([...items].sort(() => Math.random() - 0.5)); setIdx(0); setRevealedClues(1); setGuessed(false);
+        setSelected(null); setScore({ correct: 0, total: 0 }); setMissed([]); setStreak(0); setBestStreak(0); savedRef.current = false;
+      };
+
+      // ── Map murmurType to auscultation location for the heart highlight ──
+      const getQuizLocations = (item) => {
+        if (!item) return [];
+        const clueText = (item.clues || []).join(' ').toLowerCase();
+        const locs = [];
+        if (clueText.includes('rusb') || clueText.includes('right upper') || clueText.includes('aortic area')) locs.push('aortic');
+        if (clueText.includes('lusb') || clueText.includes('left upper') || clueText.includes('pulm')) locs.push('pulmonic');
+        if (clueText.includes('llsb') || clueText.includes('left lower') || clueText.includes('tricuspid')) locs.push('tricuspid');
+        if (clueText.includes('apex') || clueText.includes('mitral') || clueText.includes('apical')) locs.push('mitral');
+        if (clueText.includes('erb') || clueText.includes('left sternal border') || clueText.includes('valsalva')) locs.push('erbs');
+        if (locs.length === 0) locs.push('tricuspid'); // default
+        return locs;
+      };
+
+      return (
+        <div className="space-y-6">
+          {/* Mode Selector */}
+          <div className="flex items-center gap-3 mb-2">
+            <button onClick={() => setMode('explore')}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition border ${mode === 'explore' ? 'bg-rose-950/30 text-rose-300 border-rose-800/40' : 'bg-slate-800/40 text-slate-400 border-slate-700 hover:text-slate-300'}`}>
+              <span>🫀</span> Explore Murmurs
+            </button>
+            <button onClick={() => { setMode('quiz'); if (score.total === 0 && idx === 0) resetQuiz(); }}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition border ${mode === 'quiz' ? 'bg-rose-950/30 text-rose-300 border-rose-800/40' : 'bg-slate-800/40 text-slate-400 border-slate-700 hover:text-slate-300'}`}>
+              <span>🎮</span> Quiz Mode
+            </button>
+          </div>
+
+          {/* ═══ EXPLORE MODE ═══ */}
+          {mode === 'explore' && (
+            <div className="animate-fadeIn">
+              <p className="text-sm text-slate-400 mb-6 leading-relaxed">Click any <strong className="text-slate-300">auscultation site</strong> on the heart to explore murmurs heard at that location — with <strong className="text-slate-300">waveform patterns</strong>, <strong className="text-slate-300">shelf buzzwords</strong>, and clinical pearls.</p>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* LEFT: Heart Diagram */}
+                <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-rose-400/60 mb-4 text-center">Auscultation Sites</div>
+                  <HeartDiagram activeLocation={exploredLocation} onLocationClick={(id) => setExploredLocation(exploredLocation === id ? null : id)} highlightLocations={[]} />
+                  <div className="mt-4 grid grid-cols-5 gap-1.5">
+                    {['aortic','pulmonic','erbs','tricuspid','mitral'].map(loc => {
+                      const atlas = MURMUR_ATLAS.find(a => a.location === loc);
+                      return (
+                        <button key={loc} onClick={() => setExploredLocation(exploredLocation === loc ? null : loc)}
+                          className={`text-[10px] py-1.5 px-1 rounded-lg font-medium transition border text-center ${exploredLocation === loc ? 'bg-rose-950/40 text-rose-300 border-rose-800/40' : 'bg-slate-800/30 text-slate-500 border-slate-700 hover:text-slate-300'}`}>
+                          {loc === 'erbs' ? "Erb's" : loc.charAt(0).toUpperCase() + loc.slice(1)}
+                          <div className="text-[8px] opacity-50 mt-0.5">{atlas?.murmurs.length || 0} murmurs</div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* RIGHT: Murmur Details for selected location */}
+                <div className="space-y-4">
+                  {!activeAtlas && (
+                    <div className="bg-slate-800/30 border border-slate-700 rounded-2xl p-8 text-center">
+                      <div className="text-4xl mb-3">🩺</div>
+                      <h3 className="text-lg font-bold text-slate-300 mb-2">Select an Auscultation Site</h3>
+                      <p className="text-sm text-slate-500 leading-relaxed">Click on the heart diagram or a button below it to explore murmurs at each location.</p>
+                    </div>
+                  )}
+                  {activeAtlas && activeAtlas.murmurs.map((m, mi) => (
+                    <div key={mi} className="bg-slate-800/50 border border-slate-700 rounded-xl p-5 animate-fadeIn">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <h4 className="font-bold text-white text-sm mb-0.5">{m.name}</h4>
+                          <div className="text-[10px] text-slate-500">{m.timing} · {m.associated}</div>
+                        </div>
+                        <MurmurWaveform type={m.type} small={true} />
+                      </div>
+                      {/* Waveform large */}
+                      <div className="bg-slate-900/60 rounded-lg p-3 mb-3 flex justify-center">
+                        <MurmurWaveform type={m.type} />
+                      </div>
+                      {/* Buzzwords */}
+                      <div className="mb-3">
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-amber-400/60 mb-2">Shelf Buzzwords</div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {m.buzzwords.map((bw, bi) => (
+                            <span key={bi} className="text-[10px] px-2 py-0.5 bg-amber-500/15 text-amber-300 rounded-full font-medium border border-amber-700/20">{bw}</span>
+                          ))}
+                        </div>
+                      </div>
+                      {/* Shelf Pearl */}
+                      <div className="bg-amber-950/15 border border-amber-800/20 rounded-lg p-3">
+                        <div className="text-[10px] font-bold text-amber-400 mb-1">SHELF PEARL</div>
+                        <p className="text-xs text-amber-200/80 leading-relaxed">{m.shelfPearl}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            )}
-            <div className="flex gap-3 justify-center">
-              <button onClick={() => { setQueue([...items].sort(() => Math.random() - 0.5)); setIdx(0); setRevealedClues(1); setGuessed(false); setSelected(null); setScore({ correct: 0, total: 0 }); setMissed([]); savedRef.current = false; }}
-                className="px-6 py-2.5 bg-rose-600 hover:bg-rose-950/30 text-white rounded-lg text-sm font-medium transition">Play Again</button>
-            </div>
-          </div>
-        );
-      }
-
-      if (!current) return null;
-
-      return (
-        <div className="max-w-2xl mx-auto">
-          <GameHeader />
-          <div className="flex items-center justify-between mb-6">
-            <span className="text-sm text-slate-400 tabular-nums">{idx + 1} / {queue.length}</span>
-            <ComboDisplay combo={game.combo} />
-            <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current?.difficulty === 'advanced' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>{current?.difficulty || 'normal'}</span>
-          </div>
-
-          <div className="bg-white border border-slate-200 rounded-xl p-7 mb-6">
-            <div className="text-[10px] font-bold uppercase tracking-widest text-rose-600 mb-4">Murmur Clues</div>
-            <div className="space-y-2.5">
-              {(current?.clues || []).map((clue, ci) => (
-                <div key={ci} className={`flex items-start gap-3 transition-all duration-300 ${ci < revealedClues ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
-                  <span className="text-xs text-rose-300 font-mono mt-0.5 shrink-0 w-4">{ci + 1}.</span>
-                  <span className="text-sm text-slate-300 leading-relaxed">{clue}</span>
-                </div>
-              ))}
-            </div>
-            {!guessed && revealedClues < (current?.clues || []).length && (
-              <button onClick={() => setRevealedClues(prev => prev + 1)}
-                className="mt-4 text-xs text-rose-300 hover:text-rose-700 font-medium transition">
-                + Reveal next clue ({revealedClues}/{current?.clues?.length || 0})
-              </button>
-            )}
-          </div>
-
-          <div className="text-xs text-slate-400 uppercase tracking-widest mb-3 font-bold">What murmur is this?</div>
-          <div className="grid grid-cols-2 gap-2.5">
-            {options.map((opt, i) => {
-              let cls = 'bg-slate-800/30 border-slate-700 hover:border-slate-400';
-              if (guessed) {
-                if (opt === current.answer) cls = 'bg-emerald-50 border-emerald-400';
-                else if (opt === selected) cls = 'bg-red-50 border-red-400';
-                else cls = 'bg-slate-800/30 border-slate-700 opacity-40';
-              }
-              return (
-                <button key={i} onClick={() => handleGuess(opt)} disabled={guessed}
-                  className={`choice-btn text-left p-3.5 rounded-xl border transition text-sm text-slate-300 ${cls}`}>{opt}</button>
-              );
-            })}
-          </div>
-
-          {guessed && (
-            <div className="mt-5">
-              <div className={`p-5 rounded-xl border ${selected === current.answer ? 'bg-emerald-50 border-emerald-200' : 'bg-slate-800/30 border-slate-700'}`}>
-                <FormattedText text={current.explanation} className="feedback-text" />
-              </div>
-              <button onClick={() => { setIdx(prev => prev + 1); setRevealedClues(1); setGuessed(false); setSelected(null); }}
-                className="w-full mt-4 py-3 bg-rose-600 hover:bg-rose-950/30 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
             </div>
           )}
-          {game.overlays}
+
+          {/* ═══ QUIZ MODE ═══ */}
+          {mode === 'quiz' && (
+            <div className="animate-fadeIn">
+              <GameHeader />
+
+              {/* Quiz Complete */}
+              {isComplete && (() => {
+                const pct = Math.round(score.correct / Math.max(1, score.total) * 100);
+                const best = IDProgress.getModule('cardio_murmur_quiz');
+                const color = pct >= 80 ? 'text-emerald-400' : pct >= 60 ? 'text-amber-400' : 'text-red-400';
+                return (
+                  <div className="max-w-3xl mx-auto py-8">
+                    <div className="text-center mb-8">
+                      <div className="text-5xl mb-4">{pct >= 80 ? '🏆' : pct >= 60 ? '🔍' : '📚'}</div>
+                      <h2 className="text-xl font-bold text-white mb-1">Murmur Quiz Complete!</h2>
+                      <p className={`text-3xl font-bold ${color} mb-1`}>{pct}%</p>
+                      <p className="text-slate-400 text-sm">{score.correct} / {score.total} correct · Best streak: {bestStreak}</p>
+                      {best.attempts.length > 1 && <p className="text-xs text-slate-400 mt-1">Personal best: {best.bestScore}% · Attempt #{best.attempts.length}</p>}
+                    </div>
+                    {missed.length > 0 && (
+                      <div className="mb-8">
+                        <h3 className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">Missed Cases — Review These</h3>
+                        <div className="space-y-2">
+                          {missed.map((m, i) => (
+                            <div key={i} className="flex flex-col gap-2 p-3 bg-red-950/20 border border-red-800/20 rounded-lg text-sm">
+                              <span className="text-slate-400 text-xs"><strong className="text-slate-300">Clues:</strong> {m.clue}</span>
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <span className="text-red-400">✗</span>
+                                <span className="text-red-300/70 text-xs">You:</span>
+                                <span className="text-red-300 text-xs">{m.yourAnswer}</span>
+                                <span className="text-slate-600 mx-1">→</span>
+                                <span className="text-emerald-400 font-medium text-xs">{m.correctAnswer}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {pct < 80 && (
+                      <div className="p-4 bg-amber-950/15 border border-amber-700/20 rounded-xl mb-6">
+                        <p className="text-xs text-amber-200/80 leading-relaxed">💡 <strong>Study tip:</strong> Switch to <strong>Explore mode</strong> and review the auscultation sites for the murmurs you missed. Focus on the waveform patterns and shelf buzzwords.</p>
+                      </div>
+                    )}
+                    <div className="flex gap-3 justify-center">
+                      <button onClick={() => setMode('explore')} className="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition">Explore Murmurs</button>
+                      <button onClick={resetQuiz} className="px-6 py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-sm font-medium transition">Play Again</button>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Active Quiz */}
+              {!isComplete && current && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* LEFT: Heart + Waveform */}
+                  <div className="space-y-4">
+                    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5">
+                      <div className="text-[10px] font-bold uppercase tracking-widest text-rose-400/60 mb-3 text-center">Where would you auscultate?</div>
+                      <HeartDiagram activeLocation={null} highlightLocations={guessed ? getQuizLocations(current) : []} />
+                    </div>
+                    {/* Waveform hint (shown after answer) */}
+                    {guessed && current.murmurType && (
+                      <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 animate-fadeIn">
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-rose-400/60 mb-2 text-center">Murmur Pattern</div>
+                        <div className="flex justify-center">
+                          <MurmurWaveform type={current.murmurType} />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* RIGHT: Clues + MCQ */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-slate-400 tabular-nums font-medium">{idx + 1} / {queue.length}</span>
+                        {streak >= 3 && <span className="text-xs px-2.5 py-1 bg-amber-500/20 text-amber-300 rounded-full font-bold animate-fadeIn">🔥 {streak} streak!</span>}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <ComboDisplay combo={game.combo} />
+                        <span className={`text-[10px] px-2.5 py-1 rounded-full font-medium ${current.difficulty === 'advanced' ? 'bg-red-950/30 text-red-300' : 'bg-blue-950/30 text-blue-300'}`}>{current.difficulty || 'core'}</span>
+                      </div>
+                    </div>
+
+                    {/* Clue Card */}
+                    <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6">
+                      <div className="text-[10px] font-bold uppercase tracking-widest text-rose-400/60 mb-4">Clinical Clues</div>
+                      <div className="space-y-2.5">
+                        {(current.clues || []).map((clue, ci) => (
+                          <div key={ci} className={`flex items-start gap-3 transition-all duration-300 ${ci < revealedClues ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}>
+                            <span className="text-xs text-rose-400 font-mono mt-0.5 shrink-0 w-4">{ci + 1}.</span>
+                            <span className="text-sm text-slate-300 leading-relaxed">{clue}</span>
+                          </div>
+                        ))}
+                      </div>
+                      {!guessed && revealedClues < (current.clues || []).length && (
+                        <button onClick={() => setRevealedClues(prev => prev + 1)}
+                          className="mt-4 text-xs text-rose-400 hover:text-rose-300 font-medium transition flex items-center gap-1">
+                          <span>+</span> Reveal next clue ({revealedClues}/{current.clues?.length || 0})
+                        </button>
+                      )}
+                    </div>
+
+                    {/* MCQ */}
+                    <div>
+                      <div className="text-xs text-slate-500 uppercase tracking-widest mb-3 font-bold">What murmur is this?</div>
+                      <div className="grid grid-cols-1 gap-2">
+                        {options.map((opt, i) => {
+                          let cls = 'bg-slate-800/30 border-slate-700 hover:border-rose-500/40 hover:bg-slate-800/50';
+                          if (guessed) {
+                            if (opt === current.answer) cls = 'bg-emerald-950/30 border-emerald-500/60';
+                            else if (opt === selected) cls = 'bg-red-950/30 border-red-500/60';
+                            else cls = 'bg-slate-800/20 border-slate-700 opacity-30';
+                          }
+                          return (
+                            <button key={i} onClick={() => handleGuess(opt)} disabled={guessed}
+                              className={`choice-btn text-left p-3.5 rounded-xl border-2 transition text-sm font-medium ${cls}`}>
+                              <div className="flex items-center gap-3">
+                                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold shrink-0 ${guessed && opt === current.answer ? 'bg-emerald-500 border-emerald-500 text-white' : guessed && opt === selected ? 'bg-red-500 border-red-500 text-white' : 'border-slate-600 text-slate-500'}`}>
+                                  {guessed ? (opt === current.answer ? '✓' : opt === selected ? '✗' : String.fromCharCode(65+i)) : String.fromCharCode(65+i)}
+                                </div>
+                                <span className="text-slate-300">{opt}</span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Feedback */}
+                    {guessed && (
+                      <div className="space-y-3 animate-fadeIn">
+                        <div className={`p-5 rounded-xl border ${selected === current.answer ? 'bg-emerald-950/20 border-emerald-700/30' : 'bg-red-950/15 border-red-800/20'}`}>
+                          <div className="text-xs font-bold mb-2 uppercase tracking-wider" style={{ color: selected === current.answer ? '#6ee7b7' : '#fca5a5' }}>
+                            {selected === current.answer ? 'Correct!' : `Incorrect — Answer: ${current.answer}`}
+                          </div>
+                          <FormattedText text={current.explanation} className="feedback-text" />
+                        </div>
+                        <button onClick={() => { setIdx(prev => prev + 1); setRevealedClues(1); setGuessed(false); setSelected(null); }}
+                          className="w-full py-3 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-sm font-semibold transition">Next Case →</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+              {game.overlays}
+            </div>
+          )}
         </div>
       );
     }
@@ -4000,7 +4289,7 @@
     // ─── CARDIO STUDY GUIDE ───────────────────────────────────────────
     function CardioStudyGuide({ data, setTab }) {
       const allScores = [
-        { moduleId: 'cardio_murmur_quiz', name: 'Murmur Quiz' },
+        { moduleId: 'cardio_murmur_quiz', name: 'Murmur Master' },
         { moduleId: 'cardio_shelf_scenarios', name: 'Shelf Scenarios' },
       ];
       const scores = allScores.map(m => {
@@ -4065,7 +4354,7 @@
         { key: 'bug_drug', label: 'Bug-Drug Matcher', category: 'ID' },
         { key: 'whats_the_bug', label: "What's the Bug?", category: 'ID' },
         { key: 'vaccines_quiz', label: 'Vaccine Trainer', category: 'ID' },
-        { key: 'cardio_murmur_quiz', label: 'Murmur Quiz', category: 'Cardio' },
+        { key: 'cardio_murmur_quiz', label: 'Murmur Master', category: 'Cardio' },
         { key: 'cardio_shelf_scenarios', label: 'Shelf Scenarios', category: 'Cardio' },
       ];
 
