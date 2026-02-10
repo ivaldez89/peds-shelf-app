@@ -461,8 +461,20 @@
     // ─── TOPBAR ─────────────────────────────────────────────────────
     function TopBar({ setSidebarOpen, searchQuery, setSearchQuery, currentView, setView }) {
       const [showSearch, setShowSearch] = useState(false);
+      const [hidden, setHidden] = useState(false);
+      const lastScrollY = useRef(0);
+      useEffect(() => {
+        const onScroll = () => {
+          const y = window.scrollY;
+          if (y > lastScrollY.current && y > 60) setHidden(true);
+          else setHidden(false);
+          lastScrollY.current = y;
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
       return (
-        <header className="sticky top-0 z-30 h-14 bg-slate-900/80 backdrop-blur border-b border-slate-800 flex items-center px-5 gap-3">
+        <header className="sticky top-0 z-30 h-14 bg-slate-900/80 backdrop-blur border-b border-slate-800 flex items-center px-5 gap-3" style={{ transform: hidden ? 'translateY(-100%)' : 'translateY(0)', transition: 'transform 0.3s ease' }}>
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden text-slate-400 hover:text-white"><Icons.Menu /></button>
           <Breadcrumb currentView={currentView} setView={setView} />
           <div className="ml-auto flex items-center gap-3">
